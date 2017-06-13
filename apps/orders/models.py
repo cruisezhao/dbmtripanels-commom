@@ -1,6 +1,6 @@
 from django.db import models
 from common.utilities.utils import uuid_to_str
-from common.apps.product.models import Product, Plan
+from common.apps.products.models import Product, Plan
 
 
 ORDER_STATUS = (
