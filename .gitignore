@@ -1,0 +1,15 @@
+.idea/
+*.py[cod]
+__pycache__/
+*.log
+*.orig
+local_settings.py
+media/
+*.dist-info
+*.egg-info
+.project
+.pydevproject
+.settings/
+clusters-apps
+migrations/*
+media/
