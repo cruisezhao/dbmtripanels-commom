@@ -3,12 +3,6 @@ from common.utilities.utils import uuid_to_str
 from common.apps.product.models import Product, Plan
 
 
-# 订单状态：
-# Pending    -网站下单时候的状态（对于已经购买了服务的老客户，订单无需审核，直接是Active）
-# Active      -验证通过，Billing审核通过后的状态
-# Cancelled    -取消状态
-# Invalid      -订单不能通过审核的状态
-
 ORDER_STATUS = (
     ('Pending', 'Pending'),
     ('Active','Active'),
