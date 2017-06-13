@@ -18,8 +18,33 @@ STATUS_CHOICES  = (
         (4,'Cancelled'),
 )
 
+
+class Plans(CreatedUpdatedModel):
+    """create plan model"""
+    uuid = models.CharField('uuid', default=uuid_to_str, editable=False, max_length = 256, unique = True)
+    name = models.CharField('Name', max_length = 32)
+    cpu = models.IntegerField('CPU',default=0)
+    cpu_description = models.CharField('CPU Description', max_length = 256, null = True, blank = True)
+    memory = models.DecimalField('Memory', max_digits=19, decimal_places=4, null=True, blank=True)
+    memory_description = models.CharField('Memory Description', max_length = 256, null = True, blank = True)
+    disk = models.IntegerField('Disk', default = 0)
+    disk_description = models.CharField('Disk Description', max_length = 256, null = True, blank = True)
+    instance = models.IntegerField('Instance', default = 0)
+    instance_description = models.CharField('Instance Description', max_length = 256, null = True, blank = True)
+    description = models.CharField('Descriptin', max_length = 256, null = True, blank = True)
+
+    class Meta:
+        verbose_name = "Plans"
+        verbose_name_plural = "Plans"
+        db_table = "plans"
+
+    def __str__(self):
+        return self.name
+
+
 class Products(CreatedUpdatedModel):
     """product model"""
+    plan = models.ManyToManyField(Plans)
     uuid = models.CharField('uuid', default=uuid_to_str, editable=False, max_length = 256, unique = True, db_index = True)
     type = models.CharField('Type', max_length=32, null=False, blank=False)
     name = models.CharField('Name', max_length=255, unique=True)
