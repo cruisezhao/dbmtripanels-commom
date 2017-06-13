@@ -11,5 +11,5 @@ media/
 .pydevproject
 .settings/
 clusters-apps
-migrations/*
+apps/*/migrations/*
 media/
