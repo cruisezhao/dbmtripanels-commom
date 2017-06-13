@@ -1,6 +1,6 @@
 from django.db import models
 from common.utilities.utils import uuid_to_str
-from common.apps.products.models import Product, Plan
+from common.apps.products.models import Products, Plan
 
 
 ORDER_STATUS = (
@@ -12,8 +12,8 @@ ORDER_STATUS = (
 
 class Orders(models.Model):
     """Orders"""
-    uuid = models.CharField(db_index=True, default=uuid_to_str, max_length=255, editable=False)
-    product = models.ForeignKey(Product,on_delete=models.PROTECT)
+    uuid = models.CharField(unique=True, default=uuid_to_str, max_length=255, editable=False)
+    product = models.ForeignKey(Products,on_delete=models.PROTECT)
     plan = models.ForeignKey(Plan,on_delete=models.PROTECT)
     amount = models.DecimalField('Total Fee', max_digits=10, decimal_places=2, null=True)
     status = models.CharField(max_length=32, choices=ORDER_STATUS)
