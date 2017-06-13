@@ -1,3 +1,39 @@
 from django.db import models
+from common.utilities.utils import uuid_to_str
+from common.utilities.models import CreatedUpdatedModel
 
-# Create your models here.
+class Product(CreatedUpdatedModel):
+    """product model"""
+    uuid = models.CharField('uuid', default=uuid_to_str, editable=False, max_length = 256, unique = true, db_index = true)
+    type = models.CharField('Type', max_length=32, null=False, blank=False)
+    name = models.CharField('Name', max_length=255, unique=True, null=False, blank=False)
+    summary = models.TextField('Summary', null=True, blank=True)
+    description = models.TextField('Description',null=True, blank=True)
+    software_url = models.URLField('Software URL', max_length=256, null=True, blank=True)
+    software_pic = models.CharField('Software Logo', max_length=255, null=True, blank=True)
+    software_img = models.CharField("Software Img", max_length=255, null=True, blank=True)
+    vendor_name = models.CharField('Vendor Name',max_length=256,null=True, blank=True)
+    vendor_url = models.URLField('Vendor URL',max_length=256,null=True, blank=True)
+    latest_version = models.CharField('Latest Version', max_length=256, null=True, blank=True)
+    latest_release_date = models.DateTimeField('Latest Release Date', null=True, blank=True)
+    opensource = models.BooleanField('OpenSource', default=True)
+    license_type = models.CharField('License Type', max_length=256, null=True, blank=True)
+    demo_url = models.URLField('DemoURL', max_length=256, null=True, blank=True)
+    demo_version = models.CharField('DemoVersion', max_length=256,null=True, blank=True)
+    facebook_url  = models.URLField('FacebookURL', max_length=256,null=True, blank=True)
+    google_plus_url = models.URLField('GoogkePlusURL', max_length=256, null=True, blank=True)
+    linkedin_url = models.URLField('LinkedInURL', max_length=256, null=True, blank=True)
+    twitter_url  = models.URLField('TwitterURL',max_length=256, null=True, blank=True)
+    document_url = models.URLField('DocumentURL', max_length=256, null=True, blank=True)
+    total_users = models.IntegerField("Total Users", default=0)
+    free_plan = models.URLField('FreePlan', max_length=256, null=True, blank=True)
+    free_plan_spec =  models.CharField('FreePlanSpec',max_length=256,null=True, blank=True)
+    paid_plan = models.URLField('PaidPlan', max_length=256, null=True, blank=True)
+    paid_plan_price = models.DecimalField('PaidPlanPrice', max_digits=19, decimal_places=4, null=True, blank=True)
+    paid_plan_spec = models.CharField('PaidPlanSpec', max_length=256, null=True, blank=True)
+    status = models.IntegerField('Status', default=PENDING_STATUS, choices=STATUS_CHOICES)
+    features = fields.JSONField('Features', default={})
+    environments =fields.JSONField('Environments', default={})
+    in_homepage = models.BooleanField('Showinhomepage', default=False, blank=True)
+    created_by = models.CharField('Created By', max_length=256,null=True, blank=True)
+    updated_by = models.CharField('Updated By', max_length=256,null=True, blank=True)
