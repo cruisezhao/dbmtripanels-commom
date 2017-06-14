@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html>
+    {% load staticfiles %}
+
+    <head>
+        <meta charset="UTF-8">
+        <title>cloud - databasemart - vps</title>
+        <meta name="keywords" content="vps databasemart cloud ">
+        <meta name="description" content="Windows VPS and Linux VPS Hosting Specialist">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+            <link rel="shortcut icon" href="{% static 'site/imgs/logo.ico' %}" />
+            <link rel="stylesheet" href="{% static 'site/css/owl.carousel.css'%}" />
+            <link rel="stylesheet" href="{% static 'site/css/owl.theme.css' %}" />
+            <link rel="stylesheet" href="{% static 'bootstrap/css/bootstrap.min.css' %}" />
+            <link rel="stylesheet" href="{% static 'site/css/jquery-ui.min.css' %}" />
+            <link rel="stylesheet" href="{% static 'font-awesome/css/font-awesome.css' %}" />
+            <link rel="stylesheet" href="{% static 'site/css/style.css' %}" />
+            <link rel="stylesheet" href="{% static 'site/css/mainstyle.css' %}" />
+
+        {% block styles %}
+        {% endblock styles %}
+
+    </head>
+
+    <body>
+        <header>
+  		    <div class="others">
+      			<a href="https://portal.databasemart.com/Main/frmNewTicket.aspx" target="_blank" title="Submit VPS Mart Suport Ticket">
+      				<img src="{% static 'site/imgs/others/open-ticket.png' %}" alt="open a ticket">
+      			</a>
+      			<a href="https://clients.databasemart.com/" target="_blank" title="VPS Mart Billing System">
+      				<img src="{% static 'site/imgs/others/billing-system.png'%}" alt="Billing System">
+      			</a>
+      			<a href="https://portal.databasemart.com/Main/Chat/frmClientChat.aspx?config=1" target="openChat" title="Chat with us!">
+      				<img src="{% static 'site/imgs/others/online-chat.png' %}">
+      			</a>
+      		</div>
+
+  		    <nav >
+            <a href="/" class="navbar-band logo">
+              <img src="{% static 'site/imgs/logo.jpg' %}" alt="VPS Mart Logo">
+            </a>
+
+            <ul>
+              <!--Home-->
+      				<li>
+      					<a href="#" title="VPS Mart Home Page">
+      						Home
+      					</a>
+      				</li>
+
+              <!--Applictions-->
+      				<li class="applictions">
+      					<a href="" title="vps-home">Applictions</a>
+      				</li>
+
+              <!--Price-->
+      				<li>
+      					<a href="#">
+      						Price
+      					</a>
+      				</li>
+
+              <!--Network-->
+      				<li>
+      					<a href="#">
+      						Network
+      					</a>
+      				</li>
+
+              <!--About-->
+      				<li>
+      					<a href="">
+      						About
+      					</a>
+      				</li>
+      			</ul>
+
+            {% if not user.is_authenticated %}
+            <ul class="login-panel">
+              <li class="logIn">
+                <a  href="{% url 'accounts:login' %}">Log in</a>
+              </li>
+              <li class="signUp">
+                <a  href="{% url 'accounts:signup' %}">Sign Up</a>
+              </li>
+            </ul>
+              {% else %}
+              {% endif %}
+      		</nav>
+
+
+
+  	    </header>
+        {% block main-content %}
+        {% endblock main-content %}
+
+        {% block scripts %}
+          <script src="{% static 'js/jquery.min.js'%}"></script>
+          <script src="{% static 'bootstrap/js/bootstrap.js' %}"></script>
+	        <script src="{% static 'owl/owl-carousel/owl.carousel.min.js' %}"></script>
+	        <script src="{% static 'site/js/jquery-ui.js' %}"></script>
+          <script src="{% static 'site/js/zooming.js' %}"></script>
+        {% endblock scripts %}
+        <!--banner-js-demo-->
+        <footer>
+      		<!--<section class="footer-main">
+      			<section class="footer-list">
+      				<ul>
+      					<li>
+      						<h3>Hosting Center</h3>
+      					</li>
+      					<li>
+      						<a href="#">Windows VPS Servers</a>
+      					</li>
+      					<li>
+      						<a href="#">Linux VPS Servers</a>
+      					</li>
+      					<li>
+      						<a href="#">Dedicated Servers</a>
+      					</li>
+      					<li>
+      						<a href="#">Windows VPS Management Servers</a>
+      					</li>
+      					<li>
+      						<a href="#">Domain Registration</a>
+      					</li>
+      					<li>
+      						<a href="#">SSL Certificates</a>
+      					</li>
+      				</ul>
+      				<ul>
+      					<li><h3>Support Center</h3></li>
+      					<li>
+      						<a href="#">Helpdesk</a>
+      					</li>
+      					<li>
+      						<a href="#">Frequently Asked Questions</a>
+      					</li>
+      					<li>
+      						<a href="#">Knowledgebase</a>
+      					</li>
+      					<li>
+      						<a href="#">WebsitePanel Control Panel</a>
+      					</li>
+      				</ul>
+      				<ul>
+      					<li>
+      						<h3>Imformation Center</h3>
+      					</li>
+      					<li>
+      						<a href="#">About us</a>
+      					</li>
+      					<li>
+      						<a href="#">Why Choose Our Service</a>
+      					</li>
+      					<li>
+      						<a href="#">Network and Data Center</a>
+      					</li>
+      					<li>
+      						<a href="#">Terms Of Service</a>
+      					</li>
+      				</ul>
+      			</section>
+
+      			<figure class="social">
+      				<p>© Database Mart <span id="year">2017</span></p>
+      				<ul>
+      					<li>
+      						<a href="#">
+      							<img src="{% static 'site/imgs/facebook.png' %}">
+      						</a>
+      					</li>
+      					<li>
+      						<a href="#">
+      							<img src="{% static 'site/imgs/google.png'%}">
+      						</a>
+      					</li>
+      					<li>
+      						<a href="#">
+      							<img src="{% static 'site/imgs/twitter.png'%}">
+      						</a>
+      					</li>
+      				</ul>
+      			</figure>
+      		</section>-->
+          <section class='footer-wrap'>
+            <section class='footer-main'>
+              <section class='footer-list'>
+                <ul>
+                  <li>
+                    <h3>Hosting Center</h3>
+                  </li>
+                  <!--<li>
+                    <a href='/Windows-VPS.html' title='Windows VPS Servers'>Windows VPS Servers</a>
+                  </li>-->
+                  <li>
+                    <a href="#" title='Linux VPS Servers'>Linux VPS Servers</a>
+                  </li>
+                  <li>
+                    <a href="#" title='Dedicated Servers'>Dedicated Servers</a>
+                  </li>
+                  <!--<li>
+                    <a href='/Management.html' title='Windows VPS Server Management Service'>Windows VPS Management Servers</a>
+                  </li>-->
+                  <li>
+                    <a href="#" title='Domain Registration'>Domain Registration</a>
+                  </li>
+                  <!--<li>
+                    <a href='/SSL.html' title='SSL Certificates'>SSL Certificates</a>
+                  </li>-->
+                </ul>
+                <ul>
+                  <li><h3>Support Center</h3></li>
+                  <li>
+                    <a href='https://portal.databasemart.com/' title='Helpdesk'>Helpdesk</a>
+                  </li>
+                  <li>
+                    <a href="#" title='Frequently Asked Questions'>Frequently Asked Questions</a>
+                  </li>
+                  <li>
+                    <a href="#" title='Knowledgebase'>Knowledgebase</a>
+                  </li>
+                  <li>
+                    <a href='https://cp4001.databasemart.com/' title='SolidCP Control Panel'>SolidCP Control Panel</a>
+                  </li>
+                  <li>
+                    <a href='https://clients.databasemart.com/' title='Client Billing System'>Client Billing System</a>
+                  </li>
+                </ul>
+                <ul>
+                  <li>
+                    <h3>Information Center</h3>
+                  </li>
+                  <li>
+                    <a href="#" title='About Us'>About Us</a>
+                  </li>
+                  <li>
+                    <a href="#" title='Why Choose Us'>Why Choose Us</a>
+                  </li>
+                  <li>
+                    <a href="#" title='Network and Data Center'>Network and Data Center</a>
+                  </li>
+                  <li>
+                    <a href="#" title='Terms Of Service'>Terms Of Service</a>
+                  </li>
+                </ul>
+              </section>
+            </section>
+          </section>
+      		<p>
+      			Copyright © 2005 - 2016 Database Mart LLC <br>
+      			7017 Weis Dr., Galveston, TX 77551 409-877-4238
+      		</p>
+      	</footer>
+
+
+        <script>
+          {%block script%}
+          {% endblock script %}
+        </script>
+
+
+    </body>
+
+
+</html>

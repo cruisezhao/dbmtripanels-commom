@@ -1,0 +1,39 @@
+/* container textpage */
+
+.text-page ul , .text-page li {
+    list-style: none;
+}
+
+.text-page h1{
+    font-family: Arial;
+    color:#535353;
+}
+
+.text-page{
+    padding:120px 0;
+}
+
+.text-page a{
+    font-size: 18px;
+    font-weight: 500;
+    color:#505050;
+}
+
+
+.pageContent{
+    margin-top:26px;
+}
+
+.pageContent h3{
+    color:#0c83e7;
+}
+
+.thumbnail a>img{
+    width:300px;
+    height:180px;
+}
+
+/* About page styling */
+#sec1 {
+    background:url(/static/site/img/NetworkImg/NetworkBk.jpg) no-repeat;
+}

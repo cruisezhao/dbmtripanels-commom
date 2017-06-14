@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+
+{% load staticfiles %}
+{% load crispy_forms_tags %}
+
+{% block styles %}
+    <link href="{% static 'site/css/main.css' %}" rel="stylesheet">
+    <style>
+        .dbm-accounts {
+            margin-top: 90px;
+        }
+    </style>
+{% endblock styles %}
+
+{% block navbar-left %}
+  {% include "_navbar.html" with active_link="home" %}
+{% endblock %}
+
+{% block navbar-right %}
+  {% if not user.is_authenticated %}
+<li><a  href="{% url 'accounts:login' %}" >Log in</a></li>
+<li><a  href="{% url 'accounts:signup' %}" >Sigh Up</a></li>
+  {% else %}
+    {{ block.super }}
+  {% endif %}
+{% endblock %}
+
+{% block container %}
+    <div class="container appContainer">
+                <div class="row">
+                    <div class="col-md-12">
+                    <div class="row">
+                        <div class="col-md-2 col-sm-4 hidden-xs left_menu">
+                            {% block panel_left %}
+                            <ul class="nav nav-pills nav-stacked">
+                                {% include 'accounts/_panel.html' %}
+                            </ul>
+                            {% endblock %}
+                        </div><!--col-md-2-->
+                        <div class="col-md-10 col-sm-8 col-xs-12">
+                            {% block panel_right %}{% endblock %}
+                        </div><!--col-md-12-->
+                    </div> <!--row-->
+                </div>
+                </div>
+        </div>
+    </div>
+{% endblock container %}

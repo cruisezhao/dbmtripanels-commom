@@ -1,0 +1,91 @@
+{% extends "account_base.html" %}
+{% load staticfiles %}
+{% load static %}
+{% block styles %}
+{% endblock %}
+
+
+{% block tab %}
+
+
+<!--                 <form id="edit-profile" class="form-horizontal" enctype="multipart/form-data" method="post" action="#" >
+                {% csrf_token %}
+                  <fieldset>
+                      <div>
+                        {% if not avatar_form.instance.picture %}
+                        <img height="180px" width="100px" src="{% get_media_prefix %}wubin.png" />
+                        {% else %}
+                        <img height="180px" width="100px" src="{% get_media_prefix %}{{ avatar_form.instance.picture }}" />
+                        {% endif %}
+                      </div>
+                      <input type="hidden" name="_avatar" value="" />
+                      <div class="">
+                        <input name="picture" type="file" id="id_picture" />
+                        <button id="update-avatar"  type="submit" class="">Upload</button>
+
+                      </div>
+
+                  </fieldset>
+                </form> -->
+                <form id="edit-profile" class="form-horizontal" enctype="multipart/form-data" method="post" action="{% url 'accounts:profile' %}" >
+                {% csrf_token %}
+                  <fieldset>
+
+                   {% for field in form %}
+
+                     {% if field.id_for_label  in "id_email id_alternate_email id_first_name id_last_name" %}
+                     <div class="">
+                        <div class="control-group">
+
+                            {{ field.errors }}
+                            {{ field.label_tag }} {{ field }}
+                            {% if field.help_text %}
+                            <p class="help">{{ field.help_text|safe }}</p>
+                            {% endif %}
+                        </div>
+                      </div>
+                      {% endif %}
+                  {% endfor %}
+                  {% for field in form %}
+                      {% if field.id_for_label  in "id_country id_state id_city id_address1 id_address2 id_postcode id_company id_phone_number" %}
+                     <div class="">
+                        <div class="control-group">
+
+                            {{ field.errors }}
+                            {{ field.label_tag }} {{ field }}
+                            {% if field.help_text %}
+                            <p class="help">{{ field.help_text|safe }}</p>
+                            {% endif %}
+                        </div>
+                      </div>
+                      {% endif %}
+                  {% endfor %}
+                  {% for field in form %}
+                      {% if field.id_for_label  in " id_web_site id_google_plus id_twitter id_facebook id_linkedin id_job_description " %}
+                     <div class="">
+                        <div class="control-group">
+
+                            {{ field.errors }}
+                            {{ field.label_tag }} {{ field }}
+                            {% if field.help_text %}
+                            <p class="help">{{ field.help_text|safe }}</p>
+                            {% endif %}
+                        </div>
+                      </div>
+                      {% endif %}
+                  {% endfor %}
+                  <input type="hidden" name="_profile" value="" />
+                    <br />
+                    <div class="form-actions">
+                      <button id="update-profile"  type="submit" class="btn dbm-btn-safety">Update profile settings</button>
+                      <button class="btn">Cancel</button>
+                    </div> <!-- /form-actions -->
+                  </fieldset>
+                </form>
+
+
+
+
+{% endblock tab %}
+
+
