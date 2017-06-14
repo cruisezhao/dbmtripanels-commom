@@ -10,7 +10,7 @@ class ProductListSerializer(serializers.HyperlinkedModelSerializer):
     # url = ParameterisedHyperlinkedIdentityField(view_name="software_detail", read_only=True)
     class Meta:
         model = Products
-        fields = ['id', 'software_pic', 'name', 'type', 'summary', 'features']
+        fields = ['id', 'product_pic', 'name', 'type', 'summary', 'features']
 
 
 class ProductDetailSerializer(serializers.ModelSerializer):
