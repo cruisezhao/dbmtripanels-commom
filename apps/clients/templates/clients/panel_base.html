@@ -18,8 +18,8 @@
 
 {% block navbar-right %}
   {% if not user.is_authenticated %}
-<li><a  href="{% url 'accounts:login' %}" >Log in</a></li>
-<li><a  href="{% url 'accounts:signup' %}" >Sigh Up</a></li>
+<li><a  href="{% url 'clients:login' %}" >Log in</a></li>
+<li><a  href="{% url 'clients:signup' %}" >Sigh Up</a></li>
   {% else %}
     {{ block.super }}
   {% endif %}
@@ -33,7 +33,7 @@
                         <div class="col-md-2 col-sm-4 hidden-xs left_menu">
                             {% block panel_left %}
                             <ul class="nav nav-pills nav-stacked">
-                                {% include 'accounts/_panel.html' %}
+                                {% include 'clients/_panel.html' %}
                             </ul>
                             {% endblock %}
                         </div><!--col-md-2-->

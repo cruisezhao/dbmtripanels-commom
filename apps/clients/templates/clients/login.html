@@ -1,4 +1,4 @@
-{% extends "accounts/auth_new_base.html" %}
+{% extends "clients/auth_new_base.html" %}
 
 {% load crispy_forms_tags %}
 
@@ -16,9 +16,9 @@
          <hr>
             <div class="list-inline">
                 <ul class="list-inline">
-                    <li>Don't have a account?  <a href="{% url 'accounts:signup' %}">Create one</a></li>
+                    <li>Don't have a account?  <a href="{% url 'clients:signup' %}">Create one</a></li>
                     </br>
-                    <li class="password_fields">Forgot your password? <a href="{% url 'accounts:password-reset' %}">Recover it</a></li>
+                    <li class="password_fields">Forgot your password? <a href="{% url 'clients:password-reset' %}">Recover it</a></li>
                 </ul>
             </div> <!--list-inline-->
         </p>

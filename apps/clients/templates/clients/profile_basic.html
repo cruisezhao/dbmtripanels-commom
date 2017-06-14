@@ -26,12 +26,14 @@
 
                   </fieldset>
                 </form> -->
-                <form id="edit-profile" class="form-horizontal" enctype="multipart/form-data" method="post" action="{% url 'accounts:profile_social' %}" >
+
+
+                <form id="edit-profile" class="form-horizontal" enctype="multipart/form-data" method="post" action="" >
                 {% csrf_token %}
                   <fieldset>
 
+                   {% for field in form %}
 
-                  {% for field in form %}
 
 
                         <div class="control-group">
@@ -45,6 +47,8 @@
 
 
                   {% endfor %}
+
+
                     <br />
                     <div class="form-actions">
                       <button id="update-profile"  type="submit" class="btn dbm-btn-safety">Update profile settings</button>
@@ -57,3 +61,7 @@
 
 
 {% endblock tab %}
+
+{% block scripts %}
+
+{% endblock scripts %}
