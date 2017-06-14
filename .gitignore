@@ -6,7 +6,6 @@ __pycache__/
 local_settings.py
 media/
 *.dist-info
-*.egg-info
 .project
 .pydevproject
 .settings/
