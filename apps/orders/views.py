@@ -1,6 +1,6 @@
 from django.shortcuts import render
 
-from common.apps.orders.forms import OrderCreateForm, OrderSearchForm
+from common.apps.orders.form import OrderCreateForm
 from django.views.generic import TemplateView
 from django.views.generic.edit import FormView
 from django.shortcuts import get_object_or_404, get_list_or_404
@@ -11,17 +11,17 @@ from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect
 
 
-def allowed_order(request):
-    user = request.user
-    pkg = Packages.objects.filter(user=user)
-    if pkg:
-        count = 0
-        for p in pkg:
-            if p.status in ('Pending', 'Active', 'Suspended', 'Invalid'):
-                count += 1
-        if count:
-            return False
-    return True
+# def allowed_order(request):
+#     user = request.user
+#     pkg = Packages.objects.filter(user=user)
+#     if pkg:
+#         count = 0
+#         for p in pkg:
+#             if p.status in ('Pending', 'Active', 'Suspended', 'Invalid'):
+#                 count += 1
+#         if count:
+#             return False
+#     return True
 
 
 class OrderSuccess(TemplateView):

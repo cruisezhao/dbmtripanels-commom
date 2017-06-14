@@ -1,6 +1,7 @@
 from django.db import models
 from common.utilities.utils import uuid_to_str
-from common.apps.products.models import Products, Plan
+from common.apps.products.models import Products, Plans
+from common.apps.clients.models import Clients
 
 
 ORDER_STATUS = (
@@ -12,10 +13,10 @@ ORDER_STATUS = (
 
 class Orders(models.Model):
     """Orders"""
-    uuid = models.CharField(unique=True, default=uuid_to_str, max_length=255, editable=False)
+    uuid = models.CharField(db_index=True, default=uuid_to_str, max_length=255, editable=False)
     client = models.ForeignKey(Clients,on_delete=models.PROTECT)
     product = models.ForeignKey(Products,on_delete=models.PROTECT)
-    plan = models.ForeignKey(Plan,on_delete=models.PROTECT)
+    plan = models.ForeignKey(Plans,on_delete=models.PROTECT)
     amount = models.DecimalField('Total Fee', max_digits=10, decimal_places=2, null=True)
     status = models.CharField(max_length=32, choices=ORDER_STATUS)
     comment = models.TextField('Comment', max_length=2048, null=True, blank=True)
