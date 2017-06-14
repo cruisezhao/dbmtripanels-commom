@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+{% load static %}
+{% block styles %}
+<link rel="stylesheet" href="{% static 'css/trialfailed.css' %}" />
+{% endblock styles %}
+
+{% block leftSiderbar %}
+{% endblock leftSiderbar %}
+
+
+{% block rightcontent %}
+<div id="content">
+  <div class="line1">
+    <div id="Img">
+      <img src="{% static 'img/false.jpg' %}"/>
+    </div>
+    <div id="consequence">
+      <h3>Sorry! Apply falied. You already have a free product in using.</h3>
+    </div>
+  </div>
+  <div class="line2">
+    <input type="button" id="thisproduct" value="Back to this product" />
+    <input type="button" name="" id="productlist" value="Check the product list" />
+  </div>
+  <div class="line3">
+    <p>SolidClusters won’t send email to tell you there’s a problem about your order.
+      Please don’t be fooled. If you still have a problem about this free trial,
+      please refer to our <span>Trial Terms.</span></p>
+  </div>
+</div>
+{% endblock rightcontent %}
+
+
+{% block extra_scripts %}
+{% endblock extra_scripts %}
+
+{% block scripts %}
+<script src="{% static 'js/trialfailed.js' %}"></script>
+{% endblock scripts %}
