@@ -13,3 +13,4 @@ media/
 clusters-apps
 apps/*/migrations/*
 media/
+software-dir
