@@ -26,7 +26,7 @@ class Packages(CreatedUpdatedModel):
     uuid = models.CharField(unique=True, default=uuid_to_str, max_length=255, editable=False)
     package_name = models.CharField(max_length=100)
     description = models.TextField('Description',null=True, blank=True)
-    user = models.ForeignKey(settings.AUTH_USER_MODEL,on_delete=models.DO_NOTHING)
+    client = models.ForeignKey(settings.AUTH_USER_MODEL,on_delete=models.DO_NOTHING)
     next_due_date = models.DateField(auto_now=False, auto_now_add=False, null=True, blank=True)
     amount = models.DecimalField('Package Fee', max_digits=6, decimal_places=2, null=True, blank=True)
     status = models.CharField(max_length=32, choices=PACKAGE_STATUS)
