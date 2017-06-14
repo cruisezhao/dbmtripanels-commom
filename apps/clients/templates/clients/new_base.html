@@ -79,10 +79,10 @@
             {% if not user.is_authenticated %}
             <ul class="login-panel">
               <li class="logIn">
-                <a  href="{% url 'accounts:login' %}">Log in</a>
+                <a  href="{% url 'clients:login' %}">Log in</a>
               </li>
               <li class="signUp">
-                <a  href="{% url 'accounts:signup' %}">Sign Up</a>
+                <a  href="{% url 'clients:signup' %}">Sign Up</a>
               </li>
             </ul>
               {% else %}

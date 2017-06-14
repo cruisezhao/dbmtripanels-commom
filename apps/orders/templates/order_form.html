@@ -1,0 +1,201 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+{% load static %}
+{% block styles %}
+<link rel="stylesheet" href="{% static 'css/order_form.css' %}" />
+{% endblock styles %}
+
+{% block leftSiderbar %}
+{% endblock leftSiderbar %}
+
+
+
+{% block rightcontent %}
+          <!--1-->
+          <div id="orderSelect">
+		          <div data="versionText">
+		            Please select a version for your product. We recommend you the latest one.
+		          </div>
+		          <!--planContent-->
+		          <div class="form" >
+		              <!-- {% csrf_token %} -->
+		                <!--machineInf-->
+		                <div id="part1">
+		                    <div id="part1Content">
+								{{form.product.errors}}
+								<span class="version1">{{product.name}}</span>
+		                      <div id="describe">
+								  {{form.notes.errors}}
+		                        <label>Product describe</label>
+		                        <input type="text" id="productNotes" name="notes" placeholder="Entry name to describe what the product for" />
+		                      </div>
+
+		                    </div>
+		                </div>
+		                <!--planCostInf-->
+		                <div data="versionText">There are <span id="plsNum" class="c-success"></span> kinds of plans for <span class="pointer-title"> {{product.name}} <span id="versionNumber"></span> .</span> <span class="hidden soft_ID">{{product.uuid}}</span>Different plans, different price!</div>
+		                <div id="part2">
+			                  {{form.plan.errors}}
+			                  {% for plan in plan_list %}
+			                  <div class="everyplan">
+			                  	<div class="left">
+			                  		<div class="tick"></div>
+			                  		<div class="everyplanId">{{plan.uuid}}</div>
+			                  	</div>
+			                  	<div class="right">
+			                  		<div class="plantitle">
+			                  			<h3>{{plan.name|default_if_none:""}}</h3><h3 class="Price">${{plan.price|default_if_none:""}}/M</h3>
+			                  		</div>
+			                  		<div class="plancontent">
+
+			                  			<div class="summary">
+			                  				<div class="summary1">Summary</div>
+			                  				<ul>
+			                  					<li>Cpu_cores</li>
+		                  						<li>{{plan.cpu|default_if_none:""}}</li>
+												<li>{{plan.cpu_description|default_if_none:""}}</li>
+		                  						<li>Memory</li>
+		                  						<li>{{plan.memory|default_if_none:""}}GB</li>
+												<li>{{plan.memory_description|default_if_none:""}}</li>
+		                  						<li>Disks</li>
+		                  						<li>{{plan.disk|default_if_none:""}}GB</li>
+												<li>{{plan.disk_description|default_if_none:""}}</li>
+												<li>Instance</li>
+		                  						<li>{{plan.instance|default_if_none:""}}</li>
+												<li>{{plan.instance_description|default_if_none:""}}</li>
+		                  						<li>Description</li>
+		                  						<li>{{plan.description|default_if_none:""}}</li>
+			                  				</ul>
+			                  			</div>
+			                  		</div>
+			                  	</div>
+			                  </div>
+			                  {% endfor %}
+
+					              <div class="submitForm">
+					              	<div class="submitForm1">
+					              		<div id="errortext">
+						                	Submit failed! Please select a plan.
+						                </div>
+						              	<div id="totalAmount">
+						              		Total Amount
+						              	</div>
+						              	<div id="AmountNumber">
+
+						              	</div>
+						                <div><input type="submit" name="" id="submitForm1" value="Check out" /></div>
+					                </div>
+					              </div>
+		                </div>
+		                <div class="upup"></div>
+
+		          </div>
+          </div>
+
+          <!--2-->
+          <div id="orderSubmit">
+          	<div id="orderSubmit1">
+              <!--top-back-->
+          		<div id="previousStep">
+          			<div class="triangle"><</div>
+          			<p>Back to previous step</p>
+          		</div>
+
+              <!--software-information-->
+          		<div id="Product">
+                <!--software-information-->
+                <div class="sof-describe">
+                  <div class="sof-imgwarp">
+                    <img src="{{ software_info.software_pic }}" />
+                  </div>
+                  <div class="sof-infwarp">
+                    <h3 class="sof-name">{{software_info.name}}</h3>
+                    <p>{{software_info.summary}}</p>
+                    <div class="sof-sales">six month free trial</div>
+                    <div class="sof-price">$ <span class="price-numer">0</span> /M</div>
+                  </div>
+                </div>
+                <!--product-version-describe-->
+                <div class="pro-describe">
+                  <div class="pro-des-version">
+                    <div class="pro-des-version-title">
+                      Product version
+                    </div>
+                    <div class="pro-des-version-inf"></div>
+                  </div>
+                  <div class="pro-des-name">
+                    <div class="pro-des-name-title">
+                      Product describe
+                    </div>
+                    <div class="pro-des-name-inf"></div>
+                  </div>
+                </div>
+          		</div>
+
+              <!--select-plan-box-->
+              <div class="sel-planbox">
+
+              </div>
+
+              <!--remarks and submit-->
+              <div class="comfirm-orderbox">
+                <!--remarks-->
+                <p class="remarks">
+                  <span>Remarks</span>
+                  <input type="text" id="RemarksText" name="comment" class="remarks-describe"/>
+                </p>
+                <!--comfirmbox-->
+                <div class="comfirm">
+                  <div class="left-inf">
+                    <div class="stat-inf">
+                      <div class="stat-title">
+                        Total Amount
+                      </div>
+                      <div class="stat-content">
+
+                      </div>
+                    </div>
+                    <div class="stat-inf">
+                      <div class="stat-title">
+                        Applicant
+                      </div>
+                      <div class="stat-content">
+                        <span>{% if user.first_name is not None and user.last_name is not None %} {{user.first_name}} {{user.last_name}}{% else %}{{user.email}}{% endif %}</span>
+                      </div>
+                    </div>
+                    <div class="stat-inf">
+                      <div class="stat-title">
+                        Contact Way
+                      </div>
+                      <div class="stat-content">
+                        <span>{{user.email}}</span>
+                      </div>
+                    </div>
+                  </div>
+
+                  <a class="btn-comfirmbox" type="submit" name="" id="submitForm2" value=""/>Confirm Oder</a>
+                  <div class="upup"></div>
+                </div>
+              </div>
+
+          	</div>
+
+          </div>
+
+          <form id="planSel" method="post" class="hidden">
+            {% csrf_token %}
+            <input type="hidden" id="product" name="product" value="">
+            <input type="hidden" id="selPlanID" name="plan" value=""  />
+            <input type="hidden" id="software" name="software" value=""  />
+            <input type="hidden" id="userDescribe" name="pkgname" value="" />
+            <input type="hidden" id="userText" name="comment" value="" />
+            <div id="softwareId" class="hidden">{{software_info.id}}</div>
+          </form>
+
+
+{% endblock rightcontent %}
+
+
+{% block scripts %}
+  <script src="{% static 'js/order_form.js' %}"></script>
+{% endblock scripts %}

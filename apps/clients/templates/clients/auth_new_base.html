@@ -1,4 +1,4 @@
-{% extends "accounts/new_base.html" %}
+{% extends "clients/new_base.html" %}
 
 {% load staticfiles %}
 {% load crispy_forms_tags %}
@@ -18,8 +18,8 @@
 
 {% block navbar-right %}
   {% if not user.is_authenticated %}
-<li><a  href="{% url 'accounts:login' %}" >Log in</a></li>
-<li><a  href="{% url 'accounts:signup' %}" >Sigh Up</a></li>
+<li><a  href="{% url 'clients:login' %}" >Log in</a></li>
+<li><a  href="{% url 'clients:signup' %}" >Sigh Up</a></li>
   {% else %}
     {{ block.super }}
   {% endif %}
