@@ -1,0 +1,259 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+
+{% block styles %}
+<style type="text/css">
+
+.modal-backdrop{
+  z-index: -1;
+}
+#myModal{
+  top:20%;
+}
+
+
+</style>
+{% endblock styles %}
+
+
+
+{% block content %}
+  <!--BreadNav-->
+  <ol class="breadcrumb">
+      <li><a href="{% url 'home' %}">Home</a></li>
+      <li class="active">My Products</a></li>
+  </ol>
+
+    <!--Pro-list-->
+    <div class="c-pro-list-content">
+      <!--ProSearch-->
+      <div class="c-pro-list-searchbar">
+        <div class="c-pro-staSelBar">
+          <label for="statusSel">Status</label>
+          <select id="statusSel">
+            <option value="all">All</option>
+            <option value="Pending">Pending</option>
+            <option value="Active">Active</option>
+            <option value="Suspended">Suspended</option>
+            <option value="Cancelled">Cancelled</option>
+            <option value="Invalid">Invalid</option>
+          </select>
+
+          <input id="search_keyword" type="search" autocomplete="on"  placeholder="Enter key words of application name" />
+        </div>
+
+        <!-- <div class="c-pro-timeSelBar">
+          <label for="timeSel">Time</label>
+          <select id="timeSel">
+            <option value="building">Last Week</option>
+            <option value="using">This Week</option>
+          </select>
+        </div> -->
+
+      </div>
+      <!--ProContainer-->
+      <div class="c-pro-list-container">
+      {% for pkg in pkg_list %}
+
+            <!--Prolist-->
+            <div class="c-pro-list-wrap">
+              <!--ProIMG-->
+              <div class="c-pro-imgbar">
+                <a href="http://portal.databasemart.net/product.html?id={{ pkg.get_software_id }}">
+                  <img src="{{ pkg.get_software_pic_path }}"/>
+                </a>
+              </div>
+              <!--ProName-->
+              <div class="c-pro-shortinfNA">
+                <h3 class="c-pro-name" style="display: inline-block;">{{ pkg.get_name }}</h3>
+                <div data-toggle="modal" data-target="#myModal" data-packageid="{{ pkg.id }}" style="display: inline-block; margin-left: 10px; cursor: pointer; ">
+                    <i class="fa fa-edit"></i>
+                </div>
+                <ul class="c-pro-dateinf">
+                  <li class="c-pro-ord-col">
+                    <span  class="c-pro-class">Order date</span>
+                    <span>{{ pkg.created_date }}</span>
+                  </li>
+                  <li class="c-pro-ord-col">
+                    <span class="c-pro-class">Next due date</span>
+                    <span>{{ pkg.next_due_date }}</span>
+                  </li>
+                </ul>
+              </div>
+              <!--ProStatus-->
+              <div class="c-pro-shortinfST">
+                <h3 class="c-pro-status c-pro-ready">{{ pkg.status }}</h3>
+                <ul class="c-pro-dateinf">
+                  <li class="c-pro-ord-col">
+                    <span class="c-pro-class">Order Number</span>
+                    <span>{{ pkg.get_product_order.id }}</span>
+                  </li>
+                  <li class="c-pro-ord-col">
+                    <span class="c-pro-class">Hardware</span>
+                    <span>{{ pkg.get_plan_name }}</span>
+                  </li>
+                </ul>
+              </div>
+              <!--ProPrice-->
+              <div class="c-pro-priceBar">
+              {% if pkg.get_product_order.amount == 0 %}
+
+                <h3 class="c-pro-price c-pro-success">Free</h3>
+              {% else %}
+                <h3 class="c-pro-price c-pro-success">${{ pkg.get_product_order.amount }}</h3>
+
+              {% endif %}
+
+              {% if pkg.status == 'Active' %}
+
+                <a href="{% url 'packages:productdetails' pkg.pk %}" class="c-priceBar-btn ">Product details</a>
+              {% else %}
+                <a href="{% url 'packages:productdetails' pkg.pk %}" class="c-priceBar-btn c-priceBar-disabled">Product details</a>
+              {% endif %}
+
+              </div>
+            </div>
+
+        {% endfor %}
+      </div>
+    </div>
+    <div class="upup"></div>
+    <!-- Modal -->
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title" id="myModalLabel">Modal title</h4>
+          </div>
+          <div class="modal-body">
+            <label>Product Name </label>
+            <input type="text" name="name" id="myInput">
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-primary" id="submitbtn">Save changes</button>
+          </div>
+        </div>
+      </div>
+    </div>
+{% endblock content %}
+
+{% block scripts %}
+<script src="{% static 'js/jquery.easysearch.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/js.cookie.js' %}"></script>
+<script src="{% static 'js/jquery.validate.js' %}"></script>
+<script>
+  $('#search_keyword').jSearch({
+    selector  : '.c-pro-list-wrap ',
+    child : '.c-pro-name',
+    minValLength: 0,
+    Found : function(elem){
+        $(elem).parent().parent().show();
+    },
+    NotFound : function(elem){
+        $(elem).parent().parent().hide();
+    },
+    After : function(t){
+        if (!t.val().length) $('.c-pro-list-container .c-pro-list-wrap').show();
+    }
+  });
+
+  function csrfSafeMethod(method) {
+      // these HTTP methods do not require CSRF protection
+      return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
+  }
+
+  $(document).ready(function(){
+      var csrftoken = Cookies.get('csrftoken');
+      $.ajaxSetup({
+          beforeSend: function(xhr, settings) {
+              if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
+                  xhr.setRequestHeader("X-CSRFToken", csrftoken);
+              }
+          }
+      });
+
+      $('#myModal').on('show.bs.modal', function (event) {
+        var button = $(event.relatedTarget); // Button that triggered the modal
+        var packageid = button.data('packageid'); // Extract info from data-* attributes
+        var packagename = button.prev('.c-pro-name').text();
+        var modal = $(this);
+        var packageNameInput = modal.find('.modal-body #myInput');
+        packageNameInput.val(packagename);
+
+        modal.find('.modal-footer #submitbtn').one("click", function(e){
+            var packagename = $.trim(packageNameInput.val());
+            if (packagename === ''){
+                return false;
+            }
+
+            $.post("{% url 'packages:productlist' %}", {'packageid': packageid, 'packagename': packagename},
+                function(data){
+                  if (data.retcode === 0){
+                    button.prev('.c-pro-name').text(packagename);
+                  }
+                }
+            );
+            modal.modal('hide');
+            return true;
+        });
+
+    });
+
+    var e = document.getElementById('myInput');
+    e.oninput = function(event){
+        $input = $(this);
+        if ($.trim($input.val()) === ''){
+            $('#submitbtn').attr('disabled', true);
+        }else{
+            $('#submitbtn').removeAttr('disabled');
+        }
+    };
+    e.onpropertychange = e.oninput; // for IE8
+
+  });
+</script>
+
+<script>
+  (function($){
+      $.fn.selectTab = function(o){
+      var d = {
+      select:'select',
+      con:'.c-pro-list-wrap'
+      };
+      var o = $.extend(d,o);
+      var $option = $(d.select).find('option');
+
+      selectFn();
+      $(d.select).change(function(){
+      selectFn();
+      })
+      function selectFn(){
+      var selectedIndex = $(d.select).find('option:selected').val();
+      if(selectedIndex == "all"){
+
+          $(d.con).show();
+      }else{
+        $(d.con).hide();
+
+        $('.c-pro-status').each(function() {
+          var $thistatus = $(this).text();
+          if($thistatus == selectedIndex){
+
+            $(this).parent().parent().show();
+          }
+
+        });
+      }
+
+        // $(d.con).eq(0).siblings(d.con).show();
+
+      }
+      }
+      })(jQuery);
+      $(function(){
+      $().selectTab();
+      })
+  </script>
+  {% endblock scripts %}

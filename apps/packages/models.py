@@ -67,7 +67,7 @@ class Packages(CreatedUpdatedModel):
             return ('', '', '')
         
     def get_plan_name(self):
-        return self.plan.plan_name
+        return self.get_product_order().plan.name
     
 #     def get_vmserver_list(self):
 #         return [ VMServer(attr) for attr in self.runtime.get("servers", []) ]
