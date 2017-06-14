@@ -1,0 +1,63 @@
+software_type: ECOM
+software_name: woocommmerce
+packages:
+  # First Product Package infomation
+  - name: express.mysql 
+    version: 3.15.0
+    # express, basic, advanced
+    description:
+    system: null
+    database: null 
+    target: 
+    plans: 
+      - express-linux
+      - express-windows
+  # Second Product Package infomation
+# product plan
+plans:
+  express-linux:
+    cpu_cores: 10
+    memory: 20
+    disks: 300
+    bandwidth: 20
+    servers:
+      - name: web_server
+        description: 
+        cpu_cores: 2
+        memory: 2     
+        disks: [10,20,30]
+        ip_address:
+        user_name:
+        password:
+        applications:
+          - name: 
+            description:
+            url:
+            user_name:
+            password:
+    fees:
+      price: 0
+      discount: 1.0
+  express-windows:
+    cpu_cores: 10
+    memory: 20
+    disks: 100
+    bandwidth: 20
+    servers:
+      - name: web_server
+        description: 
+        cpu_cores: 2
+        memory: 2
+        disks: [10,20,30]
+        ip_address:
+        user_name:
+        password:
+        applications:
+          - name:
+            description:
+            url:
+            user_name:
+            password:
+    fees: 
+      price: 0
+      discount: 1.0

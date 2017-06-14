@@ -1,0 +1,90 @@
+{
+    "software_type": "ECOM",
+    "software_name": "woocommmerce",
+    "packages": [
+        {
+            "name": "express.mysql",
+            "version": "3.15.0",
+            "description": null,
+            "system": null,
+            "database": null,
+            "target": null,
+            "plans": [
+                "express-linux",
+                "express-windows"
+            ]
+        }
+    ],
+    "plans": {
+        "express-linux": {
+            "cpu_cores": 10,
+            "memory": 20,
+            "disks": 300,
+            "bandwidth": 20,
+            "servers": [
+                {
+                    "name": "web_server",
+                    "description": null,
+                    "cpu_cores": 2,
+                    "memory": 2,
+                    "disks": [
+                        10,
+                        20,
+                        30
+                    ],
+                    "ip_address": null,
+                    "user_name": null,
+                    "password": null,
+                    "applications": [
+                        {
+                            "name": null,
+                            "description": null,
+                            "url": null,
+                            "user_name": null,
+                            "password": null
+                        }
+                    ]
+                }
+            ],
+            "fees": {
+                "price": 0,
+                "discount": 1
+            }
+        },
+        "express-windows": {
+            "cpu_cores": 10,
+            "memory": 20,
+            "disks": 100,
+            "bandwidth": 20,
+            "servers": [
+                {
+                    "name": "web_server",
+                    "description": null,
+                    "cpu_cores": 2,
+                    "memory": 2,
+                    "disks": [
+                        10,
+                        20,
+                        30
+                    ],
+                    "ip_address": null,
+                    "user_name": null,
+                    "password": null,
+                    "applications": [
+                        {
+                            "name": null,
+                            "description": null,
+                            "url": null,
+                            "user_name": null,
+                            "password": null
+                        }
+                    ]
+                }
+            ],
+            "fees": {
+                "price": 0,
+                "discount": 1
+            }
+        }
+    }
+}

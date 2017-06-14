@@ -1,0 +1,91 @@
+# Basic Information
+type: ECOM
+name: magento
+tags: [Ecom,Database,Java]
+summary: >-
+  Some basic description 
+description: >-
+  Another great aspect of the software is
+# Software URL
+software_url: https://sqlite.org/
+software_pic: logo.png
+software_img: images/logo.png
+# Vendor
+vendor_name: sqlite
+vendor_url:  https://sqlite.org/
+# Latest
+latest_version: 3.15.0
+latest_release_date: '2016-01-04'
+# OpenSource
+opensorce: true
+license_type: Free License
+# status:1->Pending 2->Active 3->Inactive
+status: 2
+
+# Demo
+demo_url: 
+  https://sqlite.org/docs.html
+demo_version: 3.15.0
+
+# Videos
+videos:
+  - title: description
+    description: First Videos
+    url: https://www.facebook.com
+    status: 1
+
+# Screenshots
+screenshots:
+  - vesion: 3.15.0
+    title: hello
+    description: First screen shots 
+    url: https://www.facebook.com
+    status: 1
+
+# URL Link 
+facebook_url: 
+  https://www.facebook.com/sqliteviewer/ 
+google_plus_url: 
+  https://plus.google.com/communities/106339046631781940267
+linkedin_url: 
+  https://www.linkedin.com/company/SQLite
+document_url: 
+  https://sqlite.org/docs.html
+
+# Plan 
+free_plan: https://sqlite.org/docs.html
+free_plan_spec: demo 
+paid_plan: https://sqlite.org/docs.html
+paid_plan_price: 0.0
+paid_plan_spec: demo
+
+# Software Features dictionary
+features: 
+  Concurrency Control: true
+  Native Partitioning: true 
+  Joins: true 
+  Max DB size: 7kb 
+  Transactions: true 
+  Union: false 
+  ACID: 3342423 
+  Max Table Size: 9M 
+  Data model: Json 
+  Max Row size: 6.0kb  
+
+# Software Runtime Enviroments
+environments: 
+  platform: 
+    - Linux
+    - Window
+    - BSD
+    - MacOS
+  language: 
+    - Python
+    - Java
+    - PHP
+    - CSharp
+  database:
+    - MySQL
+    - Oracle
+    - MongoDB
+    - MSSQ
