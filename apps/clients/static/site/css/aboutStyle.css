@@ -1,0 +1,13 @@
+
+.aboutStyle{
+  width: 128px;
+  height: 128px;
+}
+
+#sec2 .row:nth-last-child(1) h2{
+	text-align: center;
+} 
+
+#sec2 .row:nth-last-child(1) P{
+	margin-top: 10px;
+} 

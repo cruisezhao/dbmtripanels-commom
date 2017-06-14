@@ -1,0 +1,154 @@
+.appContainer{
+    margin-top:10px;
+}
+
+.page-title{
+    margin-bottom: 20px;
+}
+
+.stack-logobar{
+    text-align:center;
+    margin-bottom: 100px;
+    height:200px;
+    position:relative;
+}
+
+.stack-logobar .icon{
+    margin:0 auto;
+    position: relative;
+}
+
+.stack-logobar>h5{
+    font-weight: bold;
+    position:relative;
+    font-size: 16px;
+}
+
+.stack-logobar > span {
+    max-height: 2em;
+    display:block;
+    width:auto;
+}
+
+/*////////////////////////重构后的applications页面////////////////////////*/
+.product-frame{
+    background:#fff;
+    border:1px solid #D3DEE9;
+    border-top:11px solid #248EC7;
+    box-shadow: 1px 1px 3px 0px rgba(51, 51, 51, 0.12);
+    border-radius: 4px;
+    padding:10px 10px 4px 10px;
+    margin-bottom:8px;
+}
+
+.product-top{
+    width: 100%;
+    margin-bottom: 10px;
+    position: relative;
+}
+
+.product-icon{
+    /*position:absolute;
+    top:-6px;
+    right:0px;*/
+}
+
+.product-icon img{
+    width:80px;
+    height:100%;
+}
+
+.product-title{
+    color: #248EC7;
+    font-size: 2em;
+    font-weight: 700;
+    line-height: 1;
+}
+
+.product-title span{
+    display: block;
+    font-size: 12px;
+    text-align: inherit;
+    color: #000;
+    font-weight: 400;
+    margin-top:4px;
+}
+
+.product-title a{
+    text-decoration:none;
+}
+
+.product-graphic{
+    border-radius: 100%;
+    border: 3px solid #FFED57;
+    height: 50px;
+    width: 50px;
+    display: table-cell;
+    vertical-align: middle;
+    text-align: center;
+    color: #363636;
+}
+
+.product-graphic span{
+    font-size: 0.6em;
+}
+
+.product-stat-title {
+    font-size: 0.75em;
+    text-align: center;
+}
+
+
+.product-mid{
+    min-height: 150px;
+    max-height: 150px;
+}
+
+.product-statsWrapper{
+    border-bottom: 1px solid #D4DCE5;
+    padding: 30px 20px 20px;
+    display: table;
+    text-align: center;
+    width: auto;
+    margin: 0 auto;
+}
+
+.product-bottom{
+    text-align: center;
+    width: 100%;
+    padding-top: 20px;
+}
+
+.product-btn{
+    background: #248EC7;
+    border-radius: 4px;
+    display: block;
+    color: white;
+    text-transform: uppercase;
+    font-size: 0.9em;
+    padding: 8px;
+
+}
+
+.product-bottom .row{
+    margin-left:-4px;
+    margin-right:-4px;
+}
+
+.bottomBar{
+    overflow:hidden;
+}
+
+.bottomBar a{
+    color:#fff;
+}
+
+.bottomBar span{
+    display:inline-block;
+}
+
+.product-btn:hover{
+    text-decoration: none !important;
+    background:#29abe2;
+    color:#fff;
+}

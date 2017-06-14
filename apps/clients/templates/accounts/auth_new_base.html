@@ -1,0 +1,37 @@
+{% extends "accounts/new_base.html" %}
+
+{% load staticfiles %}
+{% load crispy_forms_tags %}
+
+{% block styles %}
+    <link href="{% static 'site/css/main.css' %}" rel="stylesheet">
+    <style>
+        .dbm-accounts {
+            margin-top: 90px;
+        }
+    </style>
+{% endblock styles %}
+
+{% block navbar-left %}
+  {% include "_navbar.html" with active_link="home" %}
+{% endblock %}
+
+{% block navbar-right %}
+  {% if not user.is_authenticated %}
+<li><a  href="{% url 'accounts:login' %}" >Log in</a></li>
+<li><a  href="{% url 'accounts:signup' %}" >Sigh Up</a></li>
+  {% else %}
+    {{ block.super }}
+  {% endif %}
+{% endblock %}
+
+{% block container %}
+<div class="container form-box">
+  <div class="text-center">
+    <h2>{% block form_heading %}{% endblock %}</h2>
+  </div>
+  {% block form %}
+  {% endblock %}
+</div>
+
+{% endblock container %}

@@ -1,0 +1,26 @@
+
+
+#DetailPage1,#DetailPage2,#DetailPage3{
+	padding-top: 4px;
+	padding-bottom: 6px;
+	border-bottom: 1px solid #D6DFF6;
+}
+
+#DetailPage1,#DetailPage2,#DetailPage3,#DetailPage4 img{
+	width: 100%;
+}
+
+.Page-text{
+	margin-top: 80px;
+}
+
+.Page-text h5{
+	font-size: 14px;
+	line-height: 18px;
+}
+
+.Redis-navbar{
+	margin-top: 20px;
+}
+
+

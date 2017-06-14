@@ -1,0 +1,67 @@
+{% extends "account_base.html" %}
+{% load staticfiles %}
+{% load static %}
+
+
+
+{% block tab %}
+
+
+<!--                 <form id="edit-profile" class="form-horizontal" enctype="multipart/form-data" method="post" action="#" >
+                {% csrf_token %}
+                  <fieldset>
+                      <div>
+                        {% if not avatar_form.instance.picture %}
+                        <img height="180px" width="100px" src="{% get_media_prefix %}wubin.png" />
+                        {% else %}
+                        <img height="180px" width="100px" src="{% get_media_prefix %}{{ avatar_form.instance.picture }}" />
+                        {% endif %}
+                      </div>
+                      <input type="hidden" name="_avatar" value="" />
+                      <div class="">
+                        <input name="picture" type="file" id="id_picture" />
+                        <button id="update-avatar"  type="submit" class="">Upload</button>
+
+                      </div>
+
+                  </fieldset>
+                </form> -->
+
+
+                <form id="edit-profile" class="form-horizontal" enctype="multipart/form-data" method="post" action="{% url 'accounts:profile_basic' %}" >
+                {% csrf_token %}
+                  <fieldset>
+
+                   {% for field in form %}
+
+
+
+                        <div class="control-group">
+
+                            {{ field.errors }}
+                            {{ field.label_tag }} {{ field }}
+                            {% if field.help_text %}
+                            <p class="help">{{ field.help_text|safe }}</p>
+                            {% endif %}
+                        </div>
+
+
+                  {% endfor %}
+
+
+                    <br />
+                    <div class="form-actions">
+                      <button id="update-profile"  type="submit" class="btn dbm-btn-safety">Update profile settings</button>
+
+                    </div> <!-- /form-actions -->
+                  </fieldset>
+                </form>
+
+
+
+
+{% endblock tab %}
+
+{% block scripts %}
+
+{% endblock scripts %}

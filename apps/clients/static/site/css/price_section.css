@@ -1,0 +1,67 @@
+/* css for the home page of price section  */
+
+#pricing .col-sm-3 {
+    margin: 0 1px 3em 0;
+    position: relative;
+    width: 24.875%; }
+
+/* section-title */
+.section-title h1 {
+    text-align: center;
+    font-weight:500;
+    font-family:'Raleway', sans-serif;
+    padding-top:30px;
+    color:#1f68c7; }
+
+/* pricing id */
+#pricing {
+    text-align: center;
+    color: #1f68c7;
+}
+/* h2 element */
+#pricing .pt-header .plan {
+    background-color: #051833;
+    color: #ffffff;
+    margin:0;
+    padding:0;}
+/* h3 element */
+#pricing .pt-header .period {
+    background-color: #1f68c7;
+    color: #ffffff;
+    font-weight: 600;
+    min-height: 2.6em;
+    font-size: 1.7em;
+    line-height: 2.4em;
+    margin:0;
+    padding:0;}
+/* col-sm-3 */
+#pricing .col-sm-3 {
+    margin: 0 1px 3em 0;
+    position: relative;
+    width: 24.875%; }
+/* p element */
+#pricing .pt-header p {
+    background-color: #1f68c7;
+    line-height: 2.5em;
+    color: white;
+    margin: 0; }
+/* ul element */
+#pricing .pt-content {
+    margin: 0 0 1px; }
+/* li element */
+#pricing .pt-content li {
+    text-align: center;
+    padding: 1.2em 0;
+    background-color: #f8f8f8;
+    color: #333333;
+    margin: 1px 0 0;
+    min-height: 1.46154em;
+    line-height: 1.5;
+    border-color: #ccc;
+    border-width: 1px;
+    list-style: none; }
+
+#pricing .pt-footer {
+    text-align: center;
+    background-color: #ebebeb;
+    min-height: 1.46154em; }
