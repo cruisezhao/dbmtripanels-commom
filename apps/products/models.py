@@ -21,7 +21,7 @@ STATUS_CHOICES  = (
 
 class Plans(CreatedUpdatedModel):
     """create plan model"""
-    uuid = models.CharField('uuid', default=uuid_to_str, editable=False, max_length = 256, unique = True)
+    uuid = models.CharField('uuid', default=uuid_to_str, editable=False, max_length = 255, unique = True)
     name = models.CharField('Name', max_length = 32)
     cpu = models.IntegerField('CPU',default=0)
     cpu_description = models.CharField('CPU Description', max_length = 256, null = True, blank = True)
@@ -46,7 +46,7 @@ class Plans(CreatedUpdatedModel):
 class Products(CreatedUpdatedModel):
     """product model"""
     plan = models.ManyToManyField(Plans)
-    uuid = models.CharField('uuid', default=uuid_to_str, editable=False, max_length = 256, unique = True, db_index = True)
+    uuid = models.CharField('uuid', default=uuid_to_str, editable=False, max_length = 255, unique = True, db_index = True)
     type = models.CharField('Type', max_length=32, null=False, blank=False)
     name = models.CharField('Name', max_length=255, unique=True)
     summary = models.TextField('Summary', null=True, blank=True)
@@ -129,7 +129,7 @@ class ProductBares(CreatedUpdatedModel):
 
 class Screenshot(CreatedUpdatedModel):
     """software screen shot"""
-    uuid = models.CharField('uuid', default=uuid_to_str, editable=False, max_length = 256, unique = True, db_index = True)
+    uuid = models.CharField('uuid', default=uuid_to_str, editable=False, max_length = 255, unique = True, db_index = True)
     product = models.ForeignKey(Products)
     version = models.CharField('Version', max_length=32, null=True, blank=True)
     title = models.CharField('Title', max_length=32, null=True, blank=True)
@@ -158,7 +158,7 @@ class Review(CreatedUpdatedModel):
     (5,5),
     )
 
-    uuid = models.CharField('uuid', default=uuid_to_str, editable=False, max_length = 256, unique = True, db_index = True)
+    uuid = models.CharField('uuid', default=uuid_to_str, editable=False, max_length = 255, unique = True, db_index = True)
     product = models.ForeignKey(Products)
     rating = models.IntegerField('Rating',default=5, choices=RATING_CHOICES)
     reviews = models.TextField('Review',null=True, blank=True)
@@ -177,7 +177,7 @@ class Review(CreatedUpdatedModel):
 
 class Video(CreatedUpdatedModel):
     """video for software"""
-    uuid = models.CharField('uuid', default=uuid_to_str, editable=False, max_length = 256, unique = True, db_index = True)
+    uuid = models.CharField('uuid', default=uuid_to_str, editable=False, max_length = 255, unique = True, db_index = True)
     product = models.ForeignKey(Products)
     title = models.CharField('Title', max_length=32, null=True, blank=True)
     description = models.TextField('Description', null=True, blank=True)
