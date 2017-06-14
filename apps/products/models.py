@@ -32,6 +32,7 @@ class Plans(CreatedUpdatedModel):
     instance = models.IntegerField('Instance', default = 0)
     instance_description = models.CharField('Instance Description', max_length = 256, null = True, blank = True)
     description = models.CharField('Descriptin', max_length = 256, null = True, blank = True)
+    price = models.DecimalField('Price',max_digits=19, decimal_places=4, null=True, blank=True)
 
     class Meta:
         verbose_name = "Plans"
