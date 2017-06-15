@@ -7,6 +7,7 @@ from crispy_forms.layout import Layout, Div, Submit, HTML, Button, Row, Field
 from django import forms
 from django.contrib.auth import forms as authforms
 from django.contrib.auth import get_user_model, password_validation
+from .models import Clients
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.password_validation import UserAttributeSimilarityValidator, validate_password
 from django.core.urlresolvers import reverse
@@ -19,7 +20,7 @@ import time
 import os
 
 
-User = get_user_model()
+User = Clients
 
 
 class LoginForm(AuthenticationForm):
