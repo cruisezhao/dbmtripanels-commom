@@ -4,6 +4,8 @@ from phonenumber_field.modelfields import PhoneNumberField
 from django_countries.fields import CountryField
 from .utils import path_and_rename
 from django.conf import settings
+from django.contrib.auth.models import Group, Permission
+from django.utils.translation import ugettext_lazy as _
 
 STATUS_CHOICES  = {
         ('Pending','Pending'),
@@ -46,7 +48,25 @@ class Clients(AbstractEmailUser):
     last_login_time = models.DateTimeField('Login Time',auto_now = True)
     status = models.CharField('Status',max_length=32,default='Suspend',choices=STATUS_CHOICES)
     user_type = models.IntegerField('User Type',default=1,choices=USER_TYPE)
-
+    groups = models.ManyToManyField(
+        Group,
+        verbose_name=_('groups'),
+        blank=True,
+        help_text=_(
+            'The groups this user belongs to. A user will get all permissions '
+            'granted to each of their groups.'
+        ),
+        related_name="client_set",
+        related_query_name="client",
+    )
+    user_permissions = models.ManyToManyField(
+        Permission,
+        verbose_name=_('client permissions'),
+        blank=True,
+        help_text=_('Specific permissions for this user.'),
+        related_name="client_set",
+        related_query_name="client",
+    )
     class Meta:
         db_table = 'clients'
 
