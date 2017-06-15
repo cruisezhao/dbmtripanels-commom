@@ -48,6 +48,7 @@ class Clients(AbstractEmailUser):
     last_login_time = models.DateTimeField('Login Time',auto_now = True)
     status = models.CharField('Status',max_length=32,default='Suspend',choices=STATUS_CHOICES)
     user_type = models.IntegerField('User Type',default=1,choices=USER_TYPE)
+    #override groups and user_permissions because of fixing conflict between user and client for reverse accessor
     groups = models.ManyToManyField(
         Group,
         verbose_name=_('groups'),
@@ -57,7 +58,7 @@ class Clients(AbstractEmailUser):
             'granted to each of their groups.'
         ),
         related_name="client_set",
-        related_query_name="client",
+        related_query_name="clients",
     )
     user_permissions = models.ManyToManyField(
         Permission,
@@ -65,7 +66,7 @@ class Clients(AbstractEmailUser):
         blank=True,
         help_text=_('Specific permissions for this user.'),
         related_name="client_set",
-        related_query_name="client",
+        related_query_name="clients",
     )
     class Meta:
         db_table = 'clients'
