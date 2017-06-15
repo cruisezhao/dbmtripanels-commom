@@ -9,13 +9,13 @@ from functools import reduce
 from django.db.models import Q
 
 from crudbuilder.formset import BaseInlineFormset
-from common.apps.packages.models import OpenstackUser
-from common.apps.accounts.forms import UserForm
+#from common.apps.packages.models import OpenstackUser
+from common.apps.clients.forms import UserForm
 
-class OpenstackUserInlineFormset(BaseInlineFormset):
-    inline_model = OpenstackUser
-    parent_model = User
-    exclude = ['password']
+# class OpenstackUserInlineFormset(BaseInlineFormset):
+#     inline_model = OpenstackUser
+#     parent_model = User
+#     exclude = ['password']
 
 class UserCrud(BaseCrudBuilder):
     """user crud"""
@@ -27,7 +27,7 @@ class UserCrud(BaseCrudBuilder):
     tables2_pagination = 5
     login_required=False
     permission_required=False
-    inlineformset = OpenstackUserInlineFormset
+    #inlineformset = OpenstackUserInlineFormset
     detailview_excludes = ['password','picture']
     ordering = '-date_joined'
 

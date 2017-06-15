@@ -1,0 +1,155 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+{% load static %}
+{% block styles %}
+
+
+
+{% endblock styles %}
+
+
+{% block content %}
+  <!--BreadNav-->
+  <ol class="breadcrumb">
+      <li><a href="{% url 'staff/home' %}">Home</a></li>
+      <li class="active">Orders</li>
+  </ol>
+  <!--AlertBar-->
+  <div id="up" class="alert-style-success" style="display:none;">
+    Order was successfully updated
+  </div>
+  <!--ProfileSetting-->
+  <div class="widget">
+    <div class="widget-header">
+      <h3>Orders</h3>
+    </div> <!-- /widget-header -->
+
+    <div class="widget-content">
+      <!--tabNav-->
+      <div class="tabbable">
+
+         <br />
+         <!--tabContent-->
+         <div class="tab-content">
+           <!-- /widget-tab-pane1 -->
+            {% if messages %}
+            <ul class="messages alert-style-success">
+                {% for message in messages %}
+                <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+                {% endfor %}
+            </ul>
+            {% endif %}
+
+           {% block tab %}
+                <form  class="form-horizontal form-inline" method="POST" action="">
+                  {% csrf_token %}
+                  {% for field in form %}
+
+                        <div class="control-group">
+                            {{ field.errors }}
+                            {{ field.label_tag }} {{ field }}
+                            {% if field.help_text %}
+                            <p class="help">{{ field.help_text|safe }}</p>
+                            {% endif %}
+                        </div>
+                  {% endfor %}
+                  <div class="form-actions" style="overflow: hidden;">
+                    <button type="submit" class="btn dbm-btn-safety">Search</button>
+                  </div>
+                </form>
+
+                <table class="table table-bordered" style="margin-top:20px;">
+
+                  <tr>
+                    <th>Order ID</th>
+                    <th>User Email</th>
+                    <th>Create Date</th>
+                    <th>Product Name</th>
+                    <th>Version</th>
+                    <th>CPU Cores</th>
+                    <th>Memory</th>
+                    <th>Disk Space</th>
+                    <th>Bandwidth</th>
+                    <th>User Remarks</th>>
+                    <th>Status</th>
+                    <th>Price</th>
+                  </tr>
+
+                    {% for order in order_list %}
+                      <tr>
+                        <td><a href="{% url 'orders:detail' order.id %}">{{ order.id }}</a></td>
+                        <td>{{ order.get_user_email }}</td>
+                        <td>{{ order.created_date }}</td>
+                        <td>{{ order.get_software_name }}</td>
+                        <td>{{ order.get_product_version }}</td>
+                        <td>{{ order.get_cpu_cores }}</td>
+                        <td>{{ order.get_memory }}</td>
+                        <td>{{ order.get_disks}}</td>
+                        <td>{{ order.get_bandwidth }}</td>
+                        <td>{{ order.get_user_remarks }}</td>
+                        <td>{{ order.status }}</td>
+                        <td>{{ order.amount }}</td>
+                      </tr>
+                    {% endfor %}
+
+                </table>
+
+              <div class="pagination">
+                <span class="step-links">
+                    {% if order_list.has_previous %}
+                        <a href="{% url 'orders:list' %}?page={{ order_list.previous_page_number }}&id={{form.id.value}}&created_date={{form.created_date.value}}&status={{form.status.value}}">previous</a>
+                    {% endif %}
+
+                    <span class="current">
+                        Page {{ order_list.number }} of {{ order_list.paginator.num_pages }}.
+                    </span>
+
+                    {% if order_list.has_next %}
+                        <a href="{% url 'orders:list' %}?page={{ order_list.next_page_number }}&id={{form.id.value}}&created_date={{form.created_date.value}}&status={{form.status.value}}">next</a>
+                    {% endif %}
+                </span>
+            </div>
+           {% endblock tab %}
+
+        </div><!-- /widget-tabContent -->
+      </div><!-- /widget-tabbable -->
+    </div> <!-- /widget-content -->
+  </div><!-- /widget-->
+
+{% endblock content %}
+
+{% block scripts %}
+
+
+
+  <script>
+    $(document).ready(function() {
+
+
+
+        // $('#update-profile').click(function() {
+        //   $('.alert-style-success').css('display','block');
+        //   $('.alert-style-success').fadeOut(9000);
+        // });
+        var $messagesul = $('ul.messages');
+        if (typeof($messagesul) != "undefined") {
+          $messagesul.fadeOut(7000);
+        }
+
+
+        $("#id_email").attr('readonly','readonly');
+        $("#id_email").css('cursor','not-allowed');
+
+        var thisactiv = $('#accountbar li:first-child a' );
+        $("#accountbar .link-submenu").css('display','block');
+        thisactiv.addClass('focus-active');
+      });
+
+
+          var thisactiv = $('#accountbar li:first-child a' );
+          $("#accountbar .link-submenu").css('display','block');
+          thisactiv.addClass('focus-active');
+
+
+  </script>
+{% endblock scripts %}
