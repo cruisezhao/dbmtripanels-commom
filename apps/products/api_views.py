@@ -1,9 +1,10 @@
 from .models import Products, ACTIVE_STATUS
 from rest_framework import generics, mixins
-from rest_framework.permissions import AllowAny
+from rest_framework.permissions import AllowAny, IsAuthenticated
 from .serializers import ProductListSerializer, ProductDetailSerializer
 from rest_framework.response import Response
 from rest_framework import status
+from rest_framework.views import APIView
 
 class ProductList(mixins.ListModelMixin,generics.GenericAPIView):
     #limit 8 softwares
@@ -45,3 +46,14 @@ class ProductDetail(generics.GenericAPIView):
             return Response(serializer.data, status = status.HTTP_200_OK)
         else:
             return Response(serializer.errors, status = status.HTTP_400_BAD_REQUEST)
+
+
+class Istrialed(APIView):
+    """whether the logined person can trial or not"""
+    permission_classes = (IsAuthenticated,)
+
+    def get(self, request, format=None):
+        if allowed_order(request):
+            return Response('true',status = status.HTTP_200_OK)
+        else:
+            return Response('false', status = status.HTTP_403_FORBIDDEN)
