@@ -5,6 +5,7 @@ from django.utils.translation import ugettext as _
 from django.shortcuts import get_object_or_404
 from django.db import transaction
 
+
 SEARCH_DATE = (
     (None, 'ALL'),
     (1, 'in a Day'),
@@ -53,6 +54,7 @@ class OrderForm(forms.Form):
 
 
 
+
 @transaction.atomic
 def gen_orders(user, product, plan, notes):
     # pkg_status = 'Pending'
@@ -60,6 +62,7 @@ def gen_orders(user, product, plan, notes):
     order_status = 'Pending'
     order_amount = plan.price
     Orders.objects.create(client=user, plan=plan, product=product, amount=order_amount, status=order_status, notes=notes)
+
 
 class OrderCreateForm(forms.Form):
     product = forms.CharField(max_length=255)
