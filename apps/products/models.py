@@ -45,7 +45,7 @@ class Plans(CreatedUpdatedModel):
 
 class Products(CreatedUpdatedModel):
     """product model"""
-    plan = models.ManyToManyField(Plans)
+    plans = models.ManyToManyField(Plans)
     uuid = models.CharField('uuid', default=uuid_to_str, editable=False, max_length = 255, unique = True, db_index = True)
     type = models.CharField('Type', max_length=32, null=False, blank=False)
     name = models.CharField('Name', max_length=255, unique=True)

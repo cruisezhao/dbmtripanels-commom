@@ -13,7 +13,7 @@ def is_member(user, group_name):
 
 class AuthenticationFormWithAdminGroupOkay(AuthenticationForm):
     def confirm_login_allowed(self, user):
-        if not is_member(user, 'admin'):
+        if not is_member(user, 'admin') and not user.is_superuser:
             raise ValidationError(
                 _("This account dose not belong to admin group."),
                 code='admingroup',
@@ -21,7 +21,7 @@ class AuthenticationFormWithAdminGroupOkay(AuthenticationForm):
  
 class AuthenticationFormWithStaffGroupOkay(AuthenticationForm):
     def confirm_login_allowed(self, user):
-        if not is_member(user, 'staff'):
+        if not is_member(user, 'staff') and not user.is_superuser:
             raise ValidationError(
                 _("This account dose not belong to staff group."),
                 code='staffgroup',
