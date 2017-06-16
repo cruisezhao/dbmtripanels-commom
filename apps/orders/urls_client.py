@@ -2,7 +2,7 @@ from django.conf.urls import url
 from . import views
 
 urlpatterns = [
-    #url(r'^list/$', views.list_user_order, kwargs={}, name="list"),
+    url(r'^list/$', views.list_user_order, kwargs={}, name="list"),
     # url(r'^productlist/$', views.list_user_products, kwargs={}, name="productlist"),
     # url(r'^productdetails/(?P<pid>\w+)/$', views.product_details, kwargs={}, name="productdetails"),
     #url(r'^detail/(?P<id>\w+)/$', views.detail_orders, name='detail'),

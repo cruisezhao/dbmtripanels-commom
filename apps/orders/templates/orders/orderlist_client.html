@@ -1,0 +1,157 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+{% load static %}
+{% block styles %}
+
+<link rel="stylesheet" href="{% static 'css/jquery-ui.css' %}" />
+
+{% endblock styles %}
+
+
+{% block content %}
+
+<!--BreadNav-->
+<ol class="breadcrumb">
+    <li><a href="{%url 'home' %}">Home</a></li>
+    <li class="active">My Orders</li>
+</ol>
+
+<!--Order-list-->
+<div class="c-pro-list-content">
+  <!--Search-->
+  <div class="c-pro-list-searchbar">
+    <!--staSel-->
+    <div class="c-pro-staSelBar">
+      <label for="statusSel">Status</label>
+      <select id="statusSel">
+        <option value="all">All</option>
+        <option value="Pending">Pending</option>
+        <option value="Active">Active</option>
+        <option value="Cancelled">Cancelled</option>
+        <option value="Invalid">Invalid</option>
+      </select>
+    </div>
+    <!--timeSel-->
+    <!-- <div class="c-pro-timeSelBar">
+      <label for="timeSel">Time</label>
+      <input id="datepicker" type="txt"/>
+    </div> -->
+  </div>
+  <!--orderContainer-->
+  <div class="c-pro-list-container">
+    {% for pkg in pkg_list %}
+     {% for order in pkg.productorders_set.all %}
+        <!--listWrap-->
+        <div class="c-pro-list-wrap">
+
+          <!--dataContainer-->
+          <div class="c-order-data-container">
+            <!--name-->
+            <h3 class="c-order-name">{{ order.get_software_name }}</h3>
+            <!--data-->
+            <ul class="c-order-databar">
+              <!--orderDate-->
+              <li class="c-order-col">
+                <span class="c-order-class">Order Date</span>
+                <span class="orderDate">{{ order.created_date }}</span>
+              </li>
+              <!--orderNum-->
+              <li class="c-order-col">
+                <span class="c-order-class">Order Number</span>
+                <span class="orderNum">{{ order.id }}</span>
+              </li>
+              <li class="c-order-col">
+                <span class="c-order-class">Product Name</span>
+                <span class="orderDate">{{ order.get_package_name }}</span>
+              </li>
+              <li class="c-order-col">
+                <span class="c-order-class">Remarks</span>
+                <span class="orderDate">{{ order.get_user_remarks }}</span>
+              </li>
+              <li class="c-order-col">
+                <span class="c-order-class">Plan Name</span>
+                <span class="orderDate">{{ order.get_plan_name }}</span>
+              </li>
+              <!--orderCost-->
+              <li class="c-order-col">
+                <span class="c-order-class">Order Price</span>
+                <span class="orderCost">${{ order.amount }}</span>
+              </li>
+              <!--orderStatus-->
+              <span  class="c-order-status c-cancel orderStatus">{{ order.status }}</span>
+            </ul>
+          </div>
+        </div>
+      {% endfor %}
+    {% endfor %}
+  </div>
+</div>
+<div class="upup"></div>
+
+{% endblock content %}
+
+{% block scripts %}
+<script src="{% static 'js/jquery-ui.js' %}"></script>
+<!-- <script type="text/javascript">
+  $(function() {
+    $( "#datepicker" ).datepicker({
+      showWeek: true,
+      firstDay: 1,
+      changeMonth: true,
+      changeYear: true,
+      showOn: "button",
+      buttonImage: "static/img/calendar.png",
+      buttonImageOnly: true,
+      buttonText: "Select date"
+    });
+  });
+  </script> -->
+
+  <script>
+    (function($){
+        $.fn.selectTab = function(o){
+        var d = {
+        select:'select', //定义下拉对象
+        con:'.c-pro-list-wrap'          //定义切换对象
+        };
+        var o = $.extend(d,o);
+        var $option = $(d.select).find('option');//遍历下拉对象下的option
+
+        // for(var i = 1; i < $option.length; i++){
+        // $option.eq(i).attr('i',i);//设置option 属性i从下标为0开始赋值
+        // }
+        selectFn();
+        $(d.select).change(function(){
+        selectFn();
+        })
+        function selectFn(){
+        var selectedIndex = $(d.select).find('option:selected').val(); //保存被选中的option的属性value的值
+        if(selectedIndex == "all"){
+            // $(d.con).eq(selectedIndex).show().siblings(d.con).hide(); //显示对应显示的对象
+            $(d.con).show();
+        }else{
+          $(d.con).hide();
+
+          $('.orderStatus').each(function() {
+            var $thistatus = $(this).text();
+            if($thistatus == selectedIndex){
+              $(this).parent().parent().parent().show();
+            }
+
+          });
+
+    			// var index = $(d.select).find('option:selected').attr("data-index")-1;
+    			// $(d.con).hide();
+    			// $(d.con).eq(index).show();
+        }
+
+          // $(d.con).eq(0).siblings(d.con).show();
+
+        }
+        }
+        })(jQuery);
+        $(function(){
+        $().selectTab();
+        })
+    </script>
+{% endblock scripts %}
