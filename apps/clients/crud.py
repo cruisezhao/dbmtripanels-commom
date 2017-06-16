@@ -2,8 +2,9 @@
 
 import operator
 from crudbuilder.abstract import BaseCrudBuilder
-from django.contrib.auth import get_user_model
-User = get_user_model()
+#from django.contrib.auth import get_user_model
+from .models import Clients
+User = Clients
 
 from functools import reduce
 from django.db.models import Q
