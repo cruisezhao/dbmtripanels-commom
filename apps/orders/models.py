@@ -31,7 +31,7 @@ class Orders(models.Model):
         ordering = ['-created_date']
     
     def get_user_email(self):
-        return self.package.user.email
+        return self.package.client.email
     
     def get_product_name(self):
         return self.product.name
@@ -49,7 +49,7 @@ class Orders(models.Model):
         return self.plan.name
          
     def get_product_version(self):
-        return self.product.version
+        return self.product.latest_version
     
     def get_cpu_cores(self):
         return self.plan.cpu
@@ -61,4 +61,4 @@ class Orders(models.Model):
         return self.plan.disk
     
     def get_bandwidth(self):
-        return self.plan.bandwidth
+        return ''

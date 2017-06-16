@@ -80,7 +80,7 @@
                         <td><a href="{% url 'orders:detail' order.id %}">{{ order.id }}</a></td>
                         <td>{{ order.get_user_email }}</td>
                         <td>{{ order.created_date }}</td>
-                        <td>{{ order.get_software_name }}</td>
+                        <td>{{ order.get_product_name }}</td>
                         <td>{{ order.get_product_version }}</td>
                         <td>{{ order.get_cpu_cores }}</td>
                         <td>{{ order.get_memory }}</td>
