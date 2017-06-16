@@ -80,8 +80,8 @@ def detail_orders(request, id, template_name='orders/orderdetail_admin.html'):
 
 @login_required
 def list_user_order(request, template_name='orders/orderlist_client.html'):
-    pkgs = Packages.objects.filter(client__pk=request.user.pk)
-    return render(request, template_name, {'pkg_list': pkgs})
+    orders = Orders.objects.filter(client__pk=request.user.pk)
+    return render(request, template_name, {'orders': orders})
 
 # def allowed_order(request):
 #     user = request.user

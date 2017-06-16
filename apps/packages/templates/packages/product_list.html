@@ -60,19 +60,19 @@
               <!--ProIMG-->
               <div class="c-pro-imgbar">
                 <a href="http://portal.databasemart.net/product.html?id={{ pkg.get_software_id }}">
-                  <img src="{{ pkg.get_software_pic_path }}"/>
+                  <img src="{{ pkg.get_product_pic_path }}"/>
                 </a>
               </div>
               <!--ProName-->
               <div class="c-pro-shortinfNA">
                 <h3 class="c-pro-name" style="display: inline-block;">{{ pkg.get_name }}</h3>
-                <div data-toggle="modal" data-target="#myModal" data-packageid="{{ pkg.id }}" style="display: inline-block; margin-left: 10px; cursor: pointer; ">
+                <div data-toggle="modal" data-target="#myModal" data-packageid="{{ pkg.uuid }}" style="display: inline-block; margin-left: 10px; cursor: pointer; ">
                     <i class="fa fa-edit"></i>
                 </div>
                 <ul class="c-pro-dateinf">
                   <li class="c-pro-ord-col">
                     <span  class="c-pro-class">Order date</span>
-                    <span>{{ pkg.created_date }}</span>
+                    <span>{{ pkg.get_product_order.created_date }}</span>
                   </li>
                   <li class="c-pro-ord-col">
                     <span class="c-pro-class">Next due date</span>

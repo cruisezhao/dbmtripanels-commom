@@ -29,3 +29,36 @@ class Orders(models.Model):
     class Meta:
         db_table = "orders"
         ordering = ['-created_date']
+    
+    def get_user_email(self):
+        return self.package.client.email
+    
+    def get_product_name(self):
+        return self.product.name
+    
+    def get_package_name(self):
+        if self.package:
+            return self.package.get_name()
+        else:
+            return ''
+        
+    def get_user_remarks(self):
+        return self.comment
+    
+    def get_plan_name(self):
+        return self.plan.name
+         
+    def get_product_version(self):
+        return self.product.latest_version
+    
+    def get_cpu_cores(self):
+        return self.plan.cpu
+    
+    def get_memory(self):
+        return self.plan.memory
+
+    def get_disks(self):
+        return self.plan.disk
+    
+    def get_bandwidth(self):
+        return ''

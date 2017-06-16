@@ -46,17 +46,15 @@ class Packages(CreatedUpdatedModel):
     def get_name(self):
         return self.package_name
     
-    def get_software_name(self):
-        return self.plan.product.software.name
+    def get_product_name(self):
+        return self.get_product_order().product.name
     
-    def get_software_id(self):
-        return self.plan.product.software.pk
+    def get_product_id(self):
+        return self.get_product_order().product.uuid
     
-    def get_software_pic_path(self):
-        return self.plan.product.software.software_pic
+    def get_product_pic_path(self):
+        return self.get_product_order().product.product_pic
     
-    def get_productID(self):
-        return self.plan.product.pk
     
     def get_product_usinginfo(self, appname=''):
         if appname == '':
@@ -69,11 +67,11 @@ class Packages(CreatedUpdatedModel):
     def get_plan_name(self):
         return self.get_product_order().plan.name
     
-#     def get_vmserver_list(self):
-#         return [ VMServer(attr) for attr in self.runtime.get("servers", []) ]
+    def get_vmserver_list(self):
+        return []
 
     def get_product_order(self):
-        return self.productorders_set.all()[0]
+        return self.orders_set.all()[0]
 
     def modify_username(self,username):
         self.runtime['servers'][0]['applications'][0]['user_name'] = username
