@@ -19,7 +19,7 @@ from common.apps.packages.models import Packages
 ORDERS_PER_PAGE = 10
 
 @login_required
-def list_orders(request, template_name='orders/orderlist_admin.html'):
+def list_orders(request, template_name='orders/orderlist_staff.html'):
 
     if request.method == 'POST':
         form = OrderSearchForm(request.POST)
