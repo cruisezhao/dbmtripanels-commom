@@ -63,8 +63,7 @@ class ProductCRUD(BaseCrudBuilder):
     """product crud"""
     model = Products
     search_fields = ['version', 'title','system','database','created_date','updated_date']
-    tables2_fields = ('software','version', 'title','system','database',
-                      'created_date','updated_date')
+    tables2_fields = ('product_type','product_name', 'created','last_updated')
     tables2_css_class = "table table-bordered table-condensed"
     modelform_excludes = ('created_by','updated_by')
     tables2_pagination = 5
