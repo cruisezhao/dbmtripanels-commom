@@ -14,7 +14,7 @@ import zipfile
 import six
 import yaml
 
-import service.products.exceptions as e
+import common.service.products.exceptions as e
 
 def extract_file(archive_path, target_dir=None, drop_dir=False):
     """
