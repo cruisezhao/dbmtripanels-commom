@@ -48,10 +48,10 @@ def load_app_product(source_directory):
     template_file = 'product-app.yaml'
     
     app_product = load_data(source_directory, template_file, app_schema)
-    app_product["software_pic"] = source_directory + "/" +  \
-                                  app_product["software_pic"]   
-    app_product["software_img"] = source_directory + "/" +  \
-                                  app_product["software_img"]    
+    app_product["product_pic"] = source_directory + "/" +  \
+                                  app_product["product_pic"]
+    app_product["product_img"] = source_directory + "/" +  \
+                                  app_product["product_img"]
     return app_product
    
 def load_vm_product(source_directory):
