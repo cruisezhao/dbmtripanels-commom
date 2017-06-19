@@ -81,6 +81,7 @@ class ProductCRUD(BaseCrudBuilder):
     def custom_context(cls, request, context, **kwargs):
         """add context of search"""
         context['search_fields'] = ['version','title','system','created_date',]
+        context['extra_button'] = True
         return context
 
     # @classmethod
