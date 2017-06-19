@@ -45,9 +45,23 @@ class Plans(CreatedUpdatedModel):
 
 class Products(CreatedUpdatedModel):
     """product model"""
-    plan = models.ManyToManyField(Plans)
+    plans = models.ManyToManyField(Plans)
     uuid = models.CharField('uuid', default=uuid_to_str, editable=False, max_length = 255, unique = True, db_index = True)
     type = models.CharField('Type', max_length=32, null=False, blank=False)
+    name = models.CharField('Name', max_length=255, unique=True)
+
+    class Meta:
+        verbose_name = "Products"
+        verbose_name_plural = "Products"
+        db_table = "products"
+
+    def __str__(self):
+        return self.name
+
+
+class ProductApps(CreatedUpdatedModel):
+    """software app"""
+    product = models.OneToOneField(Products, primary_key=True)
     name = models.CharField('Name', max_length=255, unique=True)
     summary = models.TextField('Summary', null=True, blank=True)
     description = models.TextField('Description',null=True, blank=True)
@@ -78,19 +92,6 @@ class Products(CreatedUpdatedModel):
     in_homepage = models.BooleanField('Showinhomepage', default=False, blank=True)
     created_by = models.CharField('Created By', max_length=256,null=True, blank=True)
     updated_by = models.CharField('Updated By', max_length=256,null=True, blank=True)
-
-    class Meta:
-        verbose_name = "Products"
-        verbose_name_plural = "Products"
-        db_table = "products"
-
-    def __str__(self):
-        return self.name
-
-
-class ProductApps(CreatedUpdatedModel):
-    """software app"""
-    product = models.OneToOneField(Products, primary_key=True)
 
     class Meta:
         verbose_name = "ProductApps"
