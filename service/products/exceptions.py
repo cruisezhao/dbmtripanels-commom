@@ -7,7 +7,7 @@ exceptions.py: Exceptions from software module.
 """
 import six
 
-import service.exceptions as e
+import common.service.exceptions as e
 
 
 class SoftwareException(e.Error):

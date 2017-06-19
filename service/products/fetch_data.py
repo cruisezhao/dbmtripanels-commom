@@ -10,12 +10,12 @@ import os
 # import urllib.parse as urlparse
 from schema import Schema
 
-from service.products.load_utils import extract_file
-from service.products.load_utils import load_from_dir
-from service.products.exceptions import SoftwareLoadError
-from service.products.settings import map_names
-from service.products.settings import product_schema, app_schema, vm_schema, bare_schema 
-from service.products.settings import _DATA_CHECK
+from .load_utils import extract_file
+from .load_utils import load_from_dir
+from .exceptions import SoftwareLoadError
+from .settings import map_names
+from .settings import product_schema, app_schema, vm_schema, bare_schema
+from .settings import _DATA_CHECK
 
 
 def fetch(archive_path, target_dir=None, drop_dir=False):
