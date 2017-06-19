@@ -53,7 +53,7 @@ class Packages(CreatedUpdatedModel):
         return self.get_product_order().product.uuid
     
     def get_product_pic_path(self):
-        return self.get_product_order().product.product_pic
+        return self.get_product_order().get_product_pic_path()
     
     
     def get_product_usinginfo(self, appname=''):

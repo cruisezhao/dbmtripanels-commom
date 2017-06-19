@@ -1127,7 +1127,7 @@ def create_usersettings(sender, instance, created, **kwargs):
     if created:
         UserSettings.objects.create(user=instance, settings=DEFAULT_USER_SETTINGS)
 
-models.signals.post_save.connect(create_usersettings, sender=settings.AUTH_USER_MODEL)
+#models.signals.post_save.connect(create_usersettings, sender=settings.AUTH_USER_MODEL)
 
 
 @python_2_unicode_compatible
