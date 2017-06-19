@@ -51,6 +51,9 @@ class Orders(models.Model):
     def get_product_version(self):
         return self.product.productapps.latest_version
     
+    def get_product_pic_path(self):
+        return self.product.productapps.product_pic
+    
     def get_cpu_cores(self):
         return self.plan.cpu
     
