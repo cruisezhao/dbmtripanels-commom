@@ -83,20 +83,20 @@ class ProductCRUD(BaseCrudBuilder):
         context['search_fields'] = ['version','title','system','created_date',]
         return context
 
-    @classmethod
-    def custom_queryset(cls, request, **kwargs):
-        """custom queryset"""
-        id = request.GET.get('id',None)
-        try:
-            software = Software.objects.get(id=id)
-            objects = Product.objects.filter(software=software)
-        except Software.DoesNotExist as e:
-            print("id is None fetch all products")
-            objects = Product.objects.all()
-        d = request.GET
-        if ''.join([d[k] for k in d if k !='page' and k != 'sort' and k != 'id']):
-            q_list = [Q(
-                    ("{}__icontains".format(k),d[k]))
-                    for k in d if k!='page' and d[k]!='' and k != 'sort' and k != 'id']
-            objects = objects.filter(reduce(operator.or_, q_list))
-        return objects.order_by('-created_date')
+    # @classmethod
+    # def custom_queryset(cls, request, **kwargs):
+    #     """custom queryset"""
+    #     id = request.GET.get('id',None)
+    #     try:
+    #         software = Software.objects.get(id=id)
+    #         objects = Product.objects.filter(software=software)
+    #     except Products.DoesNotExist as e:
+    #         print("id is None fetch all products")
+    #         objects = Product.objects.all()
+    #     d = request.GET
+    #     if ''.join([d[k] for k in d if k !='page' and k != 'sort' and k != 'id']):
+    #         q_list = [Q(
+    #                 ("{}__icontains".format(k),d[k]))
+    #                 for k in d if k!='page' and d[k]!='' and k != 'sort' and k != 'id']
+    #         objects = objects.filter(reduce(operator.or_, q_list))
+    #     return objects.order_by('-created_date')
