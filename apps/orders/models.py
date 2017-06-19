@@ -49,7 +49,7 @@ class Orders(models.Model):
         return self.plan.name
          
     def get_product_version(self):
-        return self.product.latest_version
+        return self.product.productapps.latest_version
     
     def get_cpu_cores(self):
         return self.plan.cpu
