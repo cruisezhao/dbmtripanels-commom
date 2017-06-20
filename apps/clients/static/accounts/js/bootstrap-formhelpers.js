@@ -16372,6 +16372,10 @@ var BFHTimezonesList = {
         indexNumber,
         lastCharacter;
 
+    if (typeof(format) === 'undefined') {
+      return "";
+    }
+
     formattedNumber = '';
     number = String(number).replace(/\D/g, '');
 

@@ -4,7 +4,7 @@ from .form import OrderCreateForm, OrderSearchForm, OrderForm
 from django.views.generic import TemplateView
 from django.views.generic.edit import FormView
 from django.shortcuts import get_object_or_404, get_list_or_404
-from common.apps.products.models import Products, Plans
+from common.apps.products.models import Products, Plans, ProductApps
 from django.urls import reverse_lazy
 from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import login_required
@@ -120,11 +120,13 @@ class OrderCreateView(FormView):
         if 'pro' in self.kwargs and self.kwargs['pro']:
             prouuid = self.kwargs['pro']
             product = get_object_or_404(Products, uuid=prouuid)
+            product_app = get_object_or_404(ProductApps, product=product)
         else:
             return HttpResponseRedirect("orders/error.html")
 
-        plan_list = get_list_or_404(Plans, product=product)
-        context['product'] = product
+        plan_list = product.plans.all()
+        context['product_uuid']=prouuid
+        context['product_app'] = product_app
         context['plan_list'] = plan_list
         return context
 
