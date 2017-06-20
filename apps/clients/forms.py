@@ -186,7 +186,7 @@ class ProfileContactForm(forms.ModelForm):
     class Meta:
         model = User
         fields = [ 'country', 'state', 'city', 'address1', 'address2', 'postcode', 'company',  'phone_number', ]
-        widgets = {'country': CountrySelectWidget(layout="{widget}")}
+        #widgets = {'country': CountrySelectWidget(layout="{widget}")}
     
 
     
