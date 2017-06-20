@@ -20,6 +20,7 @@ PACKAGE_STATUS= (
     ('Invalid','Invalid'),
     )
 
+print(1111,settings.AUTH_USER_MODEL)
 # Create your models here.
 class Packages(CreatedUpdatedModel):
     """Packages"""

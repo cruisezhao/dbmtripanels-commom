@@ -6,6 +6,7 @@ from .utils import path_and_rename
 from django.conf import settings
 from django.contrib.auth.models import Group, Permission
 from django.utils.translation import ugettext_lazy as _
+from common.utilities.utils import uuid_to_str
 
 STATUS_CHOICES  = {
         ('Pending','Pending'),
@@ -20,6 +21,7 @@ class Clients(AbstractEmailUser):
         (1,'client'),
         (2,'reseller'),
     }
+    uuid = models.CharField('uuid', default=uuid_to_str, editable=False, max_length = 255, unique = True)
     picture = models.ImageField('Avatar',
                                 upload_to=path_and_rename,
                                 null=True,
