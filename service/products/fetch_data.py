@@ -12,11 +12,10 @@ from schema import Schema
 
 from common.service.products.load_utils import extract_file
 from common.service.products.load_utils import load_from_dir
-import common.service.products.exceptions as e
-from common.service.products.settings import software_schema, products_schema
+from common.service.products.exceptions import SoftwareLoadError
+from common.service.products.settings import map_names
+from common.service.products.settings import product_schema, app_schema, vm_schema, bare_schema
 from common.service.products.settings import _DATA_CHECK
-
-
 
 
 def fetch(archive_path, target_dir=None, drop_dir=False):
@@ -28,167 +27,87 @@ def fetch(archive_path, target_dir=None, drop_dir=False):
     try:  
         # Extract files from archive_path
         source = extract_file(archive_path, target_dir, drop_dir)
-        software = load_software(source)
+        product = load_product(source)
         
-        software_name = os.path.splitext(os.path.split(archive_path)[1])[0]
-        software["software_pic"] = software_name + "/" + software["software_pic"] # os.path.join(software_name, software["software_logo"])
-        software["software_img"] = software_name + "/" + software["software_img"]   # os.path.join(software_name, software["software_img"])
+        product_dir_name = os.path.splitext(os.path.split(archive_path)[1])[0]
+        assert (product_dir_name == product["product_name"])
         
-        products = load_products(source)
-        return(software, products)    
-    except e.SoftwareLoadError as ex:
+        product_type = product["product_type"]
+        
+        product_app = product_load_functions[product_type](source)
+        
+        return (product_app, product)
+  
+    except SoftwareLoadError as ex:
         raise Exception(ex)
 
 
-def load_software(source_directory):
-    ''' load software data from software.yaml
+def load_app_product(source_directory):
+    ''' load app product data from app_product.yaml
     '''
-    # add data valid check here
-    software = load_from_dir(source_directory, 'software.yaml')
+    template_file = 'product-app.yaml'
     
-    if _DATA_CHECK:
-        software = Schema(software_schema).validate(software)
-    
-    return software
-
-def load_products(source_directory):
-    ''' load products data from products.yaml
-    '''
-    # add data valid check here
-    products_dir = os.path.join(source_directory, 'products')
-    products = load_from_dir(products_dir, 'products.yaml')
-    
-    if _DATA_CHECK:
-        products = Schema(products_schema).validate(products)
-        
-    return products
+    app_product = load_data(source_directory, template_file, app_schema)
+    app_product["product_pic"] = source_directory + "/" +  \
+                                  app_product["product_pic"]
+    app_product["product_img"] = source_directory + "/" +  \
+                                  app_product["product_img"]
+    return app_product
    
+def load_vm_product(source_directory):
+    ''' load vm product data from vm_product.yaml
+    '''
+    template_file = 'product-vm.yaml'
+            
+    return load_data(source_directory, template_file, vm_schema)
+
+def load_bare_product(source_directory):
+    ''' load bare product data from bare_product.yaml
+    '''
+    template_file = 'product-bare.yaml'
+            
+    return load_data(source_directory, template_file, bare_schema)
+
+
+def load_product(source_directory):
+    ''' load products data from product.yaml
+    '''
+    template_file = 'product.yaml'
+            
+    return load_data(source_directory, template_file, product_schema)
+
+def load_data(source_directory, template_file, schema_dict):
+    ''' load data from yaml template file
+    '''
+    data = load_from_dir(source_directory, template_file)
+    
+    if _DATA_CHECK:
+        data = Schema(schema_dict).validate(data)
+    
+    return data
+
+
+product_load_functions = {
+    map_names['product_types']['APP'] : load_app_product,
+    map_names['product_types']['VM'] : load_vm_product,
+    map_names['product_types']['Bare'] : load_bare_product,
+}
+
             
 if __name__ == '__main__':
     
     try:
-        archive_path = "clusters-apps/woocommmerce.zip"
-        target_dir = "software-dir/"
-        # sf = fetch(archive_path, target_dir)
-        # print(sf[0])
-        # print(sf[1])    
-        base_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-        source_directory = os.path.join(base_dir,'products\software-dir\magento')
-        software = load_software(source_directory)
-        print(software)
-        products = load_products(source_directory)
-        print(products)
-        # software_img_root = "http://portal.databasemart.net/software-img/"
-        
-        # logo_url = urlparse.urljoin(software_img_root, sf[0]["software_logo"])
-        # print(logo_url)
+        archive_path = "packages/archive/ecwid.zip"
+        target_dir = "packages/"
+        sf = fetch(archive_path, target_dir)
+        print(sf[0])
+        print(sf[1])    
+
     except Exception as ex:
         print(ex)
 
-    #fetch
-    archive_path = os.path.join(base_dir, 'products\clusters-apps\woocommmerce.zip')
-    target_dir = os.path.join(base_dir, 'products\software-dir')
-    a,b=fetch(archive_path, target_dir)
-    print(a,b)
+
 
         
-    ''' software
-    {
-        'DocumentURL': 'https: //sqlite.org/docs.html',
-        'FreePlan': True,
-        'Features': {
-            'ECOM': {
-                'ACID': True,
-                'DataMode': None,
-                'Transactions': True
-            },
-            'DataBase': {
-                'ACID': True,
-                'DataMode': None,
-                'Transactions': True
-            }
-        },
-        'VendorURL': 'https: //sqlite.org/',
-        'Tages': [
-            'Ecom',
-            'Database',
-            'Hello'
-        ],
-        'FreePlanSpec': 'demo',
-        'DemoURL': 'https: //sqlite.org/docs.html',
-        'PaidPlanPrice': 0.0,
-        'GooglePlusURL': 'https: //plus.google.com/communities/106339046631781940267',
-        'FacebookURL': 'https: //www.facebook.com/sqliteviewer/',
-        'Screenshots': [
-            {
-                'Status': None,
-                'Vesion': '3.15.0',
-                'URL': 'https: //www.facebook.com',
-                'Description': 'Firstscreenshots',
-                'Title': 'hello'
-            }
-        ],
-        'Logo': 'https: //sqlite.org/',
-        'LatestVersion': '3.15.0',
-        'Enviroments': {
-            'Platform': [
-                'Linux',
-                'Window',
-                'BSD',
-                'MacOS'
-            ],
-            'Language': [
-                'Python',
-                'Java',
-                'PHP',
-                'CSharp'
-            ],
-            'Database': [
-                'MySQL',
-                'Oracle',
-                'MongoDB',
-                'MSSQ'
-            ]
-        },
-        'Description': 'Anothergreataspectofthesoftwareis',
-        'OpenSorce': True,
-        'LicenseTYpe': 'FreeLicense',
-        'Status': 'active',
-        'Type': 'ECOM',
-        'LatestReleaseDate': datetime.date(2016,1,4),
-        'PaidPlan': False,
-        'VendorName': 'sqlite',
-        'URL': 'https: //sqlite.org/',
-        'Videos': [
-            {
-                'Status': None,
-                'URL': 'https: //www.facebook.com',
-                'Description': 'FirstVideos',
-                'Title': 'description'
-            }
-        ],
-        'PaidPlanSpec': 'demo',
-        'Summary': 'manyembeddedproducts.',
-        'LinkedInURL': 'https: //www.linkedin.com/company/SQLite',
-        'DemoVersion': '3.15.0',
-        'Name': 'Magento'
-    }
-    '''       
-    ''' products
-    {
-        'SoftwareType': 'ECOM',
-        'SoftwareName': 'Magento',
-        'Packages': [
-            {
-                'System': 'Linux',
-                'Name': 'express.mysql',
-                'Plan': None,
-                'Target': None,
-                'Version': None,
-                'Database': None,
-                'Description': None
-            }
-        ]
-    }
-    '''
+    
     

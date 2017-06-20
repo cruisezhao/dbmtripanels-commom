@@ -1,15 +1,15 @@
-from .models import Products, ACTIVE_STATUS
+from .models import ProductApps, ACTIVE_STATUS
 from rest_framework import generics, mixins
 from rest_framework.permissions import AllowAny, IsAuthenticated
-from .serializers import ProductListSerializer, ProductDetailSerializer
+from .serializers import ProductAppsListSerializer, ProductAppsDetailSerializer
 from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.views import APIView
 
 class ProductList(mixins.ListModelMixin,generics.GenericAPIView):
     #limit 8 softwares
-    queryset = Products.objects.filter(in_homepage=True)[:8]
-    serializer_class = ProductListSerializer
+    queryset = ProductApps.objects.all()[:8]
+    serializer_class = ProductAppsListSerializer
     permission_classes = [AllowAny,]
 
 
@@ -19,8 +19,8 @@ class ProductList(mixins.ListModelMixin,generics.GenericAPIView):
 
 class ProductListAll(mixins.ListModelMixin, generics.GenericAPIView):
     """all product"""
-    queryset = Products.objects.filter(status=ACTIVE_STATUS).filter(in_homepage=True)
-    serializer_class = ProductListSerializer
+    queryset = ProductApps.objects.all()
+    serializer_class = ProductAppsListSerializer
     permission_classes = [AllowAny,]
 
 
@@ -32,12 +32,12 @@ class ProductListAll(mixins.ListModelMixin, generics.GenericAPIView):
 class ProductDetail(generics.GenericAPIView):
     """software detail"""
     permission_classes = [AllowAny,]
-    serializer_class = ProductDetailSerializer
+    serializer_class = ProductAppsDetailSerializer
 
     def get(self, request, *args, **kwargs):
         try:
             id = request.query_params.get('id', None)
-            result = generics.get_object_or_404(Products, uuid=id)
+            result = generics.get_object_or_404(ProductApps, pk=id)
         except Exception as e:
             print(e)
             return Response("error", status=status.HTTP_404_NOT_FOUND)

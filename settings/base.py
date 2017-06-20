@@ -128,7 +128,7 @@ TOKEN_COOKIE_AGE = 60 * 60 * 24 * 7 * 2
 # A string like ".example.com", or None for standard domain cookie.
 # If you test in domain 127.0.0.1, then you must comment out the databasemart.net, and use empty value
 if hostname == 'cluster':
-    TOKEN_COOKIE_DOMAIN = '.tripanles.com'
+    TOKEN_COOKIE_DOMAIN = '.tripanels.com'
 else:
     TOKEN_COOKIE_DOMAIN = ''
 # Whether the session cookie should be secure (https:// only).

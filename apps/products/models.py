@@ -2,6 +2,7 @@ from django.db import models
 from common.utilities.utils import uuid_to_str
 from common.utilities.models import CreatedUpdatedModel
 from jsonfield import fields
+import random
 
 from django.conf import settings
 from crum import get_current_user
@@ -21,18 +22,19 @@ STATUS_CHOICES  = (
 
 class Plans(CreatedUpdatedModel):
     """create plan model"""
+    CHOICE = [3.18, 4.18, 5.18, 15.18, 20.18]
     uuid = models.CharField('uuid', default=uuid_to_str, editable=False, max_length = 255, unique = True)
     name = models.CharField('Name', max_length = 32)
-    cpu = models.IntegerField('CPU',default=0)
+    cpu = models.IntegerField('CPU',default=random.choice(range(4)))
     cpu_description = models.CharField('CPU Description', max_length = 256, null = True, blank = True)
-    memory = models.DecimalField('Memory', max_digits=19, decimal_places=4, null=True, blank=True)
+    memory = models.DecimalField('Memory', max_digits=19, decimal_places=4, null=True, blank=True, default=random.choice(range(8)))
     memory_description = models.CharField('Memory Description', max_length = 256, null = True, blank = True)
-    disk = models.IntegerField('Disk', default = 0)
+    disk = models.IntegerField('Disk', default = random.choice(range(4)))
     disk_description = models.CharField('Disk Description', max_length = 256, null = True, blank = True)
-    instance = models.IntegerField('Instance', default = 0)
+    instance = models.IntegerField('Instance', default = random.randint(1,4))
     instance_description = models.CharField('Instance Description', max_length = 256, null = True, blank = True)
     description = models.CharField('Descriptin', max_length = 256, null = True, blank = True)
-    price = models.DecimalField('Price',max_digits=19, decimal_places=4, null=True, blank=True)
+    price = models.DecimalField('Price',max_digits=19, decimal_places=4, null=True, blank=True, default = random.choice(CHOICE))
 
     class Meta:
         verbose_name = "Plans"
@@ -45,10 +47,24 @@ class Plans(CreatedUpdatedModel):
 
 class Products(CreatedUpdatedModel):
     """product model"""
-    plan = models.ManyToManyField(Plans)
+    plans = models.ManyToManyField(Plans)
     uuid = models.CharField('uuid', default=uuid_to_str, editable=False, max_length = 255, unique = True, db_index = True)
-    type = models.CharField('Type', max_length=32, null=False, blank=False)
-    name = models.CharField('Name', max_length=255, unique=True)
+    product_type = models.CharField('Type', max_length=32, null=False, blank=False)
+    product_name = models.CharField('Name', max_length=255, unique=True)
+
+    class Meta:
+        verbose_name = "Products"
+        verbose_name_plural = "Products"
+        db_table = "products"
+
+    def __str__(self):
+        return self.name
+
+
+class ProductApps(CreatedUpdatedModel):
+    """software app"""
+    product = models.OneToOneField(Products, primary_key=True)
+    app_name = models.CharField('Name', max_length=255, unique=True)
     summary = models.TextField('Summary', null=True, blank=True)
     description = models.TextField('Description',null=True, blank=True)
     product_url = models.URLField('Product URL', max_length=256, null=True, blank=True)
@@ -78,19 +94,6 @@ class Products(CreatedUpdatedModel):
     in_homepage = models.BooleanField('Showinhomepage', default=False, blank=True)
     created_by = models.CharField('Created By', max_length=256,null=True, blank=True)
     updated_by = models.CharField('Updated By', max_length=256,null=True, blank=True)
-
-    class Meta:
-        verbose_name = "Products"
-        verbose_name_plural = "Products"
-        db_table = "products"
-
-    def __str__(self):
-        return self.name
-
-
-class ProductApps(CreatedUpdatedModel):
-    """software app"""
-    product = models.OneToOneField(Products, primary_key=True)
 
     class Meta:
         verbose_name = "ProductApps"
@@ -130,7 +133,7 @@ class ProductBares(CreatedUpdatedModel):
 class Screenshot(CreatedUpdatedModel):
     """software screen shot"""
     uuid = models.CharField('uuid', default=uuid_to_str, editable=False, max_length = 255, unique = True, db_index = True)
-    product = models.ForeignKey(Products)
+    product = models.ForeignKey(ProductApps)
     version = models.CharField('Version', max_length=32, null=True, blank=True)
     title = models.CharField('Title', max_length=32, null=True, blank=True)
     description = models.TextField('Description', null=True, blank=True)
@@ -178,7 +181,7 @@ class Review(CreatedUpdatedModel):
 class Video(CreatedUpdatedModel):
     """video for software"""
     uuid = models.CharField('uuid', default=uuid_to_str, editable=False, max_length = 255, unique = True, db_index = True)
-    product = models.ForeignKey(Products)
+    product = models.ForeignKey(ProductApps)
     title = models.CharField('Title', max_length=32, null=True, blank=True)
     description = models.TextField('Description', null=True, blank=True)
     url  = models.URLField('URL', max_length=256,null=True, blank=True)

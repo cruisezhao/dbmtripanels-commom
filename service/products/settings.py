@@ -15,23 +15,86 @@ if sys.version_info[0] == 3:
     basestring = str  # Python 3 does not have basestring
     unicode = str     # Python 3 does not have unicode
 
+map_names = {
+    'app_types': {
+        'ECOM': 'ECOM',
+        'ecom': 'ECOM',
+        'cms': 'CMS',
+        'db': 'DataBase'
+        # '?': basestring
+    },
+    'vm_types': {
+        'linux': 'Linux-VPS',
+        'windows': 'Windows-VPS',
+        # '?': basestring
+    },
+    'bare_types': {
+        'linux': 'Linux-Bare',
+        'windows': 'Windows-Bare',
+        # '?': basestring
+    },
+
+    'product_types': {
+        'APP': 'APP',
+        'VM': 'VM',
+        'Bare': 'Bare',
+        # '?': basestring
+    },
+
+    'os_names': {
+        'Linux': 'Linux',
+        'Window': 'Window',
+        'BSD': 'BSD',
+        'MacOS': 'MacOS',
+        # '?': basestring
+    },
+
+    'db_names': {
+        'MySQL': 'MySQL',
+        'Oracle': 'Oracle',
+        'MongoDB': 'MongoDB',
+        # '?': basestring
+    },
+
+    'languages': {
+        'Python': 'Python',
+        'Java': 'Java',
+        'PHP': 'PHP',
+        'CSharp': 'CSharp'
+        # '?': basestring
+    }  
+}
+
+def list_names(dict_names):
+    ''' get name list from names dictionary.
+    '''
+    name_sets = set()
+    for nm in dict_names:
+        name_sets.add(dict_names[nm])
+    return list(name_sets)
+
 d_fmt = '%Y-%m-%d'
 _date_validator = Or(None, lambda d: datetime.datetime.strptime(d, d_fmt))
 
-software_types = ["ECOM","CMS","DataBase"]
-platforms = ["Linux","Window","BSD","MacOS"]
-languages = ["Python","Java","PHP","CSharp","Go"]
-db_names = ["MySQL","Oracle","MongoDB",str] 
+app_types = list_names(map_names['app_types'])
+vm_types = list_names(map_names['vm_types'])
+bare_types = list_names(map_names['bare_types'])
+product_types = list_names(map_names['product_types'])
+
+
+os_names = list_names(map_names['os_names'])
+languages = list_names(map_names['languages'])
+db_names = list_names(map_names['db_names'])
  
-software_schema = {
-    "type": Or(*software_types),
-    "name": basestring,
+app_schema = {
+    "app_type": Or(*app_types),
+    "app_name": basestring,
     "tags": [And(basestring, lambda l: 2< len(l) < 64)],
     "summary": basestring,
     "description": basestring,
-    "software_url": basestring,
-    "software_pic": basestring,
-    "software_img": Or(None, basestring),
+    "product_url": basestring,
+    "product_pic": basestring,
+    "product_img": Or(None, basestring),
     "vendor_name": Or(None, basestring),
     "vendor_url": Or(None, basestring),
     "latest_version": Or(None, basestring),
@@ -71,59 +134,28 @@ software_schema = {
         str: object,
     },
     "environments": {
-        "platform": [Or(*platforms)],
+        "platform": [Or(*os_names)],
         "language": [Or(*languages)],
         "database": [Or(*db_names)]
     }
 }
 
-products_schema = {
-    "software_type": Or(*software_types),
-    "software_name": basestring,
-    "packages": [
-        {
-            "name": Or(None, basestring),
-            "version": basestring,
-            "description": Or(None, basestring),
-            "system": Or(None, object),
-            "database": Or(None, object),
-            "target": Or(None, basestring),
-            "plans": [
-                basestring,
-            ]
-        }
-    ],                  
-    "plans": {
-        basestring: {
-            "cpu_cores": int,
-            "memory": int,
-            "disks": {'sata': int, 'ssd': int},
-            "bandwidth": int,
-            "servers": [
-                {
-                    "name": basestring,
-                    "description": Or(None, basestring),
-                    "cpu_cores": int,
-                    "memory": int,
-                    "disks": [{'sata': int, 'ssd': int},],
-                    "ip_address": Or(None, basestring),
-                    "user_name": Or(None, basestring),
-                    "password": Or(None, basestring),
-                    "applications": [
-                        {
-                            "name": Or(None, basestring),
-                            "description": Or(None, basestring),
-                            "url": Or(None, basestring),
-                            "user_name": Or(None, basestring),
-                            "password": Or(None, basestring)
-                        }
-                    ]
-                }
-            ],
-            "fees": {
-                "price": Or(int, float),
-                "discount": Or(int, float)
-            }
-        },        
-    }
+vm_schema = {
+    
 }
+
+bare_schema = {
+    
+}
+
+    
+product_schema = {
+    'product_type': Or(*product_types),
+    'product_name': basestring,
+    'plans': [basestring,],
+    'deployments':[ {
+        'plan_name': basestring,
+        'clouds': [basestring]
+    },]
+}
+

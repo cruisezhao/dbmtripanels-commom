@@ -39,8 +39,8 @@
   </div>
   <!--orderContainer-->
   <div class="c-pro-list-container">
-    {% for pkg in pkg_list %}
-     {% for order in pkg.productorders_set.all %}
+    
+     {% for order in orders %}
         <!--listWrap-->
         <div class="c-pro-list-wrap">
 
@@ -58,11 +58,11 @@
               <!--orderNum-->
               <li class="c-order-col">
                 <span class="c-order-class">Order Number</span>
-                <span class="orderNum">{{ order.id }}</span>
+                <span class="orderNum">{{ order.uuid }}</span>
               </li>
               <li class="c-order-col">
                 <span class="c-order-class">Product Name</span>
-                <span class="orderDate">{{ order.get_package_name }}</span>
+                <span class="orderDate">{{ order.get_product_name }}</span>
               </li>
               <li class="c-order-col">
                 <span class="c-order-class">Remarks</span>
@@ -83,7 +83,7 @@
           </div>
         </div>
       {% endfor %}
-    {% endfor %}
+    
   </div>
 </div>
 <div class="upup"></div>

@@ -1,0 +1,265 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+{% load static %}
+{% block styles %}
+<link rel="stylesheet" href="{% static 'css/pro_detail.css' %}" />
+{% endblock styles %}
+
+{% block leftSiderbar %}
+{% endblock leftSiderbar %}
+
+{% block rightcontent %}
+<!--LoadingBox-->
+<div class="loading" tabindex="-1" id="my-modal-loading">
+	<div class="model-dialog">
+		<p>loading...</p>
+		<p class="lod-iconbar">
+			<i class="fa fa-spinner"></i>
+		</p>
+	</div>
+</div>
+
+<div id="myProductsDetail">
+      <!---BreadNav-->
+		  <div class="part1 pro-detail-BreadNav">
+		    	<div class="location">
+		    		<div class="triangle"></div>
+		    		<p><a href="{% url 'packages:productlist' %}">Back to My Products</a></p>
+		    	</div>
+		    </div>
+      <!---softwareName-->
+			<div class="part2 pro-softwareName">
+				<div class="namestatus">
+					<div class="name">
+						{{ pkg.get_product_name }}
+					</div>
+					<div class="status">
+						{{ pkg.status }}
+					</div>
+				</div>
+			</div>
+      <!---shortdetail-->
+			<div class="part3 pro-shortdetail">
+        <!---pro-img-->
+				<div class="left">
+					<img src="{{ pkg.get_software_pic_path }}"/>
+				</div>
+        <!---pro-Information-->
+				<div class="right">
+					<ul>
+            <!---Created person-->
+						<li>
+							<div class="stringName">
+								Created person
+							</div>
+							<div class="stringValue">
+								{{ user.email }}
+							</div>
+						</li>
+            <!---Created time-->
+						<li>
+							<div class="stringName">
+								Created time
+							</div>
+							<div class="stringValue">
+								{{ pkg.created }}
+							</div>
+						</li>
+            <!---Products Number-->
+						<li>
+							<div class="stringName">
+								Products Number
+							</div>
+							<div class="stringValue">
+								{{ pkg.get_product_id }}
+							</div>
+						</li>
+            <!---Next due dater-->
+						<li>
+							<div class="stringName">
+								Next due date
+							</div>
+							<div class="stringValue">
+								{{ pkg.next_due_date }}
+							</div>
+						</li>
+            <!---Username-->
+						<li>
+							<div class="stringName">
+								Username
+							</div>
+							<div class="stringValue">
+								{% if pkg.get_product_usinginfo is not None %}
+									{{ pkg.get_product_usinginfo.1 }}
+								{% endif %}
+							</div>
+						</li>
+            <!---Discount-->
+						<li>
+							<div class="stringName">
+								Discount
+							</div>
+							<div class="stringValue">
+								six month free
+							</div>
+						</li>
+            <!---Password-->
+						<li>
+							<div class="stringName">
+								Password
+							</div>
+							<div class="stringValue">
+								{% if pkg.get_product_usinginfo is not None %}
+									{{ pkg.get_product_usinginfo.2 }}
+								{% endif %}
+							</div>
+						</li>
+            <!---Hardware-->
+						<li>
+							<div class="stringName">
+								Hardware
+							</div>
+							<div class="stringValue">
+								{{ pkg.get_plan_name }}
+							</div>
+						</li>
+
+						<li>
+							<div class="stringName">
+								URL
+							</div>
+							<div class="stringValue">
+								{% if pkg.get_product_usinginfo is not None %}
+									{{ pkg.get_product_usinginfo.0}}
+								{% endif %}
+							</div>
+						</li>
+					</ul>
+					<div class="renew">
+						<input type="button" id="renew" value="Renew" />
+					</div>
+				</div>
+
+			</div>
+      <!---vm-->
+			<div class="part4 pro-vm">
+        <!---title-->
+				<h4>This product works fine based on the following {{ pkg.get_vmserver_list | length }} virtual machine !</h4><!---title end-->
+        <!---virtualMachineBar-->
+				<div class="virtualMachine">
+				{% for vmserver in pkg.get_vmserver_list %}
+          <!---vm-img-->
+					<div class="left">
+						<img src="{% static 'img/SC-45.png' %}"/>
+					</div>
+          <!---floatline-->
+					<div class="floatline"></div>
+          <!---proInformation-->
+					<div class="right">
+						<div class="machine">
+							<div class="Number">
+								{{ forloop.counter }}
+							</div>
+							<div class="machineName">
+								{{ vmserver.get_name }}
+							</div>
+						</div>
+						<ul>
+							<li>
+								<div class="one">
+									<div class="icon icon1">
+
+									</div>
+									<div class="iconText">
+										Software reboot
+									</div>
+								</div>
+								<div class="one">
+									<div class="icon icon2">
+
+									</div>
+									<div class="iconText">
+										Hardware reboot
+									</div>
+								</div>
+								<div class="one">
+									<div class="icon icon3">
+
+									</div>
+									<div class="iconText">
+										Stop
+									</div>
+								</div>
+							</li>
+							<li>
+								<div class="one">
+									<div class="name1">
+										VCPUS
+									</div>
+									<div class="value1">
+										{{ vmserver.get_cpu_cores }}
+									</div>
+								</div>
+								<div class="one">
+									<div class="name1">
+										DISK
+									</div>
+									<div class="value1">
+										{{ vmserver.get_disks }}
+									</div>
+								</div>
+								<div class="one">
+									<div class="name1">
+										RAM
+									</div>
+									<div class="value1">
+										{{ vmserver.get_memory }}
+									</div>
+								</div>
+							</li>
+							<li>
+								<div class="one">
+									<div class="name1">
+										IP
+									</div>
+									<div class="value1">
+										{{ vmserver.get_ip }}
+									</div>
+								</div>
+								<div class="one">
+									<div class="name1">
+										Status
+									</div>
+									<div class="value1">
+										{{ vmserver.get_status }}
+									</div>
+								</div>
+								<div class="one">
+									<div class="name1">
+										Creaed time
+									</div>
+									<div class="value1">
+										{{ vmserver.get_created_time }}
+									</div>
+								</div>
+							</li>
+						</ul>
+					</div>
+          <!---enterBTN-->
+					<div class="enter">
+						<a href="#"><input type="button" id="enter" value="Enter" /></a>
+					</div>
+					{% endfor %}
+				</div><!---virtualMachineBar end-->
+			</div>
+		</div>
+{% endblock rightcontent %}
+
+{% block scripts %}
+    $(document).ready(function(){
+      $('.floatline').css('top',$('.virtualMachine').height()*0.874);
+      window.onresize=function(){
+        $('.floatline').css('top',$('.virtualMachine').height()*0.874);
+      }
+    })
+{% endblock scripts %}
