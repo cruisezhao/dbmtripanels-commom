@@ -248,6 +248,8 @@ def profile_basic(request, template_name, form_name='form'):
 def profile_contact(request, template_name, form_name='form'):
     ''' list and edit user profile '''
     if request.method == 'POST':
+        if len(request.POST.get('phone_number', '').strip().split()) <= 1:
+            request.POST['phone_number'] = ''
         form = ProfileContactForm(request.POST, instance=request.user, files=request.FILES)
         if form.is_valid():
             # process the data in form.cleaned_data as required
