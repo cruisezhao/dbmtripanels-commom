@@ -4,198 +4,178 @@
 {% block styles %}
 <link rel="stylesheet" href="{% static 'css/order_form.css' %}" />
 {% endblock styles %}
-
 {% block leftSiderbar %}
 {% endblock leftSiderbar %}
-
-
-
 {% block rightcontent %}
-          <!--1-->
-          <div id="orderSelect">
-		          <div data="versionText">
-		            Please select a version for your product. We recommend you the latest one.
-		          </div>
-		          <!--planContent-->
-		          <div class="form" >
-		              <!-- {% csrf_token %} -->
-		                <!--machineInf-->
-		                <div id="part1">
-		                    <div id="part1Content">
-								{{form.product.errors}}
-								<span class="version1">{{product.name}}</span>
-		                      <div id="describe">
-								  {{form.notes.errors}}
-		                        <label>Product describe</label>
-		                        <input type="text" id="productNotes" name="notes" placeholder="Entry name to describe what the product for" />
-		                      </div>
+	
+<div id="content">
+	<div class="product">
+		<div class="productImg">
+			<img src="{% static 'img/SCLogo.png' %}"/>
+		</div>				
+		<div class="productInfo">
+			<div class="name">X-cart Commerce</div>
+			<div class="summary">X-cart is a universal eCommerce platform fitting every merchant’s needs:X-cart is a universal eCommerce platform fitting every merchant’s needs: it powers both corporate and small business sites.</div>
+			<div class="discount">Six month free trial</div>
+			<div class="price">$ 16.99 /M</div>
+		</div>
+	</div>
+	<div class="plan">
+		<div class="plan1">
+			<div class="planSelect">
+				
+			</div>
+			<div class="planContent">
+				<div class="line1">
+					<div class="name">Express Windows VPS</div>
+					<div class="price">$ <span>10.99</span> /M</div>							
+				</div>
+				<div class="line2">
+					<ul>
+						<li>CPU Cores</li>
+						<li>5GB</li>
+						<li>Memory</li>
+						<li>8GB</li>
+						<li>Disks</li>
+						<li>100GB</li>
+						<li>Instance</li>
+						<li>1</li>
+					</ul>
+				</div>
+				<div class="line3">
+					Express Windows VPS is the best choice for novices. If your demand for resources is few, then Express Windows VPS it is!
+				</div>
+			</div>
+		</div>
+		<div class="plan1">
+			<div class="planSelect">				
+			</div>
+			<div class="planContent">
+				<div class="line1">
+					<div class="name">Express Windows VPS</div>
+					<div class="price">$ <span>16.99</span> /M</div>
+					
+				</div>
+				<div class="line2">
+					<ul>
+						<li>CPU Cores</li>
+						<li>5GB</li>
+						<li>Memory</li>
+						<li>8GB</li>
+						<li>Disks</li>
+						<li>100GB</li>
+						<li>Instance</li>
+						<li>1</li>
+					</ul>
+				</div>
+				<div class="line3">
+					Express Windows VPS is the best choice for novices. If your demand for resources is few, then Express Windows VPS it is!
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="money">
+		<ul>
+			<li class="selected">
+				<div class="money1">Monthly $ <span class="priceNum">20.00</span></div>
+				<img src="{% static 'img/SC-66.png' %}" class="tick"/>
+			</li>
+			<li>
+				<div class="money2">Quarterly $ <span class="priceNum">57.00</span></div>
+				<p>$ 19.00 /M</p>
+			</li>
+			<li>
+				<div class="money2">Semi-Annually $ <span class="priceNum">108.00</span></div>
+				<p>$ 18.00 /M</p>
+			</li>
+			<li>
+				<div class="money2">Annually $ <span class="priceNum">204.00</span></div>
+				<p>$ 17.00 /M</p>
+			</li>
+			<li>
+				<div class="money2">Biennially $ <span class="priceNum">384.00</span></div>
+				<p>$ 16.00 /M</p>
+			</li>
+			<li>
+				<div class="money2">Triennially $ <span class="priceNum">540.00</span></div>
+				<p>$ 15.00 /M</p>
+			</li>
+		</ul>
+	</div>
+	<div class="addition">
+		<div class="additonR">
+			Additional requirement
+		</div>
+		<div class="additonRE">
+			<input type="text" name="" id="" value="" />
+		</div>
+	</div>
+	<div class="total">
+		<div class="totalA">
+			<div class="totalAmount">
+				Total Amount $ <span>0.00</span> /M
+			</div>
+			<div class="buy" id="BUY">
+				Buy immediately
+			</div>
+		</div>
+	</div>
+	<div class="notes">
+		<div class="Notes">Notes</div>
+		<ul>
+			<li>CPU: CPU basic description CPU basic description CPU basic description</li>
+			<li>Memory: Memory basic description Memory basic description Memory basic description</li>
+			<li>Disk: Disk basic description Disk basic description Disk basic description</li>
+			<li>Instance: Instance basic description Instance basic description Instance basic description</li>
+		</ul>
+	</div>
+</div>
 
-		                    </div>
-		                </div>
-		                <!--planCostInf-->
-		                <div data="versionText">There are <span id="plsNum" class="c-success"></span> kinds of plans for <span class="pointer-title"> {{product.name}} <span id="versionNumber"></span> .</span> <span class="hidden soft_ID">{{product.uuid}}</span>Different plans, different price!</div>
-		                <div id="part2">
-			                  {{form.plan.errors}}
-			                  {% for plan in plan_list %}
-			                  <div class="everyplan">
-			                  	<div class="left">
-			                  		<div class="tick"></div>
-			                  		<div class="everyplanId">{{plan.uuid}}</div>
-			                  	</div>
-			                  	<div class="right">
-			                  		<div class="plantitle">
-			                  			<h3>{{plan.name|default_if_none:""}}</h3><h3 class="Price">${{plan.price|default_if_none:""}}/M</h3>
-			                  		</div>
-			                  		<div class="plancontent">
-
-			                  			<div class="summary">
-			                  				<div class="summary1">Summary</div>
-			                  				<ul>
-			                  					<li>Cpu_cores</li>
-		                  						<li>{{plan.cpu|default_if_none:""}}</li>
-												<li>{{plan.cpu_description|default_if_none:""}}</li>
-		                  						<li>Memory</li>
-		                  						<li>{{plan.memory|default_if_none:""}}GB</li>
-												<li>{{plan.memory_description|default_if_none:""}}</li>
-		                  						<li>Disks</li>
-		                  						<li>{{plan.disk|default_if_none:""}}GB</li>
-												<li>{{plan.disk_description|default_if_none:""}}</li>
-												<li>Instance</li>
-		                  						<li>{{plan.instance|default_if_none:""}}</li>
-												<li>{{plan.instance_description|default_if_none:""}}</li>
-		                  						<li>Description</li>
-		                  						<li>{{plan.description|default_if_none:""}}</li>
-			                  				</ul>
-			                  			</div>
-			                  		</div>
-			                  	</div>
-			                  </div>
-			                  {% endfor %}
-
-					              <div class="submitForm">
-					              	<div class="submitForm1">
-					              		<div id="errortext">
-						                	Submit failed! Please select a plan.
-						                </div>
-						              	<div id="totalAmount">
-						              		Total Amount
-						              	</div>
-						              	<div id="AmountNumber">
-
-						              	</div>
-						                <div><input type="submit" name="" id="submitForm1" value="Check out" /></div>
-					                </div>
-					              </div>
-		                </div>
-		                <div class="upup"></div>
-
-		          </div>
-          </div>
-
-          <!--2-->
-          <div id="orderSubmit">
-          	<div id="orderSubmit1">
-              <!--top-back-->
-          		<div id="previousStep">
-          			<div class="triangle"><</div>
-          			<p>Back to previous step</p>
-          		</div>
-
-              <!--software-information-->
-          		<div id="Product">
-                <!--software-information-->
-                <div class="sof-describe">
-                  <div class="sof-imgwarp">
-                    <img src="{{ software_info.software_pic }}" />
-                  </div>
-                  <div class="sof-infwarp">
-                    <h3 class="sof-name">{{software_info.name}}</h3>
-                    <p>{{software_info.summary}}</p>
-                    <div class="sof-sales">six month free trial</div>
-                    <div class="sof-price">$ <span class="price-numer">0</span> /M</div>
-                  </div>
-                </div>
-                <!--product-version-describe-->
-                <div class="pro-describe">
-                  <div class="pro-des-version">
-                    <div class="pro-des-version-title">
-                      Product version
-                    </div>
-                    <div class="pro-des-version-inf"></div>
-                  </div>
-                  <div class="pro-des-name">
-                    <div class="pro-des-name-title">
-                      Product describe
-                    </div>
-                    <div class="pro-des-name-inf"></div>
-                  </div>
-                </div>
-          		</div>
-
-              <!--select-plan-box-->
-              <div class="sel-planbox">
-
-              </div>
-
-              <!--remarks and submit-->
-              <div class="comfirm-orderbox">
-                <!--remarks-->
-                <p class="remarks">
-                  <span>Remarks</span>
-                  <input type="text" id="RemarksText" name="comment" class="remarks-describe"/>
-                </p>
-                <!--comfirmbox-->
-                <div class="comfirm">
-                  <div class="left-inf">
-                    <div class="stat-inf">
-                      <div class="stat-title">
-                        Total Amount
-                      </div>
-                      <div class="stat-content">
-
-                      </div>
-                    </div>
-                    <div class="stat-inf">
-                      <div class="stat-title">
-                        Applicant
-                      </div>
-                      <div class="stat-content">
-                        <span>{% if user.first_name is not None and user.last_name is not None %} {{user.first_name}} {{user.last_name}}{% else %}{{user.email}}{% endif %}</span>
-                      </div>
-                    </div>
-                    <div class="stat-inf">
-                      <div class="stat-title">
-                        Contact Way
-                      </div>
-                      <div class="stat-content">
-                        <span>{{user.email}}</span>
-                      </div>
-                    </div>
-                  </div>
-
-                  <a class="btn-comfirmbox" type="submit" name="" id="submitForm2" value=""/>Confirm Oder</a>
-                  <div class="upup"></div>
-                </div>
-              </div>
-
-          	</div>
-
-          </div>
-
-          <form id="planSel" method="post" class="hidden">
-            {% csrf_token %}
-            <input type="hidden" id="product" name="product" value="">
-            <input type="hidden" id="selPlanID" name="plan" value=""  />
-            <input type="hidden" id="software" name="software" value=""  />
-            <input type="hidden" id="userDescribe" name="pkgname" value="" />
-            <input type="hidden" id="userText" name="comment" value="" />
-            <div id="softwareId" class="hidden">{{software_info.id}}</div>
-          </form>
-
-
+<div id="confirm">
+	<div class="back">
+		<div class="triangle"><img src="{% static 'img/SC-65.png' %}"/></div>
+		<div class="Back">Back to previous step</div>
+	</div>
+	<div id="orderContent">
+		<div id="product">
+			<div>
+				<div class="name">X-cart</div>
+				<div class="price">$ 16.99 /M</div>
+				<div class="discount">Six month free trial</div>
+			</div>
+			<div class="summary">X-cart Commerce is a universal eCommerce platform fitting every merchant’s needs: it powers both corporate and small business sites all over the world, companies selling physical and digital goods , companies selling physical and digital goods. </div>
+		</div>
+		<div id="plan">					
+		</div>
+		<div id="other" class="line2">
+			<ul>
+				<li>Name</li>
+				<li>Newt Huang</li>
+				<li>Contact Way</li>
+				<li>291053667@qq.com</li>
+				<li>Created date</li>
+				<li>06/11/2017</li>
+				<li>Expiration date</li>
+				<li>12/11/2017</li>
+			</ul>
+			<ul>
+				<li>Additional requirement</li>
+				<li>Please email me when you established !</li>
+			</ul>
+		</div>
+	</div>
+	<div class="total">
+		<div class="totalA">
+			<div class="totalAmount">
+				Total Amount $ <span>0.00</span> /M
+			</div>
+			<div class="buy">
+				Confirm order
+			</div>
+		</div>
+	</div>
+</div>	
 {% endblock rightcontent %}
-
-
 {% block scripts %}
   <script src="{% static 'js/order_form.js' %}"></script>
 {% endblock scripts %}
