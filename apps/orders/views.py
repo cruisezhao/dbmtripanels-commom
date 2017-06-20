@@ -123,7 +123,7 @@ class OrderCreateView(FormView):
         else:
             return HttpResponseRedirect("orders/error.html")
 
-        plan_list = get_list_or_404(Plans, product=product)
+        plan_list = product.plans.all()
         context['product'] = product
         context['plan_list'] = plan_list
         return context

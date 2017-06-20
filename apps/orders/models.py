@@ -21,8 +21,8 @@ class Orders(models.Model):
     package = models.ForeignKey(Packages, models.SET_NULL, null=True, blank=True)
     amount = models.DecimalField('Total Fee', max_digits=10, decimal_places=2, null=True)
     status = models.CharField(max_length=32, choices=ORDER_STATUS)
-    comment = models.TextField('Comment', max_length=2048, null=True, blank=True)
-    notes = models.TextField('Notes', max_length=2048, null=True, blank=True)
+    comment = models.TextField('Comment', max_length=2048, null=True, blank=True) #Recording order review comment info
+    notes = models.TextField('Notes', max_length=2048, null=True, blank=True) #Recording the notes writen by client When order create
     created_date = models.DateTimeField('Created Date', auto_now_add=True)
     updated_date = models.DateTimeField('Updated Date', auto_now=True)
 
