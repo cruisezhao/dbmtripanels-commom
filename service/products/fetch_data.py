@@ -10,12 +10,12 @@ import os
 # import urllib.parse as urlparse
 from schema import Schema
 
-from .load_utils import extract_file
-from .load_utils import load_from_dir
-from .exceptions import SoftwareLoadError
-from .settings import map_names
-from .settings import product_schema, app_schema, vm_schema, bare_schema
-from .settings import _DATA_CHECK
+from common.service.products.load_utils import extract_file
+from common.service.products.load_utils import load_from_dir
+from common.service.products.exceptions import SoftwareLoadError
+from common.service.products.settings import map_names
+from common.service.products.settings import product_schema, app_schema, vm_schema, bare_schema
+from common.service.products.settings import _DATA_CHECK
 
 
 def fetch(archive_path, target_dir=None, drop_dir=False):
@@ -48,10 +48,10 @@ def load_app_product(source_directory):
     template_file = 'product-app.yaml'
     
     app_product = load_data(source_directory, template_file, app_schema)
-    app_product["software_pic"] = source_directory + "/" +  \
-                                  app_product["software_pic"]   
-    app_product["software_img"] = source_directory + "/" +  \
-                                  app_product["software_img"]    
+    app_product["product_pic"] = source_directory + "/" +  \
+                                  app_product["product_pic"]
+    app_product["product_img"] = source_directory + "/" +  \
+                                  app_product["product_img"]
     return app_product
    
 def load_vm_product(source_directory):

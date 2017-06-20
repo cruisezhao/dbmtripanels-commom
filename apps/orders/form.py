@@ -1,5 +1,5 @@
 from django import forms
-from common.apps.products.models import Products, Plans
+from common.apps.products.models import Products, Plans, ProductApps
 from common.apps.orders.models import Orders, ORDER_STATUS
 from django.utils.translation import ugettext as _
 from django.shortcuts import get_object_or_404

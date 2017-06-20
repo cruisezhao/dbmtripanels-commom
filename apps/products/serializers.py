@@ -1,29 +1,28 @@
 from rest_framework import serializers
-from .models import Products
+from .models import ProductApps
 
 
-class ProductListSerializer(serializers.HyperlinkedModelSerializer):
+class ProductAppsListSerializer(serializers.HyperlinkedModelSerializer):
     '''
     serailizer for list on index page
     '''
     features = serializers.JSONField(read_only=True)
     # url = ParameterisedHyperlinkedIdentityField(view_name="software_detail", read_only=True)
     class Meta:
-        model = Products
-        fields = ['id', 'product_pic', 'name', 'type', 'summary', 'features']
+        model = ProductApps
+        fields = ['pk', 'product_pic', 'app_name', 'summary', 'features']
 
 
-class ProductDetailSerializer(serializers.ModelSerializer):
+class ProductAppsDetailSerializer(serializers.ModelSerializer):
     """software detail serialzer"""
     features = serializers.JSONField(read_only=True)
-    environments = serializers.JSONField(read_only=True)
     screenshots = serializers.JSONField(read_only=True,source='get_screenshots')
     videos = serializers.JSONField(read_only=True,source='get_videos')
 
     class Meta:
-        model = Products
-        fields = ['id', 'name', 'type','total_users', 'summary', 'description', 'product_url', 'product_pic',
+        model = ProductApps
+        fields = ['pk','app_name', 'total_users', 'summary', 'description', 'product_url', 'product_pic',
                   'product_img', 'latest_version', 'facebook_url', 'google_plus_url',
-                  'linkedin_url', 'twitter_url', 'document_url',  'free_plan', 'features', 'environments','screenshots',
+                  'linkedin_url', 'twitter_url', 'document_url',  'free_plan', 'features','screenshots',
                   'videos']
-        read_only_fields = ('name','type','features','environments','screenshot')
+        read_only_fields = ('pk','app_name','type','features','environments','screenshot')
