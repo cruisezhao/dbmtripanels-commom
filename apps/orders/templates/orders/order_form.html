@@ -11,97 +11,75 @@
 <div id="content">
 	<div class="product">
 		<div class="productImg">
-			<img src="{% static 'img/SCLogo.png' %}"/>
+			<!--<img src="{% static '{{product_app.product_pic}}' %}"/>-->
+			<img src="{% static 'C:\ClaireHuang\code\TriPanels\softwares\ecwid\images\ecwid.jpg' %}"/>
 		</div>				
 		<div class="productInfo">
-			<div class="name">X-cart Commerce</div>
-			<div class="summary">X-cart is a universal eCommerce platform fitting every merchant’s needs:X-cart is a universal eCommerce platform fitting every merchant’s needs: it powers both corporate and small business sites.</div>
-			<div class="discount">Six month free trial</div>
-			<div class="price">$ 16.99 /M</div>
+			{{form.product.errors}}
+			<div class="name">{{product_app.app_name}}</div>
+			<div class="summary">{{product_app.description}}</div>
+			<span class="hidden product_ID">{{product_uuid}}</span>
 		</div>
 	</div>
 	<div class="plan">
+		{{form.plan.errors}}
+		{% for plan in plan_list %}
 		<div class="plan1">
 			<div class="planSelect">
-				
 			</div>
 			<div class="planContent">
 				<div class="line1">
-					<div class="name">Express Windows VPS</div>
-					<div class="price">$ <span>10.99</span> /M</div>							
+					<div class="name">{{plan.name}}</div>
+					<div class="price">$ <span>{{plan.price}}</span> /M</div>
+					<span class="hidden plan_ID">{{plan.uuid}}</span>
 				</div>
 				<div class="line2">
 					<ul>
 						<li>CPU Cores</li>
-						<li>5GB</li>
+						<li>{{plan.cpu}}GB</li>
 						<li>Memory</li>
-						<li>8GB</li>
+						<li>{{plan.memory}}GB</li>
 						<li>Disks</li>
-						<li>100GB</li>
+						<li>{{plan.disk}}GB</li>
 						<li>Instance</li>
-						<li>1</li>
+						<li>{{plan.instance}}</li>
 					</ul>
 				</div>
 				<div class="line3">
-					Express Windows VPS is the best choice for novices. If your demand for resources is few, then Express Windows VPS it is!
+					{{plan.description}}
 				</div>
 			</div>
 		</div>
-		<div class="plan1">
-			<div class="planSelect">				
-			</div>
-			<div class="planContent">
-				<div class="line1">
-					<div class="name">Express Windows VPS</div>
-					<div class="price">$ <span>16.99</span> /M</div>
-					
-				</div>
-				<div class="line2">
-					<ul>
-						<li>CPU Cores</li>
-						<li>5GB</li>
-						<li>Memory</li>
-						<li>8GB</li>
-						<li>Disks</li>
-						<li>100GB</li>
-						<li>Instance</li>
-						<li>1</li>
-					</ul>
-				</div>
-				<div class="line3">
-					Express Windows VPS is the best choice for novices. If your demand for resources is few, then Express Windows VPS it is!
-				</div>
-			</div>
-		</div>
+		{% endfor %}
 	</div>
-	<div class="money">
-		<ul>
-			<li class="selected">
-				<div class="money1">Monthly $ <span class="priceNum">20.00</span></div>
-				<img src="{% static 'img/SC-66.png' %}" class="tick"/>
-			</li>
-			<li>
-				<div class="money2">Quarterly $ <span class="priceNum">57.00</span></div>
-				<p>$ 19.00 /M</p>
-			</li>
-			<li>
-				<div class="money2">Semi-Annually $ <span class="priceNum">108.00</span></div>
-				<p>$ 18.00 /M</p>
-			</li>
-			<li>
-				<div class="money2">Annually $ <span class="priceNum">204.00</span></div>
-				<p>$ 17.00 /M</p>
-			</li>
-			<li>
-				<div class="money2">Biennially $ <span class="priceNum">384.00</span></div>
-				<p>$ 16.00 /M</p>
-			</li>
-			<li>
-				<div class="money2">Triennially $ <span class="priceNum">540.00</span></div>
-				<p>$ 15.00 /M</p>
-			</li>
-		</ul>
-	</div>
+	<!--<div class="money">-->
+		<!--<ul>-->
+			<!--<li class="selected">-->
+				<!--<div class="money1">Monthly $ <span class="priceNum">20.00</span></div>-->
+				<!--<img src="{% static 'img/SC-66.png' %}" class="tick"/>-->
+			<!--</li>-->
+			<!--<li>-->
+				<!--<div class="money2">Quarterly $ <span class="priceNum">57.00</span></div>-->
+				<!--<p>$ 19.00 /M</p>-->
+			<!--</li>-->
+			<!--<li>-->
+				<!--<div class="money2">Semi-Annually $ <span class="priceNum">108.00</span></div>-->
+				<!--<p>$ 18.00 /M</p>-->
+			<!--</li>-->
+			<!--<li>-->
+				<!--<div class="money2">Annually $ <span class="priceNum">204.00</span></div>-->
+				<!--<p>$ 17.00 /M</p>-->
+			<!--</li>-->
+			<!--<li>-->
+				<!--<div class="money2">Biennially $ <span class="priceNum">384.00</span></div>-->
+				<!--<p>$ 16.00 /M</p>-->
+			<!--</li>-->
+			<!--<li>-->
+				<!--<div class="money2">Triennially $ <span class="priceNum">540.00</span></div>-->
+				<!--<p>$ 15.00 /M</p>-->
+			<!--</li>-->
+		<!--</ul>-->
+	<!--</div>-->
 	<div class="addition">
 		<div class="additonR">
 			Additional requirement
