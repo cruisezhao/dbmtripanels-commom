@@ -34,7 +34,7 @@ class Orders(models.Model):
         return self.package.client.email
     
     def get_product_name(self):
-        return self.product.name
+        return self.product.product_name
     
     def get_package_name(self):
         if self.package:
