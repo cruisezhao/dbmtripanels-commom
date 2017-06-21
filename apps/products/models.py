@@ -47,7 +47,7 @@ class Plans(CreatedUpdatedModel):
 
 class Products(CreatedUpdatedModel):
     """product model"""
-    plans = models.ManyToManyField(Plans)
+    plans = models.ManyToManyField(Plans, blank=True)
     uuid = models.CharField('uuid', default=uuid_to_str, editable=False, max_length = 255, unique = True, db_index = True)
     product_type = models.CharField('Type', max_length=32, null=False, blank=False)
     product_name = models.CharField('Name', max_length=255, unique=True)
@@ -58,7 +58,7 @@ class Products(CreatedUpdatedModel):
         db_table = "products"
 
     def __str__(self):
-        return self.name
+        return self.product_name
 
 
 class ProductApps(CreatedUpdatedModel):
@@ -101,7 +101,7 @@ class ProductApps(CreatedUpdatedModel):
         db_table = "product_apps"
 
     def __str__(self):
-        return "{}_{}".format(self.product.type,self.product.name)
+        return self.app_name
 
 
 class ProductVms(CreatedUpdatedModel):
@@ -114,7 +114,7 @@ class ProductVms(CreatedUpdatedModel):
         db_table = "product_vms"
 
     def __str__(self):
-        return "{}_{}".format(self.product.type, self.product.name)
+        return self.product.product_name
 
 
 class ProductBares(CreatedUpdatedModel):
@@ -127,7 +127,7 @@ class ProductBares(CreatedUpdatedModel):
         db_table = "product_bares"
 
     def __str__(self):
-        return "{}_{}".format(self.product.type, self.product.name)
+        return self.product.product_name
 
 
 class Screenshot(CreatedUpdatedModel):
@@ -170,7 +170,7 @@ class Review(CreatedUpdatedModel):
     updated_by = models.ForeignKey(settings.AUTH_USER_MODEL, default=None, related_name='ruu')
 
     def __str__(self):
-        return "{}-{}".format(self.product.name, self.created_by.name)
+        return "{}-{}".format(self.product.product_name, self.created_by.name)
 
     class Meta:
         verbose_name = "Reviews"
