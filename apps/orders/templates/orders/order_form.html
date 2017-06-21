@@ -125,9 +125,9 @@
 		<div id="other" class="line2">
 			<ul>
 				<li>Name</li>
-				<li>Newt Huang</li>
+				<li>{% if user.first_name is not None and user.last_name is not None %} {{user.first_name}} {{user.last_name}}{% else %}{{user.email}}{% endif %}</li>
 				<li>Contact Way</li>
-				<li>291053667@qq.com</li>
+				<li>{{user.email}}</li>
 				<li>Additional requirement</li>
 				<li id="addtion1"></li>
 				<!--<li>Created date</li>
@@ -150,10 +150,10 @@
 	</div>
 </div>
 <form action="" method="post" name="myform" id="myform" class="hidden">
+	{% csrf_token %}
 	<input type="text" name="product" id="product_ID1" value="" />
 	<input type="text" name="plan" id="plan_ID1" value="" />
-	<input type="text" name="notes" id="notes1" value="" />
-	<input type="submit" value="" name="submit"/>
+	<input type="text" name="notes" id="notes1" value="" />	
 </form>
 {% endblock rightcontent %}
 {% block scripts %}
