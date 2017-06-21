@@ -48,9 +48,9 @@ def load_app_product(source_directory):
     template_file = 'product-app.yaml'
     
     app_product = load_data(source_directory, template_file, app_schema)
-    app_product["product_pic"] = source_directory + "/" +  \
+    app_product["product_pic"] = os.path.basename(source_directory) + "/" +  \
                                   app_product["product_pic"]
-    app_product["product_img"] = source_directory + "/" +  \
+    app_product["product_img"] = os.path.basename(source_directory) + "/" +  \
                                   app_product["product_img"]
     return app_product
    
