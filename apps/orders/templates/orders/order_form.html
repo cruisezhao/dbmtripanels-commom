@@ -17,7 +17,8 @@
 			{{form.product.errors}}
 			<div class="name">{{product_app.app_name}}</div>
 			<div class="summary">{{product_app.description}}</div>
-			<span class="hidden product_ID">{{product_uuid}}</span>
+			<div class="discount">Six month free trial</div>
+			<span class="hidden" id="product_ID">{{product_uuid}}</span>
 		</div>
 	</div>
 	<div class="plan">
@@ -51,40 +52,37 @@
 		</div>
 		{% endfor %}
 	</div>
-	<!--<div class="money">-->
-		<!--<ul>-->
-			<!--<li class="selected">-->
-				<!--<div class="money1">Monthly $ <span class="priceNum">20.00</span></div>-->
-				<!--<img src="{% static 'img/SC-66.png' %}" class="tick"/>-->
-			<!--</li>-->
-			<!--<li>-->
-				<!--<div class="money2">Quarterly $ <span class="priceNum">57.00</span></div>-->
-				<!--<p>$ 19.00 /M</p>-->
-			<!--</li>-->
-			<!--<li>-->
-				<!--<div class="money2">Semi-Annually $ <span class="priceNum">108.00</span></div>-->
-				<!--<p>$ 18.00 /M</p>-->
-			<!--</li>-->
-			<!--<li>-->
-				<!--<div class="money2">Annually $ <span class="priceNum">204.00</span></div>-->
-				<!--<p>$ 17.00 /M</p>-->
-			<!--</li>-->
-			<!--<li>-->
-				<!--<div class="money2">Biennially $ <span class="priceNum">384.00</span></div>-->
-				<!--<p>$ 16.00 /M</p>-->
-			<!--</li>-->
-			<!--<li>-->
-				<!--<div class="money2">Triennially $ <span class="priceNum">540.00</span></div>-->
-				<!--<p>$ 15.00 /M</p>-->
-			<!--</li>-->
-		<!--</ul>-->
-	<!--</div>-->
+	
+	<!--<div class="money">
+		<ul>
+			<li class="selected">
+				<div class="money1">Monthly $ <span class="priceNum">20.00</span></div>
+				<img src="{% static 'img/SC-66.png' %}" class="tick"/>
+			</li>
+			<li>
+				<div class="money2">Quarterly $ <span class="priceNum">57.00</span></div>
+				<p>$ 19.00 /M</p>
+			</li>
+			<li>
+				<div class="money2">Semi-Annually $ <span class="priceNum">108.00</span></div>
+				<p>$ 18.00 /M</p>
+			</li>
+			<li>
+				<div class="money2">Annually $ <span class="priceNum">204.00</span></div>
+				<p>$ 17.00 /M</p>
+			</li>
+			<li>
+				<div class="money2">Biennially $ <span class="priceNum">384.00</span></div>
+				<p>$ 16.00 /M</p>
+			</li>			
+		</ul>		
+	</div>	-->
 	<div class="addition">
 		<div class="additonR">
 			Additional requirement
 		</div>
 		<div class="additonRE">
-			<input type="text" name="" id="" value="" />
+			<input type="text" name="" id="requirment" value="" />
 		</div>
 	</div>
 	<div class="total">
@@ -117,7 +115,7 @@
 		<div id="product">
 			<div>
 				<div class="name">X-cart</div>
-				<div class="price">$ 16.99 /M</div>
+				<!--<div class="price">$ 16.99 /M</div>-->
 				<div class="discount">Six month free trial</div>
 			</div>
 			<div class="summary">X-cart Commerce is a universal eCommerce platform fitting every merchant’s needs: it powers both corporate and small business sites all over the world, companies selling physical and digital goods , companies selling physical and digital goods. </div>
@@ -130,15 +128,14 @@
 				<li>Newt Huang</li>
 				<li>Contact Way</li>
 				<li>291053667@qq.com</li>
-				<li>Created date</li>
+				<li>Additional requirement</li>
+				<li id="addtion1"></li>
+				<!--<li>Created date</li>
 				<li>06/11/2017</li>
 				<li>Expiration date</li>
-				<li>12/11/2017</li>
+				<li>12/11/2017</li>-->
 			</ul>
-			<ul>
-				<li>Additional requirement</li>
-				<li>Please email me when you established !</li>
-			</ul>
+			
 		</div>
 	</div>
 	<div class="total">
@@ -146,12 +143,18 @@
 			<div class="totalAmount">
 				Total Amount $ <span>0.00</span> /M
 			</div>
-			<div class="buy">
+			<div class="buy" id="confirmOrder">
 				Confirm order
 			</div>
 		</div>
 	</div>
-</div>	
+</div>
+<form action="" method="post" name="myform" id="myform" class="hidden">
+	<input type="text" name="product" id="product_ID1" value="" />
+	<input type="text" name="plan" id="plan_ID1" value="" />
+	<input type="text" name="notes" id="notes1" value="" />
+	<input type="submit" value="" name="submit"/>
+</form>
 {% endblock rightcontent %}
 {% block scripts %}
   <script src="{% static 'js/order_form.js' %}"></script>
