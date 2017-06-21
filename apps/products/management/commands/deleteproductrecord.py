@@ -1,12 +1,12 @@
-import sys
-import django
-import os
-base = "D:/dbm/gitlab_test/bbbbbtripanel/admin/admin/admin/"
-sys.path.append(base)
-os.environ.setdefault("DJANGO_SETTINGS_MODULE", "local_settings")
-import pymysql
-pymysql.install_as_MySQLdb()
-django.setup()
+# import sys
+# import django
+# import os
+# base = "D:/dbm/gitlab_test/bbbbbtripanel/admin/admin/admin/"
+# sys.path.append(base)
+# os.environ.setdefault("DJANGO_SETTINGS_MODULE", "local_settings")
+# import pymysql
+# pymysql.install_as_MySQLdb()
+# django.setup()
 
 from django.core.management import BaseCommand
 from common.apps.products.models import (Products, Plans, Screenshot,
