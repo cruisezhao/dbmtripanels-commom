@@ -37,7 +37,7 @@ class ProductDetail(generics.GenericAPIView):
     def get(self, request, *args, **kwargs):
         try:
             id = request.query_params.get('id', None)
-            result = generics.get_object_or_404(ProductApps, pk=id)
+            result = generics.get_object_or_404(ProductApps, uuid=id)
         except Exception as e:
             print(e)
             return Response("error", status=status.HTTP_404_NOT_FOUND)
