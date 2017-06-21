@@ -149,11 +149,12 @@
 		</div>
 	</div>
 </div>
-<form action="" method="post" name="myform" id="myform" class="hidden">
+
+<form method="post" id="myform" class="hidden">
 	{% csrf_token %}
 	<input type="text" name="product" id="product_ID1" value="" />
 	<input type="text" name="plan" id="plan_ID1" value="" />
-	<input type="text" name="notes" id="notes1" value="" />	
+	<input type="text" name="notes" id="notes1" value="" />
 </form>
 {% endblock rightcontent %}
 {% block scripts %}
