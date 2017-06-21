@@ -30,7 +30,11 @@
 			<div class="planContent">
 				<div class="line1">
 					<div class="name">{{plan.name}}</div>
-					<div class="price">$ <span>{{plan.price}}</span> /M</div>
+					{% ifequal plan.price 0 %}
+					 <div class="price"><span style="color:#00b556">Free</span></div>
+					{% else %}
+					 <div class="price">$ <span>{{plan.price}}</span> /M</div>
+					{% endifequal %}
 					<span class="hidden plan_ID">{{plan.uuid}}</span>
 				</div>
 				<div class="line2">
