@@ -19,6 +19,7 @@ class ProductAppsDetailSerializer(serializers.ModelSerializer):
     features = serializers.JSONField(read_only=True)
     screenshots = serializers.JSONField(read_only=True,source='get_screenshots')
     videos = serializers.JSONField(read_only=True,source='get_videos')
+    uuid = serializers.JSONField(read_only=True,source='get_product_uuid')
 
     class Meta:
         model = ProductApps
