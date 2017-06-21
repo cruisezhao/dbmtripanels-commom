@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, render_to_response
 
 from .form import OrderCreateForm, OrderSearchForm, OrderForm
 from django.views.generic import TemplateView
@@ -122,7 +122,7 @@ class OrderCreateView(FormView):
             product = get_object_or_404(Products, uuid=prouuid)
             product_app = get_object_or_404(ProductApps, product=product)
         else:
-            return HttpResponseRedirect("orders/error.html")
+            return render_to_response('orders/error.html', {'message':'Can not get product information.'})
 
         plan_list = product.plans.all()
         context['product_uuid']=prouuid
