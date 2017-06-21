@@ -104,6 +104,9 @@ class ProductApps(CreatedUpdatedModel):
     def __str__(self):
         return self.app_name
 
+    def get_product_uuid(self):
+        return self.product.uuid
+
 
 class ProductVms(CreatedUpdatedModel):
     """vm model"""

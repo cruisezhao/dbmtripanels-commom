@@ -7,6 +7,7 @@ class ProductAppsListSerializer(serializers.HyperlinkedModelSerializer):
     serailizer for list on index page
     '''
     features = serializers.JSONField(read_only=True)
+    uuid = serializers.JSONField(read_only=True,source='get_product_uuid')
     # url = ParameterisedHyperlinkedIdentityField(view_name="software_detail", read_only=True)
     class Meta:
         model = ProductApps
