@@ -54,7 +54,7 @@
             <div class="c-pro-list-wrap">
               <!--ProIMG-->
               <div class="c-pro-imgbar">
-                <a href="http://portal.databasemart.net/product.html?id={{ pkg.get_software_id }}">
+                <a href="http://portal.tripanels.com/product.html?id={{ pkg.get_product_id }}">
                   <img src="{{ pkg.get_product_pic_path }}"/>
                 </a>
               </div>
@@ -83,7 +83,7 @@
                 <ul class="c-pro-dateinf">
                   <li class="c-pro-ord-col">
                     <span class="c-pro-class">Order Number</span>
-                    <span>{{ pkg.get_product_order.id }}</span>
+                    <span>{{ pkg.get_product_order.uuid }}</span>
                   </li>
                   <li class="c-pro-ord-col">
                     <span class="c-pro-class">Hardware</span>
@@ -103,9 +103,9 @@
 
               {% if pkg.status == 'Active' %}
 
-                <a href="{% url 'packages:productdetails' pkg.pk %}" class="c-priceBar-btn ">Product details</a>
+                <a href="{% url 'packages:productdetails' pkg.uuid %}" class="c-priceBar-btn ">Product details</a>
               {% else %}
-                <a href="{% url 'packages:productdetails' pkg.pk %}" class="c-priceBar-btn c-priceBar-disabled">Product details</a>
+                <a href="{% url 'packages:productdetails' pkg.uuid %}" class="c-priceBar-btn c-priceBar-disabled">Product details</a>
               {% endif %}
 
               </div>

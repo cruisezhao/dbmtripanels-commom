@@ -1,0 +1,111 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+{% load static %}
+{% block styles %}
+
+
+
+{% endblock styles %}
+
+
+{% block content %}
+  <!--BreadNav-->
+  <ol class="breadcrumb">
+      <li><a href="{% url 'home' %}">Home</a></li>
+      <li><a href="{% url 'orders:list' %}">Orders</a></li>
+      <li class="active">Order Updating</li>
+  </ol>
+  <!--AlertBar-->
+  <div id="up" class="alert-style-success" style="display:none;">
+    Order was successfully updated
+  </div>
+  <!--ProfileSetting-->
+  <div class="widget">
+    <div class="widget-header">
+      <h3>Orders</h3>
+    </div> <!-- /widget-header -->
+
+    <div class="widget-content">
+      <!--tabNav-->
+      <div class="tabbable">
+
+         <br />
+         <!--tabContent-->
+         <div class="tab-content">
+           <!-- /widget-tab-pane1 -->
+            {% if messages %}
+            <ul class="messages alert-style-success">
+                {% for message in messages %}
+                <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+                {% endfor %}
+            </ul>
+            {% endif %}
+
+           {% block tab %}
+
+             <form class="form-horizontal" action="" method="post">
+                {% csrf_token %}
+                {% for field in form %}
+
+                        <div class="control-group">
+
+                            {{ field.errors }}
+                            {{ field.label_tag }} {{ field }}
+                            {% if field.help_text %}
+                            <p class="help">{{ field.help_text|safe }}</p>
+                            {% endif %}
+                        </div>
+
+                {% endfor %}
+                <div class="form-actions">
+                      <button id=""  type="submit" class="btn dbm-btn-safety">Update Order</button>
+
+                </div> <!-- /form-actions -->
+            </form>
+           {% endblock tab %}
+
+        </div><!-- /widget-tabContent -->
+      </div><!-- /widget-tabbable -->
+    </div> <!-- /widget-content -->
+  </div><!-- /widget-->
+
+{% endblock content %}
+
+{% block scripts %}
+
+
+
+  <script>
+    $(document).ready(function() {
+
+
+
+        // $('#update-profile').click(function() {
+        //   $('.alert-style-success').css('display','block');
+        //   $('.alert-style-success').fadeOut(9000);
+        // });
+        var $messagesul = $('ul.messages');
+        if (typeof($messagesul) != "undefined") {
+          $messagesul.fadeOut(7000);
+        }
+
+        var ids = ["#id_id", "#id_product_name", "#id_user_name"];
+        for (var i = ids.length - 1; i >= 0; i--) {
+          $(ids[i]).attr('readonly','readonly');
+          $(ids[i]).css('cursor','not-allowed');
+        }
+
+
+        var thisactiv = $('#accountbar li:first-child a' );
+        $("#accountbar .link-submenu").css('display','block');
+        thisactiv.addClass('focus-active');
+      });
+
+
+          var thisactiv = $('#accountbar li:first-child a' );
+          $("#accountbar .link-submenu").css('display','block');
+          thisactiv.addClass('focus-active');
+
+
+  </script>
+{% endblock scripts %}

@@ -73,7 +73,7 @@
 
                     {% for order in order_list %}
                       <tr>
-                        <td><a href="{% url 'orders:detail' order.id %}">{{ order.id }}</a></td>
+                        <td><a href="{% url 'orders:detail' order.uuid %}">{{ order.uuid }}</a></td>
                         <td>{{ order.get_user_email }}</td>
                         <td>{{ order.created_date }}</td>
                         <td>{{ order.get_product_name }}</td>

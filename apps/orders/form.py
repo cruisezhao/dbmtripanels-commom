@@ -4,6 +4,7 @@ from common.apps.orders.models import Orders, ORDER_STATUS
 from django.utils.translation import ugettext as _
 from django.shortcuts import get_object_or_404
 from django.db import transaction
+from common.apps.packages.models import Packages
 
 
 SEARCH_DATE = (
@@ -21,36 +22,47 @@ SEARCH_STATUS.extend(ORDER_STATUS)
 
                 
 class OrderSearchForm(forms.Form):
-    id = forms.CharField(label=_("Order ID"), required=False)
+    uuid = forms.CharField(label=_("Order ID"), required=False)
     created_date = forms.ChoiceField(label=_("Order Date"), choices=SEARCH_DATE, required=False)
     status = forms.ChoiceField(label=_("Order Status"), choices=SEARCH_STATUS, required=False)
 
 class OrderForm(forms.Form):
-    id = forms.CharField(label=_("Order ID"))
+    uuid = forms.CharField(label=_("Order ID"))
     product_name = forms.CharField(label=_("Product Name"))
     user_name = forms.CharField(label=_("User Name"))
     status = forms.ChoiceField(label=_("Order Status"), choices=ORDER_STATUS)
-    remarks = forms.CharField(widget=forms.Textarea, required=False)
+    comment = forms.CharField(widget=forms.Textarea, required=False)
 
     @transaction.atomic
     def save(self):
-        order = Orders.objects.get(id = self.cleaned_data['id'])
+        order = Orders.objects.get(uuid = self.cleaned_data['uuid'])
         order.status = self.cleaned_data['status']
-        order.remarks = self.cleaned_data['remarks']
-        order.save()
+        order.comment = self.cleaned_data['comment']
         
+        
+        if order.status == 'Active' and not order.package:
+            pkg = Packages.objects.create(package_name=order.get_product_name(), 
+                                              client=order.client, 
+                                              status='Pending', 
+                                              amount=order.amount,
+                                              cpu=order.get_cpu_cores(),
+                                              memory=order.get_memory(),
+                                              disk=order.get_disks(),
+                                              )
+            order.package = pkg
+        order.save()
 #         planorder = PlanOrders.objects.get(package = order.package)
 #         planorder.status = self.cleaned_data['status']
 #         planorder.save()
     
     @classmethod
     def gen_data(cls, productorder_id):
-        order = Orders.objects.get(id = productorder_id)
-        return {'id':order.id, 
-                'product_name':order.product.software.name, 
-                'user_name':order.package.user.email, 
+        order = Orders.objects.get(uuid = productorder_id)
+        return {'uuid':order.uuid, 
+                'product_name':order.get_product_name(), 
+                'user_name':order.get_user_email(), 
                 'status': order.status,
-                'remarks': order.remarks}
+                'comment': order.comment}
 
 
 

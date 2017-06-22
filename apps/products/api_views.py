@@ -1,4 +1,4 @@
-from .models import ProductApps, ACTIVE_STATUS
+from .models import ProductApps, ACTIVE_STATUS, Products
 from rest_framework import generics, mixins
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from .serializers import ProductAppsListSerializer, ProductAppsDetailSerializer
@@ -37,7 +37,8 @@ class ProductDetail(generics.GenericAPIView):
     def get(self, request, *args, **kwargs):
         try:
             id = request.query_params.get('id', None)
-            result = generics.get_object_or_404(ProductApps, pk=id)
+            p = generics.get_object_or_404(Products, uuid=id)
+            result = generics.get_object_or_404(ProductApps, product=p)
         except Exception as e:
             print(e)
             return Response("error", status=status.HTTP_404_NOT_FOUND)

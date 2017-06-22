@@ -4,8 +4,6 @@ import operator
 from crudbuilder.abstract import BaseCrudBuilder
 #from django.contrib.auth import get_user_model
 from .models import Clients
-User = Clients
-
 from functools import reduce
 from django.db.models import Q
 
@@ -20,16 +18,16 @@ from common.apps.clients.forms import UserForm
 
 class UserCrud(BaseCrudBuilder):
     """user crud"""
-    model = User
+    model = Clients
     custom_modelform = UserForm
-    search_fields = ['first_name','last_name','email','is_active','date_joined','phone_number','last_login_ip',]
-    tables2_fields = ('first_name','last_name','email','is_active','date_joined','phone_number','last_login_ip')
+    search_fields = ['uuid','first_name','last_name','email','is_active','date_joined','phone_number','last_login_ip',]
+    tables2_fields = ('uuid','first_name','last_name','email','is_active','date_joined','phone_number','last_login_ip')
     tables2_css_class = "table table-bordered table-condensed"
     tables2_pagination = 5
     login_required=False
     permission_required=False
     #inlineformset = OpenstackUserInlineFormset
-    detailview_excludes = ['password','picture']
+    detailview_excludes = ['id','password','picture']
     ordering = '-date_joined'
 
     custom_templates = {
@@ -58,7 +56,7 @@ class UserCrud(BaseCrudBuilder):
 
 def search_user(d):
     """search user"""
-    objects = User.objects.all()
+    objects = Clients.objects.all()
     if ''.join([d[k] for k in d if k !='page' and k != 'sort']):
         q_list = [Q(
                     ("{}__icontains".format(k),d[k]))

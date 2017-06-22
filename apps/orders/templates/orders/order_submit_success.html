@@ -10,25 +10,20 @@
 
 
 {% block rightcontent %}
-<div id="content" class="container">
-  <div class="line1">
-    <div id="Img">
-      <img src="{% static 'img/true.jpg' %}"/>
-    </div>
-    <div id="consequence">
-      <h3>You have applied for a six month trial.</h3>
-      <h4>You can start the trial two hours later.</h4>
-    </div>
-  </div>
-  <div class="line2">
-    <input type="button" id="thisproduct" value="Back to this product" />
-    <input type="button" name="" id="productlist" value="Check the product list" />
-  </div>
-  <div class="line3">
-    <p>SolidClusters won’t send email to tell you there’s a problem about your order.
-      Please don’t be fooled. If you still have a problem about this free trial,
-      please refer to our <span>Trial Terms.</span></p>
-  </div>
+<div id="content">
+		<div class="line1">					
+				<h4>Purchase successfully !</h4>
+				<p>You have applied for a six month free trial.  You can start the trial an hour later.</p>
+		</div>
+		<div class="line2">
+				<input type="button" id="thisproduct" value="Check my product lis"/>
+				<input type="button" name="" id="productlist" value="Check my order list" />
+		</div>
+		<div class="line3">
+				<p>SolidClusters won’t send email to tell you there’s a problem about your order. 
+					Please don’t be fooled. If you still have a problem about this free trial, 
+					please refer to our <span>Trial Terms.</span></p>
+		</div>
 </div>
 {% endblock rightcontent %}
 
@@ -37,5 +32,5 @@
 {% endblock extra_scripts %}
 
 {% block scripts %}
-<script src="{% static 'js/trialfailed.js' %}"></script>
+<script src="{% static 'js/trialsuccess.js' %}"></script>
 {% endblock scripts %}

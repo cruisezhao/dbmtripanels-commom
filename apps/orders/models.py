@@ -31,10 +31,10 @@ class Orders(models.Model):
         ordering = ['-created_date']
     
     def get_user_email(self):
-        return self.package.client.email
+        return self.client.email
     
     def get_product_name(self):
-        return self.product.name
+        return self.product.product_name
     
     def get_package_name(self):
         if self.package:
@@ -43,7 +43,7 @@ class Orders(models.Model):
             return ''
         
     def get_user_remarks(self):
-        return self.comment
+        return self.notes
     
     def get_plan_name(self):
         return self.plan.name

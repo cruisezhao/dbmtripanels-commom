@@ -4,6 +4,7 @@ from django.db import models
 from common.utilities.models import CreatedUpdatedModel
 from common.utilities.utils import uuid_to_str
 from django.conf import settings
+from common.apps.clients.models import Clients
 
 # Package状态：
 # Pending    - ordering a product
@@ -20,13 +21,14 @@ PACKAGE_STATUS= (
     ('Invalid','Invalid'),
     )
 
+
 # Create your models here.
 class Packages(CreatedUpdatedModel):
     """Packages"""
     uuid = models.CharField(unique=True, default=uuid_to_str, max_length=255, editable=False)
     package_name = models.CharField(max_length=100)
     description = models.TextField('Description',null=True, blank=True)
-    client = models.ForeignKey(settings.AUTH_USER_MODEL,on_delete=models.DO_NOTHING)
+    client = models.ForeignKey(Clients,on_delete=models.DO_NOTHING)
     next_due_date = models.DateField(auto_now=False, auto_now_add=False, null=True, blank=True)
     amount = models.DecimalField('Package Fee', max_digits=6, decimal_places=2, null=True, blank=True)
     status = models.CharField(max_length=32, choices=PACKAGE_STATUS)
@@ -47,7 +49,7 @@ class Packages(CreatedUpdatedModel):
         return self.package_name
     
     def get_product_name(self):
-        return self.get_product_order().product.name
+        return self.get_product_order().product.product_name
     
     def get_product_id(self):
         return self.get_product_order().product.uuid

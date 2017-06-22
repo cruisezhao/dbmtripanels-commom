@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, render_to_response
 
 from .form import OrderCreateForm, OrderSearchForm, OrderForm
 from django.views.generic import TemplateView
@@ -14,7 +14,7 @@ from .models import Orders
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from django.contrib import messages
 from common.apps.packages.models import Packages
-
+from django.utils.translation import ugettext as _
 
 ORDERS_PER_PAGE = 10
 
@@ -26,7 +26,7 @@ def list_orders(request, template_name='orders/orderlist_staff.html'):
         
     else:
         data = {
-                'id':request.GET.get('id',''),
+                'uuid':request.GET.get('uuid',''),
                 'created_date':request.GET.get('created_date', ''),
                 'status':request.GET.get('status','')
             }
@@ -34,8 +34,8 @@ def list_orders(request, template_name='orders/orderlist_staff.html'):
     kwargs = {}
     if form.is_valid():
                 
-        if form.cleaned_data['id']:
-            kwargs['id__contains'] = form.cleaned_data['id']
+        if form.cleaned_data['uuid']:
+            kwargs['uuid__contains'] = form.cleaned_data['uuid']
         if form.cleaned_data['created_date']:
             kwargs['created_date__lte'] = datetime.datetime.now()
             kwargs['created_date__gte'] = datetime.datetime.now() - datetime.timedelta(days=int(form.cleaned_data['created_date']))
@@ -61,7 +61,7 @@ def list_orders(request, template_name='orders/orderlist_staff.html'):
 
 
 @login_required
-def detail_orders(request, id, template_name='orders/orderdetail_admin.html'):
+def detail_orders(request, uuid, template_name='orders/orderdetail_staff.html'):
     if request.method == 'POST':
         form = OrderForm(request.POST)
         if form.is_valid():
@@ -72,7 +72,7 @@ def detail_orders(request, id, template_name='orders/orderdetail_admin.html'):
             #return HttpResponseRedirect(reverse('accounts:profile_social'))
     # if a GET (or any other method) we'll create a new form by user model from DB           
     else:
-        data = OrderForm.gen_data(id)
+        data = OrderForm.gen_data(uuid)
         form = OrderForm(data)
         
     return render(request, template_name, {'form':form})
@@ -122,7 +122,7 @@ class OrderCreateView(FormView):
             product = get_object_or_404(Products, uuid=prouuid)
             product_app = get_object_or_404(ProductApps, product=product)
         else:
-            return HttpResponseRedirect("orders/error.html")
+            return render_to_response('orders/error.html', {'message':'Can not get product information.'})
 
         plan_list = product.plans.all()
         context['product_uuid']=prouuid
