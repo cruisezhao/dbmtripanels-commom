@@ -17,6 +17,7 @@ class ProductAppsListSerializer(serializers.HyperlinkedModelSerializer):
 class ProductAppsDetailSerializer(serializers.ModelSerializer):
     """software detail serialzer"""
     features = serializers.JSONField(read_only=True)
+    environments = serializers.JSONField(read_only=True)
     screenshots = serializers.JSONField(read_only=True,source='get_screenshots')
     videos = serializers.JSONField(read_only=True,source='get_videos')
     uuid = serializers.JSONField(read_only=True,source='get_product_uuid')
@@ -25,6 +26,6 @@ class ProductAppsDetailSerializer(serializers.ModelSerializer):
         model = ProductApps
         fields = ['pk','uuid','app_name', 'total_users', 'summary', 'description', 'product_url', 'product_pic',
                   'product_img', 'latest_version', 'facebook_url', 'google_plus_url',
-                  'linkedin_url', 'twitter_url', 'document_url',  'free_plan', 'features','screenshots',
+                  'linkedin_url', 'twitter_url', 'document_url',  'free_plan', 'features', 'environments','screenshots',
                   'videos']
         read_only_fields = ('pk','app_name','type','features','environments','screenshot')
