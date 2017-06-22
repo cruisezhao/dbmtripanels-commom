@@ -204,7 +204,7 @@ class UserForm(forms.ModelForm):
      """list user profile in admin site"""
      class Meta:
          model = User
-         exclude = ('password', 'picture')
+         exclude = ('id','password', 'picture')
 
      def __init__(self, *args, **kwargs):
          self.request = kwargs.pop('request', None)

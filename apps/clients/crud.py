@@ -20,14 +20,14 @@ class UserCrud(BaseCrudBuilder):
     """user crud"""
     model = Clients
     custom_modelform = UserForm
-    search_fields = ['first_name','last_name','email','is_active','date_joined','phone_number','last_login_ip',]
-    tables2_fields = ('first_name','last_name','email','is_active','date_joined','phone_number','last_login_ip')
+    search_fields = ['uuid','first_name','last_name','email','is_active','date_joined','phone_number','last_login_ip',]
+    tables2_fields = ('uuid','first_name','last_name','email','is_active','date_joined','phone_number','last_login_ip')
     tables2_css_class = "table table-bordered table-condensed"
     tables2_pagination = 5
     login_required=False
     permission_required=False
     #inlineformset = OpenstackUserInlineFormset
-    detailview_excludes = ['password','picture']
+    detailview_excludes = ['id','password','picture']
     ordering = '-date_joined'
 
     custom_templates = {
