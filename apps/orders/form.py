@@ -38,10 +38,10 @@ class OrderForm(forms.Form):
         order = Orders.objects.get(uuid = self.cleaned_data['uuid'])
         order.status = self.cleaned_data['status']
         order.comment = self.cleaned_data['comment']
-        order.save()
+        
         
         if order.status == 'Active':
-            Packages.objects.create(package_name=order.get_product_name(), 
+            pkg = Packages.objects.create(package_name=order.get_product_name(), 
                                               client=order.client, 
                                               status='Pending', 
                                               amount=order.amount,
@@ -49,6 +49,8 @@ class OrderForm(forms.Form):
                                               memory=order.get_memory(),
                                               disk=order.get_disks(),
                                               )
+            order.package = pkg
+        order.save()
 #         planorder = PlanOrders.objects.get(package = order.package)
 #         planorder.status = self.cleaned_data['status']
 #         planorder.save()

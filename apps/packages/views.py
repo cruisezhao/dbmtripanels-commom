@@ -19,6 +19,7 @@ def list_user_products(request, template_name='packages/product_list.html'):
             return JsonResponse({'retcode':0, 'desc':'update successfully'})
         return JsonResponse({'retcode':1, 'desc':'updating fails'})
     
+@login_required    
 def product_details(request, pid, template_name='packages/product_detail.html'):
     #pkg = Packages.objects.filter(user__pk=request.user.pk).get(id=pid)
     
