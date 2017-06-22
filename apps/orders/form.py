@@ -34,7 +34,7 @@ class OrderForm(forms.Form):
 
     @transaction.atomic
     def save(self):
-        order = Orders.objects.get(id = self.cleaned_data['uuid'])
+        order = Orders.objects.get(uuid = self.cleaned_data['uuid'])
         order.status = self.cleaned_data['status']
         order.remarks = self.cleaned_data['remarks']
         order.save()

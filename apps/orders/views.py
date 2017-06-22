@@ -61,7 +61,7 @@ def list_orders(request, template_name='orders/orderlist_staff.html'):
 
 
 @login_required
-def detail_orders(request, id, template_name='orders/orderdetail_admin.html'):
+def detail_orders(request, uuid, template_name='orders/orderdetail_admin.html'):
     if request.method == 'POST':
         form = OrderForm(request.POST)
         if form.is_valid():
@@ -72,7 +72,7 @@ def detail_orders(request, id, template_name='orders/orderdetail_admin.html'):
             #return HttpResponseRedirect(reverse('accounts:profile_social'))
     # if a GET (or any other method) we'll create a new form by user model from DB           
     else:
-        data = OrderForm.gen_data(id)
+        data = OrderForm.gen_data(uuid)
         form = OrderForm(data)
         
     return render(request, template_name, {'form':form})
