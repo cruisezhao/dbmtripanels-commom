@@ -107,6 +107,18 @@ class ProductApps(CreatedUpdatedModel):
     def get_product_uuid(self):
         return self.product.uuid
 
+    def get_screenshots(self):
+        """return productapp related screenshot"""
+        screenshots = Screenshot.objects.filter(product=self)
+        dict_screenshots = dict(zip([s.id for s in screenshots],[s.url for s in screenshots]))
+        return dict_screenshots
+
+    def get_videos(self):
+        """return productapp related video"""
+        screenshots = Video.objects.filter(product=self)
+        dict_screenshots = dict(zip([s.id for s in screenshots],[s.url for s in screenshots]))
+        return dict_screenshots
+
 
 class ProductVms(CreatedUpdatedModel):
     """vm model"""
