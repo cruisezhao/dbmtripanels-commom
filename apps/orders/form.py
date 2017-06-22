@@ -21,12 +21,12 @@ SEARCH_STATUS.extend(ORDER_STATUS)
 
                 
 class OrderSearchForm(forms.Form):
-    id = forms.CharField(label=_("Order ID"), required=False)
+    uuid = forms.CharField(label=_("Order ID"), required=False)
     created_date = forms.ChoiceField(label=_("Order Date"), choices=SEARCH_DATE, required=False)
     status = forms.ChoiceField(label=_("Order Status"), choices=SEARCH_STATUS, required=False)
 
 class OrderForm(forms.Form):
-    id = forms.CharField(label=_("Order ID"))
+    uuid = forms.CharField(label=_("Order ID"))
     product_name = forms.CharField(label=_("Product Name"))
     user_name = forms.CharField(label=_("User Name"))
     status = forms.ChoiceField(label=_("Order Status"), choices=ORDER_STATUS)
@@ -34,7 +34,7 @@ class OrderForm(forms.Form):
 
     @transaction.atomic
     def save(self):
-        order = Orders.objects.get(id = self.cleaned_data['id'])
+        order = Orders.objects.get(id = self.cleaned_data['uuid'])
         order.status = self.cleaned_data['status']
         order.remarks = self.cleaned_data['remarks']
         order.save()
@@ -46,9 +46,9 @@ class OrderForm(forms.Form):
     @classmethod
     def gen_data(cls, productorder_id):
         order = Orders.objects.get(id = productorder_id)
-        return {'id':order.id, 
-                'product_name':order.product.software.name, 
-                'user_name':order.package.user.email, 
+        return {'uuid':order.uuid, 
+                'product_name':order.get_product_name(), 
+                'user_name':order.get_user_email(), 
                 'status': order.status,
                 'remarks': order.remarks}
 
