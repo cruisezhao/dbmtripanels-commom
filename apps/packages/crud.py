@@ -18,6 +18,13 @@ class PackageCrud(BaseCrudBuilder,CrudContextMixin, CrudQuerySetMixin):
     ordering = '-created'
     #modelform_excludes = ('created_by','updated_by')
     custom_modelform = PackageForm
+    custom_templates = {
+        'list': 'packages/product_list_staff.html',
+        'create': 'yourtemplates/your_create_template.html',
+        'detail': 'packages/product_detail_staff.html',
+        'update': 'packages/product_update_staff.html',
+        'delete': 'yourtemplates/your_delete_template.html'
+    }
     
     
     

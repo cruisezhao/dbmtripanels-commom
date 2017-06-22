@@ -64,7 +64,6 @@ class Products(CreatedUpdatedModel):
 class ProductApps(CreatedUpdatedModel):
     """software app"""
     product = models.OneToOneField(Products, primary_key=True)
-    uuid = models.CharField('uuid', default=uuid_to_str, editable=False, max_length = 255, unique = True, db_index = True)
     app_name = models.CharField('Name', max_length=255, unique=True)
     summary = models.TextField('Summary', null=True, blank=True)
     description = models.TextField('Description',null=True, blank=True)
@@ -107,6 +106,18 @@ class ProductApps(CreatedUpdatedModel):
 
     def get_product_uuid(self):
         return self.product.uuid
+
+    def get_screenshots(self):
+        """return productapp related screenshot"""
+        screenshots = Screenshot.objects.filter(product=self)
+        dict_screenshots = dict(zip([s.id for s in screenshots],[s.url for s in screenshots]))
+        return dict_screenshots
+
+    def get_videos(self):
+        """return productapp related video"""
+        screenshots = Video.objects.filter(product=self)
+        dict_screenshots = dict(zip([s.id for s in screenshots],[s.url for s in screenshots]))
+        return dict_screenshots
 
 
 class ProductVms(CreatedUpdatedModel):

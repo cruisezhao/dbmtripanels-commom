@@ -7,7 +7,7 @@ class CrudContextMixin(object):
     @classmethod
     def custom_context(cls, request, context, **kwargs):
         """context for render"""
-        initial_data = dict(zip(cls.search_fields,[request.GET.get(field,None) for field in cls.search_fields]))
+        #initial_data = dict(zip(cls.search_fields,[request.GET.get(field,None) for field in cls.search_fields]))
         context['search_fields'] = cls.search_fields
         return context
     
