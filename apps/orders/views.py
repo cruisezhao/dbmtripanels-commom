@@ -14,7 +14,7 @@ from .models import Orders
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from django.contrib import messages
 from common.apps.packages.models import Packages
-
+from django.utils.translation import ugettext as _
 
 ORDERS_PER_PAGE = 10
 
