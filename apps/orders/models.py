@@ -43,7 +43,7 @@ class Orders(models.Model):
             return ''
         
     def get_user_remarks(self):
-        return self.comment
+        return self.notes
     
     def get_plan_name(self):
         return self.plan.name

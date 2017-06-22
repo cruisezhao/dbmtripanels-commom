@@ -30,13 +30,13 @@ class OrderForm(forms.Form):
     product_name = forms.CharField(label=_("Product Name"))
     user_name = forms.CharField(label=_("User Name"))
     status = forms.ChoiceField(label=_("Order Status"), choices=ORDER_STATUS)
-    remarks = forms.CharField(widget=forms.Textarea, required=False)
+    comment = forms.CharField(widget=forms.Textarea, required=False)
 
     @transaction.atomic
     def save(self):
         order = Orders.objects.get(uuid = self.cleaned_data['uuid'])
         order.status = self.cleaned_data['status']
-        order.remarks = self.cleaned_data['remarks']
+        order.comment = self.cleaned_data['comment']
         order.save()
         
 #         planorder = PlanOrders.objects.get(package = order.package)
@@ -50,7 +50,7 @@ class OrderForm(forms.Form):
                 'product_name':order.get_product_name(), 
                 'user_name':order.get_user_email(), 
                 'status': order.status,
-                'remarks': order.remarks}
+                'comment': order.comment}
 
 
 
