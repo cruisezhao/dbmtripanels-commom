@@ -13,7 +13,7 @@ def list_user_products(request, template_name='packages/product_list.html'):
     else:
         name = request.POST.get('packagename', '').strip()
         if  name != '':
-            pkg = get_object_or_404(Packages, id=request.POST.get('packageid'))
+            pkg = get_object_or_404(Packages, uuid=request.POST.get('packageid'))
             pkg.package_name = name
             pkg.save()
             return JsonResponse({'retcode':0, 'desc':'update successfully'})
