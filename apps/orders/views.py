@@ -26,7 +26,7 @@ def list_orders(request, template_name='orders/orderlist_staff.html'):
         
     else:
         data = {
-                'id':request.GET.get('id',''),
+                'uuid':request.GET.get('uuid',''),
                 'created_date':request.GET.get('created_date', ''),
                 'status':request.GET.get('status','')
             }
@@ -34,8 +34,8 @@ def list_orders(request, template_name='orders/orderlist_staff.html'):
     kwargs = {}
     if form.is_valid():
                 
-        if form.cleaned_data['id']:
-            kwargs['id__contains'] = form.cleaned_data['id']
+        if form.cleaned_data['uuid']:
+            kwargs['uuid__contains'] = form.cleaned_data['uuid']
         if form.cleaned_data['created_date']:
             kwargs['created_date__lte'] = datetime.datetime.now()
             kwargs['created_date__gte'] = datetime.datetime.now() - datetime.timedelta(days=int(form.cleaned_data['created_date']))
