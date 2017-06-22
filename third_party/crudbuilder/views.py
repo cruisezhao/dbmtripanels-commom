@@ -146,7 +146,9 @@ class ViewBuilder(BaseBuilder):
             permissions=self.view_permission('detail'),
             inlineformset=self.inlineformset,
             permission_required=self.check_permission_required,
-            custom_postfix_url=self.custom_postfix_url
+            custom_postfix_url=self.custom_postfix_url,
+            slug_url_kwarg='uuid',
+            slug_field='uuid',
         )
 
         detail_class = type(name, (BaseDetailViewMixin, DetailView), detail_args)

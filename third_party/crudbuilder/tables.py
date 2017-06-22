@@ -26,7 +26,7 @@ class TableBuilder(BaseBuilder):
 
         main_attrs = dict(
             #id=tables.LinkColumn(detail_url_name, args=[A('pk')])
-            uuid=tables.LinkColumn(detail_url_name, args=[A('pk')]) #'uuid' replaced 'id'
+            uuid=tables.LinkColumn(detail_url_name, args=[A('uuid')]) #'uuid' replaced 'id'
         )
 
         meta_attrs = dict(
