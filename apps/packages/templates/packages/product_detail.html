@@ -256,10 +256,12 @@
 {% endblock rightcontent %}
 
 {% block scripts %}
+<script type="text/javascript">
     $(document).ready(function(){
       $('.floatline').css('top',$('.virtualMachine').height()*0.874);
       window.onresize=function(){
         $('.floatline').css('top',$('.virtualMachine').height()*0.874);
       }
     })
+</script>
 {% endblock scripts %}
