@@ -11,6 +11,7 @@
 from django.core.management import BaseCommand
 from common.apps.products.models import (Products, Plans, Screenshot,
                                          Video,ProductApps)
+from django.db.models.deletion import ProtectedError
 
 class Command(BaseCommand):
     """delete products"""
@@ -30,11 +31,15 @@ def delete_products(name):
         product = Products.objects.get(product_name = name)
     except Products.DoesNotExist:
         print("the record does not exist!")
+        return "the record does not exist!"
     try:
         info = product.delete()
         return str(info)
-    except:
-        return "delete product failed"
+    except ProtectedError:
+        product.orders_set.all().delete()
+        product.delete()
+        print("delete product and delete protected orders")
+        return "delete product and delete protected orders"
 
 if __name__ == "__main__":
     # import sys
