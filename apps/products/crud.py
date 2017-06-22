@@ -62,4 +62,13 @@ class PlansCrud(BaseCrudBuilder, CrudContextMixin, CrudQuerySetMixin):
         'detail': 'products/plan_detail.html',
         'list': 'products/plan_list.html',
         'update': 'products/plan_update.html',
+        'create': 'products/plan_create.html',
+        'delete': 'products/plan_delete.html',
     }
+
+    @classmethod
+    def custom_context(cls, request, context, **kwargs):
+        """overide context"""
+        context.update({'extra_button':True})
+        context['search_fields'] = cls.search_fields
+        return context
