@@ -92,6 +92,7 @@ class ProductApps(CreatedUpdatedModel):
     paid_plan_spec = models.CharField('Paid PlanSpec', max_length=256, null=True, blank=True)
     status = models.IntegerField('Status', default=PENDING_STATUS, choices=STATUS_CHOICES)
     features = fields.JSONField('Features', default={})
+    environments = fields.JSONField('Environments', default={})
     in_homepage = models.BooleanField('Showinhomepage', default=False, blank=True)
     created_by = models.CharField('Created By', max_length=256,null=True, blank=True)
     updated_by = models.CharField('Updated By', max_length=256,null=True, blank=True)
