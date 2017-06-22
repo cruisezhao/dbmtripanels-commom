@@ -42,7 +42,7 @@
 			<div class="part3 pro-shortdetail">
         <!---pro-img-->
 				<div class="left">
-					<img src="{{ pkg.get_software_pic_path }}"/>
+					<img src="{{ pkg.get_product_pic_path }}"/>
 				</div>
         <!---pro-Information-->
 				<div class="right">
@@ -256,10 +256,12 @@
 {% endblock rightcontent %}
 
 {% block scripts %}
+<script type="text/javascript">
     $(document).ready(function(){
       $('.floatline').css('top',$('.virtualMachine').height()*0.874);
       window.onresize=function(){
         $('.floatline').css('top',$('.virtualMachine').height()*0.874);
       }
     })
+</script>
 {% endblock scripts %}

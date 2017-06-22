@@ -40,7 +40,7 @@ class OrderForm(forms.Form):
         order.comment = self.cleaned_data['comment']
         
         
-        if order.status == 'Active':
+        if order.status == 'Active' and not order.package:
             pkg = Packages.objects.create(package_name=order.get_product_name(), 
                                               client=order.client, 
                                               status='Pending', 

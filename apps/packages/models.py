@@ -49,7 +49,7 @@ class Packages(CreatedUpdatedModel):
         return self.package_name
     
     def get_product_name(self):
-        return self.get_product_order().product.name
+        return self.get_product_order().product.product_name
     
     def get_product_id(self):
         return self.get_product_order().product.uuid
