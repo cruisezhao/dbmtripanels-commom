@@ -31,7 +31,7 @@ class Orders(models.Model):
         ordering = ['-created_date']
     
     def get_user_email(self):
-        return self.package.client.email
+        return self.client.email
     
     def get_product_name(self):
         return self.product.product_name
