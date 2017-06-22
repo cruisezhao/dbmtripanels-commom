@@ -45,7 +45,7 @@ class OrderForm(forms.Form):
     
     @classmethod
     def gen_data(cls, productorder_id):
-        order = Orders.objects.get(id = productorder_id)
+        order = Orders.objects.get(uuid = productorder_id)
         return {'uuid':order.uuid, 
                 'product_name':order.get_product_name(), 
                 'user_name':order.get_user_email(), 
