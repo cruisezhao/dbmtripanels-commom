@@ -61,7 +61,7 @@ def list_orders(request, template_name='orders/orderlist_staff.html'):
 
 
 @login_required
-def detail_orders(request, uuid, template_name='orders/orderdetail_admin.html'):
+def detail_orders(request, uuid, template_name='orders/orderdetail_staff.html'):
     if request.method == 'POST':
         form = OrderForm(request.POST)
         if form.is_valid():
