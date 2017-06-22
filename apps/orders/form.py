@@ -4,6 +4,7 @@ from common.apps.orders.models import Orders, ORDER_STATUS
 from django.utils.translation import ugettext as _
 from django.shortcuts import get_object_or_404
 from django.db import transaction
+from common.apps.packages.models import Packages
 
 
 SEARCH_DATE = (
@@ -39,6 +40,15 @@ class OrderForm(forms.Form):
         order.comment = self.cleaned_data['comment']
         order.save()
         
+        if order.status == 'Active':
+            Packages.objects.create(package_name=order.get_product_name(), 
+                                              client=order.client, 
+                                              status='Pending', 
+                                              amount=order.amount,
+                                              cpu=order.get_cpu_cores(),
+                                              memory=order.get_memory(),
+                                              disk=order.get_disks(),
+                                              )
 #         planorder = PlanOrders.objects.get(package = order.package)
 #         planorder.status = self.cleaned_data['status']
 #         planorder.save()
