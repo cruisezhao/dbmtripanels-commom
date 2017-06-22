@@ -23,5 +23,5 @@ def list_user_products(request, template_name='packages/product_list.html'):
 def product_details(request, pid, template_name='packages/product_detail.html'):
     #pkg = Packages.objects.filter(user__pk=request.user.pk).get(id=pid)
     
-    pkg = get_object_or_404(Packages, client__pk=request.user.pk, id=pid, status='Active')
+    pkg = get_object_or_404(Packages, client__pk=request.user.pk, uuid=pid, status='Active')
     return render(request, template_name, {'pkg': pkg})
