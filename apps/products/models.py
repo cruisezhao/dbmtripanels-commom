@@ -64,7 +64,6 @@ class Products(CreatedUpdatedModel):
 class ProductApps(CreatedUpdatedModel):
     """software app"""
     product = models.OneToOneField(Products, primary_key=True)
-    uuid = models.CharField('uuid', default=uuid_to_str, editable=False, max_length = 255, unique = True, db_index = True)
     app_name = models.CharField('Name', max_length=255, unique=True)
     summary = models.TextField('Summary', null=True, blank=True)
     description = models.TextField('Description',null=True, blank=True)
