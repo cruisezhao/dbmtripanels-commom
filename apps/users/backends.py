@@ -8,9 +8,10 @@ from common.apps.users.forms import is_member
 
 class AllowAdminGroupUsersModelBackend(ModelBackend):
     def user_can_authenticate(self, user):
-        return is_member(user, 'admin') or user.is_superuser
-        #return True
+        is_superuser = getattr(user, 'is_superuser', None)
+        return is_member(user, 'admin') or is_superuser or is_superuser is None
     
 class AllowStaffGroupUsersModelBackend(ModelBackend):
     def user_can_authenticate(self, user):
-        return is_member(user, 'staff') or user.is_superuser
+        is_superuser = getattr(user, 'is_superuser', None)
+        return is_member(user, 'staff') or is_superuser or is_superuser is None
