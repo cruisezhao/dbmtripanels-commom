@@ -29,7 +29,7 @@ if tables:
 
         entries = [
             (r'^{}/{}/$', list_view.as_view(), '{}-{}-list'),
-            (r'^{}/{}/(?P<uuid>\w+)/$', detail_view.as_view(), '{}-{}-detail'),
+            (r'^{}/{}/(?P<uuid>[a-z\d]{{32}})/$', detail_view.as_view(), '{}-{}-detail'),
             (r'^{}/{}/create/$', create_view.as_view(), '{}-{}-create'),
             (r'^{}/{}/(?P<pk>\w+)/update/$',
                 update_view.as_view(),
