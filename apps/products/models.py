@@ -60,6 +60,8 @@ class Products(CreatedUpdatedModel):
     def __str__(self):
         return self.product_name
 
+    def get_absolute_url(self):
+        return reverse('product', args=[self.uuid])
 
 class ProductApps(CreatedUpdatedModel):
     """software app"""
