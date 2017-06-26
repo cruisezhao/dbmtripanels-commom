@@ -27,14 +27,14 @@ class Plans(CreatedUpdatedModel):
     name = models.CharField('Name', max_length = 32)
     cpu = models.IntegerField('CPU',default=random.choice(range(4)))
     cpu_description = models.CharField('CPU Description', max_length = 256, null = True, blank = True)
-    memory = models.DecimalField('Memory', max_digits=19, decimal_places=4, null=True, blank=True, default=random.choice(range(8)))
+    memory = models.DecimalField('Memory', max_digits=19, decimal_places=2, null=True, blank=True, default=random.choice(range(8)))
     memory_description = models.CharField('Memory Description', max_length = 256, null = True, blank = True)
     disk = models.IntegerField('Disk', default = random.choice(range(4)))
     disk_description = models.CharField('Disk Description', max_length = 256, null = True, blank = True)
     instance = models.IntegerField('Instance', default = random.randint(1,4))
     instance_description = models.CharField('Instance Description', max_length = 256, null = True, blank = True)
     description = models.CharField('Descriptin', max_length = 256, null = True, blank = True)
-    price = models.DecimalField('Price',max_digits=19, decimal_places=4, null=True, blank=True, default = random.choice(CHOICE))
+    price = models.DecimalField('Price',max_digits=19, decimal_places=2, null=True, blank=True, default = random.choice(CHOICE))
 
     class Meta:
         verbose_name = "Plans"
@@ -87,7 +87,7 @@ class ProductApps(CreatedUpdatedModel):
     free_plan = models.URLField('Free Plan', max_length=256, null=True, blank=True)
     free_plan_spec =  models.CharField('Free PlanSpec',max_length=256,null=True, blank=True)
     paid_plan = models.URLField('Paid Plan', max_length=256, null=True, blank=True)
-    paid_plan_price = models.DecimalField('Paid PlanPrice', max_digits=19, decimal_places=4, null=True, blank=True)
+    paid_plan_price = models.DecimalField('Paid PlanPrice', max_digits=19, decimal_places=2, null=True, blank=True)
     paid_plan_spec = models.CharField('Paid PlanSpec', max_length=256, null=True, blank=True)
     status = models.IntegerField('Status', default=PENDING_STATUS, choices=STATUS_CHOICES)
     features = fields.JSONField('Features', default={})

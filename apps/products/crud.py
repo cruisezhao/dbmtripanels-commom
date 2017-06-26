@@ -7,6 +7,7 @@ from django.db.models import Q
 from functools import reduce
 import operator
 from common.utilities.crud_mixin import CrudContextMixin,CrudQuerySetMixin
+from .tables import ProductTable
 # from .tables import SoftwareTable
 
 class VideoInlineFormset(BaseInlineFormset):
@@ -24,11 +25,11 @@ class ScreenshotInlineFormset(BaseInlineFormset):
 class ProductCRUD(BaseCrudBuilder,CrudContextMixin, CrudQuerySetMixin):
     """product crud"""
     model = Products
-    search_fields = ['version', 'title','system','database','created_date','updated_date']
-    tables2_fields = ('product_type','product_name', 'created','last_updated')
+    custom_table2 = ProductTable
+    search_fields = [ 'product_type','product_name','created','last_updated']
+    #tables2_fields = ('plans', 'product_type','product_name', 'created','last_updated')
     tables2_css_class = "table table-bordered table-condensed"
     modelform_excludes = ('created_by','updated_by')
-    custom_table2 = None
     tables2_pagination = 5
     login_required=False
     permission_required=False
@@ -62,4 +63,13 @@ class PlansCrud(BaseCrudBuilder, CrudContextMixin, CrudQuerySetMixin):
         'detail': 'products/plan_detail.html',
         'list': 'products/plan_list.html',
         'update': 'products/plan_update.html',
+        'create': 'products/plan_create.html',
+        'delete': 'products/plan_delete.html',
     }
+
+    @classmethod
+    def custom_context(cls, request, context, **kwargs):
+        """overide context"""
+        context.update({'extra_button':True})
+        context['search_fields'] = cls.search_fields
+        return context

@@ -21,12 +21,12 @@ from common.apps.products.models import Products
 
 class ProductTable(tables.Table):
     """product table"""
-    DETAIL_URL_NAME = 'applications-products-detail'
-    software = tables.LinkColumn(DETAIL_URL_NAME, args=[A('pk')])
-    # plans = tables.Column(accessor='plan')
+    DETAIL_URL_NAME = 'products-productses-detail'
+    uuid = tables.LinkColumn(DETAIL_URL_NAME, args=[A('uuid')])
+    plans = tables.Column(accessor='plans')
     class Meta:
         model = Products
-        fields = ('software','plan','version','system','database','created_date')
+        fields = ('uuid','plans','product_type','product_name', 'created','last_updated')
         attrs={
                 "class": "table table-bordered table-condensed table-hover",
             }

@@ -74,7 +74,7 @@
                     {% for order in order_list %}
                       <tr>
                         <td><a href="{% url 'orders:detail' order.uuid %}">{{ order.uuid }}</a></td>
-                        <td>{{ order.get_user_email }}</td>
+                        <td><a href="/crud/clients/clientses/{{ order.get_user_uuid }}/">{{ order.get_user_email }}</a></td>
                         <td>{{ order.created_date }}</td>
                         <td>{{ order.get_product_name }}</td>
                         <td>{{ order.get_product_version }}</td>
