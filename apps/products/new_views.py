@@ -3,7 +3,7 @@ from django.contrib.auth.mixins import PermissionRequiredMixin
 from .models import Products
 from django.shortcuts import render
 from django.shortcuts import get_object_or_404
-from common.utilities.views import ObjectEditView
+from common.utilities.views import ObjectEditView, ObjectDeleteView
 from . import forms
 
 
@@ -19,6 +19,11 @@ class ProductEditView(ObjectEditView):
     model = Products
     form_class = forms.ProductForm
     template_name = 'products/product_edit.html'
+    default_return_url = 'home'
+
+
+class ProductDeleteView(ObjectDeleteView):
+    model = Products
     default_return_url = 'home'
 
 

@@ -1,9 +1,11 @@
 from django.views.generic import View
+from django.db.models import ProtectedError
 from django.core.urlresolvers import reverse
 from django.shortcuts import redirect, render, get_object_or_404
 from django.utils.formats import mark_safe
 from django.utils.html import escape
 from django.contrib import messages
+from .forms import ConfirmationForm
 
 
 class GetReturnURLMixin(object):
@@ -61,5 +63,51 @@ class ObjectEditView(GetReturnURLMixin, View):
             'obj': obj,
             'obj_type': self.model._meta.verbose_name,
             'form': form,
+            'return_url': self.get_return_url(request, obj),
+        })
+
+
+class ObjectDeleteView(GetReturnURLMixin, View):
+    """
+    Delete a single object
+    model: The model of object being deleted
+    template_name: The name of the template
+    default_return_url: Name of the URL to which the user is redirected after deleted the object.
+    """
+    model = None
+    template_name = "utilities/obj_delete.html"
+
+    def get_object(self,kwargs):
+        #get a object via uuid
+        return get_object_or_404(self.model, uuid = kwargs['uuid'])
+
+    def get(self, request, **kwargs):
+        obj = self.get_object(kwargs)
+        form = ComfirmationForm(initial = request.GET)
+
+        return render(request, self.template_name, {
+            'obj': obj,
+            'form': form,
+            'obj_type': self.model._meta.verbose_name,
+            'return_url': self.get_return_url(request, obj),
+        })
+
+    def post(self, request, **kwargs):
+        #post delete the obj
+        obj = self.get_obj(kwargs)
+        form = ComfirmationForm(request.POST)
+        if form.is_valid():
+            try:
+                obj.delete()
+            except ProtectedError as e:
+                raise e("the obj can't delete, because the model is protected!")
+
+            msg = "Deleted {} {}".format(self.model._meta.verbose_name, obj)
+            messages.success(request, msg)
+            return redirect(self.get_return_url(request, obj))
+        return render(request, self.template_name, {
+            'obj': obj,
+            'form': form,
+            'obj_type': self.model._meta.verbose_name,
             'return_url': self.get_return_url(request, obj),
         })
