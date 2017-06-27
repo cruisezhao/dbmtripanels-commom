@@ -10,11 +10,6 @@
 
 {% block content %}
 
-<!--BreadNav-->
-<ol class="breadcrumb">
-    <li><a href="{%url 'home' %}">Home</a></li>
-    <li class="active">My Orders</li>
-</ol>
 
 <!--Order-list-->
 <div class="c-pro-list-content">
@@ -31,59 +26,34 @@
         <option value="Invalid">Invalid</option>
       </select>
     </div>
-    <!--timeSel-->
-    <!-- <div class="c-pro-timeSelBar">
-      <label for="timeSel">Time</label>
-      <input id="datepicker" type="txt"/>
-    </div> -->
+
   </div>
   <!--orderContainer-->
   <div class="c-pro-list-container">
-    
-     {% for order in orders %}
-        <!--listWrap-->
-        <div class="c-pro-list-wrap">
-
-          <!--dataContainer-->
-          <div class="c-order-data-container">
-            <!--name-->
-            <h3 class="c-order-name">{{ order.get_software_name }}</h3>
-            <!--data-->
-            <ul class="c-order-databar">
-              <!--orderDate-->
-              <li class="c-order-col">
-                <span class="c-order-class">Order Date</span>
-                <span class="orderDate">{{ order.created_date }}</span>
-              </li>
-              <!--orderNum-->
-              <li class="c-order-col">
-                <span class="c-order-class">Order Number</span>
-                <span class="orderNum">{{ order.uuid }}</span>
-              </li>
-              <li class="c-order-col">
-                <span class="c-order-class">Product Name</span>
-                <span class="orderDate">{{ order.get_product_name }}</span>
-              </li>
-              <li class="c-order-col">
-                <span class="c-order-class">Remarks</span>
-                <span class="orderDate">{{ order.get_user_remarks }}</span>
-              </li>
-              <li class="c-order-col">
-                <span class="c-order-class">Plan Name</span>
-                <span class="orderDate">{{ order.get_plan_name }}</span>
-              </li>
-              <!--orderCost-->
-              <li class="c-order-col">
-                <span class="c-order-class">Order Price</span>
-                <span class="orderCost">${{ order.amount }}</span>
-              </li>
-              <!--orderStatus-->
-              <span  class="c-order-status c-cancel orderStatus">{{ order.status }}</span>
-            </ul>
-          </div>
-        </div>
-      {% endfor %}
-    
+    <div class="c-pro-list-table">
+         <div class="c-pro-list-table-tr">
+             <div class="c-pro-list-table-th">Number</div>
+             <div class="c-pro-list-table-th">Product Name</div>
+             <div class="c-pro-list-table-th">Order Number</div>
+             <div class="c-pro-list-table-th">Order Date</div>
+             <div class="c-pro-list-table-th">Plan</div>
+             <div class="c-pro-list-table-th">Additional requirement</div>
+             <div class="c-pro-list-table-th">Cost</div>
+             <div class="c-pro-list-table-th">Status</div>
+         </div>
+         {% for order in orders %}
+         <div class="c-pro-list-table-tr">
+             <div class="c-pro-list-table-td">1</div>
+             <div class="c-pro-list-table-td">{{ order.get_product_name }}</div>
+             <div class="c-pro-list-table-td">{{ order.uuid }}</div>
+             <div class="c-pro-list-table-td">{{ order.created_date }}</div>
+             <div class="c-pro-list-table-td">{{ order.get_plan_name }}</div>
+             <div class="c-pro-list-table-td">{{ order.get_user_remarks }}</div>
+             <div class="c-pro-list-table-td">${{ order.amount }}</div>
+             <div class="c-pro-list-table-td orderStatus">{{ order.status }}</div>
+         </div>
+         {% endfor %}
+    </div>
   </div>
 </div>
 <div class="upup"></div>
@@ -92,27 +62,12 @@
 
 {% block scripts %}
 <script src="{% static 'js/jquery-ui.js' %}"></script>
-<!-- <script type="text/javascript">
-  $(function() {
-    $( "#datepicker" ).datepicker({
-      showWeek: true,
-      firstDay: 1,
-      changeMonth: true,
-      changeYear: true,
-      showOn: "button",
-      buttonImage: "static/img/calendar.png",
-      buttonImageOnly: true,
-      buttonText: "Select date"
-    });
-  });
-  </script> -->
-
   <script>
     (function($){
         $.fn.selectTab = function(o){
         var d = {
         select:'select', //定义下拉对象
-        con:'.c-pro-list-wrap'          //定义切换对象
+        con:'.c-pro-list-container'          //定义切换对象
         };
         var o = $.extend(d,o);
         var $option = $(d.select).find('option');//遍历下拉对象下的option
