@@ -5,7 +5,7 @@ from django.shortcuts import redirect, render, get_object_or_404
 from django.utils.formats import mark_safe
 from django.utils.html import escape
 from django.contrib import messages
-from .forms import ConfirmationForm
+from .forms import ComfirmationForm
 
 
 class GetReturnURLMixin(object):
@@ -94,7 +94,7 @@ class ObjectDeleteView(GetReturnURLMixin, View):
 
     def post(self, request, **kwargs):
         #post delete the obj
-        obj = self.get_obj(kwargs)
+        obj = self.get_object(kwargs)
         form = ComfirmationForm(request.POST)
         if form.is_valid():
             try:

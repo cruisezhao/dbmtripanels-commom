@@ -8,7 +8,7 @@ class ReturnURLForm(forms.Form):
     """
     return_url = forms.CharField(required=False, widget=forms.HiddenInput())
 
-class ConfirmationForm(ReturnURLForm):
+class ComfirmationForm(ReturnURLForm):
     """confirmation form, the form is not valid unless the
         confirm field is checked"""
     confirm = forms.BooleanField(required=True)
