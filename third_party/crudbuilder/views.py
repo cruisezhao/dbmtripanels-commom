@@ -169,7 +169,9 @@ class ViewBuilder(BaseBuilder):
             inlineformset=self.inlineformset,
             custom_form=self.createupdate_forms or self.custom_modelform,
             success_url=reverse_lazy('{}-{}-list'.format(self.app, self.custom_postfix_url)),
-            custom_postfix_url=self.custom_postfix_url
+            custom_postfix_url=self.custom_postfix_url,
+            slug_url_kwarg='uuid',
+            slug_field='uuid',
         )
 
         update_class = type(
@@ -191,7 +193,9 @@ class ViewBuilder(BaseBuilder):
             permission_required=self.check_permission_required,
             login_required=self.check_login_required,
             success_url=reverse_lazy('{}-{}-list'.format(self.app, self.custom_postfix_url)),
-            custom_postfix_url=self.custom_postfix_url
+            custom_postfix_url=self.custom_postfix_url,
+            slug_url_kwarg='uuid',
+            slug_field='uuid',
         )
 
         delete_class = type(name, (CrudBuilderMixin, DeleteView), delete_args)

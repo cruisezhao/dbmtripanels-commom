@@ -31,10 +31,10 @@ if tables:
             (r'^{}/{}/$', list_view.as_view(), '{}-{}-list'),
             (r'^{}/{}/(?P<uuid>[a-z\d]{{32}})/$', detail_view.as_view(), '{}-{}-detail'),
             (r'^{}/{}/create/$', create_view.as_view(), '{}-{}-create'),
-            (r'^{}/{}/(?P<pk>\w+)/update/$',
+            (r'^{}/{}/(?P<uuid>[a-z\d]{{32}})/update/$',
                 update_view.as_view(),
                 '{}-{}-update'),
-            (r'^{}/{}/(?P<pk>\w+)/delete/$',
+            (r'^{}/{}/(?P<uuid>[a-z\d]{{32}})/delete/$',
                 delete_view.as_view(),
                 '{}-{}-delete'),
         ]
@@ -47,3 +47,4 @@ if tables:
                 url(address, entry[1], name=url_name),
             )
         urlpatterns += urls
+        print(urlpatterns)
