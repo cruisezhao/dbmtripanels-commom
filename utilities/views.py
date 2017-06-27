@@ -6,6 +6,10 @@ from django.utils.formats import mark_safe
 from django.utils.html import escape
 from django.contrib import messages
 from .forms import ComfirmationForm
+from .paginator import EnhancedPaginator
+from django_tables2 import RequestConfig
+from django.contrib.contenttypes.models import ContentType
+from django.conf import settings
 
 
 class GetReturnURLMixin(object):
@@ -16,6 +20,60 @@ class GetReturnURLMixin(object):
         if self.default_return_url is not None:
             return reverse(self.default_return_url)
         return reverse('home')
+
+
+class ObjectListView(View):
+    """
+
+    List a series of objects
+
+    queryset: The queryset of objects to display
+    filter: The django-filter FilterSet that is applied to queryset
+    filter_form: The form used to render filter options
+    template_name: The name of the template
+    """
+    queryset = None
+    filter = None
+    filter_form = None
+    template_name = None
+
+    def get(self, request):
+        #get method
+        model = self.queryset.model
+        object_ct = ContentType.objects.get_for_model(model)
+
+        if self.filter:
+            self.queryset = self.filter(request.GET, self.queryset).qs
+
+        self.queryset = self.alter_queryset(request)
+
+        #Construct the table based on the user's permissions
+        table = self.table(self.queryset)
+        if 'pk' in table.base_columns:
+            table.base_columns['pk'].visible = True
+
+        #Apply the request context
+        paginate = {
+            'klass': EnhancedPaginator,
+            'per_page': request.GET.get('per_page', settings.PAGINATE_COUNT)
+        }
+        RequestConfig(request, paginate).configure(table)
+
+        context = {
+            'table': table,
+            'permissions': False,
+            'filter_form': self.filter_form(request.GET, label_suffix='')if self.filter_form else None,
+            'export_templates': None,
+        }
+        context.update(self.extra_context())
+        return render(request, self.template_name, context)
+
+
+    def alter_queryset(self, request):
+        return self.queryset.all()
+
+    def extra_context(self):
+        return {}
 
 
 class ObjectEditView(GetReturnURLMixin, View):

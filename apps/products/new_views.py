@@ -3,8 +3,19 @@ from django.contrib.auth.mixins import PermissionRequiredMixin
 from .models import Products
 from django.shortcuts import render
 from django.shortcuts import get_object_or_404
-from common.utilities.views import ObjectEditView, ObjectDeleteView
+from common.utilities.views import ObjectEditView, ObjectDeleteView, ObjectListView
 from . import forms
+from . import filters
+from . import tables
+
+
+class ProductListView(ObjectListView):
+    """product list"""
+    queryset = Products.objects.all()
+    filter = filters.ProductFilter
+    filter_form = forms.ProductFilterForm
+    table = tables.ProductTable
+    template_name = 'products/product_list.html'
 
 
 class ProductView(View):
@@ -25,5 +36,3 @@ class ProductEditView(ObjectEditView):
 class ProductDeleteView(ObjectDeleteView):
     model = Products
     default_return_url = 'home'
-
-

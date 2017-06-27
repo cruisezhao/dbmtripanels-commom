@@ -1,5 +1,7 @@
 from django.forms import ModelForm
+from django import forms
 from .models import Products
+from common.utilities.extra_forms import CustomFieldFilterForm
 
 
 class ProductForm(ModelForm):
@@ -8,6 +10,13 @@ class ProductForm(ModelForm):
     class Meta:
         model = Products
         fields = ('product_type', 'product_name',)
+
+
+class ProductFilterForm(forms.Form):
+    """
+        product filterform
+    """
+    q = forms.CharField(required=False, label='Search')
 
 
 # class SoftwareShowForm(ModelForm):
