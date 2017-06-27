@@ -43,7 +43,7 @@
          </div>
          {% for order in orders %}
          <div class="c-pro-list-table-tr">
-             <div class="c-pro-list-table-td">1</div>
+             <div class="c-pro-list-table-td">{{ forloop.counter }}</div>
              <div class="c-pro-list-table-td">{{ order.get_product_name }}</div>
              <div class="c-pro-list-table-td">{{ order.uuid }}</div>
              <div class="c-pro-list-table-td">{{ order.created_date }}</div>
