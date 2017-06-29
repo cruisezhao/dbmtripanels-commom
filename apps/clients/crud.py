@@ -26,7 +26,7 @@ class UserCrud(BaseCrudBuilder):
     tables2_pagination = 5
     login_required=False
     permission_required=False
-    #inlineformset = OpenstackUserInlineFormset
+    custom_postfix_url='clients'
     detailview_excludes = ['id','password','picture']
     ordering = '-date_joined'
 
