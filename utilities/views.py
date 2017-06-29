@@ -157,8 +157,8 @@ class ObjectDeleteView(GetReturnURLMixin, View):
         if form.is_valid():
             try:
                 obj.delete()
-            except ProtectedError as e:
-                raise e("the obj can't delete, because the model is protected!")
+            except ProtectedError:
+                raise ProtectedError(self.model,"the obj can't delete, because the model is protected!")
 
             msg = "Deleted {} {}".format(self.model._meta.verbose_name, obj)
             messages.success(request, msg)
