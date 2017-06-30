@@ -32,7 +32,7 @@ class ProductFilterForm(ModelForm):
     q = forms.CharField(required=False, label='Search')
 
     plan = FilterChoiceField(
-        queryset=Plans.objects.annotate(filter_count=Count('name')),
+        queryset=Plans.objects.annotate(filter_count=Count('products')),
         widget=forms.CheckboxSelectMultiple(),
         to_field_name='pk',
     )
