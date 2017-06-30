@@ -1,26 +1,47 @@
 from django.forms import ModelForm
-from .models import Software
+from django import forms
+from .models import Products
+from common.utilities.extra_forms import CustomFieldFilterForm
+from datetimewidget.widgets import DateTimeWidget, DateWidget, TimeWidget
 
 
-class SoftwareForm(ModelForm):
-    """software verify form"""
-    def __init__(self, *args, **kwargs):
-        super(SoftwareForm, self).__init__(*args,**kwargs)
-        self.fields['type'].widget.attrs['readonly'] = True
-        self.fields['name'].widget.attrs['readonly'] = True
-
-    class Meta:
-        model = Software
-        fields = ('type', 'name', 'status')
-
-
-class SoftwareShowForm(ModelForm):
-    """show software in portal"""
-    def __init__(self, *args, **kwargs):
-        super(SoftwareShowForm, self).__init__(*args,**kwargs)
-        self.fields['type'].widget.attrs['readonly'] = True
-        self.fields['name'].widget.attrs['readonly'] = True
+class ProductForm(ModelForm):
+    """product form"""
 
     class Meta:
-        model = Software
-        fields = ('type', 'name', 'in_homepage')
+        model = Products
+        fields = ('product_type', 'product_name',)
+
+
+class ProductFilterForm(ModelForm):
+    """
+        product filterform
+    """
+    q = forms.CharField(required=False, label='Search')
+    name = forms.CharField(required=False, label='Name')
+    start_date = forms.DateField(
+        required=False,
+        label='start_date',
+        widget=DateWidget(options={'format': 'yyyy-mm-dd',},bootstrap_version=3),
+    )
+    end_date = forms.DateField(
+        required=False,
+        label='end_date',
+        widget=DateWidget(options={'format': 'yyyy-mm-dd',},bootstrap_version=3),
+    )
+
+    class Meta:
+        model = Products
+        fields = ['q', 'name']
+
+
+# class SoftwareShowForm(ModelForm):
+#     """show software in portal"""
+#     def __init__(self, *args, **kwargs):
+#         super(SoftwareShowForm, self).__init__(*args,**kwargs)
+#         self.fields['type'].widget.attrs['readonly'] = True
+#         self.fields['name'].widget.attrs['readonly'] = True
+#
+#     class Meta:
+#         model = Products
+#         fields = ('type', 'name', 'in_homepage')

@@ -24,6 +24,7 @@ class ProductTable(tables.Table):
     DETAIL_URL_NAME = 'products-productses-detail'
     uuid = tables.LinkColumn(DETAIL_URL_NAME, args=[A('uuid')])
     plans = tables.Column(accessor='plans')
+
     class Meta:
         model = Products
         fields = ('uuid','plans','product_type','product_name', 'created','last_updated')
