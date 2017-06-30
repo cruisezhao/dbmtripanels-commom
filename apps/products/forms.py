@@ -5,6 +5,7 @@ from django.utils.html import mark_safe
 from .models import Products, Plans
 from common.utilities.extra_forms import CustomFieldFilterForm
 from datetimewidget.widgets import DateTimeWidget, DateWidget, TimeWidget
+from common.utilities.forms import FilterChoiceField
 
 
 class ProductForm(ModelForm):
@@ -23,14 +24,15 @@ def product_type_choice():
         pt_d[p['product_type']] = p['count']
     return [(t[0], mark_safe("{} <span class='badge pull-right'>{}</span>".format(t[1],pt_d.get(t[0],0)))) for t in Products.TYPE_CHOICE ]
 
+
 class ProductFilterForm(ModelForm):
     """
         product filterform
     """
     q = forms.CharField(required=False, label='Search')
 
-    plan = forms.ModelMultipleChoiceField(
-        queryset=Plans.objects.annotate(count=Count('name')),
+    plan = FilterChoiceField(
+        queryset=Plans.objects.annotate(filter_count=Count('name')),
         widget=forms.CheckboxSelectMultiple(),
         to_field_name='pk',
     )
