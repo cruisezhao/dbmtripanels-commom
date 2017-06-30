@@ -47,4 +47,3 @@ if tables:
                 url(address, entry[1], name=url_name),
             )
         urlpatterns += urls
-        print(urlpatterns)

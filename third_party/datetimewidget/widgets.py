@@ -113,7 +113,7 @@ BOOTSTRAP_INPUT_TEMPLATE = {
        <div id="%(id)s" class="input-group date">
            %(rendered_widget)s
            %(clear_button)s
-           <span class="input-group-addon"><span class="glyphicon %(glyphicon)s"></span></span>
+           <span class="input-group-addon"><span class="fa %(glyphicon)s"></span></span>
        </div>
        <script type="text/javascript">
            $("#%(id)s").datetimepicker({%(options)s}).find('input').addClass("form-control");
@@ -122,7 +122,7 @@ BOOTSTRAP_INPUT_TEMPLATE = {
        }
 
 CLEAR_BTN_TEMPLATE = {2: """<span class="add-on"><i class="icon-remove"></i></span>""",
-                      3: """<span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>"""}
+                      3: """<span class="input-group-addon"><span class="fa fa-times"></span></span>"""}
 
 
 quoted_options = set([
@@ -294,7 +294,7 @@ class DateWidget(PickerWidgetMixin, DateInput):
     """
 
     format_name = 'DATE_INPUT_FORMATS'
-    glyphicon = 'glyphicon-calendar'
+    glyphicon = 'fa-calendar'
 
     def __init__(self, attrs=None, options=None, usel10n=None, bootstrap_version=None):
 

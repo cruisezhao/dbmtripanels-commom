@@ -22,26 +22,19 @@ class ProductFilterForm(ModelForm):
     start_date = forms.DateField(
         required=False,
         label='start_date',
-        widget=DateWidget(options={'format': 'yyyy-mm-dd',},bootstrap_version=3),
+        widget=DateWidget(
+            options={'format': 'yyyy-mm-dd',},
+            bootstrap_version=3),
     )
     end_date = forms.DateField(
         required=False,
         label='end_date',
-        widget=DateWidget(options={'format': 'yyyy-mm-dd',},bootstrap_version=3),
+        widget=DateWidget(
+            options={'format': 'yyyy-mm-dd',},
+            bootstrap_version=3
+        ),
     )
 
     class Meta:
         model = Products
         fields = ['q', 'name']
-
-
-# class SoftwareShowForm(ModelForm):
-#     """show software in portal"""
-#     def __init__(self, *args, **kwargs):
-#         super(SoftwareShowForm, self).__init__(*args,**kwargs)
-#         self.fields['type'].widget.attrs['readonly'] = True
-#         self.fields['name'].widget.attrs['readonly'] = True
-#
-#     class Meta:
-#         model = Products
-#         fields = ('type', 'name', 'in_homepage')
