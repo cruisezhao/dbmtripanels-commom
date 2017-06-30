@@ -18,7 +18,17 @@ class ProductFilterForm(ModelForm):
         product filterform
     """
     q = forms.CharField(required=False, label='Search')
-    name = forms.CharField(required=False, label='Name')
+    name = forms.CharField(
+        required=False,
+        widget = forms.TextInput(attrs={'class':'form-control'}),
+        label='Name')
+
+    type = forms.MultipleChoiceField(
+        choices=Products.TYPE_CHOICE,
+        widget=forms.CheckboxSelectMultiple(),
+        required=False
+    )
+
     start_date = forms.DateField(
         required=False,
         label='start_date',

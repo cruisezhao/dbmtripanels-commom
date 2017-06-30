@@ -11,6 +11,10 @@ class ProductFilter(django_filters.FilterSet):
         name='product_name',
         lookup_expr='exact'
     )
+    type = django_filters.MultipleChoiceFilter(
+        name='product_type',
+        choices=Products.TYPE_CHOICE,
+    )
     # date = django_filters.DateFromToRangeFilter(
     #     name = "created",
     #     widget=RangeWidget(attrs={'display':'inline'}),

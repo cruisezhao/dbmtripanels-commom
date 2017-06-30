@@ -12,12 +12,12 @@ ACTIVE_STATUS = 2
 SUSPENDED_STATUS = 3
 CANCELLED_STATUS = 4
 
-STATUS_CHOICES  = (
+STATUS_CHOICES  = [
         (1,'Pending'),
         (2,'Active'),
         (3,'Suspended'),
         (4,'Cancelled'),
-)
+]
 
 
 class Plans(CreatedUpdatedModel):
@@ -47,9 +47,14 @@ class Plans(CreatedUpdatedModel):
 
 class Products(CreatedUpdatedModel):
     """product model"""
+    TYPE_CHOICE = [
+        ('APP', 'APP'),
+        ('VPS', 'VPS'),
+        ('BARE', 'BARE'),
+    ]
     plans = models.ManyToManyField(Plans, blank=True)
     uuid = models.CharField('uuid', default=uuid_to_str, editable=False, max_length = 255, unique = True, db_index = True)
-    product_type = models.CharField('Type', max_length=32, null=False, blank=False)
+    product_type = models.CharField('Type', max_length=32, default=TYPE_CHOICE[0], choices=TYPE_CHOICE)
     product_name = models.CharField('Name', max_length=255, unique=True)
 
     class Meta:
