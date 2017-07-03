@@ -62,6 +62,14 @@ class Products(CreatedUpdatedModel):
         verbose_name_plural = "Products"
         db_table = "products"
 
+    @property
+    def all_plans(self):
+
+        return ', '.\
+            join(
+            ['<a href="/crud/products/planses/{}/">{}</a>'.format(p.uuid, p.name) for p in self.plans.all()]
+                 )
+
     def __str__(self):
         return self.product_name
 
