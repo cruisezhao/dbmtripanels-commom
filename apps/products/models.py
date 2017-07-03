@@ -49,7 +49,7 @@ class Products(CreatedUpdatedModel):
     """product model"""
     TYPE_CHOICE = [
         ('APP', 'APP'),
-        ('VPS', 'VPS'),
+        ('VM', 'VM'),
         ('BARE', 'BARE'),
     ]
     plans = models.ManyToManyField(Plans, blank=True)
@@ -75,6 +75,26 @@ class Products(CreatedUpdatedModel):
 
     def get_absolute_url(self):
         return reverse('product', args=[self.uuid])
+
+    @property
+    def get_model(self):
+        """get apps\bare\vm model according product_type """
+        if self.product_type == self.TYPE_CHOICE[0][0]:
+            try:
+                return self.productapps
+            except ProductApps.DoesNotExist:
+                return None
+        elif self.product_type == self.TYPE_CHOICE[1][0]:
+            try:
+                return self.productvms
+            except ProductVms.DoesNotExist:
+                return None
+        else:
+            try:
+                return self.productbares
+            except ProductBares.DoesNotExist:
+                return None
+
 
 class ProductApps(CreatedUpdatedModel):
     """software app"""
