@@ -25,22 +25,22 @@ def product_type_choice():
     return [(t[0], mark_safe("{} <span class='badge pull-right'>{}</span>".format(t[1],pt_d.get(t[0],0)))) for t in Products.TYPE_CHOICE ]
 
 
-class ProductFilterForm(ModelForm):
+class ProductFilterForm(forms.Form):
     """
         product filterform
     """
     q = forms.CharField(required=False, label='Search')
+
+    name = forms.CharField(
+        required=False,
+        widget = forms.TextInput(attrs={'class':'form-control'}),
+        label='Name')
 
     plan = FilterChoiceField(
         queryset=Plans.objects.annotate(filter_count=Count('products')),
         widget=forms.CheckboxSelectMultiple(),
         to_field_name='pk',
     )
-
-    name = forms.CharField(
-        required=False,
-        widget = forms.TextInput(attrs={'class':'form-control'}),
-        label='Name')
 
     type = forms.MultipleChoiceField(
         choices = product_type_choice,
@@ -64,6 +64,6 @@ class ProductFilterForm(ModelForm):
         ),
     )
 
-    class Meta:
-        model = Products
-        fields = ['q', 'name']
+    # class Meta:
+    #     model = Products
+    #     fields = ['q', 'name']
