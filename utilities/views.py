@@ -116,6 +116,9 @@ class ObjectEditView(GetReturnURLMixin, View):
             else:
                 msg = '{} {}'.format(msg, escape(obj))
             messages.success(request, mark_safe(msg))
+            #add another
+            if '_addanother' in request.POST:
+                return redirect(request.path)
             return redirect(self.get_return_url(request, obj))
         return render(request, self.template_name, {
             'obj': obj,
