@@ -3,13 +3,25 @@ from django_filters import filters
 import django_filters
 from django.db.models import Q
 from common.utilities.filters import NumericInFilter
-from .models import Products
+from .models import Products, Plans
 
 class ProductFilter(django_filters.FilterSet):
     """product filter set"""
     name = django_filters.CharFilter(
         name='product_name',
         lookup_expr='exact'
+    )
+
+    plan = django_filters.ModelMultipleChoiceFilter(
+        name='plans__pk',
+        queryset=Plans.objects.all(),
+        to_field_name='pk',
+        label='name',
+    )
+
+    type = django_filters.MultipleChoiceFilter(
+        name='product_type',
+        choices=Products.TYPE_CHOICE,
     )
     # date = django_filters.DateFromToRangeFilter(
     #     name = "created",
