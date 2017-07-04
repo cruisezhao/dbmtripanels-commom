@@ -13,12 +13,12 @@ ACTIVE_STATUS = 2
 SUSPENDED_STATUS = 3
 CANCELLED_STATUS = 4
 
-STATUS_CHOICES  = (
+STATUS_CHOICES  = [
         (1,'Pending'),
         (2,'Active'),
         (3,'Suspended'),
         (4,'Cancelled'),
-)
+]
 
 
 class Plans(CreatedUpdatedModel):
@@ -48,9 +48,14 @@ class Plans(CreatedUpdatedModel):
 
 class Products(CreatedUpdatedModel):
     """product model"""
+    TYPE_CHOICE = [
+        ('APP', 'APP'),
+        ('VM', 'VM'),
+        ('BARE', 'BARE'),
+    ]
     plans = models.ManyToManyField(Plans, blank=True)
     uuid = models.CharField('uuid', default=uuid_to_str, editable=False, max_length = 255, unique = True, db_index = True)
-    product_type = models.CharField('Type', max_length=32, null=False, blank=False)
+    product_type = models.CharField('Type', max_length=32, default=TYPE_CHOICE[0], choices=TYPE_CHOICE)
     product_name = models.CharField('Name', max_length=255, unique=True)
 
     class Meta:
@@ -58,11 +63,39 @@ class Products(CreatedUpdatedModel):
         verbose_name_plural = "Products"
         db_table = "products"
 
+    @property
+    def all_plans(self):
+
+        return ', '.\
+            join(
+            ['<a href="/crud/products/planses/{}/">{}</a>'.format(p.uuid, p.name) for p in self.plans.all()]
+                 )
+
     def __str__(self):
         return self.product_name
 
     def get_absolute_url(self):
         return reverse('product', args=[self.uuid])
+
+    @property
+    def get_model(self):
+        """get apps\bare\vm model according product_type """
+        if self.product_type == self.TYPE_CHOICE[0][0]:
+            try:
+                return self.productapps
+            except ProductApps.DoesNotExist:
+                return None
+        elif self.product_type == self.TYPE_CHOICE[1][0]:
+            try:
+                return self.productvms
+            except ProductVms.DoesNotExist:
+                return None
+        else:
+            try:
+                return self.productbares
+            except ProductBares.DoesNotExist:
+                return None
+
 
 class ProductApps(CreatedUpdatedModel):
     """software app"""
