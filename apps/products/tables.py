@@ -22,7 +22,7 @@ from common.apps.products.models import Products
 class ProductTable(tables.Table):
     """product table"""
     DETAIL_URL_NAME = 'products-productses-detail'
-    uuid = tables.LinkColumn(DETAIL_URL_NAME, args=[A('uuid')])
+    uuid = tables.LinkColumn('orders:detail', args=[A('uuid')])
     plans = tables.Column(accessor='plans')
 
     class Meta:

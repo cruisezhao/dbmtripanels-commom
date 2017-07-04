@@ -58,11 +58,16 @@ class ObjectListView(View):
             'per_page': request.GET.get('per_page', settings.PAGINATE_COUNT)
         }
         RequestConfig(request, paginate).configure(table)
-
+        
+        if self.filter_form is None:
+            form = self.filter(request.GET, self.queryset).form
+        else:
+            form = self.filter_form(request.GET, label_suffix='')if self.filter_form else None
+            
         context = {
             'table': table,
             'permissions': False,
-            'filter_form': self.filter_form(request.GET, label_suffix='')if self.filter_form else None,
+            'filter_form': form,
             'export_templates': None,
         }
         context.update(self.extra_context())

@@ -6,6 +6,7 @@ import random
 
 from django.conf import settings
 from crum import get_current_user
+from django.urls.base import reverse
 
 PENDING_STATUS = 1
 ACTIVE_STATUS = 2
