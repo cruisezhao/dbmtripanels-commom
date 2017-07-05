@@ -15,9 +15,9 @@
 				<h4>Purchase successfully !</h4>
 				<p>You have applied for a six month free trial.  You can start the trial an hour later.</p>
 		</div>
-		<div class="line2">
-				<input type="button" id="thisproduct" value="Check my product lis"/>
-				<input type="button" name="" id="productlist" value="Check my order list" />
+		<div class="line2">				
+				<a href="{% url 'packages:productlist' %}" id="thisproduct">Check my product list</a>
+				<a href="{% url 'orders:list' %}" id="productlist">Check my order list</a>
 		</div>
 		<div class="line3">
 				<p>SolidClusters won’t send email to tell you there’s a problem about your order. 
