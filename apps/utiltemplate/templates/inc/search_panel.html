@@ -1,121 +1,111 @@
-
-
 {% load form_helpers %}
-<div class="span2 Tspan2">
-  <div class="well sidebar-nav" id="filtration">
-    <ul class="nav nav-list">
-      <li class="nav-header">By time</li>
-      <li>
-      	<div class="Tcheckbox"></div>
-      	<div class="Ttext">Within one day</div>
-      	<div class="Tnumber">2</div>
-      </li>
-      <li>
-      	<div class="Tcheckbox"></div>
-      	<div class="Ttext">Within one week</div>
-      	<div class="Tnumber">2</div>
-      </li>
-      <li>
-      	<div class="Tcheckbox"></div>
-      	<div class="Ttext">Within one month</div>
-      	<div class="Tnumber">2</div>
-      </li>
-      <li>
-      	<div class="Tcheckbox"></div>
-      	<div class="Ttext">Within one year</div>
-      	<div class="Tnumber">2</div>
-      </li>
-      <li class="nav-header">By status <div class="Tred">Hot</div></li>
-      <li>
-      	<div class="Tcheckbox"></div>
-      	<div class="Ttext">Pending</div>
-      	<div class="Tnumber">2</div>
-      </li>
-      <li>
-      	<div class="Tcheckbox"></div>
-      	<div class="Ttext">Active</div>
-      	<div class="Tnumber">2</div>
-      </li>
-      <li>
-      	<div class="Tcheckbox"></div>
-      	<div class="Ttext">Suspended</div>
-      	<div class="Tnumber">2</div>
-      </li>
-      <li>
-      	<div class="Tcheckbox"></div>
-      	<div class="Ttext">Deleted</div>
-      	<div class="Tnumber">2</div>
-      </li>
-      <li class="nav-header">By plan</li>
-      <li>
-      	<div class="Tcheckbox"></div>
-      	<div class="Ttext">Express Windows</div>
-      	<div class="Tnumber">2</div>
-      </li>
-      <li>
-      	<div class="Tcheckbox"></div>
-      	<div class="Ttext">Professional Windows</div>
-      	<div class="Tnumber">2</div>
-      </li>
-      <li>
-      	<div class="Tcheckbox"></div>
-      	<div class="Ttext">Advanced Windows</div>
-      	<div class="Tnumber">2</div>
-      </li>
-      <li>
-      	<div class="Tcheckbox"></div>
-      	<div class="Ttext">Custom Defined</div>
-      	<div class="Tnumber">2</div>
-      </li>
-      <li class="nav-header">Free screening</li>
-      <li>
-      	<div class="TinputText"><input type="text" id="" value="" placeholder="Product name"/></div>              	
-      </li>
-      <li>
-      	<div class="TinputText"><input type="text" id="" value="" placeholder="Order number"/></div>     
-      </li>
-      <li class="nav-header1">Start date</li>
-      <li>
-      	<div class="TinputText"></div>
-      </li>
-      <li class="nav-header1">End date</li>
-      <li>
-      	<div class="TinputText"></div>
-      </li>
-      <li>
-      	<div class="TinputText"><input type="button" id="" value="Screen" /></div>
-      </li>
-    </ul>
-  </div><!--/.well -->
-</div>
+<!--<div class="span2 Tspan2">-->
+  <!--<div class="well sidebar-nav" id="filtration">-->
+    <!--<ul class="nav nav-list">-->
+      <!--<li class="nav-header">By time</li>-->
+      <!--<li>-->
+      	<!--<div class="Tcheckbox"></div>-->
+      	<!--<div class="Ttext">Within one day</div>-->
+      	<!--<div class="Tnumber">2</div>-->
+      <!--</li>-->
+      <!--<li>-->
+      	<!--<div class="Tcheckbox"></div>-->
+      	<!--<div class="Ttext">Within one week</div>-->
+      	<!--<div class="Tnumber">2</div>-->
+      <!--</li>-->
+      <!--<li>-->
+      	<!--<div class="Tcheckbox"></div>-->
+      	<!--<div class="Ttext">Within one month</div>-->
+      	<!--<div class="Tnumber">2</div>-->
+      <!--</li>-->
+      <!--<li>-->
+      	<!--<div class="Tcheckbox"></div>-->
+      	<!--<div class="Ttext">Within one year</div>-->
+      	<!--<div class="Tnumber">2</div>-->
+      <!--</li>-->
+      <!--<li class="nav-header">By status <div class="Tred">Hot</div></li>-->
+      <!--<li>-->
+      	<!--<div class="Tcheckbox"></div>-->
+      	<!--<div class="Ttext">Pending</div>-->
+      	<!--<div class="Tnumber">2</div>-->
+      <!--</li>-->
+      <!--<li>-->
+      	<!--<div class="Tcheckbox"></div>-->
+      	<!--<div class="Ttext">Active</div>-->
+      	<!--<div class="Tnumber">2</div>-->
+      <!--</li>-->
+      <!--<li>-->
+      	<!--<div class="Tcheckbox"></div>-->
+      	<!--<div class="Ttext">Suspended</div>-->
+      	<!--<div class="Tnumber">2</div>-->
+      <!--</li>-->
+      <!--<li>-->
+      	<!--<div class="Tcheckbox"></div>-->
+      	<!--<div class="Ttext">Deleted</div>-->
+      	<!--<div class="Tnumber">2</div>-->
+      <!--</li>-->
+      <!--<li class="nav-header">By plan</li>-->
+      <!--<li>-->
+      	<!--<div class="Tcheckbox"></div>-->
+      	<!--<div class="Ttext">Express Windows</div>-->
+      	<!--<div class="Tnumber">2</div>-->
+      <!--</li>-->
+      <!--<li>-->
+      	<!--<div class="Tcheckbox"></div>-->
+      	<!--<div class="Ttext">Professional Windows</div>-->
+      	<!--<div class="Tnumber">2</div>-->
+      <!--</li>-->
+      <!--<li>-->
+      	<!--<div class="Tcheckbox"></div>-->
+      	<!--<div class="Ttext">Advanced Windows</div>-->
+      	<!--<div class="Tnumber">2</div>-->
+      <!--</li>-->
+      <!--<li>-->
+      	<!--<div class="Tcheckbox"></div>-->
+      	<!--<div class="Ttext">Custom Defined</div>-->
+      	<!--<div class="Tnumber">2</div>-->
+      <!--</li>-->
+      <!--<li class="nav-header">Free screening</li>-->
+      <!--<li>-->
+      	<!--<div class="TinputText"><input type="text" id="" value="" placeholder="Product name"/></div>              	-->
+      <!--</li>-->
+      <!--<li>-->
+      	<!--<div class="TinputText"><input type="text" id="" value="" placeholder="Order number"/></div>     -->
+      <!--</li>-->
+      <!--<li class="nav-header1">Start date</li>-->
+      <!--<li>-->
+      	<!--<div class="TinputText"></div>-->
+      <!--</li>-->
+      <!--<li class="nav-header1">End date</li>-->
+      <!--<li>-->
+      	<!--<div class="TinputText"></div>-->
+      <!--</li>-->
+      <!--<li>-->
+      	<!--<div class="TinputText"><input type="button" id="" value="Screen" /></div>-->
+      <!--</li>-->
+    <!--</ul>-->
+  <!--</div>&lt;!&ndash;/.well &ndash;&gt;-->
+<!--&lt;!&ndash;</div>-->
 
 
 <!--原来的代码-->
-<!--<div class="panel panel-default">
-    <div class="panel-heading">-->
-        <!-- <span class="fa fa-search" aria-hidden="true"></span> -->
-        <!--<span>SearchS</span>
-    </div>
-    <div class="panel-body">
-        <form action="." method="get" class="form">
+<div class="span2 Tspan2">
+    <div class="well sidebar-nav" id="filtration">
+        <form action="." method="get">
+            <ul class="nav nav-list">
                 {% for field in filter_form %}
-                    <div class="form-group">
-                        {% if field.name == "q" %}
-                            <div class="input-group">
-                                <input type="text" name="q" class="form-control" placeholder="Search" {% if request.GET.q %}value="{{ request.GET.q }}" {% endif %}/>
-                                <span class="input-group-btn">
-                                    <button type="submit" class="btn btn-primary">
-                                        <span class="fa fa-search" aria-hidden="true"></span>
-                                    </button>
-                                </span>
-                            </div>
-                        {% elif field|widget_type == 'checkboxinput' %}
-                            <label for="{{ field.id_for_label }}">{{ field }} {{ field.label }}</label>
-                        {% else %}
+                  {% if field|widget_type == 'checkboxselectmultiple' %}
+                     <li>
+                         {{field}}
+                     </li>
+                  {% else %}
+                     <li>
+                        <div class="TinputText">
                             {{ field.label_tag }}
                             {{ field }}
-                        {% endif %}
                     </div>
+                     </li>
+                   {% endif %}
                 {% endfor %}
                 <div class="text-center">
                     <button type="submit" class="btn btn-wihte">
@@ -125,6 +115,7 @@
                         <span class="fa fa-remove" aria-hidden="true"></span> Clear
                     </a>
                 </div>
+            </ul>
         </form>
     </div>
-</div>-->
+</div>
