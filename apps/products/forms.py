@@ -22,7 +22,7 @@ def product_type_choice():
     ps = Products.objects.values('product_type').annotate(count=Count('product_type'))
     for p in ps:
         pt_d[p['product_type']] = p['count']
-    return [(t[0], mark_safe("{} <div class='Tnumber'>{}</div>".format(t[1],pt_d.get(t[0],0)))) for t in Products.TYPE_CHOICE ]
+    return [(t[0], mark_safe("{} <span class='badge pull-right'>{}</span>".format(t[1],pt_d.get(t[0],0)))) for t in Products.TYPE_CHOICE ]
 
 
 class ProductFilterForm(forms.Form):
@@ -32,32 +32,23 @@ class ProductFilterForm(forms.Form):
     type = forms.MultipleChoiceField(
         choices = product_type_choice,
         widget=forms.CheckboxSelectMultiple(),
-        required=False
+        required=False,
+        label="By Type",
     )
     plan = FilterChoiceField(
         queryset=Plans.objects.annotate(filter_count=Count('products')),
         widget=forms.CheckboxSelectMultiple(),
         to_field_name='pk',
+        label="By Plan",
     )
 
-    q = forms.CharField(required=False, label='Search')
+    #q = forms.CharField(required=False, label='Search')
 
     name = forms.CharField(
         required=False,
         widget = forms.TextInput(attrs={'class':'TinputText'}),
-        label='Name')
-
-    plan = FilterChoiceField(
-        queryset=Plans.objects.annotate(filter_count=Count('products')),
-        widget=forms.CheckboxSelectMultiple(),
-        to_field_name='pk',
-    )
-
-    type = forms.MultipleChoiceField(
-        choices = product_type_choice,
-        widget=forms.CheckboxSelectMultiple(),
-        required=False,
-    )
+        label='Product Name',
+        )
 
     start_date = forms.DateField(
         required=False,

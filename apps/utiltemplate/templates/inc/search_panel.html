@@ -96,6 +96,7 @@
                 {% for field in filter_form %}
                   {% if field|widget_type == 'checkboxselectmultiple' %}
                      <li>
+                     		{{ field.label_tag }}
                          {{field}}
                      </li>
                   {% else %}
@@ -103,16 +104,14 @@
                         <div class="TinputText">
                             {{ field.label_tag }}
                             {{ field }}
-                    </div>
+                        </div>
                      </li>
                    {% endif %}
                 {% endfor %}
-                <div class="text-center">
-                    <button type="submit" class="btn btn-wihte">
-                        <span class="fa fa-search" aria-hidden="true"></span> Apply
-                    </button>
-                    <a href="." class="btn btn-wihte">
-                        <span class="fa fa-remove" aria-hidden="true"></span> Clear
+                <div class="TinputText">
+                    <input type="submit" value="Screen"><br />                     
+                    <a href="." >
+                        Clear
                     </a>
                 </div>
             </ul>
