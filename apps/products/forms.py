@@ -52,14 +52,14 @@ class ProductFilterForm(forms.Form):
 
     start_date = forms.DateField(
         required=False,
-        label='Start_date',
+        label='Start Date',
         widget=DateWidget(
             options={'format': 'yyyy-mm-dd',},
             bootstrap_version=3),
     )
     end_date = forms.DateField(
         required=False,
-        label='End_date',
+        label='End Date',
         widget=DateWidget(
             options={'format': 'yyyy-mm-dd',},
             bootstrap_version=3

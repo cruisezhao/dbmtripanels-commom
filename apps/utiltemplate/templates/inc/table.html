@@ -1,6 +1,8 @@
 {% load django_tables2 %}
 
-<table{% if table.attrs %} {{ table.attrs.as_html }}{% endif %}>
+<div class="span10" id="content_wrapper">
+    <div class="Ttable">
+        <table>
     {% if table.show_header %}
         <thead>
             <tr>
@@ -39,3 +41,5 @@
         </tfoot>
     {% endif %}
 </table>
+    </div>
+</div>
