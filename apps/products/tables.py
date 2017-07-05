@@ -10,7 +10,7 @@ class ProductTable(tables.Table):
     """product table"""
     DETAIL_URL_NAME = 'products-productses-detail'
     pk = ToggleColumn()
-    uuid = tables.LinkColumn(DETAIL_URL_NAME, args=[A('uuid')])
+    uuid = tables.LinkColumn(DETAIL_URL_NAME, args=[A('id')])
     plans = tables.Column(accessor='all_plans', orderable=False)
     summary = tables.Column(
         accessor='get_model.summary',
