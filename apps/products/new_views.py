@@ -1,6 +1,6 @@
 from django.views.generic import View
 from django.contrib.auth.mixins import PermissionRequiredMixin
-from .models import Products
+from .models import Products, Plans
 from django.shortcuts import render
 from django.shortcuts import get_object_or_404
 from common.utilities.views import ObjectEditView, ObjectDeleteView, ObjectListView
@@ -35,4 +35,34 @@ class ProductEditView(ObjectEditView):
 
 class ProductDeleteView(ObjectDeleteView):
     model = Products
+    default_return_url = 'home'
+
+
+class PlanListView(ObjectListView):
+    """plan list"""
+    queryset = Plans.objects.all()
+    filter = filters.PlanFilter
+    filter_form = forms.PlanFilterForm
+    table = tables.PlanTable
+    template_name = 'products/plan_new_list.html'
+
+
+class PlanView(View):
+    """plan"""
+    def get(self,request,uuid):
+        plan = get_object_or_404(Plans,uuid=uuid)
+        return render(request, "products/plan.html", {'object':plan})
+
+
+class PlanEditView(ObjectEditView):
+    """plan edit"""
+    model = Plans
+    form_class = forms.PlanForm
+    template_name = 'products/plan_edit.html'
+    default_return_url = 'home'
+
+
+class PlanDeleteView(ObjectDeleteView):
+    """plan delete"""
+    model = Plans
     default_return_url = 'home'

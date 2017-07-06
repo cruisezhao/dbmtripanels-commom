@@ -5,6 +5,9 @@ from .serializers import ProductAppsListSerializer, ProductAppsDetailSerializer
 from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.views import APIView
+from django_filters import rest_framework as filters
+from .filters4api import ProductAppsFilter4API
+from rest_framework.filters import SearchFilter,DjangoFilterBackend
 
 class ProductList(mixins.ListModelMixin,generics.GenericAPIView):
     #limit 8 softwares
@@ -22,6 +25,8 @@ class ProductListAll(mixins.ListModelMixin, generics.GenericAPIView):
     queryset = ProductApps.objects.all()
     serializer_class = ProductAppsListSerializer
     permission_classes = [AllowAny,]
+    filter_backends = (SearchFilter,)
+    search_fields = ('app_name', 'summary', 'features', 'description')
 
 
     def get(self, request, *args, **kwargs):

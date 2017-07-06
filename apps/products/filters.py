@@ -1,3 +1,4 @@
+import random
 from django_filters.widgets import RangeWidget
 from django_filters import filters
 import django_filters
@@ -46,3 +47,43 @@ class ProductFilter(django_filters.FilterSet):
             Q(product_type__icontains=value)
         )
         return queryset.filter(qs_filter)
+
+
+class PlanFilter(django_filters.FilterSet):
+    """plan filter"""
+    name = django_filters.CharFilter(
+         name='name',
+         lookup_expr='exact',
+    )
+    cpu = django_filters.MultipleChoiceFilter(
+        name = 'cpu',
+        choices = range(4),
+    )
+
+    memory = django_filters.MultipleChoiceFilter(
+        name = 'memory',
+        choices = range(8),
+    )
+
+    disk = django_filters.MultipleChoiceFilter(
+        name = 'disk',
+        choices = range(4),
+    )
+
+    instance = django_filters.MultipleChoiceFilter(
+        name='instance',
+        choices = range(1,4),
+    )
+
+    price = django_filters.MultipleChoiceFilter(
+        name = 'price',
+        choices = Plans.CHOICE,
+    )
+    #the time the plan created
+    start_date = filters.DateFilter(name='created', lookup_expr='gte')
+
+    end_date = filters.DateFilter(name='created', lookup_expr='lte')
+
+    class Meta:
+        model = Plans
+        fields = ('start_date', 'end_date')
