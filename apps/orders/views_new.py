@@ -11,7 +11,7 @@ from . import tables
 
 
 class OrderListView(ObjectListView):
-    """product list"""
+    
     queryset = Orders.objects.all()
     filter = filters.OrderFilter
     #filter_form = filter.form
