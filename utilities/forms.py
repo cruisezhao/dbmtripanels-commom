@@ -1,5 +1,6 @@
 from django import forms
 from django.utils.html import mark_safe
+from datetimewidget.widgets import DateTimeWidget, DateWidget, TimeWidget
 
 
 class ReturnURLForm(forms.Form):
@@ -43,3 +44,22 @@ class FilterChoiceFieldMixin(object):
 
 class FilterChoiceField(FilterChoiceFieldMixin, forms.ModelMultipleChoiceField):
     pass
+
+
+class DateFilterMixin(forms.Form):
+    """used for render start date and end date"""
+    start_date = forms.DateField(
+        required=False,
+        label='Start Date',
+        widget=DateWidget(
+            options={'format': 'yyyy-mm-dd',},
+            bootstrap_version=3),
+    )
+    end_date = forms.DateField(
+        required=False,
+        label='End Date',
+        widget=DateWidget(
+            options={'format': 'yyyy-mm-dd',},
+            bootstrap_version=3
+        ),
+    )
