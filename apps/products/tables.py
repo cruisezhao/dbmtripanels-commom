@@ -8,9 +8,9 @@ from common.utilities.tables import ToggleColumn
 
 class ProductTable(tables.Table):
     """product table"""
-    DETAIL_URL_NAME = 'home'
+    DETAIL_URL_NAME = 'product'
     # pk = ToggleColumn()
-    product_name = tables.Column()
+    product_name = tables.LinkColumn(DETAIL_URL_NAME, args=[A('uuid')])
     plans = tables.Column(accessor='all_plans', orderable=False)
     summary = tables.Column(
         accessor='get_model.summary',
