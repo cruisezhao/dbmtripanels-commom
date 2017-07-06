@@ -5,7 +5,7 @@
 
     {% if paginator.num_pages > 1 %}
         <nav>
-            <ul class="pagination pull-right">
+            <ol class="pagination pull-right">
                 {% if page.has_previous %}
                     <li><a href="{% querystring request page=page.previous_page_number %}"><i class="fa fa-angle-double-left"></i></a></li>
                 {% endif %}
@@ -19,7 +19,7 @@
                 {% if page.has_next %}
                     <li><a href="{% querystring request page=page.next_page_number %}"><i class="fa fa-angle-double-right"></i></a></li>
                 {% endif %}
-            </ul>
+            </ol>
         </nav>
     {% endif %}
 
