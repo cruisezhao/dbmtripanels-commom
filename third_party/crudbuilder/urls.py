@@ -29,12 +29,12 @@ if tables:
 
         entries = [
             (r'^{}/{}/$', list_view.as_view(), '{}-{}-list'),
-            (r'^{}/{}/(?P<uuid>[a-z\d]{{32}})/$', detail_view.as_view(), '{}-{}-detail'),
+            (r'^{}/{}/(?P<pk>\d+)/$', detail_view.as_view(), '{}-{}-detail'),
             (r'^{}/{}/create/$', create_view.as_view(), '{}-{}-create'),
-            (r'^{}/{}/(?P<uuid>[a-z\d]{{32}})/update/$',
+            (r'^{}/{}/(?P<pk>\d+)/update/$',
                 update_view.as_view(),
                 '{}-{}-update'),
-            (r'^{}/{}/(?P<uuid>[a-z\d]{{32}})/delete/$',
+            (r'^{}/{}/(?P<pk>\d+)/delete/$',
                 delete_view.as_view(),
                 '{}-{}-delete'),
         ]

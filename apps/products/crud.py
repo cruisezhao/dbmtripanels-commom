@@ -25,9 +25,9 @@ class ScreenshotInlineFormset(BaseInlineFormset):
 class ProductCRUD(BaseCrudBuilder,CrudContextMixin, CrudQuerySetMixin):
     """product crud"""
     model = Products
-    custom_table2 = ProductTable
+    custom_table2 = None
     search_fields = [ 'product_type','product_name','created','last_updated']
-    #tables2_fields = ('plans', 'product_type','product_name', 'created','last_updated')
+    tables2_fields = ('plans', 'product_type','product_name', 'created','last_updated')
     tables2_css_class = "table table-bordered table-condensed"
     modelform_excludes = ('created_by','updated_by')
     tables2_pagination = 5
