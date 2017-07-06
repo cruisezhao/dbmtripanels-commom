@@ -29,35 +29,37 @@ class ProductFilterForm(forms.Form):
     """
         product filterform
     """
-    q = forms.CharField(required=False, label='Search')
-
-    name = forms.CharField(
+    type = forms.MultipleChoiceField(
+        choices = product_type_choice,
+        widget=forms.CheckboxSelectMultiple(),
         required=False,
-        widget = forms.TextInput(attrs={'class':'form-control'}),
-        label='Name')
-
+        label="By Type",
+    )
     plan = FilterChoiceField(
         queryset=Plans.objects.annotate(filter_count=Count('products')),
         widget=forms.CheckboxSelectMultiple(),
         to_field_name='pk',
+        label="By Plan",
     )
 
-    type = forms.MultipleChoiceField(
-        choices = product_type_choice,
-        widget=forms.CheckboxSelectMultiple(),
-        required=False
-    )
+    #q = forms.CharField(required=False, label='Search')
+
+    name = forms.CharField(
+        required=False,
+        widget = forms.TextInput(attrs={'class':'TinputText'}),
+        label='Product Name',
+        )
 
     start_date = forms.DateField(
         required=False,
-        label='Start_date',
+        label='Start Date',
         widget=DateWidget(
             options={'format': 'yyyy-mm-dd',},
             bootstrap_version=3),
     )
     end_date = forms.DateField(
         required=False,
-        label='End_date',
+        label='End Date',
         widget=DateWidget(
             options={'format': 'yyyy-mm-dd',},
             bootstrap_version=3

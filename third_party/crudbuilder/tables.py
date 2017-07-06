@@ -25,14 +25,14 @@ class TableBuilder(BaseBuilder):
         )
 
         main_attrs = dict(
-            #id=tables.LinkColumn(detail_url_name, args=[A('pk')])
-            uuid=tables.LinkColumn(detail_url_name, args=[A('uuid')]) #'uuid' replaced 'id'
+            id=tables.LinkColumn(detail_url_name, args=[A('pk')])
+            # uuid=tables.LinkColumn(detail_url_name, args=[A('uuid')]) #'uuid' replaced 'id'
         )
 
         meta_attrs = dict(
             model=model_class,
-            # fields=('id',) + self.tables2_fields if self.tables2_fields else ('id',),
-            fields=self.tables2_fields, #Exclude 'id' in table field
+            fields=('id',) + self.tables2_fields if self.tables2_fields else ('id',),
+            # fields=self.tables2_fields, #Exclude 'id' in table field
             attrs={
                 "class": self.tables2_css_class,
                 "empty_text": "No {} exist".format(plural(self.model))
