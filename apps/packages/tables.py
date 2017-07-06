@@ -10,7 +10,7 @@ from django_tables2 import A
 
 class PackageTable(tables.Table):
     """Package table"""
-    uuid = tables.LinkColumn('packages:detail', args=[A('uuid')])
+    id = tables.LinkColumn('packages:detail', args=[A('uuid')])
     package_name = tables.Column()
     created = tables.Column()
     client = tables.Column(accessor='client.email')
@@ -19,7 +19,7 @@ class PackageTable(tables.Table):
 
     class Meta:
         model = Packages
-        fields = ('uuid','package_name','created','client', 'status')
+        fields = ('id','package_name','created','client', 'status')
         attrs={
                 "class": "table table-bordered table-condensed table-hover",
             }

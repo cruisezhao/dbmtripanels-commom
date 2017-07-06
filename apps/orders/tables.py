@@ -9,7 +9,7 @@ from django_tables2 import A
 
 class OrderTable(tables.Table):
     """product table"""
-    uuid = tables.LinkColumn('orders:detail', args=[A('uuid')])
+    id = tables.LinkColumn('orders:detail', args=[A('uuid')])
     email = tables.Column(accessor='client.email')
     created_date = tables.Column()
     product_name = tables.Column(accessor='product.product_name')
@@ -23,7 +23,7 @@ class OrderTable(tables.Table):
 
     class Meta:
         model = Orders
-        fields = ('uuid','email','created_date','product_name', 'version','cpu_cores','memory','disk','remarks','status','price')
+        fields = ('id','email','created_date','product_name', 'version','cpu_cores','memory','disk','remarks','status','price')
         attrs={
                 "class": "table table-bordered table-condensed table-hover",
             }

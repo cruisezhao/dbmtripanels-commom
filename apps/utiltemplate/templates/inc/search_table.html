@@ -1,19 +1,27 @@
 {% extends 'base.html' %}
+{% load staticfiles %}
 {% load helpers %}
 
 {% block title %}{{title}}{% endblock %}
 
 {% block content %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/base3_add.css' %}"/>
+<link rel="stylesheet" type="text/css" href="{% static 'css/base4_table.css' %}"/>
+<div class="row-fluid" id="content_wrapper1">
+        {% include 'inc/search_panel.html' %}
 
-<h1>{{title}}</h1>
-<div class="row">
+        <div class="pull-right subtitle_btn">
+            {% if perms %}
 
-    <div class="col-md-3">
-    {% include 'inc/search_panel.html' %}
+            {% endif %}
+        </div>
+        <div class="span10" id="content_wrapper">
+            <p>Client lists</p>
+
+            <div class="Ttable">
+             {% include 'utilities/obj_table.html' %}
+            </div>
+        </div>
     </div>
-
-    <div class="col-md-9">
-        {% include 'utilities/obj_table.html' %}
-    </div>
-</div>
+<script src="{% static 'js/base2.js' %}" type="text/javascript" charset="utf-8"></script>
 {% endblock %}
