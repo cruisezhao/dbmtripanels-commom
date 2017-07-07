@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+{% load static %}
+{% block styles %}
+
+{% endblock styles %}
+
+{% block content %}
+<button type="button" class="btn btn-default"><a href="{% url 'packages:edit' pkg.uuid %}">Edit</a></button>
+<table class="table">
+    <tr>
+        <td>uuid</td>
+        <td>{{pkg.uuid}}</td>
+    </tr>
+    <tr>
+        <td>Product Name</td>
+        <td>{{pkg.get_product_name}}</td>
+    </tr>
+    <tr>
+        <td>Created Date</td>
+        <td>{{pkg.created}}</td>
+    </tr>
+    <tr>
+        <td>Client Email</td>
+        <td>{{pkg.client.email}}</td>
+    </tr>
+    <tr>
+        <td>Status</td>
+        <td>{{pkg.status}}</td>
+    </tr>
+</table>
+
+{% endblock content %}

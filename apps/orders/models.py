@@ -28,7 +28,7 @@ class Orders(models.Model):
 
     class Meta:
         db_table = "orders"
-        ordering = ['-created_date']
+        #ordering = ['-created_date']
     
     def get_user_email(self):
         return self.client.email

@@ -3,17 +3,15 @@ from django.shortcuts import render, render_to_response
 from .form import OrderCreateForm, OrderSearchForm, OrderForm
 from django.views.generic import TemplateView
 from django.views.generic.edit import FormView
-from django.shortcuts import get_object_or_404, get_list_or_404
-from common.apps.products.models import Products, Plans, ProductApps
+from django.shortcuts import get_object_or_404
+from common.apps.products.models import Products, ProductApps
 from django.urls import reverse_lazy
 from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import login_required
-from django.http import HttpResponseRedirect
 import datetime
 from .models import Orders
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from django.contrib import messages
-from common.apps.packages.models import Packages
 from django.utils.translation import ugettext as _
 
 ORDERS_PER_PAGE = 10

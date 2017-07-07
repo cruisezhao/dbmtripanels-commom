@@ -1,0 +1,15 @@
+# Basic Information
+vm_type: linux_vm
+vm_name: Linux VPS
+tags: [Ecom,Database,Java]
+summary: >-
+  Some basic description 
+description: >-
+  Another great aspect of the software is
+
+status: 2
+
+# product Features dictionary
+features: 
+  feature1: Linux 
+  feature2: SSH Root Access  
