@@ -2,6 +2,8 @@
 {% load form_helpers %}
 
 {% block content %}
+    {% block button %}
+    {% endblock %}
     <form action="." method="post" enctype="multipart/form-data" class="form form-horizontal">
         {% csrf_token %}
         {% for field in form.hidden_fields %}

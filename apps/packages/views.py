@@ -6,6 +6,7 @@ from common.utilities.views import ObjectListView, ObjectEditView
 from . import filters,tables
 from django.views.generic import View
 from .forms import PackageForm
+from django.utils.decorators import method_decorator
 
 
 # Create your views here.
@@ -30,6 +31,7 @@ def product_details(request, pid, template_name='packages/product_detail.html'):
     pkg = get_object_or_404(Packages, client__pk=request.user.pk, uuid=pid, status='Active')
     return render(request, template_name, {'pkg': pkg})
 
+@method_decorator(login_required, name='dispatch')
 class PackageListView(ObjectListView):
     '''Package list view'''
     queryset = Packages.objects.all()
@@ -38,6 +40,7 @@ class PackageListView(ObjectListView):
     table = tables.PackageTable
     template_name = 'packages/package_list.html'
     
+@method_decorator(login_required, name='dispatch')    
 class PackageView(View):
     """Package object view"""
     def get(self,request,uuid):
@@ -45,7 +48,7 @@ class PackageView(View):
         print(pkg)
         return render(request, "packages/package.html", {'pkg':pkg})
     
-
+@method_decorator(login_required, name='dispatch')
 class PackageEditView(ObjectEditView):
     """package edit view"""
     model = Packages
