@@ -1,0 +1,10 @@
+template_url: http://gitlab.databasemart.net/tripanels-compose.yml
+package_id: 334556
+plan:
+    cpu: 2
+    memory: 20
+    disk: 200
+    instances: 2
+answers:
+    cloud: tripanels
+    proxy_scheme: https

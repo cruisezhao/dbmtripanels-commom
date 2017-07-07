@@ -1,0 +1,16 @@
+# Basic Information
+bare_type: windows_bares
+bare_name: Windows Server
+tags: [Linux,Bare metal]
+summary: >-
+  Some basic description 
+description: >-
+  Another great aspect of the software is
+# status:1->Pending 2->Active 3->Inactive
+status: 2
+
+# product Features dictionary
+features: 
+  feature1: Windows 
+  feature2: IIS 
+  
