@@ -5,24 +5,7 @@
         {
             "name": "opencart",
             "service_id": 556789,
-            "peer_id": 556789,
-            "configurations": [
-                {
-                    "type": "DataBase",
-                    "name": "MySQL",
-                    "value": "MySQL5.5"
-                },
-                {
-                    "type": "OS",
-                    "name": "Ubuntu14",
-                    "value": "Ubuntu14"
-                },
-                {
-                    "type": "web",
-                    "name": "Apache",
-                    "value": "Apache5.5"
-                }
-            ]
+            "peer_id": 556789   
         }
     ]
 }

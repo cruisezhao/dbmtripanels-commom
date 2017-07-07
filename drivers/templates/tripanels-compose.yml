@@ -9,6 +9,9 @@ description: |
 version: 0.0.1
 relationship:
 
+deploy_police:
+  name: 
+  
 deploy_instances:
   - name: opencart
     cloud: private.rancher 
@@ -22,8 +25,9 @@ deploy_instances:
       - type: web
         name: Apache
         value: Apache5.5
+  
 
-form_fields:
+questions:
   - name: cloud
     label: Cloud location
     description: |
@@ -43,3 +47,41 @@ form_fields:
     default: http
     required: false
     hidden: false
+
+docker:
+  broker:
+    tty: true
+    image: rawmind/alpine-kafka:0.10.2.1
+    volumes_from:
+      - broker-volume
+      - broker-conf
+    environment:
+      - JVMFLAGS=-Xmx${kafka_mem}m -Xms${kafka_mem}m
+      - CONFD_INTERVAL=${kafka_interval}
+      - ZK_SERVICE=${zk_link}
+      - KAFKA_DELETE_TOPICS=${kafka_delete_topics}
+      - KAFKA_LOG_DIRS=${kafka_log_dir}
+      - KAFKA_LOG_RETENTION_HOURS=${kafka_log_retention}
+      - KAFKA_NUM_PARTITIONS=${kafka_num_partitions}
+      - ADVERTISE_PUB_IP=${kafka_pub_ip}
+    external_links:
+      - ${zk_link}:zk
+    labels: 
+      io.rancher.scheduler.affinity:container_label_soft_ne: io.rancher.stack_service.name=$${stack_name}/$${service_name}
+      io.rancher.container.hostname_override: container_name
+      io.rancher.sidekicks: broker-volume, broker-conf
+
+rancher:
+  broker:
+  scale: ${kafka_scale}
+  retain_ip: true
+  health_check:
+    port: 9092
+    interval: 5000
+    unhealthy_threshold: 3
+    request_line: ''
+    healthy_threshold: 2
+    response_timeout: 5000
+
+  
+  
