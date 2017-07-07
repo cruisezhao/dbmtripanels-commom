@@ -1,0 +1,45 @@
+name: OpenCart
+# type of products [Application(APP), Virtual Machine(VM), 
+# Bare Metal(Bare)]
+type: APP
+description: |
+  OpenCart is an open source PHP-based online
+  e-commerce solution.
+# author: TriClusters, Inc
+version: 0.0.1
+relationship:
+
+deploy_instances:
+  - name: opencart
+    cloud: private.rancher 
+    configurations:
+      - type: DataBase
+        name: MySQL
+        value: MySQL5.5
+      - type: OS
+        name: Ubuntu14
+        value: Ubuntu14
+      - type: web
+        name: Apache
+        value: Apache5.5
+
+form_fields:
+  - name: cloud
+    label: Cloud location
+    description: |
+      The Cloud location where product an deployed.
+    type: string
+    default: private.rancher
+    required: true
+    hidden: false
+  - name: proxy_scheme
+    label: Proxy scheme
+    description: |
+      When behind a proxy, specify the protocol clients will use to connect to Confluence
+    type: enum
+    options:
+      - http
+      - https
+    default: http
+    required: false
+    hidden: false

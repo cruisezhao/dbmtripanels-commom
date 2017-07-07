@@ -1,0 +1,15 @@
+product_type: APP
+product_name: ecwid
+plans: 
+  - express
+  - basic
+  - Professional
+deployments: 
+  - plan_name: express
+    clouds: 
+      - Rancher_001
+      - Rancher_002
+  - plan_name: basic
+    clouds: 
+      - Openstack_001
+      - Openstack_002

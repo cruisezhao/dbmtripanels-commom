@@ -1,0 +1,15 @@
+name: OpenCart
+package_id: 334556
+servers: 
+  - cloud: private.rancher
+    peer_id: 556789
+    configurations: 
+      - type: DataBase
+        name: MySQL
+        value: MySQL5.5
+      - type: OS
+        name: Ubuntu14
+        value: Ubuntu14
+      - type: web
+        name: Apache
+        value: Apache5.5
