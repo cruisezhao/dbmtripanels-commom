@@ -1,9 +1,10 @@
 {
     "name": "OpenCart",
-    "package_id": 334556,
+    "stack_id": 334556,
     "servers": [
         {
-            "cloud": "private.rancher",
+            "name": "opencart",
+            "service_id": 556789,
             "peer_id": 556789,
             "configurations": [
                 {
