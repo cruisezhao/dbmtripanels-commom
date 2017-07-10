@@ -45,7 +45,6 @@ class PackageView(View):
     """Package object view"""
     def get(self,request,uuid):
         pkg = get_object_or_404(Packages,uuid=uuid)
-        print(pkg)
         return render(request, "packages/package.html", {'pkg':pkg})
     
 @method_decorator(login_required, name='dispatch')

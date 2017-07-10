@@ -68,7 +68,7 @@ class Products(CreatedUpdatedModel):
 
         return ', '.\
             join(
-            ['<a href="/crud/products/planses/{}/">{}</a>'.format(p.uuid, p.name) for p in self.plans.all()]
+            ['<a href="/plan/{}/">{}</a>'.format(p.uuid, p.name) for p in self.plans.all()]
                  )
 
     def __str__(self):
@@ -187,7 +187,7 @@ class Screenshot(CreatedUpdatedModel):
     uuid = models.CharField('uuid', default=uuid_to_str, editable=False, max_length = 255, unique = True, db_index = True)
     product = models.ForeignKey(ProductApps)
     version = models.CharField('Version', max_length=32, null=True, blank=True)
-    title = models.CharField('Title', max_length=32, null=True, blank=True)
+    title = models.CharField('Title', max_length=256, null=True, blank=True)
     description = models.TextField('Description', null=True, blank=True)
     url  = models.URLField('URL', max_length=256,null=True, blank=True)
     status = models.IntegerField('Status', default=PENDING_STATUS, choices=STATUS_CHOICES)
@@ -234,7 +234,7 @@ class Video(CreatedUpdatedModel):
     """video for software"""
     uuid = models.CharField('uuid', default=uuid_to_str, editable=False, max_length = 255, unique = True, db_index = True)
     product = models.ForeignKey(ProductApps)
-    title = models.CharField('Title', max_length=32, null=True, blank=True)
+    title = models.CharField('Title', max_length=256, null=True, blank=True)
     description = models.TextField('Description', null=True, blank=True)
     url  = models.URLField('URL', max_length=256,null=True, blank=True)
     status = models.IntegerField('Status', default=PENDING_STATUS, choices=STATUS_CHOICES)
