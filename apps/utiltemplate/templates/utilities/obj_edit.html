@@ -3,6 +3,7 @@
 {% load staticfiles %}
 <link rel="stylesheet" type="text/css" href="{% static 'css/base4_table.css' %}"/>
 {% block content %}
+
     <form action="." method="post" enctype="multipart/form-data" class="content_wrapper1">
         {% csrf_token %}
         {% for field in form.hidden_fields %}

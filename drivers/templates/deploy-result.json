@@ -1,0 +1,11 @@
+{
+    "name": "OpenCart",
+    "stack_id": 334556,
+    "servers": [
+        {
+            "name": "opencart",
+            "service_id": 556789,
+            "peer_id": 556789   
+        }
+    ]
+}
