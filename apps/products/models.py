@@ -68,7 +68,7 @@ class Products(CreatedUpdatedModel):
 
         return ', '.\
             join(
-            ['<a href="/crud/products/planses/{}/">{}</a>'.format(p.uuid, p.name) for p in self.plans.all()]
+            ['<a href="/plan/{}/">{}</a>'.format(p.uuid, p.name) for p in self.plans.all()]
                  )
 
     def __str__(self):
