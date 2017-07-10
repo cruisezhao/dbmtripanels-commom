@@ -1,17 +1,18 @@
 {% extends 'base.html' %}
 {% load form_helpers %}
 {% load staticfiles %}
-<link rel="stylesheet" type="text/css" href="{% static 'css/base4_table.css' %}"/>
 {% block content %}
-
-    <form action="." method="post" enctype="multipart/form-data" class="content_wrapper1">
+<link rel="stylesheet" type="text/css" href="{% static 'css/base3_add.css' %}"/>
+{% block styles %}
+{% endblock styles %}
+    <form action="." method="post" enctype="multipart/form-data" class="form_module">
         {% csrf_token %}
         {% for field in form.hidden_fields %}
             {{ field }}
         {% endfor %}
-        <div class="">
-            <div class="">
-                <h3>{% block title %}{% if obj.pk %}Editing {{ obj_type }} {{ obj }}{% else %}Add a new {{ obj_type }}{% endif %}{% endblock %}</h3>
+        <div class="createProduct">
+            <div class="createProduct1">
+                <h4>{% block title %}{% if obj.pk %}Editing {{ obj_type }} {{ obj }}{% else %}Create a new {{ obj_type }}{% endif %}{% endblock %}</h4>
                 {% block tabs %}{% endblock %}
                 {% if form.non_field_errors %}
                     <div class="panel panel-danger">
@@ -23,24 +24,24 @@
                 {% endif %}
                 {% block form %}
                     <div class="panel panel-default">
-                        <div class="panel-heading"><strong>{{ obj_type|capfirst }}</strong></div>
+                        <!--<div class="panel-heading"><strong>{{ obj_type|capfirst }}</strong></div>-->
                         <div class="panel-body">
                             {% render_form form %}
                         </div>
                     </div>
                 {% endblock %}
             </div>
+        </div>        
+        <div class="Button">
+        	<a href="{{ return_url }}" class="btn btn-default">Cancel</a>
+            {% if obj.pk %}
+                <button type="submit" name="_update" class="btn btn-primary">Update</button>
+            {% else %}
+                <button type="submit" name="_create" class="btn btn-primary">Create</button>
+                <button type="submit" name="_addanother" class="btn btn-primary">Create and Add Another</button>
+            {% endif %}
+                
         </div>
-        <div class="row">
-            <div class="col-md-6 col-md-offset-3 text-right">
-                {% if obj.pk %}
-                    <button type="submit" name="_update" class="btn btn-primary">Update</button>
-                {% else %}
-                    <button type="submit" name="_create" class="btn btn-primary">Create</button>
-                    <button type="submit" name="_addanother" class="btn btn-primary">Create and Add Another</button>
-                {% endif %}
-                <a href="{{ return_url }}" class="btn btn-default">Cancel</a>
-            </div>
-        </div>
+        
     </form>
 {% endblock %}
