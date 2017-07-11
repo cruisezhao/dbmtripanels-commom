@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% load crudbuilder %}
+
+{% block content %}
+<div id="content_wrapper">
+	<div style="margin:20px;">
+	    <h3>Detail of {{object}}</h3>
+		{% block button %}
+	    {% endblock %}
+	    <table class="table table-bordered">        
+	        <tr>
+	            <th>Field</th>
+	            <th>Value</th>
+	        </tr>
+	      {% for field in object|get_model_fields %}
+	        <tr>
+	            <td>{{object|get_verbose_field_name:field.name}}</td>
+	            <td>{{object|get_value:field.name|default_if_none:""}}</td>
+	        </tr>
+	      {% endfor %}        
+	    </table>
+	</div>
+</div>
+{% endblock content %}
