@@ -35,9 +35,8 @@ from authtools.views import LoginRequiredMixin
 from django.views.generic.base import View
 from django.urls import reverse
 from django.utils.translation import ugettext as _
-
-
-Clients = get_user_model()
+from .models import Clients
+#Clients = get_user_model()
 logger = logging.getLogger("project")
 
 

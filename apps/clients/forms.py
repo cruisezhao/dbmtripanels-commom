@@ -18,6 +18,9 @@ from django.conf import settings
 import hmac
 import time
 import os
+from common.utilities.forms import FilterChoiceField
+from django.contrib.auth.models import Group
+from django.db.models import Count
 
 
 User = Clients
@@ -209,5 +212,33 @@ class UserForm(forms.ModelForm):
      def __init__(self, *args, **kwargs):
          self.request = kwargs.pop('request', None)
          super(UserForm, self).__init__(*args, **kwargs)
+
+
+class ClientFilterForm(forms.Form):
+    model = Clients
+    q = forms.CharField(required=False,
+                        widget=forms.TextInput(attrs={'class': 'TinputText'}),
+                        label='Search')
+
+    id = forms.IntegerField(required=False, label='Id')
+
+    email = EmailField(required=False, label='Email')
+
+    first_name = forms.IntegerField(required=False, label='First Name')
+
+    status =forms.MultipleChoiceField(required=False,
+                                      widget=forms.CheckboxSelectMultiple(),
+                                      label='Status')
+
+    phone_number = forms.IntegerField(required=False, label='Phone Number')
+
+    groups = FilterChoiceField(required=False,
+                               queryset=Group.objects.annotate(filter_count=Count('clients')),
+                               widget=forms.CheckboxSelectMultiple(),
+                               label='Groups',)
+
+    class Meta:
+        model = Clients
+        fields = []
 
          
