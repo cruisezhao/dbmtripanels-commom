@@ -1,5 +1,7 @@
 from django import forms
 from datetimewidget.widgets import DateWidget
+from .models import SystemOptions
+
 
 class SysOptionFilterForm(forms.Form):
     name = forms.CharField(
@@ -28,3 +30,9 @@ class SysOptionFilterForm(forms.Form):
             bootstrap_version=3),
         label='End Date'
         )
+
+
+class SystemOptionForm(forms.ModelForm):
+    class Meta:
+        model = SystemOptions
+        fields = ['type', 'name', 'value']

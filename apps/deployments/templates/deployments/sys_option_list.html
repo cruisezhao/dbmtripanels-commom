@@ -12,7 +12,7 @@
             <p{% if message.tags %} class="{{ message.tags }} warning-txt" {% endif %} >{{ message }}</p>
             {% endfor %}{% endif %}
             {% if perms %}
-                <a href="{% url 'product_add' %}" class="btn btn-primary">
+                <a href="{% url 'deployments:sys_option_add'%}" class="btn btn-primary">
                     <span class="fa fa-plus" aria-hidden="true"></span>
                     Create a Options
                 </a>
