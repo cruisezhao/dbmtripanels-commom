@@ -2,21 +2,26 @@
 {% load crudbuilder %}
 
 {% block content %}
- <h3>Detail of </h3>
-    <table class="table table-bordered">
-        <thead>
-            <tr>
-                <th>Field</th>
-                <th>Value</th>
-            </tr>
-        </thead>
-        <tbody>
-          {% for field in object|get_model_fields %}
-            <tr>
-                <td>{{object|get_verbose_field_name:field.name}}</td>
-                <td>{{object|get_value:field.name|default_if_none:""}}</td>
-            </tr>
-          {% endfor %}
-        </tbody>
-    </table>
+<div id="content_wrapper">
+	<div style="margin:20px;">
+	    <h3>Detail of </h3>
+	    <div class="float_right" style="top: 0px;">
+	    	<a href="" class="edit btn btn-primary"><i class="fa fa-pencil"></i> Edit</a>
+	    	<a href="" class="delete btn btn-primary"><i class="fa fa-trash"></i> Delete</a>
+	    </div>
+	    
+	    <table class="table table-bordered">        
+	        <tr>
+	            <th>Field</th>
+	            <th>Value</th>
+	        </tr>
+	      {% for field in object|get_model_fields %}
+	        <tr>
+	            <td>{{object|get_verbose_field_name:field.name}}</td>
+	            <td>{{object|get_value:field.name|default_if_none:""}}</td>
+	        </tr>
+	      {% endfor %}        
+	    </table>
+	</div>
+</div>
 {% endblock content %}
