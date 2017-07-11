@@ -7,11 +7,11 @@ class ClientTable(tables.Table):
     # DETAIL_URL_NAME = 'clients'
     # id = tables.LinkColumn(DETAIL_URL_NAME, args=[A('uuid')])
     email = tables.EmailColumn()
+    phone_number = tables.Column()
 
     class Meta:
         model = Clients
-        fields = ('pk','first_name','last_name','email','status',
-                  'phone_number','user_type')
+        fields = ('pk','first_name','last_name','email','phone_number','status','user_type')
         attrs={
                 "class": "table table-bordered table-condensed table-hover",
             }
