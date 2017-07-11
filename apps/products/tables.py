@@ -30,8 +30,7 @@ class ProductTable(tables.Table):
 class PlanTable(tables.Table):
     """plan table"""
     """product table"""
-    DETAIL_URL_NAME = 'home'
-    id = tables.LinkColumn(DETAIL_URL_NAME)
+    id = tables.LinkColumn('plan', args=[A('uuid')])
 
     class Meta:
         model = Plans

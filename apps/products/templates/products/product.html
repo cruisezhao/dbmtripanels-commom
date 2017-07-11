@@ -4,10 +4,10 @@
 {% block content %}
 <div id="content_wrapper">
 	<div style="margin:20px;">
-	    <h3>Detail of </h3>
+	    <h3>Detail of {{object}}</h3>
 	    <div class="float_right" style="top: 0px;">
-	    	<a href="" class="edit btn btn-primary"><i class="fa fa-pencil"></i> Edit</a>
-	    	<a href="" class="delete btn btn-primary"><i class="fa fa-trash"></i> Delete</a>
+	    	<a href="{% url 'product_edit' object.uuid%}" class="edit btn btn-primary"><i class="fa fa-pencil"></i> Edit</a>
+	    	<a href="{% url 'product_delete' uuid=object.uuid %}" class="delete btn btn-primary"><i class="fa fa-trash"></i> Delete</a>
 	    </div>
 	    
 	    <table class="table table-bordered">        
