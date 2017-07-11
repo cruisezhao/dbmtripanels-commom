@@ -26,7 +26,7 @@ class Clouds(CreatedUpdatedModel):
 class DeployPolicies(CreatedUpdatedModel):
     """Deploy Policies model"""
     uuid = models.CharField(unique=True, default=uuid_to_str, max_length=255, editable=False)
-    product_id =  models.ForeignKey(Products, on_delete=models.PROTECT)
+    product =  models.ForeignKey(Products, on_delete=models.PROTECT)
     relationships = fields.JSONField('Relationships', default={})
     tripanels_composer_url = models.URLField('Tripanels_Composer.yml URL', max_length=256)
     
@@ -37,8 +37,8 @@ class DeployPolicies(CreatedUpdatedModel):
 class DeployInstances(CreatedUpdatedModel):    
     '''deploy instances model''' 
     uuid = models.CharField(unique=True, default=uuid_to_str, max_length=255, editable=False)   
-    policy_id = models.ForeignKey(DeployPolicies, on_delete=models.PROTECT)
-    cloud_id = models.ForeignKey(Clouds, on_delete=models.PROTECT)
+    deploy_policy = models.ForeignKey(DeployPolicies, on_delete=models.PROTECT)
+    cloud = models.ForeignKey(Clouds, on_delete=models.PROTECT)
     relationships = fields.JSONField('Relationships', default={})
     
     class Meta:
@@ -47,8 +47,8 @@ class DeployInstances(CreatedUpdatedModel):
 class InstanceConfigurations(CreatedUpdatedModel):        
     '''instance configurations model''' 
     uuid = models.CharField(unique=True, default=uuid_to_str, max_length=255, editable=False)    
-    deploy_instance_id = models.ForeignKey(DeployInstances, on_delete=models.PROTECT)
-    option_id = models.ForeignKey(SystemOptions, on_delete=models.PROTECT)
+    deploy_instance = models.ForeignKey(DeployInstances, on_delete=models.PROTECT)
+    system_option = models.ForeignKey(SystemOptions, on_delete=models.PROTECT)
      
     class Meta:
         db_table = 'instance_configurations'   
@@ -62,7 +62,7 @@ class Questions(CreatedUpdatedModel):
         ('integer', 'integer'),
     ]
     uuid = models.CharField(unique=True, default=uuid_to_str, max_length=255, editable=False)
-    product_id = models.ForeignKey(Products, on_delete=models.PROTECT)
+    product = models.ForeignKey(Products, on_delete=models.PROTECT)
     name = models.CharField('Name', max_length=32)
     label = models.CharField('Label', max_length=64)
     description = models.CharField('Description', max_length=100, null = True, blank = True)
