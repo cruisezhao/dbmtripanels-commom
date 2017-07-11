@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>deploy</title>
+</head>
+<body>
+
+    <form method="POST" action="">
+    {% for server in server_list %}
+        <span>server {{forloop.counter}}</span>>
+        {% for groups in server.get_options_by_type %}
+            {{% for (type, sys_options) in groups %}}
+            <select name="{{ type }}">
+                {{% for option in sys_options %}}
+                <option value="{{option.value}}">"{{option.label}}"</option>
+                {{% endfor %}}}
+            </select>
+            {{% endfor %}}
+        {% endfor %}
+    {% endfor %}
+
+    {% for question in question_list %}
+        <label>{{ question.label }}:</label>
+        {% if question.type == 'enum' %}
+            <select name="{{ question.name }}">
+                {{% for option in question.options %}}
+                <option value="{{ option }}">{{ option }}</option>
+                {{% endfor %}}}
+            </select>
+        {% else %}
+            <input type="text" name="{{question.name}}" value="">
+
+        {% endif %}
+
+
+    {% endfor %}
+    </form>
+
+</body>
+</html>
