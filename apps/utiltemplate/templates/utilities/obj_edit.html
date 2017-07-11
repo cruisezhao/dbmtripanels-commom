@@ -10,6 +10,7 @@
         {% for field in form.hidden_fields %}
             {{ field }}
         {% endfor %}
+        <h3>Create a new {{ obj_type }}</h3>
         <div class="createProduct">
             <div class="createProduct1">
                 <h4>{% block title %}{% if obj.pk %}Editing {{ obj_type }} {{ obj }}{% else %}Create a new {{ obj_type }}{% endif %}{% endblock %}</h4>
