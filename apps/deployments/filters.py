@@ -10,6 +10,9 @@ class SysOptionFilterForm(django_filters.FilterSet):
         name='name',
         lookup_expr='exact'
     )
+
+    start_date = django_filters.DateFilter(name='created', lookup_expr='gte')
+    end_date = django_filters.DateFilter(name='created', lookup_expr='lte')
     class Meta:
         model = SystemOptions
         fields = ['name']
