@@ -16,6 +16,9 @@ class SystemOptions(CreatedUpdatedModel):
     
     class Meta:
         db_table = "system_options"
+
+    def __str__(self):
+        return self.name
     
 class Clouds(CreatedUpdatedModel):
     '''clouds model'''
@@ -24,6 +27,9 @@ class Clouds(CreatedUpdatedModel):
     
     class Meta:
         db_table = "clouds"
+
+    def __str__(self):
+        return self.name
         
 class DeployPolicies(CreatedUpdatedModel):
     """Deploy Policies model"""
@@ -35,6 +41,9 @@ class DeployPolicies(CreatedUpdatedModel):
     
     class Meta:
         db_table = "deploy_policies"
+
+    def __str__(self):
+        return "{}-{}".format(self.product.product_name,self.tripanels_composer_url)
 
 class DeployInstances(CreatedUpdatedModel):    
     '''deploy instances model''' 
@@ -85,5 +94,8 @@ class Questions(CreatedUpdatedModel):
     options = fields.JSONField('Options', default={})
     
     class Meta:
-        db_table = 'questions'   
+        db_table = 'questions'
+
+    def __str__(self):
+        return self.name
     
