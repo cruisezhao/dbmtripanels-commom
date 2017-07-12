@@ -2,6 +2,8 @@
 # package_id: 334556
 cloud_type: Rancher
 cloud_location: USA_TX_Dallas
+cloud_user:
+cloud_user_password:
 
 plan:
     cpu: 2
