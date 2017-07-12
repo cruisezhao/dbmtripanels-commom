@@ -7,3 +7,11 @@ Magento:
     operating_system: Ubuntu 14.04
     database: MySQL 5.5
     
+Magento: 
+  - template_url: http://xx.xx.xx.xx/images/magento/tripanels-compose.yml
+    operating_system: Ubuntu 16.04
+    database: MySQL 5.7
+
+  - template_url: http://xx.xx.xx.xx/images/magento/tripanels-compose.yml
+    operating_system: Ubuntu 14.04
+    database: MySQL 5.5
