@@ -30,12 +30,12 @@ class ProductEditView(ObjectEditView):
     model = Products
     form_class = forms.ProductForm
     template_name = 'products/product_edit.html'
-    default_return_url = 'home'
+    default_return_url = 'product_list'
 
 
 class ProductDeleteView(ObjectDeleteView):
     model = Products
-    default_return_url = 'home'
+    default_return_url = 'product_list'
 
 
 class PlanListView(ObjectListView):
@@ -59,10 +59,10 @@ class PlanEditView(ObjectEditView):
     model = Plans
     form_class = forms.PlanForm
     template_name = 'products/plan_edit.html'
-    default_return_url = 'home'
+    default_return_url = 'plan_list'
 
 
 class PlanDeleteView(ObjectDeleteView):
     """plan delete"""
     model = Plans
-    default_return_url = 'home'
+    default_return_url = 'plan_list'
