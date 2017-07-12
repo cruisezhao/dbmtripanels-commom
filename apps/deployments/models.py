@@ -69,6 +69,7 @@ class Questions(CreatedUpdatedModel):
     
     TYPE_CHOICE = [
         ('string', 'string'),
+        ('password', 'password'),
         ('enum', 'enum'),
         ('integer', 'integer'),
     ]
@@ -80,7 +81,7 @@ class Questions(CreatedUpdatedModel):
     type = models.CharField('Type', max_length=32, default=TYPE_CHOICE[0], choices=TYPE_CHOICE)
     default = models.CharField('Default Value', default='', max_length=64, null = True, blank = True)
     required = models.BooleanField('Required', default=True)
-    hidden = models.BooleanField('Hidden', default=True)
+    hidden = models.BooleanField('Hidden', default=False)
     options = fields.JSONField('Options', default={})
     
     class Meta:
