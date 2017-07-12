@@ -2,7 +2,7 @@ from django.db import models
 from common.utilities.models import CreatedUpdatedModel
 from common.utilities.utils import uuid_to_str
 from jsonfield import fields
-from common.apps.products.models import Products
+from common.apps.products.models import Products, Plans
 
 # Create your models here.
 
@@ -34,16 +34,17 @@ class Clouds(CreatedUpdatedModel):
 class DeployPolicies(CreatedUpdatedModel):
     """Deploy Policies model"""
     uuid = models.CharField(unique=True, default=uuid_to_str, max_length=255, editable=False)
-    product =  models.ForeignKey(Products, on_delete=models.PROTECT)
+    plan =  models.ForeignKey(Plans, on_delete=models.SET_NULL, null=True, blank=True)
+    product =  models.ForeignKey(Products, on_delete=models.SET_NULL, null=True, blank=True)
     relationships = fields.JSONField('Relationships', default={})
-    tripanels_composer_url = models.URLField('Tripanels_Composer.yml URL', max_length=256)
+    #tripanels_composer_url = models.URLField('Tripanels_Composer.yml URL', max_length=256)
     
     
     class Meta:
         db_table = "deploy_policies"
 
     def __str__(self):
-        return "{}-{}".format(self.product.product_name,self.tripanels_composer_url)
+        return "{}-{}".format(self.product.product_name,self.plan.name)
 
 class DeployInstances(CreatedUpdatedModel):    
     '''deploy instances model''' 
@@ -61,7 +62,10 @@ class DeployInstances(CreatedUpdatedModel):
             if config.system_option.type not in groups:
                 groups[config.system_option.type] = []
             groups[config.system_option.type].append(config.system_option)
-        return groups        
+        return groups
+
+    def __str__(self):
+        return "{}-{}".format('instance',self.cloud.name)
             
 
 class InstanceConfigurations(CreatedUpdatedModel):        
@@ -71,13 +75,17 @@ class InstanceConfigurations(CreatedUpdatedModel):
     system_option = models.ForeignKey(SystemOptions, on_delete=models.PROTECT)
      
     class Meta:
-        db_table = 'instance_configurations'   
+        db_table = 'instance_configurations'
+
+    def __str__(self):
+        return '{}-{}'.format(self.deploy_instance,self.system_option.name)
       
 class Questions(CreatedUpdatedModel):  
     '''questions for product deploy'''
     
     TYPE_CHOICE = [
         ('string', 'string'),
+        ('password', 'password'),
         ('enum', 'enum'),
         ('integer', 'integer'),
     ]
@@ -89,7 +97,7 @@ class Questions(CreatedUpdatedModel):
     type = models.CharField('Type', max_length=32, default=TYPE_CHOICE[0], choices=TYPE_CHOICE)
     default = models.CharField('Default Value', default='', max_length=64, null = True, blank = True)
     required = models.BooleanField('Required', default=True)
-    hidden = models.BooleanField('Hidden', default=True)
+    hidden = models.BooleanField('Hidden', default=False)
     options = fields.JSONField('Options', default={})
     
     class Meta:
