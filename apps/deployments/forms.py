@@ -3,6 +3,10 @@ from datetimewidget.widgets import DateWidget
 from .models import SystemOptions
 
 
+from django import forms
+
+class DeployForm(forms.Form):
+    pass
 class SysOptionFilterForm(forms.Form):
     name = forms.CharField(
         required = False,

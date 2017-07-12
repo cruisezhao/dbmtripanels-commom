@@ -2,7 +2,7 @@ from django.db import models
 from common.utilities.models import CreatedUpdatedModel
 from common.utilities.utils import uuid_to_str
 from jsonfield import fields
-from common.apps.products.models import Products
+from common.apps.products.models import Products, Plans
 
 # Create your models here.
 
@@ -34,9 +34,10 @@ class Clouds(CreatedUpdatedModel):
 class DeployPolicies(CreatedUpdatedModel):
     """Deploy Policies model"""
     uuid = models.CharField(unique=True, default=uuid_to_str, max_length=255, editable=False)
-    product =  models.ForeignKey(Products, on_delete=models.PROTECT)
+    plan =  models.ForeignKey(Plans, on_delete=models.SET_NULL, null=True, blank=True)
+    product =  models.ForeignKey(Products, on_delete=models.SET_NULL, null=True, blank=True)
     relationships = fields.JSONField('Relationships', default={})
-    tripanels_composer_url = models.URLField('Tripanels_Composer.yml URL', max_length=256)
+    #tripanels_composer_url = models.URLField('Tripanels_Composer.yml URL', max_length=256)
     
     
     class Meta:
@@ -78,6 +79,7 @@ class Questions(CreatedUpdatedModel):
     
     TYPE_CHOICE = [
         ('string', 'string'),
+        ('password', 'password'),
         ('enum', 'enum'),
         ('integer', 'integer'),
     ]
@@ -89,7 +91,7 @@ class Questions(CreatedUpdatedModel):
     type = models.CharField('Type', max_length=32, default=TYPE_CHOICE[0], choices=TYPE_CHOICE)
     default = models.CharField('Default Value', default='', max_length=64, null = True, blank = True)
     required = models.BooleanField('Required', default=True)
-    hidden = models.BooleanField('Hidden', default=True)
+    hidden = models.BooleanField('Hidden', default=False)
     options = fields.JSONField('Options', default={})
     
     class Meta:
