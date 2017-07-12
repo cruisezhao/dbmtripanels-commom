@@ -1,5 +1,5 @@
 {
-    "template_url": "http://gitlab.databasemart.net/tripanels-compose.yml",
+    ,
     "package_id": 334556,
     "plan": {
         "cpu": 2,
