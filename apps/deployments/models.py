@@ -44,7 +44,7 @@ class DeployPolicies(CreatedUpdatedModel):
         db_table = "deploy_policies"
 
     def __str__(self):
-        return "{}-{}".format(self.product.product_name,self.plan.name)
+         return "policies-{}".format(self.uuid[:4])
 
 class DeployInstances(CreatedUpdatedModel):    
     '''deploy instances model''' 
