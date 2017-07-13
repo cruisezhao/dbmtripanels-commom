@@ -1,5 +1,6 @@
 from django.conf.urls import include,url
 from .views4admin import SystemOptionListView,SystemOptionView,SystemOptionEditView,SystemOptionDeleteView
+from common.apps.deployments.views import DeployView
 
 urlpatterns = [
     url(r'^sys-options/$', SystemOptionListView.as_view(), name='sys_option_list'),
@@ -7,4 +8,6 @@ urlpatterns = [
     url(r'^sys-options/add/$', SystemOptionEditView.as_view(), name='sys_option_add'),
     url(r'^sys-options/(?P<uuid>[a-z\d+]{32})/edit/$', SystemOptionEditView.as_view(), name='sys_option_edit'),
     url(r'^sys-options/(?P<uuid>[a-z\d+]{32})/delete/$', SystemOptionDeleteView.as_view(), name='sys_option_delete'),
+    
+
 ]

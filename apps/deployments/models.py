@@ -58,7 +58,7 @@ class DeployInstances(CreatedUpdatedModel):
         
     def get_options_by_type(self):
         groups = {}
-        for config in self.instanceconfigurations_set:
+        for config in self.instanceconfigurations_set.all():
             if config.system_option.type not in groups:
                 groups[config.system_option.type] = []
             groups[config.system_option.type].append(config.system_option)
