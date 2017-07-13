@@ -1,4 +1,4 @@
-name: OpenCart
+name: wordpress
 # type of products [Application(APP), Virtual Machine(VM), 
 # Bare Metal(Bare)]
 type: APP
@@ -34,5 +34,32 @@ questions:
     hidden: false
 
 docker:
-  
+  wordpress:
+    image: wordpress
+    links:
+      - db:mysql
+    ports:
+      - 8088:80
+
+  db:
+    image: mariadb
+    environment:
+      MYSQL_ROOT_PASSWORD: example  
+
 rancher:
+  .catalog:
+    name: "Wordpress"
+    version: "v0.1-educaas1"
+    description: "Blog tool, publishing platform and CMS"
+    uuid: Wordpress-0
+    minimum_rancher_version: v0.51.0
+    questions:    
+      - variable: public_port
+        description: "public port to access the wordpress site"
+        label: "Public Port"
+        required: true
+        default: "80"
+        type: "int"
+
+
+  wordpress:
