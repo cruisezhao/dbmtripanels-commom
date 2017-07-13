@@ -44,7 +44,7 @@ class DeployPolicies(CreatedUpdatedModel):
         db_table = "deploy_policies"
 
     def __str__(self):
-        return "{}-{}".format(self.product.product_name,self.tripanels_composer_url)
+         return "policies-{}".format(self.uuid[:4])
 
 class DeployInstances(CreatedUpdatedModel):    
     '''deploy instances model''' 
@@ -62,7 +62,10 @@ class DeployInstances(CreatedUpdatedModel):
             if config.system_option.type not in groups:
                 groups[config.system_option.type] = []
             groups[config.system_option.type].append(config.system_option)
-        return groups        
+        return groups
+
+    def __str__(self):
+        return "{}-{}".format('instance',self.cloud.name)
             
 
 class InstanceConfigurations(CreatedUpdatedModel):        
@@ -72,7 +75,10 @@ class InstanceConfigurations(CreatedUpdatedModel):
     system_option = models.ForeignKey(SystemOptions, on_delete=models.PROTECT)
      
     class Meta:
-        db_table = 'instance_configurations'   
+        db_table = 'instance_configurations'
+
+    def __str__(self):
+        return '{}-{}'.format(self.deploy_instance,self.system_option.name)
       
 class Questions(CreatedUpdatedModel):  
     '''questions for product deploy'''

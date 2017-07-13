@@ -1,5 +1,10 @@
-template_url: http://gitlab.databasemart.net/tripanels-compose.yml
+# template_url: http://gitlab.databasemart.net/tripanels-compose.yml
 # package_id: 334556
+cloud_type: Rancher
+cloud_location: USA_TX_Dallas
+cloud_user:
+cloud_user_password:
+
 plan:
     cpu: 2
     memory: 20

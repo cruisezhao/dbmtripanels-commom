@@ -1,8 +1,10 @@
 from django import forms
 from datetimewidget.widgets import DateWidget
-from .models import SystemOptions
 from common.apps.packages.models import Packages
-from common.apps.deployments.models import DeployPolicies
+from .models import (SystemOptions, Clouds, DeployPolicies, DeployInstances,
+                    InstanceConfigurations, Questions)
+
+
 
 class DeployForm(forms.Form):
     def __init__(self, *args, **kwargs):
@@ -67,3 +69,32 @@ class SystemOptionForm(forms.ModelForm):
     class Meta:
         model = SystemOptions
         fields = ['type', 'name', 'value']
+
+class CloudForm(forms.ModelForm):
+    class Meta:
+        model = Clouds
+        fields = ['name']
+
+
+class DeployPolicyForm(forms.ModelForm):
+    class Meta:
+        model = DeployPolicies
+        fields = ['plan', 'product',]
+        # fields = ['relationships']
+
+
+class DeployInstanceForm(forms.ModelForm):
+    class Meta:
+        model = DeployInstances
+        fields = ['deploy_policy','cloud']
+
+class InstanceConfigurationForm(forms.ModelForm):
+    class Meta:
+        model = InstanceConfigurations
+        fields = ['deploy_instance','system_option']
+
+
+class QuestionForm(forms.ModelForm):
+    class Meta:
+        model = Questions
+        fields = ['id','product','name','type','required']
