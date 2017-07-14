@@ -81,4 +81,8 @@ class Packages(CreatedUpdatedModel):
     def modify_password(self,password):
         self.runtime['servers'][0]['applications'][0]['password'] = password
 
-    
+class PackageServers(CreatedUpdatedModel):
+    '''relationship between package and server model'''
+    #uuid = models.CharField(unique=True, default=uuid_to_str, max_length=255, editable=False)
+    package = models.ForeignKey(Packages,on_delete=models.PROTECT)
+    #server = models.ForeignKey(Servers,on_delete=models.PROTECT)
