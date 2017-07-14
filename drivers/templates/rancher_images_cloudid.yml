@@ -1,5 +1,6 @@
+
 Magento: 
-  - template_url: http://xx.xx.xx.xx/images/magento/tripanels-compose.yml
+  - template_url: ../drivers/tripanel_composer/magento/tripanels-compose.yml
     operating_system: Ubuntu 16.04
     database: MySQL 5.7
 
@@ -7,7 +8,7 @@ Magento:
     operating_system: Ubuntu 14.04
     database: MySQL 5.5
     
-Magento: 
+Magento2: 
   - template_url: http://xx.xx.xx.xx/images/magento/tripanels-compose.yml
     operating_system: Ubuntu 16.04
     database: MySQL 5.7
