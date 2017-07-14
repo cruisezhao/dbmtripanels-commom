@@ -4,28 +4,38 @@
     <title>deploy</title>
 </head>
 <body>
-
+<h2>Dear, you are deploying {{form.package.get_product_name}}:</h2>
+<h3>Your plan is:</h3>
+<p>CPU: {{form.plan.cpu}}</p>
+<p>Memory: {{form.plan.memory}}</p>
+<p>Disk: {{form.plan.disk}}</p>
     <form method="POST" action="">
-    {% for server in server_list %}
-        <span>server {{forloop.counter}}</span>>
-        {% for groups in server.get_options_by_type %}
-            {{% for (type, sys_options) in groups %}}
-            <select name="{{ type }}">
-                {{% for option in sys_options %}}
-                <option value="{{option.value}}">"{{option.label}}"</option>
-                {{% endfor %}}}
+    {% csrf_token %}
+    {% for server in form.deploy_instance_list %}
+        <h3>server {{forloop.counter}}:</h3>
+        <br>
+
+            {% for type, sys_options in server.get_options_by_type.items %}
+            <span>{{ type }}:</span>
+
+            <select name="{{server.uuid}}_{{ type }}">
+                {% for option in sys_options %}
+                <option value="{{option.value}}">{{option.label}}</option>
+                {% endfor %}
             </select>
-            {{% endfor %}}
-        {% endfor %}
+            <br>
+            {% endfor %}
+
     {% endfor %}
 
+    {% comment %}
     {% for question in question_list %}
         <label>{{ question.label }}:</label>
         {% if question.type == 'enum' %}
             <select name="{{ question.name }}">
-                {{% for option in question.options %}}
+                {% for option in question.options %}
                 <option value="{{ option }}">{{ option }}</option>
-                {{% endfor %}}}
+                {% endfor %}
             </select>
         {% else %}
             <input type="text" name="{{question.name}}" value="">
@@ -34,7 +44,7 @@
 
 
     {% endfor %}
-
+    {% endcomment %}
     <input type="submit" name="submit">
     </form>
 

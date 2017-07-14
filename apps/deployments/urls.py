@@ -1,4 +1,5 @@
 from django.conf.urls import include,url
+from common.apps.deployments.views import DeployView
 from .views4admin import (SystemOptionListView,SystemOptionView,SystemOptionEditView,SystemOptionDeleteView,
                           CloudListView, CloudView,CloudEditView,CloudDeleteView,
                           DeployPolicyListView,DeployPolicyView, DeployPolicyEditView, DeployPolicyDeleteView,
