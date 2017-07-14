@@ -132,7 +132,84 @@ def get_login_details(cloud_id, deploy_id):
                 login_list.append(login_details)
             result["login"]=login_list
     return  result
+def delete_deploy(cloud_id, deploy_id):
+    '''
+    descriptions:
+        delete product deployed
+    parameters:
+        cloud_id:  platform id
+        deploy_id: comes from deploy API function,
+                   deploy_id means stack id for Rancher,
+                   callee distinguishes platforms by cloud_id
+    returns:
+        state:  current state, values can be:
+    '''
+    result={}
+    racher_env=apis.list_env()
+    for env in racher_env["environments"]:
+        if cloud_id == env["id"]:
+            current_state=apis.delete_stack(cloud_id,deploy_id)
+            break
+    return  current_state
 
+
+def start(cloud_id, server_id):
+    '''
+    descriptions:
+        start server/service stopped
+    parameters:
+        cloud_id:  platform id
+        server_id: means service_id for Rancher;
+                   means server_id for Openstack
+                   callee distinguishes platforms by cloud_id
+    returns:
+        state: current state, values can be:
+    '''
+    racher_env=apis.list_env()
+    for env in racher_env["environments"]:
+        if cloud_id == env["id"]:
+            current_state=apis.start_service(cloud_id,server_id)
+            break
+    return  current_state
+
+def stop(cloud_id, server_id):
+    '''
+    descriptions:
+        stop server/service started
+    parameters:
+        cloud_id:  platform id
+        server_id: means service_id for Rancher;
+                   means server_id for Openstack
+                   callee distinguishes platforms by cloud_id
+    returns:
+        state: current state, values can be:
+    '''
+    racher_env=apis.list_env()
+    for env in racher_env["environments"]:
+        if cloud_id == env["id"]:
+            current_state=apis.stop_service(cloud_id,server_id)
+            break
+    return  current_state
+
+
+def get_server_state(cloud_id, server_id):
+    '''
+    descriptions:
+        get server/service state
+    parameters:
+        cloud_id:  platform id
+        server_id: means service_id for Rancher;
+                   means server_id for Openstack
+                   callee distinguishes platforms by cloud_id
+    returns:
+        state: current state, values can be:'Active','Deactive'
+    '''
+    racher_env=apis.list_env()
+    for env in racher_env["environments"]:
+        if cloud_id == env["id"]:
+            current_state=apis.service_state(cloud_id,server_id)
+            break
+    return current_state
 if __name__=='__main__':
     recived_dict={
         #"template_url":"C:/Users/admin/Documents/TriPanel/common/drivers/templates/tripanels-compose.yml",
@@ -141,7 +218,8 @@ if __name__=='__main__':
         "cloud_location":"USA_TX_Dallas",
         "cloud_user":"",
         "cloud_user_password":"",
-        "deploy_id":"1st68",
+        "deploy_id":"1st130",
+        "service_id":"1st136",
         "system": "false",
         "startOnCreate": "true",
         "service": {
@@ -160,5 +238,18 @@ if __name__=='__main__':
         }
     }
     #test deploy()
-    stack_id=deploy(recived_dict)
-    print(stack_id)
+    # stack_id=deploy(recived_dict)
+    # print(stack_id)
+    # res0=get_deployment_state(recived_dict["service"]["cloud_id"],recived_dict["deploy_id"])
+    # print("deployment_state")
+    # print(res0)
+    # res1=get_deployment_details(recived_dict["service"]["cloud_id"],recived_dict["deploy_id"])
+    # print("deployment_details")
+    # print(res1)
+    # res2=get_login_details(recived_dict["service"]["cloud_id"],recived_dict["deploy_id"])
+    # print("login_details")
+    # print(res2)
+    # res3=delete_deploy(recived_dict["service"]["cloud_id"],recived_dict["deploy_id"])
+    # print(res3)
+    res4=get_server_state(recived_dict["service"]["cloud_id"],recived_dict["service_id"])
+    print(res4)
