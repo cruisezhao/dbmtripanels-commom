@@ -15,7 +15,6 @@ wordpress = {
      }
 
 opencart = {
-
     "name": "opencart",
     "system": "false",
     "dockerCompose": "opencart:\r\n  image: 172.107.32.205:5000/opencart\r\n  ports:\r\n    - 80:80",
@@ -191,11 +190,13 @@ def stop_stack(env_id,stack_id):
 
 #Show stack state
 def stack_state(env_id,stack_id):
+    result={}
     url = Rancher_Url +"/v2-beta/projects/" + env_id + "/stacks/" + stack_id
     req = requests.get(url,auth=HTTPBasicAuth(API_PublicValue, API_SecretValue), headers=headers)
     dic = req.json()
-    healthState = dic["healthState"]
-    return healthState
+    result["state"] = dic["state"]
+    result["message"]=dic["transitioningMessage"]
+    return result
 
 #Start stack
 def start_stack(env_id,stack_id):
@@ -335,3 +336,4 @@ def add_scheduler_ip(env_id,host_id,scheduler_ip):
     dic = req.json()
     state = dic["state"]
     return  state
+# start_service("1a5","1st130")
