@@ -18,19 +18,25 @@ def deploy(deployment_infos):
         deploy_id
         deploy_id means stack id for Rancher;
     '''
-    fr=open(deployment_infos["template_url"],'r')
-    x=yaml.load(fr)
+    fr1=open("../drivers/templates/rancher_images_cloudid.yml",'r')
+    urls=yaml.load(fr1)[deployment_infos["name"]]
+    URL=""
+    for url in urls:
+        if url["database"]==deployment_infos["server_configurations"]["database"] and url["operating_system"]==deployment_infos["server_configurations"]["operating_system"]:
+            URL=url["template_url"]
+    fr2=open(URL,'r')
+    tri_compose=yaml.load(fr2)
     if deployment_infos["cloud_type"] == "Rancher":
-        app_dict["name"]=x["name"]
+        app_dict["name"]=tri_compose["name"]
         app_dict["system"]=deployment_infos["system"]
         app_dict["startOnCreate"]=deployment_infos["startOnCreate"]
-        tri_docker=x["docker"]
+        tri_docker=tri_compose["docker"]
         #tri_rancher=x["rancher"]
         final_docker=yaml.dump(tri_docker)
         #final_rancher = yaml.dump(tri_rancher)
         #app_dict["rancherCompose"]=final_rancher#wordpress["rancherCompose"]
         app_dict["dockerCompose"]=final_docker
-        result=apis.create_stack(deployment_infos["cloud_id"],app_dict)
+        result=apis.create_stack(deployment_infos["service"]["cloud_id"],app_dict)
     return result
 def get_deployment_state(cloud_id, deploy_id):
     '''
@@ -129,20 +135,24 @@ def get_login_details(cloud_id, deploy_id):
 
 if __name__=='__main__':
     recived_dict={
-        "template_url":"C:/Users/admin/Documents/TriPanel/common/drivers/templates/tripanels-compose.yml",
+        #"template_url":"C:/Users/admin/Documents/TriPanel/common/drivers/templates/tripanels-compose.yml",
+        "name":"Magento",
         "cloud_type":"Rancher",
         "cloud_location":"USA_TX_Dallas",
         "cloud_user":"",
         "cloud_user_password":"",
-        "cloud_id":"1a5",
         "deploy_id":"1st68",
         "system": "false",
         "startOnCreate": "true",
-        "plan": {
+        "service": {
+            "cloud_id":"1a5",
             "cpu": 2,
             "memory": 20,
             "disk": 200,
-            "instances": 2
+        },
+        "server_configurations": {
+            "operating_system":"Ubuntu 16.04",
+            "database":"MySQL 5.7",
         },
         "answers": {
             "cloud": "tripanels",
@@ -150,5 +160,5 @@ if __name__=='__main__':
         }
     }
     #test deploy()
-    # stack_id=deploy(recived_dict)
-    # print(stack_id)
+    stack_id=deploy(recived_dict)
+    print(stack_id)
