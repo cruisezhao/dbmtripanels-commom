@@ -3,7 +3,8 @@ from django.contrib.auth.mixins import PermissionRequiredMixin
 from .models import Products, Plans
 from django.shortcuts import render
 from django.shortcuts import get_object_or_404
-from common.utilities.views import ObjectEditView, ObjectDeleteView, ObjectListView
+from common.utilities.views import (
+    ObjectEditView, ObjectDeleteView, ObjectListView,BulkEditView, BulkDeleteView)
 from . import forms
 from . import filters
 from . import tables
@@ -35,6 +36,12 @@ class ProductEditView(ObjectEditView):
 
 class ProductDeleteView(ObjectDeleteView):
     model = Products
+    default_return_url = 'product_list'
+
+
+class ProductBulkDeleteView(BulkDeleteView):
+    cls = Products
+    filter = filters.ProductFilter
     default_return_url = 'product_list'
 
 
