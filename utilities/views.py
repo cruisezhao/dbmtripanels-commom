@@ -188,7 +188,7 @@ class BulkEditView(View):
     template_name = None
     default_return_url = 'home'
 
-    def get(self):
+    def get(self,request):
         return redirect(self.default_return_url)
 
     def post(self, request, **kwargs):
@@ -203,15 +203,10 @@ class BulkEditView(View):
             form = self.form(self.cls, request.POST)
             if form.is_valid():
                 standard_fields = [field for field in form.fields if field != 'pk']
-                nullified_fields = request.POST.getlist('_nullify')
+                # nullified_fields = request.POST.getlist('_nullify')
                 fields_to_update = {}
                 for field in standard_fields:
-                    if field in form.nullable_fields and field in nullified_fields:
-                        if isinstance(form.fields[field], CharField):
-                            fields_to_update[field] = ''
-                        else:
-                            fields_to_update[field] = None
-                    elif form.cleaned_data[field] not in (None, ''):
+                    if form.cleaned_data[field] not in (None, ''):
                         fields_to_update[field] = form.cleaned_data[field]
                 updated_count = self.cls.objects.filter(pk__in=pk_list).update(**fields_to_update)
 
