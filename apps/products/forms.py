@@ -17,6 +17,12 @@ class ProductForm(ModelForm):
         fields = ('product_type', 'product_name',)
 
 
+class ProductBulkEditForm(forms.Form):
+    def __init__(self,model,*args,**kwargs):
+        super(ProductBulkEditForm,self).__init__(*args,**kwargs)
+    pk = forms.ModelMultipleChoiceField(queryset=Products.objects.all(), widget=forms.MultipleHiddenInput)
+
+
 def product_type_choice():
     """choice for product type"""
     pt_d = {}

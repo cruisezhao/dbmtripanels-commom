@@ -230,6 +230,11 @@ class BulkEditView(View):
         if not selected_objects:
             messages.warning(request, "No {} were selected.".format(self.cls._meta.verbose_name_plural))
             return redirect(return_url)
+        return render(request, self.template_name, {
+            'form': form,
+            'selected_objects': selected_objects,
+            'return_url': return_url,
+        })
 
 
 class BulkDeleteView(View):
