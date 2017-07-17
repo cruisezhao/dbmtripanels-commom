@@ -137,16 +137,14 @@ def container_details(env_id,con_id):
     req = requests.get(url,auth=HTTPBasicAuth(API_PublicValue, API_SecretValue), headers=headers)
     dic = req.json()
     container_detail_result = {}
-    container_details = []
     container_detail = {}
     container_detail["id"] = dic["id"]
     container_detail["name"] = dic["name"]
     container_detail["state"] = dic["state"]
     container_detail["privateIP"] = dic["primaryIpAddress"]
     container_detail["port"] = dic["ports"]
-    container_details.append(container_detail)
-    container_detail_result["containers"] = container_details
-    return container_detail_result
+    container_detail_result["containers"] = container_detail
+    return container_detail_result["containers"]
 
 
 #Create environment
