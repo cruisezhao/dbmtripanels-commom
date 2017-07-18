@@ -94,7 +94,17 @@ def get_deployment_details(cloud_id, deploy_id):
             for service in search_res["services"]:
                 stack_detail["stack_id"]=deploy_id
                 stack_detail["service_id"]=service["service_id"]
-                stack_detail["container_ids"] = service["container_id"]
+                containers=service["container_id"]
+                container_list=[]
+                if isinstance(containers,list):
+                    for container in containers:
+                        container_detail=apis.container_details(cloud_id,container)
+                        container_list.append(container_detail)
+                        stack_detail["containers"] = container_list
+                else:
+                    container_detail=apis.container_details(cloud_id,containers)
+                    container_list.append(container_detail)
+                    stack_detail["containers"] = container_list
                 stack_list.append(stack_detail)
             result["details"]=stack_list
     return result
@@ -243,13 +253,14 @@ if __name__=='__main__':
     # res0=get_deployment_state(recived_dict["service"]["cloud_id"],recived_dict["deploy_id"])
     # print("deployment_state")
     # print(res0)
-    # res1=get_deployment_details(recived_dict["service"]["cloud_id"],recived_dict["deploy_id"])
-    # print("deployment_details")
-    # print(res1)
+    res1=get_deployment_details(recived_dict["service"]["cloud_id"],recived_dict["deploy_id"])
+    print("deployment_details")
+    print(res1)
+    print(yaml.dump(res1))
     # res2=get_login_details(recived_dict["service"]["cloud_id"],recived_dict["deploy_id"])
     # print("login_details")
     # print(res2)
     # res3=delete_deploy(recived_dict["service"]["cloud_id"],recived_dict["deploy_id"])
     # print(res3)
-    res4=get_server_state(recived_dict["service"]["cloud_id"],recived_dict["service_id"])
-    print(res4)
+    # res4=get_server_state(recived_dict["service"]["cloud_id"],recived_dict["service_id"])
+    # print(res4)

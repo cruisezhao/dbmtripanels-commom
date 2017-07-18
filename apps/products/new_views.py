@@ -45,6 +45,14 @@ class ProductBulkDeleteView(BulkDeleteView):
     default_return_url = 'product_list'
 
 
+class ProductBulkEditView(BulkEditView):
+    cls = Products
+    filter = filters.ProductFilter
+    form = forms.ProductBulkEditForm
+    template_name = 'products/product_bulk_edit.html'
+    default_return_url = 'product_list'
+
+
 class PlanListView(ObjectListView):
     """plan list"""
     queryset = Plans.objects.all()

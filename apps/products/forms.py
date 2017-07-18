@@ -9,6 +9,15 @@ from datetimewidget.widgets import DateTimeWidget, DateWidget, TimeWidget
 from common.utilities.forms import FilterChoiceField, DateFilterMixin
 
 
+def product_type_choice():
+    """choice for product type"""
+    pt_d = {}
+    ps = Products.objects.values('product_type').annotate(count=Count('product_type'))
+    for p in ps:
+        pt_d[p['product_type']] = p['count']
+    return [(t[0], mark_safe("{} <span class='badge pull-right'>{}</span>".format(t[1],pt_d.get(t[0],0)))) for t in Products.TYPE_CHOICE ]
+
+
 class ProductForm(ModelForm):
     """product form"""
 
@@ -17,13 +26,22 @@ class ProductForm(ModelForm):
         fields = ('product_type', 'product_name',)
 
 
-def product_type_choice():
-    """choice for product type"""
-    pt_d = {}
-    ps = Products.objects.values('product_type').annotate(count=Count('product_type'))
-    for p in ps:
-        pt_d[p['product_type']] = p['count']
-    return [(t[0], mark_safe("{} <span class='badge pull-right'>{}</span>".format(t[1],pt_d.get(t[0],0)))) for t in Products.TYPE_CHOICE ]
+class ProductBulkEditForm(forms.Form):
+    def __init__(self,model,*args,**kwargs):
+        super(ProductBulkEditForm,self).__init__(*args,**kwargs)
+    pk = forms.ModelMultipleChoiceField(queryset=Products.objects.all(), widget=forms.MultipleHiddenInput)
+    product_type = forms.ChoiceField(
+        choices = Products.TYPE_CHOICE+[('','----')],
+        required=False,
+    )
+    #many to many field cannot used to bulkedit
+    #only non-relations and foreign keys permitted
+    # plans = forms.ModelChoiceField(
+    #     queryset=Plans.objects.all(),
+    #     # widget=forms.CheckboxSelectMultiple(),
+    #     required = False
+    # )
+
 
 def generic_choice(m, field, choice):
     """generic choice field
