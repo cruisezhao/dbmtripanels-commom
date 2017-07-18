@@ -8,11 +8,16 @@ Magento:
     operating_system: Ubuntu 14.04
     database: MySQL 5.5
     
-Magento2: 
-  - template_url: http://xx.xx.xx.xx/images/magento/tripanels-compose.yml
+OpenCart:
+  - template_url: ../drivers/tripanel_composer/opencart/tripanels-compose.yml
     operating_system: Ubuntu 16.04
     database: MySQL 5.7
 
   - template_url: http://xx.xx.xx.xx/images/magento/tripanels-compose.yml
     operating_system: Ubuntu 14.04
     database: MySQL 5.5
+
+OsCommerce:
+  - template_url: ../drivers/tripanel_composer/osCommerce/tripanels-compose.yml
+    operating_system: Ubuntu 16.04
+    database: MySQL 5.7
