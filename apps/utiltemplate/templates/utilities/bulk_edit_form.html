@@ -1,10 +1,27 @@
+
 {% extends 'base.html' %}
 <!--{% load form_helpers %}-->
 
 {% block content %}
-<h1>{% block title %}{% endblock %}</h1>
+<style type="text/css">
+	.form-group{margin-bottom: 10px !important;display: block;height: 30px;}
+	.form-group select{border-radius: 0px;}
+	label.control-label{line-height: 30px;}
+	.Ta,.Tb{display: inline-block;vertical-align: top;margin-top: 20px;}
+	.Ta a{display: block;height: 30px;width: 80px;border: solid 1px #dddddd;color: #333333;line-height: 30px;text-align: center;transition: all 0.3s linear;}
+	.Tb button{height: 30px;width: 80px;border: solid 1px #ff6700;background: #FF3C00;color: #ffffff;transition: all 0.3s linear;}
+	.Ta a:hover{background: #ffffff;}
+	.Tb button:hover{background: #ff715a;}
+	@media only screen and (min-width:768px) {
+		.Tleft{padding-left:50px;}
+	}
+	@media only screen and (max-width:768px) {
+		.Tleft{padding-left:0px;}
+	}
+</style>
+<div class="row-fluid" id="content_wrapper">
 
-<form action="." method="post" class="form form-horizontal">
+	<form action="." method="post" style="margin-top: 20px;">
     {% csrf_token %}
     {% if request.POST.return_url %}
         <input type="hidden" name="return_url" value="{{ request.POST.return_url }}" />
@@ -14,28 +31,28 @@
     {% endfor %}
 
     <div class="row">
-        <div class="col-md-7">
-            <div class="panel panel-default">
-                <div class="panel-heading"><strong>{% block selected_objects_title %}{{ selected_objects|length }} Selected For Editing{% endblock %}</strong></div>
-                <table class="panel-body table table-hover">
+        <div class="col-lg-9 col-md-8 col-sm-7 col-xs-12">
+            <div class="Tleft">
+                <div style="line-height: 36px;font-size: 18px;color: #333333;">{% block selected_objects_title %}{{ selected_objects|length }} Selected For Editing{% endblock %}</div>
+                <table class="table table-bordered">
                     {% block selected_objects_table %}{% endblock %}
                 </table>
             </div>
         </div>
 
-        <div class="col-md-5">
+        <div class="col-lg-3 col-md-4 col-sm-5 col-xs-12">
 
             {% if form.non_field_errors %}
-                <div class="panel panel-danger">
-                    <div class="panel-heading"><strong>Errors</strong></div>
-                    <div class="panel-body">
-                        {{ form.non_field_errors }}
-                    </div>
+            <div class="">
+                <div class="">Errors</div>
+                <div class="">
+                    {{ form.non_field_errors }}
                 </div>
+            </div>
             {% endif %}
-            <div class="panel panel-default">
-                <div class="panel-heading"><strong>{% block form_title %}Attributes{% endblock %}</strong></div>
-                <div class="panel-body">
+            <div style="padding-left:20px;padding-right: 30px;">
+                <div style="margin-bottom: 20px;line-height: 36px;font-size: 18px;color: #333333;border-bottom: solid 1px #dddddd;">{% block form_title %}Edit attributes{% endblock %}</div>
+                
                     {% for field in form.visible_fields %}
                         {% if field.name in form.nullable_fields %}
                             {% render_field field bulk_nullable=True %}
@@ -43,19 +60,21 @@
                             {% render_field field %}
                         {% endif %}
                     {% endfor %}
-                </div>
+                
             </div>
 
-		    <div class="form-group text-right">
-                <div class="col-md-12">
-                    <button type="submit" name="_apply" class="btn btn-primary">Apply</button>
-                    <a href="{{ return_url }}" class="btn btn-default">Cancel</a>
+		    <div style="padding-left: 20px;">
+                <div class="Ta">
+                	<a href="{{ return_url }}">Cancel</a>
+                </div>
+                <div class="Tb">
+                	<button type="submit" name="_apply">Apply</button>                   
                 </div>
 		    </div>
         </div>
     </div>
 
 </form>
-
+</div>
 {% endblock %}
 
