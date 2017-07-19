@@ -63,6 +63,7 @@ class DeployForm(forms.Form):
         
         #call infrastructure deploy API
         print('deploy starting...')
+        deploy_id = None
         try:
             quotas = self.get_quotas(self.deploy_instance_list)
             servers = []
@@ -81,10 +82,13 @@ class DeployForm(forms.Form):
             timeout_s = 10*60
             interval_s = 10
         
-            apis.deploy(deploy_infos,  make_callback(self.package.id), timeout_s, interval_s)
+            deploy_id = apis.deploy(deploy_infos,  make_callback(self.package.id), timeout_s, interval_s)
         except Exception as e:
             DeployTaskManager.deploy_is_over(self.package.id)
             raise e
+        
+        self.package.deploy_id = deploy_id
+        self.package.save()
         return 'This package is deploying now...'
 
     def get_quotas(self, deploy_instance_list):

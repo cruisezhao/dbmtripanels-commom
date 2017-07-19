@@ -12,8 +12,7 @@ from common.utilities.tables import ToggleColumn
 DEPLOY_ACTIONS = """
 {% if record.deploy_status == 'Undeployed' %}
     <a href="{% url 'deployments:deploy' record.uuid %}" class="btn btn-xs btn-warning">deploy</a>
-{% else %}
-    <span class="">{{ record.deploy_status }}</span>
+
 {% endif %}
 """
 
@@ -25,15 +24,16 @@ class PackageTable(tables.Table):
     created = tables.Column()
     client = tables.Column(accessor='client.email')
     status = tables.Column()
+    deploy_status = tables.Column()
     deploy = tables.TemplateColumn(
         template_code=DEPLOY_ACTIONS,
         attrs={'td': {'class': 'text-right'}},
-        verbose_name='Deploy Status'
+        verbose_name=''
     )    
 
     class Meta:
         model = Packages
-        fields = ('pk','id','package_name','created','client', 'status',)
+        fields = ('pk','id','package_name','created','client', 'status','deploy_status')
         attrs={
                 "class": "table table-bordered table-condensed table-hover",
             }
