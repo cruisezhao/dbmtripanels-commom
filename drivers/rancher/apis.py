@@ -5,31 +5,12 @@ import paramiko
 import os,sys,re
 from requests.auth import HTTPBasicAuth
 from requests.auth import HTTPDigestAuth
+from common.drivers import settings
 
-
-wordpress = {
-    "name": "wordpress2",
-    "system": "false","dockerCompose": "wordpress:\n  image: wordpress\n  links:\n    - db:mysql\n  ports:\n    - 8088:80\n\ndb:\n  image: mariadb\n  environment:\n    MYSQL_ROOT_PASSWORD: example\n",
-    "rancherCompose": ".catalog:\n  name: \"Wordpress\"\n  version: \"v0.1-educaas1\"\n  description: \"Blog tool, publishing platform and CMS\"\n  uuid: Wordpress-0\n  minimum_rancher_version: v0.51.0\n  questions:    \n    - variable: public_port\n      description: \"public port to access the wordpress site\"\n      label: \"Public Port\"\n      required: true\n      default: \"80\"\n      type: \"int\"\n\n\nwordpress:\n",
-    "startOnCreate":"true"
-     }
-
-opencart = {
-    "name": "opencart",
-    "system": "false",
-    "dockerCompose": "opencart:\r\n  image: 172.107.32.205:5000/opencart\r\n  ports:\r\n    - 80:80",
-    "rancherCompose": ".catalog:\r\n  name: \"Opencart\"\r\n  version: \"v1\"\r\n  description: \"opencart\"\r\n  uuid: Opencart-0\r\n  minimum_rancher_version: v0.51.0\r\n  questions:    \r\n    - variable: public_port\r\n      description: \"public port to access the opencart site\"\r\n      label: \"Public Port\"\r\n      required: true\r\n      default: \"80\"\r\n      type: \"int\"\r\n\r\nopencart:",
-    "startOnCreate":"true"
-
-}
-
-Rancher_Url = "http://209.105.243.175"
-API_PublicValue = "83F6F46E15BDDB026A2D"
-API_SecretValue = "cpNuCJn2i7915WjNYdzUJKsiHFudwKW3CYvfkzgK"
-headers = {
-    'content-type': 'application/json',
-    'Accept': 'application/json'
-}
+Rancher_Url = settings.Rancher_Url
+API_PublicValue = settings.API_PublicValue
+API_SecretValue = settings.API_SecretValue
+headers = settings.headers
 
 #List environments
 def list_env():
@@ -68,7 +49,6 @@ def list_hosts(env_id):
     url = Rancher_Url +"/v2-beta/projects/" + env_id + "/hosts"
     req = requests.get(url,auth=HTTPBasicAuth(API_PublicValue, API_SecretValue), headers=headers)
     dic = req.json()
-    #print (dic)
     host_result = {}
     hosts = []  
     for datas in dic["data"]:
@@ -111,10 +91,10 @@ def list_services(env_id,stack_id):
         service["name"] = datas["name"]
         service["state"] = datas["state"]
         service["stack_id"] = datas["stackId"]
-        service["container_id"] = datas["instanceIds"][0]
+        service["container_ids"] = datas["instanceIds"]
         services.append(service)
-        service_result["services"] = services
-        service_result["publicEndpoints"] = publicEndpoints
+    service_result["services"] = services
+    service_result["publicEndpoints"] = publicEndpoints
     return service_result
 
 def list_containers(env_id):
@@ -128,6 +108,7 @@ def list_containers(env_id):
         container["id"] = datas["id"]
         container["name"] = datas["name"]
         container["state"] = datas["state"]
+        container["host_id"] = datas["hostId"]
         containers.append(container)
         container_result["containers"] = containers
     return container_result
@@ -138,11 +119,12 @@ def container_details(env_id,con_id):
     dic = req.json()
     container_detail_result = {}
     container_detail = {}
-    container_detail["id"] = dic["id"]
+    container_detail["container_id"] = dic["id"]
     container_detail["name"] = dic["name"]
     container_detail["state"] = dic["state"]
     container_detail["privateIP"] = dic["primaryIpAddress"]
-    container_detail["port"] = dic["ports"]
+    container_detail["port"] = dic["ports"][0]
+    container_detail["host_id"] = dic["hostId"]
     container_detail_result["containers"] = container_detail
     return container_detail_result["containers"]
 
@@ -197,10 +179,9 @@ def stack_state(env_id,stack_id):
     return result
 
 #Start stack
-def start_stack(env_id,stack_id):
-    data = json.dumps(wordpress)
+def start_stack(env_id,stack_id,app):
     url = Rancher_Url +"/v2-beta/projects/" + env_id + "/stacks/" + stack_id + "/?action=activateservices"
-    req = requests.post(url,data,auth=HTTPBasicAuth(API_PublicValue, API_SecretValue), headers=headers)
+    req = requests.post(url,app,auth=HTTPBasicAuth(API_PublicValue, API_SecretValue), headers=headers)
     dic = req.json()
     healthState = dic["healthState"]
     return healthState

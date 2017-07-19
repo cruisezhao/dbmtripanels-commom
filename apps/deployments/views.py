@@ -2,6 +2,7 @@ from django.shortcuts import render
 from django.views.generic.edit import FormView
 from .forms import DeployForm
 from django.urls import reverse_lazy
+from django.contrib import messages
 
 # Create your views here.
 class DeployView(FormView):
@@ -12,7 +13,8 @@ class DeployView(FormView):
     def form_valid(self, form):
         # This method is called when valid form data has been POSTed.
         # It should return an HttpResponse.
-        form.deploy()
+        str = form.deploy()
+        messages.success(self.request, str)
         return super(DeployView, self).form_valid(form)
     
     def get_form_kwargs(self):

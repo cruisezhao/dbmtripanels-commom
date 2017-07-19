@@ -25,6 +25,13 @@ PACKAGE_STATUS= (
 # Create your models here.
 class Packages(CreatedUpdatedModel):
     """Packages"""
+    DEPLOY_STATUS= (
+        ('Undeployed','Undeployed'),
+        ('Deploying','Deploying'),
+        ('Success', 'Success'),
+        ('Failure','Failure'),
+        ('Timeout','Timeout'),
+    )
     uuid = models.CharField(unique=True, default=uuid_to_str, max_length=255, editable=False)
     package_name = models.CharField(max_length=100)
     description = models.TextField('Description',null=True, blank=True)
@@ -38,6 +45,14 @@ class Packages(CreatedUpdatedModel):
     cpu = models.IntegerField('CPU',default=0)
     memory = models.DecimalField('Memory', max_digits=19, decimal_places=4, null=True, blank=True)
     disk = models.IntegerField('Disk', default = 0)
+    deploy_status = models.CharField(max_length=32, choices=DEPLOY_STATUS, default='Undeployed')
+    
+    def is_undeployed(self):
+        return self.deploy_status == 'Undeployed'
+    
+    def allow_to_deploy(self):
+        return (self.deploy_status == 'Undeployed') or (self.deploy_status == 'Failure') \
+                or (self.deploy_status == 'Timeout')
     
     class Meta:
         db_table = "packages"
@@ -81,8 +96,3 @@ class Packages(CreatedUpdatedModel):
     def modify_password(self,password):
         self.runtime['servers'][0]['applications'][0]['password'] = password
 
-class PackageServers(CreatedUpdatedModel):
-    '''relationship between package and server model'''
-    #uuid = models.CharField(unique=True, default=uuid_to_str, max_length=255, editable=False)
-    package = models.ForeignKey(Packages,on_delete=models.PROTECT)
-    #server = models.ForeignKey(Servers,on_delete=models.PROTECT)

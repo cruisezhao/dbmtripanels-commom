@@ -5,13 +5,15 @@ Created on Jul 5, 2017
 '''
 
 import django_tables2 as tables
-from common.apps.packages.models import Packages
+from .models import Packages
 from django_tables2 import A
 from common.utilities.tables import ToggleColumn
 
 DEPLOY_ACTIONS = """
-{% if record.status == 'Pending' %}
+{% if record.deploy_status == 'Undeployed' %}
     <a href="{% url 'deployments:deploy' record.uuid %}" class="btn btn-xs btn-warning">deploy</a>
+{% else %}
+    <span class="">{{ record.deploy_status }}</span>
 {% endif %}
 """
 
@@ -26,7 +28,7 @@ class PackageTable(tables.Table):
     deploy = tables.TemplateColumn(
         template_code=DEPLOY_ACTIONS,
         attrs={'td': {'class': 'text-right'}},
-        verbose_name=''
+        verbose_name='Deploy Status'
     )    
 
     class Meta:
