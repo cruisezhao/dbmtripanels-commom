@@ -1,13 +1,7 @@
 import yaml
 from common.drivers.rancher import apis
 
-app_dict={
-    "name": "",
-    "system": "",
-    "dockerCompose": "",
-    #"rancherCompose": "",
-    "startOnCreate": ""
-    }
+
 def deploy(deployment_infos):
     '''
     descriptions:
@@ -18,15 +12,24 @@ def deploy(deployment_infos):
         deploy_id
         deploy_id means stack id for Rancher;
     '''
+    
     fr1=open("../drivers/templates/rancher_images_cloudid.yml",'r')
-    urls=yaml.load(fr1)[deployment_infos["name"]]
+    urls=yaml.load(fr1)[deployment_infos["product_name"]]
     URL=""
     for url in urls:
-        if url["database"]==deployment_infos["server_configurations"]["database"] and url["operating_system"]==deployment_infos["server_configurations"]["operating_system"]:
+        if url["database"]==deployment_infos["server_configurations"]["DataBase"] and url["operating_system"]==deployment_infos["server_configurations"]["OS"]:
             URL=url["template_url"]
+            break
     fr2=open(URL,'r')
     tri_compose=yaml.load(fr2)
-    if deployment_infos["cloud_type"] == "Rancher":
+    
+    if 'rancher' in deployment_infos["cloud_name"].lower():
+        app_dict={}
+        #     "name": "",
+        #     "system": "",
+        #     "dockerCompose": "",
+        #     #"rancherCompose": "",
+        #     "startOnCreate": ""
         app_dict["name"]=tri_compose["name"]
         app_dict["system"]=deployment_infos["system"]
         app_dict["startOnCreate"]=deployment_infos["startOnCreate"]
