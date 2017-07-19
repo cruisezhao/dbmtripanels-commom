@@ -38,5 +38,7 @@ docker:
     image: registry.databasemart.net:443/magento2
     ports:
       - 80:80
+    mem_limit:
+    cpu_quota:
 
 rancher:

@@ -5,3 +5,13 @@ headers = {
     'content-type': 'application/json',
     'Accept': 'application/json'
 }
+deploy_info={
+    "system": "false",
+    "startOnCreate": "true",
+}
+
+enviroment_info={
+enviroment_info={
+    "Rancher":"1a5",
+    "Openstack":"",
+}
