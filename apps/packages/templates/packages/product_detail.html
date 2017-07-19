@@ -144,10 +144,10 @@
       <!---vm-->
 			<div class="part4 pro-vm">
         <!---title-->
-				<h4>This product works fine based on the following {{ pkg.get_vmserver_list | length }} virtual machine !</h4><!---title end-->
+				<h4>This product works fine based on the following {{ pkg.get_server_list | length }} virtual machine !</h4><!---title end-->
         <!---virtualMachineBar-->
 				<div class="virtualMachine">
-				{% for vmserver in pkg.get_vmserver_list %}
+				{% for server in pkg.get_server_list %}
           <!---vm-img-->
 					<div class="left">
 						<img src="{% static 'img/SC-45.png' %}"/>
@@ -161,7 +161,7 @@
 								{{ forloop.counter }}
 							</div>
 							<div class="machineName">
-								{{ vmserver.get_name }}
+								{{ server.name }}
 							</div>
 						</div>
 						<ul>
@@ -197,7 +197,7 @@
 										VCPUS
 									</div>
 									<div class="value1">
-										{{ vmserver.get_cpu_cores }}
+										{{ server.total_cores }}
 									</div>
 								</div>
 								<div class="one">
@@ -205,7 +205,7 @@
 										DISK
 									</div>
 									<div class="value1">
-										{{ vmserver.get_disks }}
+										{{ server.get_disks }}
 									</div>
 								</div>
 								<div class="one">
@@ -213,7 +213,7 @@
 										RAM
 									</div>
 									<div class="value1">
-										{{ vmserver.get_memory }}
+										{{ server.total_memory }}
 									</div>
 								</div>
 							</li>
@@ -223,7 +223,7 @@
 										IP
 									</div>
 									<div class="value1">
-										{{ vmserver.get_ip }}
+										{{ server.get_ip }}
 									</div>
 								</div>
 								<div class="one">
@@ -231,7 +231,7 @@
 										Status
 									</div>
 									<div class="value1">
-										{{ vmserver.get_status }}
+										{{ server.status }}
 									</div>
 								</div>
 								<div class="one">
@@ -239,7 +239,7 @@
 										Creaed time
 									</div>
 									<div class="value1">
-										{{ vmserver.get_created_time }}
+										{{ server.created }}
 									</div>
 								</div>
 							</li>

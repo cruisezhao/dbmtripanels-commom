@@ -173,6 +173,12 @@ class Servers(CreatedUpdatedModel):
     def is_type_VM(cls, t):
         return t == 'VirtualMachine'
     
+    def get_disks(self):
+        return ''
+    
+    def get_ip(self):
+        return ''
+    
 class ServerContainers(Servers):
     """Containers"""
     #server = models.OneToOneField(Servers, primary_key=True)
