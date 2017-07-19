@@ -4,32 +4,22 @@
 
 {% block styles %}
 <link rel="stylesheet" type="text/css" href="{% static 'css/base3_add.css' %}"/>
-<link rel="stylesheet" type="text/css" href="{% static 'css/base4_table.css' %}"/>
 {% endblock styles %}
 
 
 
 {% block content %}
+<div class="row-fluid" id="content_wrapper">
+	{% include 'inc/search_panel.html' %}       
+	<div id="content_wrapper1" class="span10" >
+        <p>{{title}} List</p>
 
-<div class="row-fluid" id="content_wrapper1">
-        {% include 'inc/search_panel.html' %}
-
-        <div class="pull-right subtitle_btn">
-            {% if perms %}
-
-            {% endif %}
-        </div>
-        <div class="span10" id="content_wrapper">
-            <p>{{title}} List</p>
-
-            <div class="Ttable">
-             {% include 'utilities/obj_table.html' %}
-            </div>
-        </div>
-    </div>
-
+        <div class="Ttable">
+         {% include 'utilities/obj_table.html' %}
+        </div>	    
+	</div>
+</div>
 {% endblock %}
 
 {% block scripts %}
-<script src="{% static 'js/base2.js' %}" type="text/javascript" charset="utf-8"></script>
 {% endblock scripts %}

@@ -9,7 +9,7 @@ from common.utilities.tables import ToggleColumn
 class ProductTable(tables.Table):
     """product table"""
     DETAIL_URL_NAME = 'product'
-    # pk = ToggleColumn()
+    pk = ToggleColumn()
     product_name = tables.LinkColumn(DETAIL_URL_NAME, args=[A('uuid')])
     plans = tables.Column(accessor='all_plans', orderable=False)
     summary = tables.Column(
@@ -30,9 +30,10 @@ class ProductTable(tables.Table):
 class PlanTable(tables.Table):
     """plan table"""
     """product table"""
+    pk = ToggleColumn()
     id = tables.LinkColumn('plan', args=[A('uuid')])
 
     class Meta:
         model = Plans
-        fields = ('id','name','cpu','memory','disk','instance', 'price',
+        fields = ('pk','id','name','cpu','memory','disk','instance', 'price',
                   'created','last_updated')

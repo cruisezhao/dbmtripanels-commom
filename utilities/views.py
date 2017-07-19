@@ -1,4 +1,5 @@
 from django.views.generic import View
+from django import forms
 from django.db.models import ProtectedError
 from django.core.urlresolvers import reverse
 from django.shortcuts import redirect, render, get_object_or_404
@@ -177,3 +178,113 @@ class ObjectDeleteView(GetReturnURLMixin, View):
             'obj_type': self.model._meta.verbose_name,
             'return_url': self.get_return_url(request, obj),
         })
+
+
+class BulkEditView(View):
+    """batch change objects"""
+    cls = None
+    filter = None
+    form = None
+    template_name = None
+    default_return_url = 'home'
+
+    def get(self,request):
+        return redirect(self.default_return_url)
+
+    def post(self, request, **kwargs):
+        return_url = reverse(self.default_return_url)
+
+        if request.POST.get("_all") and self.filter is not None:
+            pk_list = [obj.pk for obj in self.filter(request.GET, self.cls.objects.only('pk')).qs]
+        else:
+            pk_list = [int(pk) for pk in request.POST.getlist('pk')]
+
+        if '_apply' in request.POST:
+            form = self.form(self.cls, request.POST)
+            if form.is_valid():
+                standard_fields = [field for field in form.fields if field != 'pk']
+                # nullified_fields = request.POST.getlist('_nullify')
+                fields_to_update = {}
+                for field in standard_fields:
+                    if form.cleaned_data[field] not in (None, ''):
+                        fields_to_update[field] = form.cleaned_data[field]
+                updated_count = self.cls.objects.filter(pk__in=pk_list).update(**fields_to_update)
+
+                if updated_count:
+                    msg = 'Updated {} {}'.format(updated_count, self.cls._meta.verbose_name_plural)
+                    messages.success(self.request, msg)
+                return redirect(return_url)
+
+        else:
+            initial_data = request.POST.copy()
+            initial_data['pk'] = pk_list
+            form = self.form(self.cls, initial=initial_data)
+
+        selected_objects = self.cls.objects.filter(pk__in=pk_list)
+
+        if not selected_objects:
+            messages.warning(request, "No {} were selected.".format(self.cls._meta.verbose_name_plural))
+            return redirect(return_url)
+        return render(request, self.template_name, {
+            'form': form,
+            'selected_objects': selected_objects,
+            'return_url': return_url,
+        })
+
+
+class BulkDeleteView(View):
+    """bulk delete view"""
+    cls = None
+    filter = None
+    form = None
+    template_name = "utilities/confirm_bulk_delete.html"
+    default_return_url = 'home'
+
+    def post(self, request, **kwargs):
+        return_url = reverse(self.default_return_url)
+
+        if request.POST.get('_all') and self.filter is not None:
+            pk_list = [obj.pk for obj in self.filter(request.GET, self.cls.objects.only('pk')).qs]
+        else:
+            pk_list = [int(pk) for pk in request.POST.getlist('pk')]
+
+        form_cls = self.get_form()
+        if '_confirm' in request.POST:
+            form = form_cls(request.POST)
+            if form.is_valid():
+
+                # Delete objects
+                queryset = self.cls.objects.filter(pk__in=pk_list)
+                try:
+                    deleted_count = queryset.delete()[1][self.cls._meta.label]
+                except ProtectedError as e:
+                    msg = "Delete objects failed, because of protected error."
+                    messages.success(request, msg)
+                    return redirect(return_url)
+
+                msg = 'Deleted {} {}'.format(deleted_count, self.cls._meta.verbose_name_plural)
+                messages.success(request, msg)
+                return redirect(return_url)
+        else:
+            form = form_cls(initial={'pk': pk_list, 'return_url': return_url})
+
+        selected_objects = self.cls.objects.filter(pk__in=pk_list)
+        if not selected_objects:
+            messages.warning(request, "No {} were selected for deletion.".format(self.cls._meta.verbose_name_plural))
+            return redirect(return_url)
+
+        return render(request, self.template_name, {
+            'form': form,
+            'obj_type_plural': self.cls._meta.verbose_name_plural,
+            'selected_objects': selected_objects,
+            'return_url': return_url,
+        })
+
+    def get_form(self):
+
+        class BulkDeleteForm(ComfirmationForm):
+            pk = forms.ModelMultipleChoiceField(queryset=self.cls.objects.all(), widget=forms.MultipleHiddenInput)
+
+        if self.form:
+            return self.form
+        return BulkDeleteForm

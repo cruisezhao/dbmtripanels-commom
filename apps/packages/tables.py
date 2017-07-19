@@ -7,6 +7,7 @@ Created on Jul 5, 2017
 import django_tables2 as tables
 from .models import Packages
 from django_tables2 import A
+from common.utilities.tables import ToggleColumn
 
 DEPLOY_ACTIONS = """
 {% if record.deploy_status == 'Undeployed' %}
@@ -18,6 +19,7 @@ DEPLOY_ACTIONS = """
 
 class PackageTable(tables.Table):
     """Package table"""
+    pk = ToggleColumn()
     id = tables.LinkColumn('packages:detail', args=[A('uuid')])
     package_name = tables.Column()
     created = tables.Column()
@@ -31,7 +33,7 @@ class PackageTable(tables.Table):
 
     class Meta:
         model = Packages
-        fields = ('id','package_name','created','client', 'status',)
+        fields = ('pk','id','package_name','created','client', 'status',)
         attrs={
                 "class": "table table-bordered table-condensed table-hover",
             }
