@@ -76,13 +76,6 @@ class Vendors(CreatedUpdatedModel):
     class Meta:
         db_table = "vendors"
 
-class Clouds(CreatedUpdatedModel):
-    """Cloud Consoles"""
-    name = models.CharField(max_length=32)
-
-    class Meta:
-        db_table = "clouds"
-
 class DataCenters(CreatedUpdatedModel):
     """Data Centers"""
     name = models.CharField(max_length=32)
