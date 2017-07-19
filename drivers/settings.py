@@ -10,7 +10,7 @@ deploy_info={
     "startOnCreate": "true",
 }
 
-enviroment_info={
+
 enviroment_info={
     "Rancher":"1a5",
     "Openstack":"",
