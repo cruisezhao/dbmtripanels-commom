@@ -104,6 +104,8 @@
               {% if pkg.status == 'Active' %}
 
                 <a href="{% url 'packages:productdetails' pkg.uuid %}" class="c-priceBar-btn ">Product details</a>
+              {% elif pkg.deploy_status == 'Undeployed' %}
+                <a href="{% url 'deployments:deploy' pkg.uuid %}" class="c-priceBar-btn">deploy</a>
               {% else %}
                 <a href="{% url 'packages:productdetails' pkg.uuid %}" class="c-priceBar-btn c-priceBar-disabled">Product details</a>
               {% endif %}

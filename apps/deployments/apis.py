@@ -34,7 +34,7 @@ def _get_driver_deploy_parameter(deploy_infos):
     ret_infos['servers'] = []
     for dict_server in deploy_infos['servers']:
         server = {}
-        server['cloud'] = dict_server['cloud'].id
+        server['cloud_name'] = dict_server['cloud'].name
         server['cpu'] = dict_server['cpu']
         server['memory'] = dict_server['memory']
         server['disk'] = dict_server['disk']
@@ -115,7 +115,7 @@ Driver Gateway deploy API input parameter:
 {
     "product_name":'Magento',
     "servers":[ {
-        "cloud":cloud_id,
+        "cloud_name":cloud_name,
         "cpu": 2,
         "memory": 20,
         "disk": 200,
@@ -165,7 +165,7 @@ Driver Gateway deploy API input parameter:
 
     #start a thread to query deploy state
     exe = DeployExecutorManager.get_executor()
-    future = exe.submit(_get_deploy_state, driver_deploy_infos['servers'][0]['cloud'], deploy_id, timeout_s, interval_s)
+    future = exe.submit(_get_deploy_state, driver_deploy_infos['servers'][0]['cloud_name'], deploy_id, timeout_s, interval_s)
     future.add_done_callback(callback) 
 
     
@@ -199,21 +199,21 @@ def _flaten_services_to_containers(service_dict):
 # service_id = '789'    
 # container_id = '00012345'
 # host_id = '9999'
-def _get_deployment_details(cloud_id, deploy_id):
+def _get_deployment_details(cloud_name, deploy_id):
     '''
-    {cloud_id, details:[{stack_id, service_id, containers:[id,name,port,privateIP,state,host_id]}]}
+    {cloud_name, details:[{stack_id, service_id, containers:[id,name,port,privateIP,state,host_id]}]}
     '''
 #     global stack_id, service_id,container_id,host_id
 #     import random
 #     service_id = str(random.uniform(100, 999))
 #     container_id = str(random.uniform(1000, 9999))
-#     return {'cloud_id' : 1, 'details':[{'stack_id':stack_id, 'service_id':service_id, \
+#     return {'cloud_name' : 'Rancher', 'details':[{'stack_id':stack_id, 'service_id':service_id, \
 #                                         'containers':[{'id':container_id, 'name':'ben','port':['209.105.243.70:80:80/tcp'],'privateIP':'','state':'running','host_id':host_id},]}]}
-    return gateway.get_deployment_details(cloud_id, deploy_id) 
+    return gateway.get_deployment_details(cloud_name, deploy_id) 
 
-def _get_deployment_state(cloud_id, deploy_id):
+def _get_deployment_state(cloud_name, deploy_id):
 #     return {'retcode':0, 'descriptions':'success'}
-    return gateway.get_deployment_state(cloud_id, deploy_id)           
+    return gateway.get_deployment_state(cloud_name, deploy_id)           
 
 def _driver_deploy(driver_deploy_infos):
 #     import random
@@ -222,7 +222,7 @@ def _driver_deploy(driver_deploy_infos):
 #     return stack_id
     return gateway.deploy(driver_deploy_infos)
 
-def _get_deploy_state(cloud_id, deploy_id, timeout_s, interval_s):
+def _get_deploy_state(cloud_name, deploy_id, timeout_s, interval_s):
     '''
     return {'retcode':DEPLOY_SUCCESS, 'deploy_id':deploy_id}
     '''
@@ -231,10 +231,10 @@ def _get_deploy_state(cloud_id, deploy_id, timeout_s, interval_s):
     times = timeout_s // interval_s + 1
     try:
         for _ in range(times):
-            state = _get_deployment_state(cloud_id, deploy_id)
+            state = _get_deployment_state(cloud_name, deploy_id)
             if state['retcode'] == 0:
                 #success
-                res = _get_deployment_details(cloud_id, deploy_id)
+                res = _get_deployment_details(cloud_name, deploy_id)
                 servers = Servers.objects.filter(deploy_id = deploy_id)
                 real_servers = []
                 for (server,detail) in zip(servers, _flaten_services_to_containers(res['details'])):
