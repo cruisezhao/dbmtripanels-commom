@@ -27,3 +27,9 @@ class DevicePowerFilter(django_filters.FilterSet):
     class Meta:
         model = DevicePowers
         fields = ['name']
+
+
+class DeviceDriveFilter(django_filters.FilterSet):
+    class Meta:
+        model = DeviceDrives
+        fields = ['name']

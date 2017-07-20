@@ -1,0 +1,40 @@
+{% extends 'utilities/obj_edit.html' %}
+{% load form_helpers %}
+
+{% block form %}
+    <!-- commondity infomation -->
+    {% include "racks/_device_common.html" %}
+    <!-- device specice attr -->
+    <div class="createProduct">
+            <div class="createProduct1">
+                <h4>Driver</h4>
+                    <div class="panel panel-default">
+                        <!--<div class="panel-heading"><strong>{{ obj_type|capfirst }}</strong></div>-->
+                        <div class="panel-body">
+                            {% render_field form.disk_size %}
+                            {% render_field form.file_system %}
+                            {% render_field form.status %}
+                            {% comment %}
+                                difference between device
+                            {% endcomment %}
+
+                        </div>
+                    </div>
+
+            </div>
+        </div>
+    <!-- comment -->
+    <div class="createProduct">
+            <div class="createProduct1">
+                <h4>Comment</h4>
+                    <div class="panel panel-default">
+                        <!--<div class="panel-heading"><strong>{{ obj_type|capfirst }}</strong></div>-->
+                        <div class="panel-body">
+                            {% render_field form.comments %}
+                        </div>
+                    </div>
+
+            </div>
+        </div>
+{% endblock %}
+

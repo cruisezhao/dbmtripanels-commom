@@ -122,3 +122,31 @@ class DevicePowerEditView(ObjectEditView):
 class DevicePowerDeleteView(ObjectDeleteView):
     model = DevicePowers
     default_return_url = "infras:power_list"
+
+
+class DeviceDriveList(ObjectListView):
+    queryset = DeviceDrives.objects.all()
+    filter = filters.DeviceDriveFilter
+    form_class = None
+    table = tables.DeviceDriveTable
+    template_name = "drivers/driver_list.html"
+
+
+class DeviceDriveView(View):
+    def get(self,request,uuid):
+        drive = get_object_or_404(DeviceDrives, uuid=uuid)
+        return render(request, "drivers/drive.html",{
+            'object':drive,
+        })
+
+
+class DeviceDriveEditView(ObjectEditView):
+    model = DeviceDrives
+    form_class = forms.DeviceDriveForm
+    template_name = "drivers/drive_edit.html"
+    default_return_url = "infras:driver_list"
+
+
+class DeviceDriveDeleteView(ObjectDeleteView):
+    model = DeviceDrives
+    default_return_url = "infras:driver_list"

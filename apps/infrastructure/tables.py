@@ -38,3 +38,12 @@ class DevicePowerTable(tables.Table):
     class Meta:
         model = DevicePowers
         fields = ['pk','name','outlet_amount','voltage','mgmt_ip']
+
+
+class DeviceDriveTable(tables.Table):
+    pk = ToggleColumn()
+    name = tables.LinkColumn('infras:driver', args=[A("uuid")])
+
+    class Meta:
+        model = DeviceDrives
+        fields = ['pk','name','disk_size','file_system']

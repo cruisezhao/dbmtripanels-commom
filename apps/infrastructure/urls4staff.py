@@ -2,7 +2,8 @@ from django.conf.urls import url,include
 from  .view4staff import (RackListView, RackView, RackEditView,RackDeleteView,
                           DataCenterListView, DataCenterView, DataCenterEditView, DataCenterDeleteView,
                           VendorListView, VendorView, VendorEditView, VendorDeleteView,
-                          DevicePowerList,DevicePowerView,DevicePowerEditView,DevicePowerDeleteView)
+                          DevicePowerList,DevicePowerView,DevicePowerEditView,DevicePowerDeleteView,
+                          DeviceDriveList, DeviceDriveView, DeviceDriveEditView, DeviceDriveDeleteView)
 
 
 urlpatterns = [
@@ -33,4 +34,11 @@ urlpatterns = [
     url(r'^powers/add/$', DevicePowerEditView.as_view(), name='power_add'),
     url(r'^powers/(?P<uuid>[a-z\d+]{32})/edit/$', DevicePowerEditView.as_view(), name='power_edit'),
     url(r'^powers/(?P<uuid>[a-z\d+]{32})/delete/$', DevicePowerDeleteView.as_view(), name='power_delete'),
+
+    #power
+    url(r'^drivers/$', DeviceDriveList.as_view(), name='driver_list'),
+    url(r'^drivers/(?P<uuid>[a-z\d+]{32})/$', DeviceDriveView.as_view(), name='driver'),
+    url(r'^drivers/add/$', DeviceDriveEditView.as_view(), name='driver_add'),
+    url(r'^drivers/(?P<uuid>[a-z\d+]{32})/edit/$', DeviceDriveEditView.as_view(), name='driver_edit'),
+    url(r'^drivers/(?P<uuid>[a-z\d+]{32})/delete/$', DeviceDriveDeleteView.as_view(), name='driver_delete'),
 ]

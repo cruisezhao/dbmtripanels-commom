@@ -88,3 +88,12 @@ class DevicePowerForm(DeviceDateForm):
                   'rack','u_height','tag','seller', 'purchase_date', 'price',
                   'order_no', 'warranty_date', 'status', 'comments',
                   'outlet_amount', 'voltage', 'mgmt_ip']
+
+
+class DeviceDriveForm(DeviceDateForm):
+    class Meta:
+        model = DeviceDrives
+        fields = ['data_center','name','type','model','manufacturer','sn',
+                  'rack','u_height','tag','seller', 'purchase_date', 'price',
+                  'order_no', 'warranty_date', 'status', 'comments',
+                  'disk_size','file_system']
