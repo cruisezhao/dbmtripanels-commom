@@ -6,7 +6,8 @@ from  .view4staff import (RackListView, RackView, RackEditView,RackDeleteView,
                           DeviceDriveList, DeviceDriveView, DeviceDriveEditView, DeviceDriveDeleteView,
                           DeviceKVMList, DeviceKVMView, DeviceKVMEditView, DeviceKVMDeleteView,
                           DeviceRouterList,DeviceRouterView,DeviceRouterEditView,DeviceRouterDeleteView,
-                          DeviceSwitcheListView,DeviceSwitcheView,DeviceSwitcheEditView,DeviceSwitcheDeleteView)
+                          DeviceSwitcheListView,DeviceSwitcheView,DeviceSwitcheEditView,DeviceSwitcheDeleteView,
+                          DeviceFirewallListView, DeviceFirewallView, DeviceFirewallEditView,DeviceFirewallDeleteView)
 
 
 urlpatterns = [
@@ -65,4 +66,11 @@ urlpatterns = [
     url(r'^switches/add/$', DeviceSwitcheEditView.as_view(), name='switche_add'),
     url(r'^switches/(?P<uuid>[a-z\d+]{32})/edit/$', DeviceSwitcheEditView.as_view(), name='switche_edit'),
     url(r'^switches/(?P<uuid>[a-z\d+]{32})/delete/$', DeviceSwitcheDeleteView.as_view(), name='switche_delete'),
+
+    #DeviceFirewalls
+    url(r'^firewalls/$', DeviceFirewallListView.as_view(), name='firewall_list'),
+    url(r'^firewalls/(?P<uuid>[a-z\d+]{32})/$', DeviceFirewallView.as_view(), name='firewall'),
+    url(r'^firewalls/add/$', DeviceFirewallEditView.as_view(), name='firewall_add'),
+    url(r'^firewalls/(?P<uuid>[a-z\d+]{32})/edit/$', DeviceFirewallEditView.as_view(), name='firewall_edit'),
+    url(r'^firewalls/(?P<uuid>[a-z\d+]{32})/delete/$', DeviceFirewallDeleteView.as_view(), name='firewall_delete'),
 ]

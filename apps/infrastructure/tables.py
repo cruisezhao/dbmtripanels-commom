@@ -71,3 +71,12 @@ class DeviceSwitcheTable(tables.Table):
     class Meta:
         model = DeviceRouters
         fields = ['pk','name','account', 'password', 'mgmt_ip','os_version', 'port_amount']
+
+
+class DeviceFirewallTable(tables.Table):
+    pk = ToggleColumn()
+    name = tables.LinkColumn("infras:firewall", args=[A("uuid")])
+    class Meta:
+        model = DeviceFirewalls
+        fields = ['pk','name','account', 'password', 'mgmt_ip','os_version', 'port_amount',
+                  'license_amount','safe_area','unsafe_area']

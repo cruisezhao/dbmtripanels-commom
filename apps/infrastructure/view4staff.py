@@ -234,3 +234,31 @@ class DeviceSwitcheEditView(ObjectEditView):
 class DeviceSwitcheDeleteView(ObjectDeleteView):
     model = DeviceSwitches
     default_return_url = "infras:switche_list"
+
+
+class DeviceFirewallListView(ObjectListView):
+    queryset = DeviceFirewalls.objects.all()
+    filter = filters.DeviceFirewallFilter
+    filter_form = None
+    table = tables.DeviceFirewallTable
+    template_name = "firewalls/firewall_list.html"
+
+
+class DeviceFirewallView(View):
+    def get(self,request,uuid):
+        firewall = get_object_or_404(DeviceFirewalls, uuid=uuid)
+        return render(request, "firewalls/firewall.html",{
+            'object':firewall,
+        })
+
+
+class DeviceFirewallEditView(ObjectEditView):
+    model = DeviceFirewalls
+    default_return_url = "infras:firewall_list"
+    form_class = forms.DeviceFirewallForm
+    template_name = "firewalls/firewall_edit.html"
+
+
+class DeviceFirewallDeleteView(ObjectDeleteView):
+    model = DeviceFirewalls
+    default_return_url = "infras:firewall_list"

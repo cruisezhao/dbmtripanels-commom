@@ -51,3 +51,9 @@ class DeviceSwitcheFilter(django_filters.FilterSet):
     class Meta:
         model = DeviceSwitches
         fields = ['name']
+
+
+class DeviceFirewallFilter(django_filters.FilterSet):
+    class Meta:
+        model = DeviceFirewalls
+        fields = ['name']
