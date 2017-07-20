@@ -51,3 +51,9 @@ class DataCentersForm(forms.ModelForm):
         fields = ['name','tag','address','city','state',
                   'country','zip','website','phone','support_email',
                   'support_portal','username','password','notes']
+
+
+class VendorForm(forms.ModelForm):
+    class Meta:
+        model = Vendors
+        fields = ['name', 'type', 'description','website','status']

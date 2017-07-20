@@ -1,6 +1,6 @@
 import django_tables2 as tables
 from django_tables2.utils import A
-from .models.network import DeviceRacks, DataCenters
+from .models.network import DeviceRacks, DataCenters,Vendors
 from common.utilities.tables import ToggleColumn
 
 class RackTable(tables.Table):
@@ -17,3 +17,12 @@ class DataCenterTable(tables.Table):
     class Meta:
         model = DataCenters
         fields = ['pk', 'name', 'address','website','phone','support_email','username']
+
+
+class VerdorTable(tables.Table):
+    pk = ToggleColumn()
+    name = tables.LinkColumn("infras:vendor", args=[A('uuid')])
+
+    class Meta:
+        model = Vendors
+        fields = ['pk', 'name', 'type', 'description', 'website', 'status']

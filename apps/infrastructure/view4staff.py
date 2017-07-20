@@ -2,10 +2,38 @@ from django.shortcuts import render, get_object_or_404
 from django.views.generic import View
 from common.utilities.views import (ObjectListView, ObjectEditView,
                             ObjectDeleteView)
-from .models.network import DeviceRacks,DataCenters
+from .models.network import DeviceRacks,DataCenters,Vendors
 from . import filters
 from . import tables
 from . import forms
+
+
+class VendorListView(ObjectListView):
+    queryset = Vendors.objects.all()
+    filter = filters.VendorFilter
+    filter_form = None
+    table = tables.VerdorTable
+    template_name = "vendors/vendor_list.html"
+
+
+class VendorView(View):
+    def get(self,request, uuid):
+        vendor = get_object_or_404(Vendors, uuid=uuid)
+        return render(request, 'vendors/vendor.html',{
+            'object':vendor,
+        })
+
+
+class VendorEditView(ObjectEditView):
+    model = Vendors
+    form_class = forms.VendorForm
+    template_name = "vendors/vendor_edit.html"
+    default_return_url = "infras:vendor_list"
+
+
+class VendorDeleteView(ObjectDeleteView):
+    model = Vendors
+    default_return_url = "infras:vendor_list"
 
 
 class DataCenterListView(ObjectListView):
