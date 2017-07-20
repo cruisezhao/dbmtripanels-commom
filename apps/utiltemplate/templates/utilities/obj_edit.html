@@ -1,20 +1,21 @@
 {% extends 'base.html' %}
 {% load form_helpers %}
 {% load staticfiles %}
-{% block content %}
-<link rel="stylesheet" type="text/css" href="{% static 'css/base3_add.css' %}"/>
 {% block styles %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/base3_add.css' %}"/>
 {% endblock styles %}
+
+{% block content %}
     <form action="." method="post" enctype="multipart/form-data" class="form_module">
         {% csrf_token %}
         {% for field in form.hidden_fields %}
             {{ field }}
         {% endfor %}
         <h3>Create a new {{ obj_type }}</h3>
+        {% block form %}
         <div class="createProduct">
             <div class="createProduct1">
                 <h4>{% block title %}{% if obj.pk %}Editing {{ obj_type }} {{ obj }}{% else %}Create a new {{ obj_type }}{% endif %}{% endblock %}</h4>
-                {% block tabs %}{% endblock %}
                 {% if form.non_field_errors %}
                     <div class="panel panel-danger">
                         <div class="panel-heading"><strong>Errors</strong></div>
@@ -23,16 +24,15 @@
                         </div>
                     </div>
                 {% endif %}
-                {% block form %}
                     <div class="panel panel-default">
                         <!--<div class="panel-heading"><strong>{{ obj_type|capfirst }}</strong></div>-->
                         <div class="panel-body">
                             {% render_form form %}
                         </div>
                     </div>
-                {% endblock %}
             </div>
-        </div>        
+        </div>
+        {% endblock %}
         <div class="Button">
         	<a href="{{ return_url }}" class="btn btn-default">Cancel</a>
             {% if obj.pk %}

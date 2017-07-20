@@ -99,6 +99,7 @@ class DataCenters(CreatedUpdatedModel):
 class Devices(CreatedUpdatedModel):
     """Devices"""
     uuid = models.CharField(db_index=True, default=uuid_to_str, max_length=255, editable=False)
+    data_center = models.ForeignKey(DataCenters, models.SET_NULL, null=True, blank=True)
     name = models.CharField(max_length=64)
     type = models.CharField(max_length=32, choices=DEVICE_TYPE)
     manufacturer = models.ForeignKey(Vendors, models.SET_NULL, related_name='manufacturer_device', null=True, blank=True)
@@ -124,9 +125,11 @@ class Devices(CreatedUpdatedModel):
         #     ['data_center', 'tag'],
         # ]
 
+    def __str__(self):
+        return self.name
+
 class DeviceRacks(Devices):
     """Racks"""
-    data_center = models.ForeignKey(DataCenters, models.SET_NULL, null=True, blank=True)
     #desc_units = models.BooleanField(default=False, verbose_name='Descending units',help_text='Units are numbered top-to-bottom')
     location = models.TextField(blank=True, help_text='How to find the rack in data center.')
     total_electric_current = models.CharField(max_length=64)
@@ -281,7 +284,7 @@ class Interfaces(CreatedUpdatedModel):
     def __str__(self):
         return self.name
 
-class RackInterfaces(Interfaces):
+class InterfaceRacks(Interfaces):
     has_rail = models.NullBooleanField()
     rail_model = models.CharField(max_length=255)
     unit_no = models.PositiveSmallIntegerField(null=True, blank=True)
@@ -292,7 +295,7 @@ class RackInterfaces(Interfaces):
     def __str__(self):
         return self.name
 
-class NetworkInterfaces(Interfaces):
+class InterfaceNetworks(Interfaces):
     speed = models.CharField(max_length=64)
     mac = models.CharField(max_length=128, null=True, blank=True, verbose_name='MAC Address')
     port_model = models.CharField(max_length=128)
