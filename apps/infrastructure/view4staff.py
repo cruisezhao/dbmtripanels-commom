@@ -206,3 +206,31 @@ class DeviceRouterEditView(ObjectEditView):
 class DeviceRouterDeleteView(ObjectDeleteView):
     model = DeviceRouters
     default_return_url = "infras:router_list"
+
+
+class DeviceSwitcheListView(ObjectListView):
+    queryset = DeviceSwitches.objects.all()
+    filter = filters.DeviceSwitcheFilter
+    filter_form = None
+    table = tables.DeviceSwitcheTable
+    template_name = "switches/switche_list.html"
+
+
+class DeviceSwitcheView(View):
+    def get(self,request,uuid):
+        switche = get_object_or_404(DeviceSwitches, uuid=uuid)
+        return render(request, "switches/switche.html",{
+            'object':switche,
+        })
+
+
+class DeviceSwitcheEditView(ObjectEditView):
+    model = DeviceSwitches
+    default_return_url = "infras:switche_list"
+    template_name = "switches/switche_edit.html"
+    form_class = forms.DeviceSwitcheForm
+
+
+class DeviceSwitcheDeleteView(ObjectDeleteView):
+    model = DeviceSwitches
+    default_return_url = "infras:switche_list"

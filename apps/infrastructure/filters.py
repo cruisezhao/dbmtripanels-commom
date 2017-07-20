@@ -45,3 +45,9 @@ class DeviceRouterFilter(django_filters.FilterSet):
     class Meta:
         model = DeviceRouters
         fields = ['name']
+
+
+class DeviceSwitcheFilter(django_filters.FilterSet):
+    class Meta:
+        model = DeviceSwitches
+        fields = ['name']

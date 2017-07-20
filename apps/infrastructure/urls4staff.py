@@ -5,7 +5,8 @@ from  .view4staff import (RackListView, RackView, RackEditView,RackDeleteView,
                           DevicePowerList,DevicePowerView,DevicePowerEditView,DevicePowerDeleteView,
                           DeviceDriveList, DeviceDriveView, DeviceDriveEditView, DeviceDriveDeleteView,
                           DeviceKVMList, DeviceKVMView, DeviceKVMEditView, DeviceKVMDeleteView,
-                          DeviceRouterList,DeviceRouterView,DeviceRouterEditView,DeviceRouterDeleteView)
+                          DeviceRouterList,DeviceRouterView,DeviceRouterEditView,DeviceRouterDeleteView,
+                          DeviceSwitcheListView,DeviceSwitcheView,DeviceSwitcheEditView,DeviceSwitcheDeleteView)
 
 
 urlpatterns = [
@@ -57,4 +58,11 @@ urlpatterns = [
     url(r'^routers/add/$', DeviceRouterEditView.as_view(), name='router_add'),
     url(r'^routers/(?P<uuid>[a-z\d+]{32})/edit/$', DeviceRouterEditView.as_view(), name='router_edit'),
     url(r'^routers/(?P<uuid>[a-z\d+]{32})/delete/$', DeviceRouterDeleteView.as_view(), name='router_delete'),
+
+    #DeviceSwitches
+    url(r'^switches/$', DeviceSwitcheListView.as_view(), name='switche_list'),
+    url(r'^switches/(?P<uuid>[a-z\d+]{32})/$', DeviceSwitcheView.as_view(), name='switche'),
+    url(r'^switches/add/$', DeviceSwitcheEditView.as_view(), name='switche_add'),
+    url(r'^switches/(?P<uuid>[a-z\d+]{32})/edit/$', DeviceSwitcheEditView.as_view(), name='switche_edit'),
+    url(r'^switches/(?P<uuid>[a-z\d+]{32})/delete/$', DeviceSwitcheDeleteView.as_view(), name='switche_delete'),
 ]

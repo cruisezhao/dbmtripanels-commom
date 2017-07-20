@@ -116,3 +116,11 @@ class DeviceRouterForm(DeviceDateForm):
               'order_no', 'warranty_date', 'status', 'comments',
               'account', 'password', 'mgmt_ip','os_version', 'port_amount']
 
+
+class DeviceSwitcheForm(DeviceDateForm):
+     class Meta:
+        model = DeviceSwitches
+        fields = ['data_center','name','type','model','manufacturer','sn',
+              'rack','u_height','tag','seller', 'purchase_date', 'price',
+              'order_no', 'warranty_date', 'status', 'comments',
+              'account', 'password', 'mgmt_ip','os_version', 'port_amount']
