@@ -67,6 +67,7 @@ CONNECTION_STATUS = (
 
 class Vendors(CreatedUpdatedModel):
     """Vendors"""
+    uuid = models.CharField(db_index=True, default=uuid_to_str, max_length=255, editable=False)
     name = models.CharField(max_length=32)
     type = models.CharField(max_length=32, choices=VENDOR_TYPE)
     description = models.CharField(max_length=32)
@@ -76,8 +77,13 @@ class Vendors(CreatedUpdatedModel):
     class Meta:
         db_table = "vendors"
 
+    def __str__(self):
+        return self.name
+
+
 class DataCenters(CreatedUpdatedModel):
     """Data Centers"""
+    uuid = models.CharField(db_index=True, default=uuid_to_str, max_length=255, editable=False)
     name = models.CharField(max_length=32)
     tag = models.CharField(max_length=32)
     address = models.CharField(max_length=32)
@@ -95,6 +101,10 @@ class DataCenters(CreatedUpdatedModel):
 
     class Meta:
         db_table = "data_centers"
+
+    def __str__(self):
+        return self.name
+
 
 class Devices(CreatedUpdatedModel):
     """Devices"""

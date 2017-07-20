@@ -1,5 +1,5 @@
 from django import forms
-from .models.network import DeviceRacks,Vendors,DEVICE_TYPE
+from .models.network import DeviceRacks,Vendors,DEVICE_TYPE,DataCenters
 from datetimewidget.widgets import DateTimeWidget, DateWidget
 
 class DeviceRacksForm(forms.ModelForm):
@@ -43,3 +43,11 @@ class DeviceRacksForm(forms.ModelForm):
                   'used_electric_current','ec_check_date','power_stripe_amount',
                   'total_band_width','used_band_width', 'bw_check_date',
                   'up_router_ip','comments','location']
+
+
+class DataCentersForm(forms.ModelForm):
+    class Meta:
+        model =DataCenters
+        fields = ['name','tag','address','city','state',
+                  'country','zip','website','phone','support_email',
+                  'support_portal','username','password','notes']
