@@ -33,3 +33,15 @@ class DeviceDriveFilter(django_filters.FilterSet):
     class Meta:
         model = DeviceDrives
         fields = ['name']
+
+
+class DeviceKVMFilter(django_filters.FilterSet):
+    class Meta:
+        model = DeviceKVMs
+        fields = ['name']
+
+
+class DeviceRouterFilter(django_filters.FilterSet):
+    class Meta:
+        model = DeviceRouters
+        fields = ['name']

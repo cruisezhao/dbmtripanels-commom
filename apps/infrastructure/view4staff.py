@@ -150,3 +150,59 @@ class DeviceDriveEditView(ObjectEditView):
 class DeviceDriveDeleteView(ObjectDeleteView):
     model = DeviceDrives
     default_return_url = "infras:driver_list"
+
+
+class DeviceKVMList(ObjectListView):
+    queryset = DeviceKVMs.objects.all()
+    filter = filters.DeviceKVMFilter
+    filter_form = None
+    table = tables.DeviceKVMTable
+    template_name = "kvms/kvm_list.html"
+
+
+class DeviceKVMView(View):
+    def get(self,request,uuid):
+        KVM = get_object_or_404(DeviceKVMs, uuid=uuid)
+        return render(request, "kvms/kvm.html",{
+            'object':KVM,
+        })
+
+
+class DeviceKVMEditView(ObjectEditView):
+    model = DeviceKVMs
+    form_class = forms.DeviceKVMForm
+    template_name = "kvms/kvm_edit.html"
+    default_return_url = "infras:kvm_list"
+
+
+class DeviceKVMDeleteView(ObjectDeleteView):
+    model = DeviceKVMs
+    default_return_url = "infras:kvm_list"
+
+
+class DeviceRouterList(ObjectListView):
+    queryset = DeviceRouters.objects.all()
+    filter = filters.DeviceRouterFilter
+    filter_form = None
+    table = tables.DeviceRouterTable
+    template_name = "routers/router_list.html"
+
+class DeviceRouterView(View):
+
+    def get(self,request,uuid):
+        router = get_object_or_404(DeviceRouters, uuid=uuid)
+        return render(request, "routers/router.html",{
+            'object':router,
+        })
+
+
+class DeviceRouterEditView(ObjectEditView):
+    model = DeviceRouters
+    default_return_url = "infras:router_list"
+    form_class = forms.DeviceRouterForm
+    template_name = "routers/router_edit.html"
+
+
+class DeviceRouterDeleteView(ObjectDeleteView):
+    model = DeviceRouters
+    default_return_url = "infras:router_list"

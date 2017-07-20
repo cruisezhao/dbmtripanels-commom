@@ -47,3 +47,20 @@ class DeviceDriveTable(tables.Table):
     class Meta:
         model = DeviceDrives
         fields = ['pk','name','disk_size','file_system']
+
+
+class DeviceKVMTable(tables.Table):
+    pk = ToggleColumn()
+    name = tables.LinkColumn("infras:kvm", args=[A("uuid")])
+    class Meta:
+        model = DeviceKVMs
+        fields = ['pk','name','account', 'password', 'mgmt_ip', 'port_amount']
+
+
+class DeviceRouterTable(tables.Table):
+    pk = ToggleColumn()
+    name = tables.LinkColumn("infras:router", args=[A("uuid")])
+
+    class Meta:
+        model = DeviceRouters
+        fields = ['pk','name','account', 'password', 'mgmt_ip','os_version', 'port_amount']

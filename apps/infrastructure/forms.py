@@ -97,3 +97,22 @@ class DeviceDriveForm(DeviceDateForm):
                   'rack','u_height','tag','seller', 'purchase_date', 'price',
                   'order_no', 'warranty_date', 'status', 'comments',
                   'disk_size','file_system']
+
+
+class DeviceKVMForm(DeviceDateForm):
+    class Meta:
+        model = DeviceKVMs
+        fields = ['data_center','name','type','model','manufacturer','sn',
+                  'rack','u_height','tag','seller', 'purchase_date', 'price',
+                  'order_no', 'warranty_date', 'status', 'comments',
+                  'account', 'password', 'mgmt_ip', 'port_amount']
+
+
+class DeviceRouterForm(DeviceDateForm):
+    class Meta:
+        model = DeviceRouters
+        fields = ['data_center','name','type','model','manufacturer','sn',
+              'rack','u_height','tag','seller', 'purchase_date', 'price',
+              'order_no', 'warranty_date', 'status', 'comments',
+              'account', 'password', 'mgmt_ip','os_version', 'port_amount']
+

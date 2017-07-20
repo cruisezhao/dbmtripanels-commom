@@ -12,14 +12,14 @@
             <p{% if message.tags %} class="{{ message.tags }} warning-txt" {% endif %} >{{ message }}</p>
             {% endfor %}{% endif %}
             {% if perms %}
-                <a href="{% url 'infras:power_add'%}" class="btn btn-primary">
+                <a href="{% url 'infras:router_add'%}" class="btn btn-primary">
                     <span class="fa fa-plus" aria-hidden="true"></span>
-                    Create a Power
+                    Create a Router
                 </a>
             {% endif %}
         </div>
         <div class="span10" id="content_wrapper1">
-            <p>Power Lists</p>
+            <p>Router Lists</p>
             <div class="Ttable">
 		     {% include 'utilities/obj_table.html' %}
             </div>

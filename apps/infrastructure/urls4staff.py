@@ -3,7 +3,9 @@ from  .view4staff import (RackListView, RackView, RackEditView,RackDeleteView,
                           DataCenterListView, DataCenterView, DataCenterEditView, DataCenterDeleteView,
                           VendorListView, VendorView, VendorEditView, VendorDeleteView,
                           DevicePowerList,DevicePowerView,DevicePowerEditView,DevicePowerDeleteView,
-                          DeviceDriveList, DeviceDriveView, DeviceDriveEditView, DeviceDriveDeleteView)
+                          DeviceDriveList, DeviceDriveView, DeviceDriveEditView, DeviceDriveDeleteView,
+                          DeviceKVMList, DeviceKVMView, DeviceKVMEditView, DeviceKVMDeleteView,
+                          DeviceRouterList,DeviceRouterView,DeviceRouterEditView,DeviceRouterDeleteView)
 
 
 urlpatterns = [
@@ -41,4 +43,18 @@ urlpatterns = [
     url(r'^drivers/add/$', DeviceDriveEditView.as_view(), name='driver_add'),
     url(r'^drivers/(?P<uuid>[a-z\d+]{32})/edit/$', DeviceDriveEditView.as_view(), name='driver_edit'),
     url(r'^drivers/(?P<uuid>[a-z\d+]{32})/delete/$', DeviceDriveDeleteView.as_view(), name='driver_delete'),
+
+    #DeviceKVMs
+    url(r'^kvms/$', DeviceKVMList.as_view(), name='kvm_list'),
+    url(r'^kvms/(?P<uuid>[a-z\d+]{32})/$', DeviceKVMView.as_view(), name='kvm'),
+    url(r'^kvms/add/$', DeviceKVMEditView.as_view(), name='kvm_add'),
+    url(r'^kvms/(?P<uuid>[a-z\d+]{32})/edit/$', DeviceKVMEditView.as_view(), name='kvm_edit'),
+    url(r'^kvms/(?P<uuid>[a-z\d+]{32})/delete/$', DeviceKVMDeleteView.as_view(), name='kvm_delete'),
+
+    #DeviceRouters
+    url(r'^routers/$', DeviceRouterList.as_view(), name='router_list'),
+    url(r'^routers/(?P<uuid>[a-z\d+]{32})/$', DeviceRouterView.as_view(), name='router'),
+    url(r'^routers/add/$', DeviceRouterEditView.as_view(), name='router_add'),
+    url(r'^routers/(?P<uuid>[a-z\d+]{32})/edit/$', DeviceRouterEditView.as_view(), name='router_edit'),
+    url(r'^routers/(?P<uuid>[a-z\d+]{32})/delete/$', DeviceRouterDeleteView.as_view(), name='router_delete'),
 ]
