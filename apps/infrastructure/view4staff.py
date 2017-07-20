@@ -262,3 +262,31 @@ class DeviceFirewallEditView(ObjectEditView):
 class DeviceFirewallDeleteView(ObjectDeleteView):
     model = DeviceFirewalls
     default_return_url = "infras:firewall_list"
+
+
+class DeviceBareListView(ObjectListView):
+    queryset = DeviceBares.objects.all()
+    filter = filters.DeviceBareFilter
+    filter_form = None
+    table = tables.DeviceBareTable
+    template_name = "bares/bare_list.html"
+
+
+class DeviceBareView(View):
+    def get(self,request,uuid):
+        bare = get_object_or_404(DeviceBare, uuid=uuid)
+        return render(request, "bares/bare.html",{
+            'object':bare,
+        })
+
+
+class DeviceBareEditView(ObjectEditView):
+    model = DeviceBares
+    default_return_url = "infras:bare_list"
+    form_clas = forms.DeviceBareForm
+    template_name = "bares/bare_edit.html"
+
+
+class DeviceBareDeleteView(ObjectDeleteView):
+    model = DeviceBares
+    default_return_url = "infras:bare_list"

@@ -7,7 +7,8 @@ from  .view4staff import (RackListView, RackView, RackEditView,RackDeleteView,
                           DeviceKVMList, DeviceKVMView, DeviceKVMEditView, DeviceKVMDeleteView,
                           DeviceRouterList,DeviceRouterView,DeviceRouterEditView,DeviceRouterDeleteView,
                           DeviceSwitcheListView,DeviceSwitcheView,DeviceSwitcheEditView,DeviceSwitcheDeleteView,
-                          DeviceFirewallListView, DeviceFirewallView, DeviceFirewallEditView,DeviceFirewallDeleteView)
+                          DeviceFirewallListView, DeviceFirewallView, DeviceFirewallEditView,DeviceFirewallDeleteView,
+                          DeviceBareListView,DeviceBareView,DeviceBareEditView,DeviceBareDeleteView)
 
 
 urlpatterns = [
@@ -73,4 +74,11 @@ urlpatterns = [
     url(r'^firewalls/add/$', DeviceFirewallEditView.as_view(), name='firewall_add'),
     url(r'^firewalls/(?P<uuid>[a-z\d+]{32})/edit/$', DeviceFirewallEditView.as_view(), name='firewall_edit'),
     url(r'^firewalls/(?P<uuid>[a-z\d+]{32})/delete/$', DeviceFirewallDeleteView.as_view(), name='firewall_delete'),
+
+    #DeviceBares
+    url(r'^bares/$', DeviceBareListView.as_view(), name='bare_list'),
+    url(r'^bares/(?P<uuid>[a-z\d+]{32})/$', DeviceBareView.as_view(), name='bare'),
+    url(r'^bares/add/$', DeviceBareEditView.as_view(), name='bare_add'),
+    url(r'^bares/(?P<uuid>[a-z\d+]{32})/edit/$', DeviceBareEditView.as_view(), name='bare_edit'),
+    url(r'^bares/(?P<uuid>[a-z\d+]{32})/delete/$', DeviceBareDeleteView.as_view(), name='bare_delete'),
 ]

@@ -134,3 +134,21 @@ class DeviceFirewallForm(DeviceDateForm):
               'order_no', 'warranty_date', 'status', 'comments',
               'account', 'password', 'mgmt_ip','os_version', 'port_amount',
                 'license_amount','safe_area','unsafe_area']
+
+
+class DeviceBareForm(DeviceDateForm):
+
+    class Meta:
+        model = DeviceBares
+        fields = ['data_center',]
+
+
+
+#     'name','type','model','manufacturer','sn',
+# 'rack','u_height','tag','seller', 'purchase_date', 'price',
+# 'order_no', 'warranty_date', 'status', 'comments',
+# 'account', 'password', 'mgmt_ip', 'port_amount',
+# 'processor_model','no_of_processors','memory_chips','memory_size','motherboard_model',
+#   'chassis_model', 'power_supply_model', 'disk_size',
+#     'disk_description'
+#   ]

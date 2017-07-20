@@ -57,3 +57,9 @@ class DeviceFirewallFilter(django_filters.FilterSet):
     class Meta:
         model = DeviceFirewalls
         fields = ['name']
+
+
+class DeviceBareFilter(django_filters.FilterSet):
+    class Meta:
+        model = DeviceBares
+        fields = ['name']

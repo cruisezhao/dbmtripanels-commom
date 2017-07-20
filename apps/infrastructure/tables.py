@@ -80,3 +80,11 @@ class DeviceFirewallTable(tables.Table):
         model = DeviceFirewalls
         fields = ['pk','name','account', 'password', 'mgmt_ip','os_version', 'port_amount',
                   'license_amount','safe_area','unsafe_area']
+
+class DeviceBareTable(tables.Table):
+    pk = ToggleColumn()
+    name = tables.LinkColumn("infras:firewall", args=[A("uuid")])
+    class Meta:
+        model = DeviceFirewalls
+        fields = ['pk','name','account', 'password', 'mgmt_ip','os_version', 'port_amount',
+                  'processor_model','no_of_processors','memory_chips','memory_size','motherboard_model',]
