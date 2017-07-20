@@ -1,4 +1,151 @@
 {% extends 'utilities/obj_detail.html' %}
+{% load crudbuilder %}
+{% block content %}
+<div class="row im-wrap">
+	<div class="col-lg-4 col-md-6 col-xs-12">
+		<div id="content_wrapper">
+			<div style="margin:20px;">
+			    <h3>Detail of {{object}}</h3>
+			    <table class="table table-bordered">
+			        <tr>
+			            <th>Field</th>
+			            <th>Value</th>
+			        </tr>
+			      {% for field in object|get_model_fields %}
+			        <tr>
+			            <td>{{object|get_verbose_field_name:field.name}}</td>
+			            <td>{{object|get_value:field.name|default_if_none:""}}</td>
+			        </tr>
+			      {% endfor %}
+			    </table>
+			</div>
+		</div>
+	</div>
+	<div class="col-lg-8 col-md-6 col-xs-12 inter-connections">
+		<div href="#" class="btn btn-success addnew "><i class="fa fa-plus"></i> Add a new interface</div>
+		<table class=" table table-bordered interfacer-table">
+            <thead>
+              <tr>
+                <th class="pk">
+                  <input type="checkbox" id="toggle_all" title="Toggle all">
+                </th>
+                <th class="">
+                  <a href="?sort=product_name">Interface A</a>
+                </th>
+                <th class="">
+                  <a href="#">Status</a>
+                </th>
+								<th class="">
+									<a href="?sort=created">Connection Status</a>
+								</th>
+                <th class="summary">
+                  Connection Name
+                </th>
+
+                <th class="">
+                  <a href="#">Interface B</a>
+                </th>
+
+								<th class="">
+									<a href="#">status</a>
+								</th>
+
+								<th class="">
+									Console
+								</th>
+
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="even">
+                <td class="pk">
+                  <input type="checkbox" name="pk" value="5">
+                </td>
+                <td class="">
+                  <a href="#"><i class="fa fa-exchange"></i>G1/2</a>
+                </td>
+                <td class="">
+									<label class="label" style="background-color: #2dab4c">active</label>
+                </td>
+								<td class="">
+									<label class="label" style="background-color: #2dab4c">active</label>
+								</td>
+                <td class="">
+                  <a href="#">DBM-SRV-2342</a>
+                </td>
+
+                <td class="">
+                  eh1
+                </td>
+								<td class="">
+                  <label class="label" style="background-color: #2dab4c">active</label>
+                </td>
+                <td>
+                  <a href="#" class="btn btn-danger btn-xs">
+                      <i class="fa fa-expand" aria-hidden="true" title="Connect"></i>
+                  </a>
+
+                  <a href="#" class="btn btn-info btn-xs">
+                  <i class="fa fa-pencil" aria-hidden="true" title="Edit outlet"></i>
+                  </a>
+
+
+
+                  <a href="#" class="btn btn-danger btn-xs" disabled="disabled" style="cursor:not-allowed;">
+                      <i class="fa fa-trash" aria-hidden="true" title="Delete outlet"></i>
+                  </a>
+
+                </td>
+
+              </tr>
+
+							<tr class="even">
+                <td class="">
+                  <input type="checkbox" name="pk" value="5">
+                </td>
+                <td class="">
+                  <a href="#"><i class="fa fa-exchange"></i>G1/1</a>
+                </td>
+                <td class="">
+									<label class="label" style="background-color: #2dab4c">active</label>
+                </td>
+                <td class="">
+                  <a href="#"></a>
+                </td>
+                <td class="">
+
+                </td>
+                <td class="">
+
+                </td>
+								<td class="">
+
+                </td>
+                <td>
+                  <a href="#" class="btn btn-success btn-xs">
+                      <i class="fa fa-compress" aria-hidden="true" title="Connect"></i>
+                  </a>
+
+                  <a href="" class="btn btn-info btn-xs">
+                  <i class="fa fa-pencil" aria-hidden="true" title="Edit outlet"></i>
+                  </a>
+
+
+
+                  <a href="" class="btn btn-danger btn-xs">
+                      <i class="fa fa-trash" aria-hidden="true" title="Delete outlet"></i>
+                  </a>
+
+                </td>
+
+              </tr>
+            </tbody>
+    </table>
+	</div>
+</div>
+
+{% endblock content %}
+
 {% block button %}
 <div class="float_right" style="top: 0px;">
 	<a href="{% url 'infras:rack_edit' object.uuid%}" class="edit btn btn-primary"><i class="fa fa-pencil"></i> Edit</a>
