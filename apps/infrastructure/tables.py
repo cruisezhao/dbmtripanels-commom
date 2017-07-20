@@ -1,6 +1,9 @@
 import django_tables2 as tables
 from django_tables2.utils import A
-from .models.network import DeviceRacks, DataCenters,Vendors
+from .models.network import (DeviceRacks,DataCenters,Vendors,InterfaceRacks,
+                                DevicePowers, DeviceDrives,DeviceKVMs,DeviceMaintenances,
+                                DeviceRouters,DeviceSwitches, DeviceFirewalls,DeviceBares,
+                                InterfaceNetworks,Connections)
 from common.utilities.tables import ToggleColumn
 
 class RackTable(tables.Table):
@@ -26,3 +29,12 @@ class VerdorTable(tables.Table):
     class Meta:
         model = Vendors
         fields = ['pk', 'name', 'type', 'description', 'website', 'status']
+
+
+class DevicePowerTable(tables.Table):
+    pk = ToggleColumn()
+    name= tables.LinkColumn('infras:power', args=[A("uuid")])
+
+    class Meta:
+        model = DevicePowers
+        fields = ['pk','name','outlet_amount','voltage','mgmt_ip']

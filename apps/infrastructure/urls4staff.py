@@ -1,7 +1,8 @@
 from django.conf.urls import url,include
 from  .view4staff import (RackListView, RackView, RackEditView,RackDeleteView,
                           DataCenterListView, DataCenterView, DataCenterEditView, DataCenterDeleteView,
-                          VendorListView, VendorView, VendorEditView, VendorDeleteView)
+                          VendorListView, VendorView, VendorEditView, VendorDeleteView,
+                          DevicePowerList,DevicePowerView,DevicePowerEditView,DevicePowerDeleteView)
 
 
 urlpatterns = [
@@ -25,4 +26,11 @@ urlpatterns = [
     url(r'^racks/add/$', RackEditView.as_view(), name='rack_add'),
     url(r'^racks/(?P<uuid>[a-z\d+]{32})/edit/$', RackEditView.as_view(), name='rack_edit'),
     url(r'^racks/(?P<uuid>[a-z\d+]{32})/delete/$', RackDeleteView.as_view(), name='rack_delete'),
+
+    #power
+    url(r'^powers/$', DevicePowerList.as_view(), name='power_list'),
+    url(r'^powers/(?P<uuid>[a-z\d+]{32})/$', DevicePowerView.as_view(), name='power'),
+    url(r'^powers/add/$', DevicePowerEditView.as_view(), name='power_add'),
+    url(r'^powers/(?P<uuid>[a-z\d+]{32})/edit/$', DevicePowerEditView.as_view(), name='power_edit'),
+    url(r'^powers/(?P<uuid>[a-z\d+]{32})/delete/$', DevicePowerDeleteView.as_view(), name='power_delete'),
 ]

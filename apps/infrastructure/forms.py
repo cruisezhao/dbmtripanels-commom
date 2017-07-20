@@ -1,6 +1,28 @@
 from django import forms
-from .models.network import DeviceRacks,Vendors,DEVICE_TYPE,DataCenters
+from .models.network import (DeviceRacks,DataCenters,Vendors,InterfaceRacks,
+                                DevicePowers, DeviceDrives,DeviceKVMs,DeviceMaintenances,
+                                DeviceRouters,DeviceSwitches, DeviceFirewalls,DeviceBares,
+                                InterfaceNetworks,Connections,DEVICE_TYPE,DataCenters)
 from datetimewidget.widgets import DateTimeWidget, DateWidget
+
+
+class DeviceDateForm(forms.ModelForm):
+    purchase_date = forms.DateField(
+        required=False,
+        label='Purchase Date',
+        widget=DateWidget(
+            options={'format': 'yyyy-mm-dd',},
+            bootstrap_version=3),
+    )
+
+    warranty_date = forms.DateField(
+        required=False,
+        label='Warranty Date',
+        widget=DateWidget(
+            options={'format': 'yyyy-mm-dd',},
+            bootstrap_version=3),
+    )
+
 
 class DeviceRacksForm(forms.ModelForm):
     """"""
@@ -57,3 +79,12 @@ class VendorForm(forms.ModelForm):
     class Meta:
         model = Vendors
         fields = ['name', 'type', 'description','website','status']
+
+
+class DevicePowerForm(DeviceDateForm):
+    class Meta:
+        model = DevicePowers
+        fields = ['data_center','name','type','model','manufacturer','sn',
+                  'rack','u_height','tag','seller', 'purchase_date', 'price',
+                  'order_no', 'warranty_date', 'status', 'comments',
+                  'outlet_amount', 'voltage', 'mgmt_ip']

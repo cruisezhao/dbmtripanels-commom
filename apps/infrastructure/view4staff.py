@@ -2,7 +2,10 @@ from django.shortcuts import render, get_object_or_404
 from django.views.generic import View
 from common.utilities.views import (ObjectListView, ObjectEditView,
                             ObjectDeleteView)
-from .models.network import DeviceRacks,DataCenters,Vendors
+from .models.network import (DeviceRacks,DataCenters,Vendors,InterfaceRacks,
+                                DevicePowers, DeviceDrives,DeviceKVMs,DeviceMaintenances,
+                                DeviceRouters,DeviceSwitches, DeviceFirewalls,DeviceBares,
+                                InterfaceNetworks,Connections)
 from . import filters
 from . import tables
 from . import forms
@@ -91,3 +94,31 @@ class RackEditView(ObjectEditView):
 class RackDeleteView(ObjectDeleteView):
     model = DeviceRacks
     default_return_url = "infras:rack_list"
+
+
+class DevicePowerList(ObjectListView):
+    queryset = DevicePowers.objects.all()
+    filter = filters.DevicePowerFilter
+    filter_form = None
+    table = tables.DevicePowerTable
+    template_name = "powers/power_list.html"
+
+
+class DevicePowerView(View):
+    def get(self, request, uuid):
+        power = get_object_or_404(DevicePowers, uuid = uuid)
+        return render(request,"powers/power.html",{
+            "object":power,
+        })
+
+
+class DevicePowerEditView(ObjectEditView):
+    model = DevicePowers
+    form_class = forms.DevicePowerForm
+    template_name = "powers/power_edit.html"
+    default_return_url = "infras:power_list"
+
+
+class DevicePowerDeleteView(ObjectDeleteView):
+    model = DevicePowers
+    default_return_url = "infras:power_list"
