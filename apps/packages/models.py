@@ -84,8 +84,8 @@ class Packages(CreatedUpdatedModel):
     def get_plan_name(self):
         return self.get_product_order().plan.name
     
-    def get_vmserver_list(self):
-        return []
+    def get_server_list(self):
+        return self.servers_set.all()
 
     def get_product_order(self):
         return self.orders_set.all()[0]

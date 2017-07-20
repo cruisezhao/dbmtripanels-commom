@@ -7,8 +7,8 @@
 <h2>Dear, you are deploying {{form.package.get_product_name}}:</h2>
 <h3>Your plan is:</h3>
 <p>CPU: {{form.plan.cpu}}</p>
-<p>Memory: {{form.plan.memory}}</p>
-<p>Disk: {{form.plan.disk}}</p>
+<p>Memory: {{form.plan.memory}}G</p>
+<p>Disk: {{form.plan.disk}}M</p>
     <form method="POST" action="">
     {% csrf_token %}
     {% for server in form.deploy_instance_list %}

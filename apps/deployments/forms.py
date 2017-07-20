@@ -106,7 +106,9 @@ class DeployForm(forms.Form):
         servers = []
         
         avg_num_cpu = math.ceil(self.plan.cpu / ins_num)
-        avg_num_memory = math.ceil(self.plan.memory / ins_num)
+        #memory unit is G in plan
+        #memory uint is M in quotas
+        avg_num_memory = math.ceil(self.plan.memory * 1024 / ins_num)
         avg_num_disk = math.ceil(self.plan.disk / ins_num)
         for i,ins in enumerate(deploy_instance_list):
             server = {}
