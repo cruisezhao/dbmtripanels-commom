@@ -35,8 +35,9 @@ def deploy(deployment_infos):
         app_dict["system"] = settings.deploy_info["system"]
         app_dict["startOnCreate"]=settings.deploy_info["startOnCreate"]
         tri_docker=tri_compose["docker"]
-        tri_docker["osCommerce3"]["mem_limit"]=(deployment_infos["servers"][0]["memory"])*1024*1024
-        tri_docker["osCommerce3"]["cpu_quota"]=(deployment_infos["servers"][0]["cpu"])*24*2*100000/100
+        for server in tri_docker:
+            tri_docker[server]["mem_limit"]=(deployment_infos["servers"][0]["memory"])*1024*1024
+            tri_docker[server]["cpu_quota"]=(deployment_infos["servers"][0]["cpu"])*24*2*100000/100
         #tri_rancher=x["rancher"]
         final_docker=yaml.dump(tri_docker)
         #final_rancher = yaml.dump(tri_rancher)
