@@ -1,4 +1,4 @@
-name: osCommerce
+name: PrestaShop
 # type of products [Application(APP), Virtual Machine(VM), 
 # Bare Metal(Bare)]
 type: APP
@@ -35,8 +35,8 @@ questions:
     hidden: false
 
 docker:
-  oscommerce:
-    image: registry.databasemart.net:443/oscommerce2
+  prestashop:
+    image: registry.databasemart.net:443/prestashop
     mem_limit: 1000000000
     cpu_quota: 50000
     ports:
@@ -44,8 +44,8 @@ docker:
     labels:
       - app_plan=Basic
     volumes:
-      - oscommerce_db:/var/lib/mysql
-      - oscommerce_web:/var/www/html
+      - prestashop_db:/var/lib/mysql
+      - prestashop_web:/var/www/html
     environment:
       - DB_PASSWORD=dbpassword
 

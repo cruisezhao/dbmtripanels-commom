@@ -35,10 +35,32 @@ questions:
 
 docker:
   opencart:
-    image: registry.databasemart.net:443/opencart2
+    image: registry.databasemart.net:443/opencart3
+    mem_limit: 1000000000
+    cpu_quota: 50000
     ports:
       - 80:80
-    mem_limit:
-    cpu_quota:
+    labels:
+      - app_plan=Basic
+    volumes:
+      - opencart_db:/var/lib/mysql
+      - opencart_web:/var/www/html
+    environment:
+      - DB_PASSWORD=dbpassword
 
 rancher:
+  .catalog:
+    name: "Opencart"
+    version: "v1"
+    description: "opencart"
+    uuid: Opencart-0
+    minimum_rancher_version: v0.51.0
+    questions:
+      - variable: public_port
+        description: "public port to access the opencart site"
+        label: "Public Port"
+        required: true
+        default: "80"
+        type: "int"
+
+  opencart:

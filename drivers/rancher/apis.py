@@ -50,7 +50,8 @@ def list_hosts(env_id):
     req = requests.get(url,auth=HTTPBasicAuth(API_PublicValue, API_SecretValue), headers=headers)
     dic = req.json()
     host_result = {}
-    hosts = []  
+    hosts = []
+    #print(dic["data"])
     for datas in dic["data"]:
         host = {}
         host["id"] = datas["id"]
@@ -68,12 +69,11 @@ def list_hosts(env_id):
         host["CPU count"] = cpuinfo["count"]
         diskinfo = {}
         diskinfo = datas["info"]["diskInfo"]
-        host["disk_total"] = diskinfo["mountPoints"]["zpool-docker"]["total"]
-        host["disk_free"] = diskinfo["mountPoints"]["zpool-docker"]["free"]
+        #host["disk_total"] = diskinfo["mountPoints"]["zpool-docker"]["total"]
+        #host["disk_free"] = diskinfo["mountPoints"]["zpool-docker"]["free"]
         hosts.append(host)
         host_result["hosts"] = hosts
     return host_result
-
 
 
 #List service
@@ -221,8 +221,6 @@ def create_stack(env_id,app):
     dic = req.json()
     stack_id = dic["id"]
     return stack_id
-       
-    
 
 #Delete stack
 def delete_stack(env_id,stack_id):

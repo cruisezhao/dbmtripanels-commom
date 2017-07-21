@@ -2,6 +2,7 @@ import yaml
 from common.drivers.rancher import apis
 from common.drivers import settings
 import os,time
+import random,string
 
 def deploy(deployment_infos):
     '''
@@ -34,13 +35,23 @@ def deploy(deployment_infos):
         #     "dockerCompose": "",
         #     #"rancherCompose": "",
         #     "startOnCreate": ""
-        app_dict["name"] = deployment_infos["package_id"]+deployment_infos["product_name"]+time.strftime("%Y%m%d%H%M%S", time.localtime())
+
+        stack_name=deployment_infos["package_id"]+deployment_infos["product_name"]+time.strftime("%Y%m%d%H%M%S", time.localtime())
+        app_dict["name"] = stack_name
         app_dict["system"] = settings.deploy_info["system"]
         app_dict["startOnCreate"]=settings.deploy_info["startOnCreate"]
         tri_docker=tri_compose["docker"]
         for server in tri_docker:
             tri_docker[server]["mem_limit"]=(deployment_infos["servers"][0]["memory"])*1024*1024
             tri_docker[server]["cpu_quota"]=(deployment_infos["servers"][0]["cpu"])*24*2*100000//100
+            password=random.sample(string.ascii_letters + string.digits, 16)
+            password2=''.join(password)
+            tri_docker[server]["environment"][0]="DB_PASSWORD="+password2
+            for i in range(len(tri_docker[server]["volumes"])):
+                tri_docker[server]["volumes"][i]=(tri_docker[server]["volumes"][i]).replace(server,stack_name)
+            for j in range(len(tri_docker[server]["labels"])):
+                if "app_plan" in tri_docker[server]["labels"][j]:
+                    tri_docker[server]["labels"][j]="app_plan="+str(deployment_infos["servers"][0]["disk"]/1024)
         #tri_rancher=x["rancher"]
         final_docker=yaml.dump(tri_docker)
         #final_rancher = yaml.dump(tri_rancher)
@@ -209,10 +220,42 @@ def get_server_state(cloud_name, server_id):
     if 'rancher' in cloud_name.lower():
             current_state=apis.service_state(settings.enviroment_info[cloud_name],server_id)
     return current_state
+def add_host(cloud_name, admin_ip,user,password, host_label):
+    '''
+    descriptions:
+        add a host into platform.
+    parameters:
+        cloud_name:  platform name
+        admin_ip: ip address for host adminstration,
+        user?username to login host
+        password: password to login host
+        host_label: host label
+
+    returns:
+        host_id: host id in platform
+    '''
+    result={}
+    if 'rancher' in cloud_name.lower():
+        result=apis.add_host(settings.enviroment_info[cloud_name],admin_ip,host_label,user,password)
+    return result
+def add_host_state(cloud_name, admin_ip):
+    result={}
+    if 'rancher' in cloud_name.lower():
+        hosts_list = apis.list_hosts(settings.enviroment_info[cloud_name])
+        for host_i in range(len(hosts_list)):
+            if hosts_list["hosts"][host_i]["state"] =="active":
+                result["retcode"]=0
+                if admin_ip == hosts_list["hosts"][host_i]["IP"]:
+                    result["host_id"]=hosts_list["hosts"][host_i]["id"]
+                    break
+            else:
+                result["retcode"]=1
+    return result
+
 if __name__=='__main__':
     recived_dict={
         #"template_url":"C:/Users/admin/Documents/TriPanel/common/drivers/templates/tripanels-compose.yml",
-        "product_name":"OsCommerce",
+        "product_name":"PrestaShop",
         "package_id":"334556",
         "servers": [{
             "cloud_name": "Rancher",
@@ -229,8 +272,8 @@ if __name__=='__main__':
         }
     }
     #test deploy()
-    stack_id=deploy(recived_dict)
-    print(stack_id)
+    # stack_id=deploy(recived_dict)
+    # print(stack_id)
     # res0=get_deployment_state(recived_dict["servers"][0]["cloud_name"],"1st162")
     # print("deployment_state")
     # print(res0)
@@ -249,4 +292,13 @@ if __name__=='__main__':
     # print(res6)
     # res3=delete_deploy(recived_dict["servers"][0]["cloud_name"],"1st162")
     # print(res3)
+    # res7=add_host("Rancher1","45.35.12.234","root","Data8ase-mart","1=1")
+    # print(res7)
+    res8=add_host_state("Rancher1","45.35.12.234")
+    print(res8)
+    # for host_i in range(len(res["hosts"])):
+    #     if "45.35.12.234" == res["hosts"][host_i]["IP"]:
+    #         host_id=res["hosts"][host_i]["id"]
+    #         print(host_id)
+
 
