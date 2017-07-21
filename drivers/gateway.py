@@ -1,7 +1,7 @@
 import yaml
 from common.drivers.rancher import apis
 from common.drivers import settings
-
+import os,time
 
 def deploy(deployment_infos):
     '''
@@ -13,15 +13,18 @@ def deploy(deployment_infos):
         deploy_id
         deploy_id means stack id for Rancher;
     '''
-    
-    fr1=open("../drivers/templates/rancher_images_cloudid.yml",'r')
+    image_path = os.path.abspath(os.path.join(settings.BASE_DIR, "templates/rancher_images_cloudid.yml"))
+    #print(image_path)
+    fr1=open(image_path,'r')
+    #fr1=open("../drivers/templates/rancher_images_cloudid.yml",'r')
     urls=yaml.load(fr1)[deployment_infos["product_name"]]
     URL=""
     for url in urls:
         if url["database"]==deployment_infos["servers"][0]["server_configurations"]["DataBase"] and url["operating_system"]==deployment_infos["servers"][0]["server_configurations"]["OS"]:
             URL=url["template_url"]
             break
-    fr2=open(URL,'r')
+    tri_composer_path = os.path.abspath(os.path.join(settings.BASE_DIR, URL))
+    fr2=open(tri_composer_path,'r')
     tri_compose=yaml.load(fr2)
     cloud_name=deployment_infos["servers"][0]["cloud_name"]
     if 'rancher' in cloud_name.lower():
@@ -31,13 +34,13 @@ def deploy(deployment_infos):
         #     "dockerCompose": "",
         #     #"rancherCompose": "",
         #     "startOnCreate": ""
-        app_dict["name"] = tri_compose["name"]
+        app_dict["name"] = deployment_infos["package_id"]+deployment_infos["product_name"]+time.strftime("%Y%m%d%H%M%S", time.localtime())
         app_dict["system"] = settings.deploy_info["system"]
         app_dict["startOnCreate"]=settings.deploy_info["startOnCreate"]
         tri_docker=tri_compose["docker"]
         for server in tri_docker:
             tri_docker[server]["mem_limit"]=(deployment_infos["servers"][0]["memory"])*1024*1024
-            tri_docker[server]["cpu_quota"]=(deployment_infos["servers"][0]["cpu"])*24*2*100000/100
+            tri_docker[server]["cpu_quota"]=(deployment_infos["servers"][0]["cpu"])*24*2*100000//100
         #tri_rancher=x["rancher"]
         final_docker=yaml.dump(tri_docker)
         #final_rancher = yaml.dump(tri_rancher)
@@ -210,6 +213,7 @@ if __name__=='__main__':
     recived_dict={
         #"template_url":"C:/Users/admin/Documents/TriPanel/common/drivers/templates/tripanels-compose.yml",
         "product_name":"OsCommerce",
+        "package_id":"334556",
         "servers": [{
             "cloud_name": "Rancher",
             "cpu": 2,

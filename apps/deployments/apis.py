@@ -31,6 +31,7 @@ def _get_server_type_by_cloud(cloud):
 def _get_driver_deploy_parameter(deploy_infos):
     ret_infos = {}
     ret_infos['product_name'] = deploy_infos['product_name']
+    ret_infos['product_id'] = deploy_infos['product_id']
     ret_infos['servers'] = []
     for dict_server in deploy_infos['servers']:
         server = {}
@@ -95,6 +96,7 @@ def deploy(deploy_infos, callback, timeout_s, interval_s):
 {
     "client":client,
     "product_name":"Magento",
+    "package_id":2,
     "servers":[ {
         "cloud":cloud,
         "cpu": 2,
@@ -114,6 +116,7 @@ def deploy(deploy_infos, callback, timeout_s, interval_s):
 Driver Gateway deploy API input parameter:
 {
     "product_name":'Magento',
+    "package_id":2,
     "servers":[ {
         "cloud_name":cloud_name,
         "cpu": 2,
@@ -176,7 +179,7 @@ def retry_deploy(deploy_id, product_name):
 
 def _flaten_services_to_containers(service_dict):
     '''
-    details:[{stack_id, service_id, containers:[id,name,port,privateIP,state,host_id]}]
+    details:[{stack_id, service_id, containers:[container_id,name,port,privateIP,state,host_id]}]
     =>
     details:[{stack_id, service_id, container_id,container_name,port,privateIP,state,host_id}]
     '''
@@ -186,7 +189,7 @@ def _flaten_services_to_containers(service_dict):
             container = {}
             container['stack_id'] = service['stack_id']
             container['service_id'] = service['service_id']
-            container['container_id'] = c['id']
+            container['container_id'] = c['container_id']
             container['container_name'] = c['name']
             container['port'] = c['port']
             container['privateIP'] = c['privateIP']
@@ -230,7 +233,7 @@ def _get_deploy_state(cloud_name, deploy_id, timeout_s, interval_s):
     import traceback
     times = timeout_s // interval_s + 1
     try:
-        for _ in range(times):
+        for i in range(times):
             state = _get_deployment_state(cloud_name, deploy_id)
             if state['retcode'] == 0:
                 #success
@@ -251,20 +254,22 @@ def _get_deploy_state(cloud_name, deploy_id, timeout_s, interval_s):
                 with transaction.atomic():        
                     for real_server in real_servers:
                         real_server.save()
-                        
+                print('get deploy success')        
                 return {'retcode':DEPLOY_SUCCESS, 'deploy_id':deploy_id}
             
             elif state['retcode'] == 1:
                 #in progress
+                print('i am get deploy state ', i)
                 time.sleep(interval_s)
                 continue
             else:
                 #failed
+                print('get deploy failure')
                 return {'retcode':DEPLOY_FAILURE, 'deploy_id':deploy_id}
     except Exception as e:
         print('get_deploy_state occurs exceptions: ')
         print(e)
-        traceback.print_stack()
+        traceback.print_exc()
         return {'retcode':DEPLOY_FAILURE, 'deploy_id':deploy_id}
         
     

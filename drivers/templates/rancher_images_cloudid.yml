@@ -1,6 +1,6 @@
 
 Magento: 
-  - template_url: ../drivers/tripanel_composer/magento/tripanels-compose.yml
+  - template_url: tripanel_composer/magento/tripanels-compose.yml
     operating_system: Ubuntu 16.04
     database: MySQL 5.7
 
@@ -9,7 +9,7 @@ Magento:
     database: MySQL 5.5
     
 OpenCart:
-  - template_url: ../drivers/tripanel_composer/opencart/tripanels-compose.yml
+  - template_url: tripanel_composer/opencart/tripanels-compose.yml
     operating_system: Ubuntu 16.04
     database: MySQL 5.7
 
@@ -18,6 +18,6 @@ OpenCart:
     database: MySQL 5.5
 
 OsCommerce:
-  - template_url: ../drivers/tripanel_composer/osCommerce/tripanels-compose.yml
+  - template_url: tripanel_composer/osCommerce/tripanels-compose.yml
     operating_system: Ubuntu 16.04
     database: MySQL 5.7
