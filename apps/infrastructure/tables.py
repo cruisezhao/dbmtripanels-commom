@@ -108,3 +108,13 @@ class InterfaceRackTable(tables.Table):
         model = InterfaceRacks
         fields = ['pk','name', 'device', 'tag', 'type', 'status', 'description',
                   'has_rail', 'rail_model', 'unit_no']
+
+
+class InterfaceNetworkTable(tables.Table):
+    pk = ToggleColumn()
+    name = tables.LinkColumn("infras:interface_network", args=[A("uuid")])
+
+    class Meta:
+        model = InterfaceNetworks
+        fields = ['pk','name', 'device', 'tag', 'type', 'status', 'description',
+                  'speed', 'mac', 'port_model']

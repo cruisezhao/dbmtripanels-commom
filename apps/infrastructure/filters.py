@@ -77,3 +77,9 @@ class InterfaceRackFilter(django_filters.FilterSet):
     class Meta:
         model = InterfaceRacks
         fields = ['name', 'device']
+
+
+class InterfaceNetworkFilter(django_filters.FilterSet):
+    class Meta:
+        model = InterfaceNetworks
+        fields = ['name', 'device']

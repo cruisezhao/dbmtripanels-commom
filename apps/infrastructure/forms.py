@@ -176,3 +176,10 @@ class InterfaceRackForm(forms.ModelForm):
         fields = ['device', 'name', 'tag', 'type', 'status', 'description',
                   'has_rail', 'rail_model', 'unit_no']
 
+
+class InterfaceNetworkForm(forms.ModelForm):
+     class Meta:
+        model = InterfaceNetworks
+        fields = ['device', 'name', 'tag', 'type', 'status', 'description',
+                  'speed', 'mac', 'port_model']
+

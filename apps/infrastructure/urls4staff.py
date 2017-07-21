@@ -10,7 +10,8 @@ from  .view4staff import (RackListView, RackView, RackEditView,RackDeleteView,
                           DeviceFirewallListView, DeviceFirewallView, DeviceFirewallEditView,DeviceFirewallDeleteView,
                           DeviceBareListView,DeviceBareView,DeviceBareEditView,DeviceBareDeleteView,
                           DeviceMaintenanceListView,DeviceMaintenanceView,DeviceMaintenanceEditView,DeviceMaintenanceDeleteView,
-                          InterfaceRackListView, InterfaceRackView, InterfaceRackEditView,InterfaceRackDeleteView)
+                          InterfaceRackListView, InterfaceRackView, InterfaceRackEditView,InterfaceRackDeleteView,
+                          InterfaceNetworkListView, InterfaceNetworkView,InterfaceNetworkEditView,InterfaceNetworkDeleteView)
 
 
 urlpatterns = [
@@ -97,4 +98,11 @@ urlpatterns = [
     url(r'^interface-racks/add/$', InterfaceRackEditView.as_view(), name='interface_rack_add'),
     url(r'^interface-racks/(?P<uuid>[a-z\d+]{32})/edit/$', InterfaceRackEditView.as_view(), name='interface_rack_edit'),
     url(r'^interface-racks/(?P<uuid>[a-z\d+]{32})/delete/$', InterfaceRackDeleteView.as_view(), name='interface_rack_delete'),
+
+    #InterfaceNetworks
+    url(r'^interface-networks/$', InterfaceNetworkListView.as_view(), name='interface_network_list'),
+    url(r'^interface-networks/(?P<uuid>[a-z\d+]{32})/$', InterfaceNetworkView.as_view(), name='interface_network'),
+    url(r'^interface-networks/add/$', InterfaceNetworkEditView.as_view(), name='interface_network_add'),
+    url(r'^interface-networks/(?P<uuid>[a-z\d+]{32})/edit/$', InterfaceNetworkEditView.as_view(), name='interface_network_edit'),
+    url(r'^interface-networks/(?P<uuid>[a-z\d+]{32})/delete/$', InterfaceNetworkDeleteView.as_view(), name='interface_network_delete'),
 ]

@@ -345,3 +345,31 @@ class DeviceMaintenanceEditView(ObjectEditView):
 class DeviceMaintenanceDeleteView(ObjectDeleteView):
     model = DeviceMaintenances
     default_return_url = "infras:device_maintenance_list"
+
+
+class InterfaceNetworkListView(ObjectListView):
+    queryset = InterfaceNetworks.objects.all()
+    filter = filters.InterfaceNetworkFilter
+    filter_form = None
+    table = tables.InterfaceNetworkTable
+    template_name = "interfaces/interface_network_list.html"
+
+
+class InterfaceNetworkView(View):
+    def get(self,request,uuid):
+        network = get_object_or_404(InterfaceNetworks, uuid=uuid)
+        return render(request, "interfaces/interface_network.html",{
+            "object":network,
+        })
+
+
+class InterfaceNetworkEditView(ObjectEditView):
+    model = InterfaceNetworks
+    default_return_url = "infras:interface_network_list"
+    template_name = "interfaces/interface_network_edit.html"
+    form_class = forms.InterfaceNetworkForm
+
+
+class InterfaceNetworkDeleteView(ObjectDeleteView):
+    model = InterfaceNetworks
+    default_return_url = "infras:interface_network_list"
