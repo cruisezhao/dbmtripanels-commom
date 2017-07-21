@@ -31,6 +31,7 @@ def _get_server_type_by_cloud(cloud):
 def _get_driver_deploy_parameter(deploy_infos):
     ret_infos = {}
     ret_infos['product_name'] = deploy_infos['product_name']
+    ret_infos['product_id'] = deploy_infos['product_id']
     ret_infos['servers'] = []
     for dict_server in deploy_infos['servers']:
         server = {}
@@ -95,6 +96,7 @@ def deploy(deploy_infos, callback, timeout_s, interval_s):
 {
     "client":client,
     "product_name":"Magento",
+    "package_id":2,
     "servers":[ {
         "cloud":cloud,
         "cpu": 2,
@@ -114,6 +116,7 @@ def deploy(deploy_infos, callback, timeout_s, interval_s):
 Driver Gateway deploy API input parameter:
 {
     "product_name":'Magento',
+    "package_id":2,
     "servers":[ {
         "cloud_name":cloud_name,
         "cpu": 2,
@@ -251,7 +254,7 @@ def _get_deploy_state(cloud_name, deploy_id, timeout_s, interval_s):
                 with transaction.atomic():        
                     for real_server in real_servers:
                         real_server.save()
-                        
+                print('get deploy success')        
                 return {'retcode':DEPLOY_SUCCESS, 'deploy_id':deploy_id}
             
             elif state['retcode'] == 1:
@@ -261,6 +264,7 @@ def _get_deploy_state(cloud_name, deploy_id, timeout_s, interval_s):
                 continue
             else:
                 #failed
+                print('get deploy failure')
                 return {'retcode':DEPLOY_FAILURE, 'deploy_id':deploy_id}
     except Exception as e:
         print('get_deploy_state occurs exceptions: ')

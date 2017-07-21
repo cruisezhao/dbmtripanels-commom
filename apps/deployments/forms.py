@@ -76,6 +76,7 @@ class DeployForm(forms.Form):
                 server['server_configurations'] = ins.get_system_options()
                 servers.append(server)
             deploy_infos = {"product_name":self.package.get_product_name(),
+                            "package_id": self.package.id,
                             "servers":servers,
                             "answers":{}
                             }
