@@ -147,3 +147,32 @@ class DeviceBareForm(DeviceDateForm):
             'processor_model','no_of_processors','memory_chips','memory_size','motherboard_model',
             'chassis_model', 'power_supply_model', 'disk_size',
             'disk_description']
+
+
+class DeviceMaintenanceForm(DeviceDateForm):
+    start_time = forms.DateTimeField(
+        required=False,
+        label='Start Date',
+        widget=DateTimeWidget(
+            options={'format': 'yyyy-mm-dd',},
+            bootstrap_version=3),
+    )
+    end_time = forms.DateTimeField(
+        required=False,
+        label='End Date',
+        widget=DateTimeWidget(
+            options={'format': 'yyyy-mm-dd',},
+            bootstrap_version=3),
+    )
+    class Meta:
+        model = DeviceMaintenances
+        fields = ['device', 'user', 'start_time','end_time','task_subject','task_detail',
+            'total_minutes','status','notes']
+
+
+class InterfaceRackForm(forms.ModelForm):
+    class Meta:
+        model = InterfaceRacks
+        fields = ['device', 'name', 'tag', 'type', 'status', 'description',
+                  'has_rail', 'rail_model', 'unit_no']
+

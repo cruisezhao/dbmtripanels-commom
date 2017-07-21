@@ -1,0 +1,36 @@
+{% extends 'utilities/obj_edit.html' %}
+{% load form_helpers %}
+
+{% block form %}
+    <!-- common infomation -->
+    {% include "interfaces/_interface_common.html" %}
+    <!-- device specice attr -->
+    <div class="createProduct">
+            <div class="createProduct1">
+                <h4>Interface Rack</h4>
+                    <div class="panel panel-default">
+                        <!--<div class="panel-heading"><strong>{{ obj_type|capfirst }}</strong></div>-->
+                        <div class="panel-body">
+                            {% render_field form.has_rail %}
+                            {% render_field form.rail_model %}
+                            {% render_field form.unit_no %}
+                        </div>
+                    </div>
+
+            </div>
+        </div>
+    <!-- Description -->
+    <div class="createProduct">
+            <div class="createProduct1">
+                <h4>Description</h4>
+                    <div class="panel panel-default">
+                        <!--<div class="panel-heading"><strong>{{ obj_type|capfirst }}</strong></div>-->
+                        <div class="panel-body">
+                            {% render_field form.description %}
+                        </div>
+                    </div>
+
+            </div>
+        </div>
+{% endblock %}
+

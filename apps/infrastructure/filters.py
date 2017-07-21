@@ -63,3 +63,17 @@ class DeviceBareFilter(django_filters.FilterSet):
     class Meta:
         model = DeviceBares
         fields = ['name']
+
+
+class DeviceMaintenanceFilter(django_filters.FilterSet):
+
+    class Meta:
+        model = DeviceMaintenances
+        fields = ['user']
+
+
+class InterfaceRackFilter(django_filters.FilterSet):
+
+    class Meta:
+        model = InterfaceRacks
+        fields = ['name', 'device']

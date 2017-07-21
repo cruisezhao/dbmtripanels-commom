@@ -263,6 +263,7 @@ class DeviceBares(Devices):
 
 class DeviceMaintenances(CreatedUpdatedModel):
     """Device Maintenances"""
+    uuid = models.CharField(db_index=True, default=uuid_to_str, max_length=255, editable=False)
     device = models.ForeignKey(Devices)
     user = models.ForeignKey(Users)
     start_time = models.DateTimeField('Start Time', null=True, blank=True)
@@ -277,7 +278,7 @@ class DeviceMaintenances(CreatedUpdatedModel):
         db_table = "server_maintenances"
 
     def __str__(self):
-        return "{}-{}".format(self.user.name, self.device.name)
+        return "{}-{}".format(self.user.username, self.device.name)
 
 class Interfaces(CreatedUpdatedModel):
     uuid = models.CharField(db_index=True, default=uuid_to_str, max_length=255, editable=False)
