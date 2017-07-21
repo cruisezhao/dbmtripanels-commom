@@ -1,7 +1,7 @@
 import yaml
 from common.drivers.rancher import apis
 from common.drivers import settings
-
+import os
 
 def deploy(deployment_infos):
     '''
@@ -13,15 +13,18 @@ def deploy(deployment_infos):
         deploy_id
         deploy_id means stack id for Rancher;
     '''
-    
-    fr1=open("../drivers/templates/rancher_images_cloudid.yml",'r')
+    image_path = os.path.abspath(os.path.join(settings.BASE_DIR, "templates/rancher_images_cloudid.yml"))
+    print(image_path)
+    fr1=open(image_path,'r')
+    #fr1=open("../drivers/templates/rancher_images_cloudid.yml",'r')
     urls=yaml.load(fr1)[deployment_infos["product_name"]]
     URL=""
     for url in urls:
         if url["database"]==deployment_infos["servers"][0]["server_configurations"]["DataBase"] and url["operating_system"]==deployment_infos["servers"][0]["server_configurations"]["OS"]:
             URL=url["template_url"]
             break
-    fr2=open(URL,'r')
+    tri_composer_path = os.path.abspath(os.path.join(settings.BASE_DIR, URL))
+    fr2=open(tri_composer_path,'r')
     tri_compose=yaml.load(fr2)
     cloud_name=deployment_infos["servers"][0]["cloud_name"]
     if 'rancher' in cloud_name.lower():
@@ -35,8 +38,11 @@ def deploy(deployment_infos):
         app_dict["system"] = settings.deploy_info["system"]
         app_dict["startOnCreate"]=settings.deploy_info["startOnCreate"]
         tri_docker=tri_compose["docker"]
-        tri_docker["osCommerce3"]["mem_limit"]=(deployment_infos["servers"][0]["memory"])*1024*1024
-        tri_docker["osCommerce3"]["cpu_quota"]=(deployment_infos["servers"][0]["cpu"])*24*2*100000/100
+        product_name = deployment_infos["product_name"].lower()
+        tri_docker[product_name]["mem_limit"]=(deployment_infos["servers"][0]["memory"])*1024*1024
+        print(deployment_infos["servers"][0]["memory"])
+        print(tri_docker[product_name]["mem_limit"])
+        tri_docker[product_name]["cpu_quota"]=(deployment_infos["servers"][0]["cpu"])*24*2*100000//100
         #tri_rancher=x["rancher"]
         final_docker=yaml.dump(tri_docker)
         #final_rancher = yaml.dump(tri_rancher)

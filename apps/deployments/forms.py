@@ -29,7 +29,7 @@ class DeployForm(forms.Form):
             for (option_type, sys_options) in groups.items():
                 field_name = ins.uuid + '_' + option_type
                 self.fields[field_name] = forms.ChoiceField(
-                    choices=[(option.name, option.value) for option in sys_options ],
+                    choices=[(option.value, option.value) for option in sys_options ],
                     required=True,
                     
                 )
@@ -108,15 +108,16 @@ class DeployForm(forms.Form):
         avg_num_cpu = math.ceil(self.plan.cpu / ins_num)
         #memory unit is G in plan
         #memory uint is M in quotas
-        avg_num_memory = math.ceil(self.plan.memory * 1024 / ins_num)
+        memory = int(self.plan.memory) * 1024
+        avg_num_memory = math.ceil( memory / ins_num)
         avg_num_disk = math.ceil(self.plan.disk / ins_num)
         for i,ins in enumerate(deploy_instance_list):
             server = {}
             
             if (i == ins_num-1):
-                server['cpu'] = self.plan.cpu - avg_num_cpu * (ins_num-1)
-                server['memory'] = self.plan.memory - avg_num_memory * (ins_num-1)
-                server['disk'] = self.plan.disk - avg_num_disk * (ins_num-1)
+                server['cpu'] = int(self.plan.cpu) - avg_num_cpu * (ins_num-1)
+                server['memory'] = int(memory) - avg_num_memory * (ins_num-1)
+                server['disk'] = int(self.plan.disk) - avg_num_disk * (ins_num-1)
             else:
                 server['cpu'] = avg_num_cpu
                 server['memory'] = avg_num_memory
