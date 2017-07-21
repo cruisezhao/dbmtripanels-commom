@@ -83,3 +83,9 @@ class InterfaceNetworkFilter(django_filters.FilterSet):
     class Meta:
         model = InterfaceNetworks
         fields = ['name', 'device']
+
+
+class ConnectionFilter(django_filters.FilterSet):
+    class Meta:
+        model = Connections
+        fields = ['type', 'status']

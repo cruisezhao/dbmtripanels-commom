@@ -183,3 +183,9 @@ class InterfaceNetworkForm(forms.ModelForm):
         fields = ['device', 'name', 'tag', 'type', 'status', 'description',
                   'speed', 'mac', 'port_model']
 
+
+class ConnectionForm(forms.ModelForm):
+
+    class Meta:
+        model = Connections
+        fields = ['interface_a', 'interface_b', 'type', 'status', 'description']

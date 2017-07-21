@@ -1,0 +1,7 @@
+{% extends 'utilities/obj_detail.html' %}
+{% block button %}
+<div class="float_right" style="top: 0px;">
+	<a href="{% url 'infras:connection_edit' object.uuid%}" class="edit btn btn-primary"><i class="fa fa-pencil"></i> Edit</a>
+	<a href="{% url 'infras:connection_delete' uuid=object.uuid %}" class="delete btn btn-primary"><i class="fa fa-trash"></i> Delete</a>
+</div>
+{% endblock %}

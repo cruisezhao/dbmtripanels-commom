@@ -373,3 +373,31 @@ class InterfaceNetworkEditView(ObjectEditView):
 class InterfaceNetworkDeleteView(ObjectDeleteView):
     model = InterfaceNetworks
     default_return_url = "infras:interface_network_list"
+
+
+class ConnectionListView(ObjectListView):
+    queryset = Connections.objects.all()
+    filter = filters.ConnectionFilter
+    filter_form = None
+    table = tables.ConnectionTable
+    template_name = "interfaces/connection_list.html"
+
+
+class ConnectionView(View):
+    def get(self,request,uuid):
+        connection = get_object_or_404(Connections, uuid=uuid)
+        return render(request, "interfaces/connection.html",{
+            "object":connection,
+        })
+
+
+class ConnectionEditView(ObjectEditView):
+    model = Connections
+    default_return_url = "infras:connection_list"
+    form_class = forms.ConnectionForm
+    template_name = "interfaces/connection_edit.html"
+
+
+class ConnectionDeleteView(ObjectDeleteView):
+    model = Connections
+    default_return_url = "infras:connection_list"
