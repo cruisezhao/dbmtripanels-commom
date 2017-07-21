@@ -1,0 +1,35 @@
+{% extends 'utilities/obj_edit.html' %}
+{% load form_helpers %}
+
+{% block form %}
+    <!-- device specice attr -->
+    <div class="createProduct">
+            <div class="createProduct1">
+                <h4>Connection</h4>
+                    <div class="panel panel-default">
+                        <!--<div class="panel-heading"><strong>{{ obj_type|capfirst }}</strong></div>-->
+                        <div class="panel-body">
+                            {% render_field form.interface_a %}
+                            {% render_field form.interface_b %}
+                            {% render_field form.type %}
+                            {% render_field form.status %}
+                        </div>
+                    </div>
+
+            </div>
+        </div>
+    <!-- Description -->
+    <div class="createProduct">
+            <div class="createProduct1">
+                <h4>Description</h4>
+                    <div class="panel panel-default">
+                        <!--<div class="panel-heading"><strong>{{ obj_type|capfirst }}</strong></div>-->
+                        <div class="panel-body">
+                            {% render_field form.description %}
+                        </div>
+                    </div>
+
+            </div>
+        </div>
+{% endblock %}
+

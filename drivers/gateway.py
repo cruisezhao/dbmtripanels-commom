@@ -1,7 +1,7 @@
 import yaml
 from common.drivers.rancher import apis
 from common.drivers import settings
-import os
+import os,time
 
 def deploy(deployment_infos):
     '''
@@ -14,7 +14,7 @@ def deploy(deployment_infos):
         deploy_id means stack id for Rancher;
     '''
     image_path = os.path.abspath(os.path.join(settings.BASE_DIR, "templates/rancher_images_cloudid.yml"))
-    print(image_path)
+    #print(image_path)
     fr1=open(image_path,'r')
     #fr1=open("../drivers/templates/rancher_images_cloudid.yml",'r')
     urls=yaml.load(fr1)[deployment_infos["product_name"]]
@@ -34,7 +34,7 @@ def deploy(deployment_infos):
         #     "dockerCompose": "",
         #     #"rancherCompose": "",
         #     "startOnCreate": ""
-        app_dict["name"] = tri_compose["name"]
+        app_dict["name"] = deployment_infos["package_id"]+deployment_infos["product_name"]+time.strftime("%Y%m%d%H%M%S", time.localtime())
         app_dict["system"] = settings.deploy_info["system"]
         app_dict["startOnCreate"]=settings.deploy_info["startOnCreate"]
         tri_docker=tri_compose["docker"]
@@ -213,6 +213,7 @@ if __name__=='__main__':
     recived_dict={
         #"template_url":"C:/Users/admin/Documents/TriPanel/common/drivers/templates/tripanels-compose.yml",
         "product_name":"OsCommerce",
+        "package_id":"334556",
         "servers": [{
             "cloud_name": "Rancher",
             "cpu": 2,

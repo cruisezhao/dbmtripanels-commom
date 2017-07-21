@@ -1,0 +1,17 @@
+{% load form_helpers %}
+<div class="createProduct">
+            <div class="createProduct1">
+                <h4>Interface Information</h4>
+                    <div class="panel panel-default">
+                        <!--<div class="panel-heading"><strong>{{ obj_type|capfirst }}</strong></div>-->
+                        <div class="panel-body">
+                            {% render_field form.device %}
+                            {% render_field form.name %}
+                            {% render_field form.tag %}
+                            {% render_field form.type %}
+                            {% render_field form.status %}
+                        </div>
+                    </div>
+
+            </div>
+        </div>
