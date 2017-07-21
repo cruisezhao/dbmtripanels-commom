@@ -4,10 +4,10 @@
 {% block form %}
     <!-- commondity infomation -->
     {% include "racks/_device_common.html" %}
-    <!-- specific attr-->
+    <!-- device specice attr -->
     <div class="createProduct">
             <div class="createProduct1">
-                <h4>Rack</h4>
+                <h4>Power</h4>
                     <div class="panel panel-default">
                         <!--<div class="panel-heading"><strong>{{ obj_type|capfirst }}</strong></div>-->
                         <div class="panel-body">
@@ -15,14 +15,15 @@
                             {% render_field form.rack %}
                             {% render_field form.u_height %}
                             {% render_field form.status %}
-                            {% render_field form.total_electric_current %}
-                            {% render_field form.used_electric_current %}
-                            {% render_field form.ec_check_date %}
-                            {% render_field form.power_stripe_amount %}
-                            {% render_field form.total_band_width %}
-                            {% render_field form.used_band_width %}
-                            {% render_field form.bw_check_date %}
-                            {% render_field form.up_router_ip %}
+
+                            {% comment %}
+                                difference between device
+                            {% endcomment %}
+
+                            {% render_field form.account %}
+                            {% render_field form.password %}
+                            {% render_field form.mgmt_ip %}
+                            {% render_field form.port_amount %}
                         </div>
                     </div>
 
@@ -36,19 +37,6 @@
                         <!--<div class="panel-heading"><strong>{{ obj_type|capfirst }}</strong></div>-->
                         <div class="panel-body">
                             {% render_field form.comments %}
-                        </div>
-                    </div>
-
-            </div>
-        </div>
-    <!-- location-->
-    <div class="createProduct">
-            <div class="createProduct1">
-                <h4>Location</h4>
-                    <div class="panel panel-default">
-                        <!--<div class="panel-heading"><strong>{{ obj_type|capfirst }}</strong></div>-->
-                        <div class="panel-body">
-                            {% render_field form.location %}
                         </div>
                     </div>
 

@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% load helpers %}
+
+{% block content %}
+	<div class="row-fluid" id="content_wrapper">
+		{% include 'inc/search_panel.html' %}
+
+		<div class="float_right">
+            {% if messages %}
+            {% for message in messages %}
+            <p{% if message.tags %} class="{{ message.tags }} warning-txt" {% endif %} >{{ message }}</p>
+            {% endfor %}{% endif %}
+            {% if perms %}
+                <a href="{% url 'infras:data_center_add'%}" class="btn btn-primary">
+                    <span class="fa fa-plus" aria-hidden="true"></span>
+                    Create a Data Center
+                </a>
+            {% endif %}
+        </div>
+        <div class="span10" id="content_wrapper1">
+            <p>DataCenter Lists</p>
+            <div class="Ttable">
+		     {% include 'utilities/obj_table.html' %}
+            </div>
+        </div>
+	</div>
+
+{% endblock %}

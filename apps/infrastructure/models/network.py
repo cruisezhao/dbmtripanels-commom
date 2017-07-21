@@ -67,6 +67,7 @@ CONNECTION_STATUS = (
 
 class Vendors(CreatedUpdatedModel):
     """Vendors"""
+    uuid = models.CharField(db_index=True, default=uuid_to_str, max_length=255, editable=False)
     name = models.CharField(max_length=32)
     type = models.CharField(max_length=32, choices=VENDOR_TYPE)
     description = models.CharField(max_length=32)
@@ -76,8 +77,13 @@ class Vendors(CreatedUpdatedModel):
     class Meta:
         db_table = "vendors"
 
+    def __str__(self):
+        return self.name
+
+
 class DataCenters(CreatedUpdatedModel):
     """Data Centers"""
+    uuid = models.CharField(db_index=True, default=uuid_to_str, max_length=255, editable=False)
     name = models.CharField(max_length=32)
     tag = models.CharField(max_length=32)
     address = models.CharField(max_length=32)
@@ -96,9 +102,14 @@ class DataCenters(CreatedUpdatedModel):
     class Meta:
         db_table = "data_centers"
 
+    def __str__(self):
+        return self.name
+
+
 class Devices(CreatedUpdatedModel):
     """Devices"""
     uuid = models.CharField(db_index=True, default=uuid_to_str, max_length=255, editable=False)
+    data_center = models.ForeignKey(DataCenters, models.SET_NULL, null=True, blank=True)
     name = models.CharField(max_length=64)
     type = models.CharField(max_length=32, choices=DEVICE_TYPE)
     manufacturer = models.ForeignKey(Vendors, models.SET_NULL, related_name='manufacturer_device', null=True, blank=True)
@@ -124,9 +135,11 @@ class Devices(CreatedUpdatedModel):
         #     ['data_center', 'tag'],
         # ]
 
+    def __str__(self):
+        return self.name
+
 class DeviceRacks(Devices):
     """Racks"""
-    data_center = models.ForeignKey(DataCenters, models.SET_NULL, null=True, blank=True)
     #desc_units = models.BooleanField(default=False, verbose_name='Descending units',help_text='Units are numbered top-to-bottom')
     location = models.TextField(blank=True, help_text='How to find the rack in data center.')
     total_electric_current = models.CharField(max_length=64)
@@ -141,6 +154,9 @@ class DeviceRacks(Devices):
     class Meta:
         db_table = "device_racks"
 
+    def __str__(self):
+        return self.name
+
 class DevicePowers(Devices):
     """Power Devices"""
     outlet_amount = models.PositiveSmallIntegerField(verbose_name='Power Outlet Amount', null=True, blank=True)
@@ -150,6 +166,9 @@ class DevicePowers(Devices):
     class Meta:
         db_table = "device_powers"
 
+    def __str__(self):
+        return self.name
+
 class DeviceDrives(Devices):
     """Drives"""
     disk_size = models.CharField(max_length=64)
@@ -157,6 +176,9 @@ class DeviceDrives(Devices):
 
     class Meta:
         db_table = "device_drives"
+
+    def __str__(self):
+        return self.name
 
 class DeviceKVMs(Devices):
     """KVMs"""
@@ -167,6 +189,9 @@ class DeviceKVMs(Devices):
 
     class Meta:
         db_table = "device_kvms"
+
+    def __str__(self):
+        return self.name
 
 class DeviceRouters(Devices):
     """Routers"""
@@ -179,6 +204,9 @@ class DeviceRouters(Devices):
     class Meta:
         db_table = "device_routers"
 
+    def __str__(self):
+        return self.name
+
 class DeviceSwitches(Devices):
     """Switches"""
     account = models.CharField(max_length=128)
@@ -189,6 +217,9 @@ class DeviceSwitches(Devices):
 
     class Meta:
         db_table = "device_switches"
+
+    def __str__(self):
+        return self.name
 
 class DeviceFirewalls(Devices):
     """Firewalls"""
@@ -203,6 +234,9 @@ class DeviceFirewalls(Devices):
 
     class Meta:
         db_table = "device_firewalls"
+
+    def __str__(self):
+        return self.name
 
 class DeviceBares(Devices):
     """Bare Metals"""
@@ -224,6 +258,9 @@ class DeviceBares(Devices):
     class Meta:
         db_table = "device_bares"
 
+    def __str__(self):
+        return self.name
+
 class DeviceMaintenances(CreatedUpdatedModel):
     """Device Maintenances"""
     device = models.ForeignKey(Devices)
@@ -239,6 +276,9 @@ class DeviceMaintenances(CreatedUpdatedModel):
     class Meta:
         db_table = "server_maintenances"
 
+    def __str__(self):
+        return "{}-{}".format(self.user.name, self.device.name)
+
 class Interfaces(CreatedUpdatedModel):
     uuid = models.CharField(db_index=True, default=uuid_to_str, max_length=255, editable=False)
     device = models.ForeignKey(Devices, related_name='interfaces', on_delete=models.CASCADE)
@@ -251,7 +291,10 @@ class Interfaces(CreatedUpdatedModel):
     class Meta:
         db_table = "interfaces"
 
-class RackInterfaces(Interfaces):
+    def __str__(self):
+        return self.name
+
+class InterfaceRacks(Interfaces):
     has_rail = models.NullBooleanField()
     rail_model = models.CharField(max_length=255)
     unit_no = models.PositiveSmallIntegerField(null=True, blank=True)
@@ -259,13 +302,19 @@ class RackInterfaces(Interfaces):
     class Meta:
         db_table = "racks_interfaces"
 
-class NetworkInterfaces(Interfaces):
+    def __str__(self):
+        return self.name
+
+class InterfaceNetworks(Interfaces):
     speed = models.CharField(max_length=64)
     mac = models.CharField(max_length=128, null=True, blank=True, verbose_name='MAC Address')
     port_model = models.CharField(max_length=128)
 
     class Meta:
         db_table = "network_interfaces"
+
+    def __str__(self):
+        return self.name
 
 class Connections(CreatedUpdatedModel):
     interface_a = models.ForeignKey(Interfaces, related_name='interface_a', on_delete=models.SET_NULL, blank=True, null=True)
@@ -277,6 +326,8 @@ class Connections(CreatedUpdatedModel):
     class Meta:
         db_table = "connections"
 
+    def __str__(self):
+        return "{}-{}-{}".format(self.type,self.interface_a.name,self.interface_b.name)
 
 
 
