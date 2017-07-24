@@ -290,3 +290,114 @@ class DeviceBareEditView(ObjectEditView):
 class DeviceBareDeleteView(ObjectDeleteView):
     model = DeviceBares
     default_return_url = "infras:bare_list"
+
+
+class DeviceMaintenanceListView(ObjectListView):
+    queryset = DeviceMaintenances.objects.all()
+    filter = filters.DeviceMaintenanceFilter
+    filter_form = None
+    table = tables.DeviceMaintenanceTable
+    template_name = "maintenances/maintenace_list.html"
+
+
+class DeviceMaintenanceView(View):
+    def get(self,request,uuid):
+        maintenace = get_object_or_404(DeviceMaintenances, uuid=uuid)
+        return render(request, "maintenances/maintenace.html",{
+            "object":maintenace,
+        })
+
+
+class InterfaceRackListView(ObjectListView):
+    queryset = InterfaceRacks.objects.all()
+    filter = filters.InterfaceRackFilter
+    filter_form = None
+    table = tables.InterfaceRackTable
+    template_name = "interfaces/interface_rack_list.html"
+
+
+class InterfaceRackView(View):
+    def get(self,request,uuid):
+        Irack = get_object_or_404(InterfaceRacks, uuid=uuid)
+        return render(request, "interfaces/interface_rack.html",{
+            "object":Irack,
+        })
+
+
+class InterfaceRackEditView(ObjectEditView):
+    model = InterfaceRacks
+    default_return_url = "infras:interface_rack_list"
+    form_class = forms.InterfaceRackForm
+    template_name = "interfaces/interface_rack_edit.html"
+
+
+class InterfaceRackDeleteView(ObjectDeleteView):
+    model = InterfaceRacks
+    default_return_url = "infras:interface_rack_list"
+
+class DeviceMaintenanceEditView(ObjectEditView):
+    model = DeviceMaintenances
+    default_return_url = "infras:device_maintenance_list"
+    form_class = forms.DeviceMaintenanceForm
+    template_name = "maintenances/maintenace_edit.html"
+
+
+class DeviceMaintenanceDeleteView(ObjectDeleteView):
+    model = DeviceMaintenances
+    default_return_url = "infras:device_maintenance_list"
+
+
+class InterfaceNetworkListView(ObjectListView):
+    queryset = InterfaceNetworks.objects.all()
+    filter = filters.InterfaceNetworkFilter
+    filter_form = None
+    table = tables.InterfaceNetworkTable
+    template_name = "interfaces/interface_network_list.html"
+
+
+class InterfaceNetworkView(View):
+    def get(self,request,uuid):
+        network = get_object_or_404(InterfaceNetworks, uuid=uuid)
+        return render(request, "interfaces/interface_network.html",{
+            "object":network,
+        })
+
+
+class InterfaceNetworkEditView(ObjectEditView):
+    model = InterfaceNetworks
+    default_return_url = "infras:interface_network_list"
+    template_name = "interfaces/interface_network_edit.html"
+    form_class = forms.InterfaceNetworkForm
+
+
+class InterfaceNetworkDeleteView(ObjectDeleteView):
+    model = InterfaceNetworks
+    default_return_url = "infras:interface_network_list"
+
+
+class ConnectionListView(ObjectListView):
+    queryset = Connections.objects.all()
+    filter = filters.ConnectionFilter
+    filter_form = None
+    table = tables.ConnectionTable
+    template_name = "interfaces/connection_list.html"
+
+
+class ConnectionView(View):
+    def get(self,request,uuid):
+        connection = get_object_or_404(Connections, uuid=uuid)
+        return render(request, "interfaces/connection.html",{
+            "object":connection,
+        })
+
+
+class ConnectionEditView(ObjectEditView):
+    model = Connections
+    default_return_url = "infras:connection_list"
+    form_class = forms.ConnectionForm
+    template_name = "interfaces/connection_edit.html"
+
+
+class ConnectionDeleteView(ObjectDeleteView):
+    model = Connections
+    default_return_url = "infras:connection_list"

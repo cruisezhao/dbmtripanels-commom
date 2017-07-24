@@ -8,7 +8,11 @@ from  .view4staff import (RackListView, RackView, RackEditView,RackDeleteView,
                           DeviceRouterList,DeviceRouterView,DeviceRouterEditView,DeviceRouterDeleteView,
                           DeviceSwitcheListView,DeviceSwitcheView,DeviceSwitcheEditView,DeviceSwitcheDeleteView,
                           DeviceFirewallListView, DeviceFirewallView, DeviceFirewallEditView,DeviceFirewallDeleteView,
-                          DeviceBareListView,DeviceBareView,DeviceBareEditView,DeviceBareDeleteView)
+                          DeviceBareListView,DeviceBareView,DeviceBareEditView,DeviceBareDeleteView,
+                          DeviceMaintenanceListView,DeviceMaintenanceView,DeviceMaintenanceEditView,DeviceMaintenanceDeleteView,
+                          InterfaceRackListView, InterfaceRackView, InterfaceRackEditView,InterfaceRackDeleteView,
+                          InterfaceNetworkListView, InterfaceNetworkView,InterfaceNetworkEditView,InterfaceNetworkDeleteView,
+                          ConnectionListView, ConnectionView, ConnectionEditView, ConnectionDeleteView)
 
 
 urlpatterns = [
@@ -81,4 +85,32 @@ urlpatterns = [
     url(r'^bares/add/$', DeviceBareEditView.as_view(), name='bare_add'),
     url(r'^bares/(?P<uuid>[a-z\d+]{32})/edit/$', DeviceBareEditView.as_view(), name='bare_edit'),
     url(r'^bares/(?P<uuid>[a-z\d+]{32})/delete/$', DeviceBareDeleteView.as_view(), name='bare_delete'),
+
+    #DeviceMaintenances
+    url(r'^device-maintenances/$', DeviceMaintenanceListView.as_view(), name='device_maintenance_list'),
+    url(r'^device-maintenances/(?P<uuid>[a-z\d+]{32})/$', DeviceMaintenanceView.as_view(), name='device_maintenance'),
+    url(r'^device-maintenances/add/$', DeviceMaintenanceEditView.as_view(), name='device_maintenance_add'),
+    url(r'^device-maintenances/(?P<uuid>[a-z\d+]{32})/edit/$', DeviceMaintenanceEditView.as_view(), name='device_maintenance_edit'),
+    url(r'^device-maintenances/(?P<uuid>[a-z\d+]{32})/delete/$', DeviceMaintenanceDeleteView.as_view(), name='device_maintenance_delete'),
+
+    #InterfaceRacks
+    url(r'^interface-racks/$', InterfaceRackListView.as_view(), name='interface_rack_list'),
+    url(r'^interface-racks/(?P<uuid>[a-z\d+]{32})/$', InterfaceRackView.as_view(), name='interface_rack'),
+    url(r'^interface-racks/add/$', InterfaceRackEditView.as_view(), name='interface_rack_add'),
+    url(r'^interface-racks/(?P<uuid>[a-z\d+]{32})/edit/$', InterfaceRackEditView.as_view(), name='interface_rack_edit'),
+    url(r'^interface-racks/(?P<uuid>[a-z\d+]{32})/delete/$', InterfaceRackDeleteView.as_view(), name='interface_rack_delete'),
+
+    #InterfaceNetworks
+    url(r'^interface-networks/$', InterfaceNetworkListView.as_view(), name='interface_network_list'),
+    url(r'^interface-networks/(?P<uuid>[a-z\d+]{32})/$', InterfaceNetworkView.as_view(), name='interface_network'),
+    url(r'^interface-networks/add/$', InterfaceNetworkEditView.as_view(), name='interface_network_add'),
+    url(r'^interface-networks/(?P<uuid>[a-z\d+]{32})/edit/$', InterfaceNetworkEditView.as_view(), name='interface_network_edit'),
+    url(r'^interface-networks/(?P<uuid>[a-z\d+]{32})/delete/$', InterfaceNetworkDeleteView.as_view(), name='interface_network_delete'),
+
+    #Connections
+    url(r'^connections/$', ConnectionListView.as_view(), name='connection_list'),
+    url(r'^connections/(?P<uuid>[a-z\d+]{32})/$', ConnectionView.as_view(), name='connection'),
+    url(r'^connections/add/$', ConnectionEditView.as_view(), name='connection_add'),
+    url(r'^connections/(?P<uuid>[a-z\d+]{32})/edit/$', ConnectionEditView.as_view(), name='connection_edit'),
+    url(r'^connections/(?P<uuid>[a-z\d+]{32})/delete/$', ConnectionDeleteView.as_view(), name='connection_delete'),
 ]

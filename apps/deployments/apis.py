@@ -31,7 +31,7 @@ def _get_server_type_by_cloud(cloud):
 def _get_driver_deploy_parameter(deploy_infos):
     ret_infos = {}
     ret_infos['product_name'] = deploy_infos['product_name']
-    ret_infos['product_id'] = deploy_infos['product_id']
+    ret_infos['package_id'] = deploy_infos['package_id']
     ret_infos['servers'] = []
     for dict_server in deploy_infos['servers']:
         server = {}
@@ -204,7 +204,7 @@ def _flaten_services_to_containers(service_dict):
 # host_id = '9999'
 def _get_deployment_details(cloud_name, deploy_id):
     '''
-    {cloud_name, details:[{stack_id, service_id, containers:[id,name,port,privateIP,state,host_id]}]}
+    {cloud_name, details:[{stack_id, service_id, containers:[container_id,name,port,privateIP,state,host_id]}]}
     '''
 #     global stack_id, service_id,container_id,host_id
 #     import random

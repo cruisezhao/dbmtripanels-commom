@@ -1,0 +1,40 @@
+{% extends 'utilities/obj_edit.html' %}
+{% load form_helpers %}
+
+{% block form %}
+    <!-- device specice attr -->
+    <div class="createProduct">
+            <div class="createProduct1">
+                <h4>Maintenace</h4>
+                    <div class="panel panel-default">
+                        <!--<div class="panel-heading"><strong>{{ obj_type|capfirst }}</strong></div>-->
+                        <div class="panel-body">
+                            {% render_field form.device %}
+                            {% render_field form.user %}
+                            {% render_field form.start_time %}
+                            {% render_field form.end_time %}
+                            {% render_field form.task_subject %}
+                            {% render_field form.task_detail %}
+                            {% render_field form.total_minutes %}
+                            {% render_field form.status %}
+                            {% render_field form.notes %}
+                        </div>
+                    </div>
+
+            </div>
+        </div>
+    <!-- comment -->
+    <div class="createProduct">
+            <div class="createProduct1">
+                <h4>Comment</h4>
+                    <div class="panel panel-default">
+                        <!--<div class="panel-heading"><strong>{{ obj_type|capfirst }}</strong></div>-->
+                        <div class="panel-body">
+                            {% render_field form.comments %}
+                        </div>
+                    </div>
+
+            </div>
+        </div>
+{% endblock %}
+

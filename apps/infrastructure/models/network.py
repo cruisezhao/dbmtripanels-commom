@@ -263,6 +263,7 @@ class DeviceBares(Devices):
 
 class DeviceMaintenances(CreatedUpdatedModel):
     """Device Maintenances"""
+    uuid = models.CharField(db_index=True, default=uuid_to_str, max_length=255, editable=False)
     device = models.ForeignKey(Devices)
     user = models.ForeignKey(Users)
     start_time = models.DateTimeField('Start Time', null=True, blank=True)
@@ -277,7 +278,7 @@ class DeviceMaintenances(CreatedUpdatedModel):
         db_table = "server_maintenances"
 
     def __str__(self):
-        return "{}-{}".format(self.user.name, self.device.name)
+        return "{}-{}".format(self.user.username, self.device.name)
 
 class Interfaces(CreatedUpdatedModel):
     uuid = models.CharField(db_index=True, default=uuid_to_str, max_length=255, editable=False)
@@ -317,6 +318,7 @@ class InterfaceNetworks(Interfaces):
         return self.name
 
 class Connections(CreatedUpdatedModel):
+    uuid = models.CharField(db_index=True, default=uuid_to_str, max_length=255, editable=False)
     interface_a = models.ForeignKey(Interfaces, related_name='interface_a', on_delete=models.SET_NULL, blank=True, null=True)
     interface_b = models.ForeignKey(Interfaces, related_name='interface_b', on_delete=models.SET_NULL, blank=True, null=True)
     type = models.CharField(max_length=32, choices=CONNECTION_TYPE)
@@ -327,7 +329,10 @@ class Connections(CreatedUpdatedModel):
         db_table = "connections"
 
     def __str__(self):
-        return "{}-{}-{}".format(self.type,self.interface_a.name,self.interface_b.name)
+        if self.interface_a or self.interface_b:
+            return "{}-{}-{}".format(self.type,self.interface_a.name,self.interface_b.name)
+        else:
+            return self.type
 
 
 

@@ -88,3 +88,42 @@ class DeviceBareTable(tables.Table):
         model = DeviceFirewalls
         fields = ['pk','name','account', 'password', 'mgmt_ip','os_version', 'port_amount',
                   'processor_model','no_of_processors','memory_chips','memory_size','motherboard_model',]
+
+
+class DeviceMaintenanceTable(tables.Table):
+    pk = ToggleColumn()
+    id = tables.LinkColumn("infras:device_maintenance", args=[A("uuid")])
+
+    class Meta:
+        model = DeviceMaintenances
+        fields = ['pk','id','device', 'user', 'start_time','end_time',
+                  'task_subject','task_detail','total_minutes','status','notes']
+
+
+class InterfaceRackTable(tables.Table):
+    pk = ToggleColumn()
+    name = tables.LinkColumn("infras:interface_rack", args=[A("uuid")])
+
+    class Meta:
+        model = InterfaceRacks
+        fields = ['pk','name', 'device', 'tag', 'type', 'status', 'description',
+                  'has_rail', 'rail_model', 'unit_no']
+
+
+class InterfaceNetworkTable(tables.Table):
+    pk = ToggleColumn()
+    name = tables.LinkColumn("infras:interface_network", args=[A("uuid")])
+
+    class Meta:
+        model = InterfaceNetworks
+        fields = ['pk','name', 'device', 'tag', 'type', 'status', 'description',
+                  'speed', 'mac', 'port_model']
+
+
+class ConnectionTable(tables.Table):
+    pk = ToggleColumn()
+    type = tables.LinkColumn("infras:connection", args=[A("uuid")])
+
+    class Meta:
+        model = Connections
+        fields = ['pk','interface_a', 'interface_b', 'type', 'status', 'description']
