@@ -34,7 +34,7 @@ def deploy(deployment_infos):
         #     "dockerCompose": "",
         #     #"rancherCompose": "",
         #     "startOnCreate": ""
-        app_dict["name"] = deployment_infos["package_id"]+deployment_infos["product_name"]+time.strftime("%Y%m%d%H%M%S", time.localtime())
+        app_dict["name"] = str(deployment_infos["package_id"])+deployment_infos["product_name"]+time.strftime("%Y%m%d%H%M%S", time.localtime())
         app_dict["system"] = settings.deploy_info["system"]
         app_dict["startOnCreate"]=settings.deploy_info["startOnCreate"]
         tri_docker=tri_compose["docker"]
@@ -207,7 +207,7 @@ def get_server_state(cloud_name, server_id):
         state: current state, values can be:'Active','Deactive'
     '''
     if 'rancher' in cloud_name.lower():
-            current_state=apis.service_state(settings.enviroment_info[cloud_name],server_id)
+        current_state=apis.service_state(settings.enviroment_info[cloud_name],server_id)
     return current_state
 if __name__=='__main__':
     recived_dict={

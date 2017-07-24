@@ -174,6 +174,22 @@ Driver Gateway deploy API input parameter:
     
     return deploy_id
 
+
+def start(server):
+    cloud_name = server.cloud.name.lower()
+    if 'rancher' in cloud_name:
+        #rancher support only starting service, don't support starting container
+        service_id = server.servercontainers.service_id
+        gateway.start(cloud_name, service_id) 
+         #start a thread to query deploy state
+         
+    exe = DeployExecutorManager.get_executor()
+    future = exe.submit(_get_server_state, driver_deploy_infos['servers'][0]['cloud_name'], deploy_id, timeout_s, interval_s)
+    future.add_done_callback(callback) 
+    
+def _get_server_state():
+    pass
+        
 def retry_deploy(deploy_id, product_name):
     servers = Servers.objects.filter(deploy_id = deploy_id)
 
