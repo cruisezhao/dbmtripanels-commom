@@ -1,4 +1,11 @@
 {% load helpers %}
+<div class="col-xs-12">
+				<div class="box">
+		            <div class="box-header with-border">
+		              <h3 class="box-title">Bordered Table</h3>
+		            </div>
+		            <!-- /.box-header -->
+		            <div class="box-body">
 {% if perms %}
     <form method="post">
         {% csrf_token %}
@@ -31,12 +38,12 @@
         {% block extra_actions %}{% endblock %}
         <div class="operateMany" >
         {% if bulk_edit_url and perms %}
-            <button type="submit" name="_edit" formaction="{% url bulk_edit_url %}{% if request.GET %}?{{ request.GET.urlencode }}{% endif %}" class="edit">
+            <button type="submit" name="_edit" formaction="{% url bulk_edit_url %}{% if request.GET %}?{{ request.GET.urlencode }}{% endif %}" class="btn btn-success">
                 <i class="fa fa-pencil"></i> Edit Selected
             </button>
         {% endif %}
         {% if bulk_delete_url and perms %}
-            <button type="submit" name="_delete" formaction="{% url bulk_delete_url %}{% if request.GET %}?{{ request.GET.urlencode }}{% endif %}" class="delete">
+            <button type="submit" name="_delete" formaction="{% url bulk_delete_url %}{% if request.GET %}?{{ request.GET.urlencode }}{% endif %}" class="btn btn-danger">
                 <i class="fa fa-trash"></i> Delete Selected
             </button>
         {% endif %}
@@ -45,4 +52,6 @@
 {% else %}
     {% include table_template|default:'responsive_table.html' %}
 {% endif %}
-<div class="clearfix"></div>
+    </div>
+ </div>
+</div>

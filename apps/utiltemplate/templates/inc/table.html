@@ -1,7 +1,7 @@
 {% load django_tables2 %}
 
 
-        <table>
+    <table {{ table.attrs.as_html }}>
     {% if table.show_header %}
         <thead>
             <tr>
