@@ -295,6 +295,18 @@ def add_ip(primary_ip,user,host_pwd,new_ip):
         else:
             return "The ip "+new_ip+" is NOT working on this host"
 
+def delete_install_folder(host_ip,stack_name):
+    ssh = paramiko.SSHClient()
+    ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
+    ssh.connect(hostname=host_ip, port=22, username='root', password='Data8ase-mart')
+    cmd = "rm -fr /var/lib/docker/volumes/"+ stack_name +"_web/_data/install && echo $?"
+    stdin, stdout, stderr = ssh.exec_command(cmd)
+    err = str(stderr.read())
+    stdout = str(stdout.read())
+    if len(stdout) != 0:
+        return (stdout)
+    else:
+        return (stdout)
 #Add scheduler ip to rancher
 def add_scheduler_ip(env_id,host_id,scheduler_ip):
     url = Rancher_Url +"/v2-beta/projects/" + env_id + "/hosts/" + host_id
@@ -313,4 +325,3 @@ def add_scheduler_ip(env_id,host_id,scheduler_ip):
     dic = req.json()
     state = dic["state"]
     return  state
-# start_service("1a5","1st130")

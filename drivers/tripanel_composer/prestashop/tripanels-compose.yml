@@ -42,7 +42,8 @@ docker:
     ports:
       - 80:80
     labels:
-      - app_plan=Basic
+      app_plan: Basic
+      io.rancher.scheduler.affinity:host_label: Rack=AH05-Linux-Host01
     volumes:
       - prestashop_db:/var/lib/mysql
       - prestashop_web:/var/www/html
