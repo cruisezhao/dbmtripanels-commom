@@ -1,13 +1,13 @@
 {% load helpers %}
 
-<div class="pageControl">
+<div class="paginator pull-right">
 
 
     {% if paginator.num_pages > 1 %}
         <nav>
-            <ol>
+            <ul class="pagination pull-right">
                 {% if page.has_previous %}
-                    <li><a href="{% querystring request page=page.previous_page_number %}"><i class="lastPage"></i></a></li>
+                    <li><a href="{% querystring request page=page.previous_page_number %}"><i class="fa fa-angle-double-left"></i></a></li>
                 {% endif %}
                 {% for p in page.smart_pages %}
                     {% if p %}
@@ -17,9 +17,9 @@
                     {% endif %}
                 {% endfor %}
                 {% if page.has_next %}
-                    <li><a href="{% querystring request page=page.next_page_number %}"><i class="nextPage"></i></a></li>
+                    <li><a href="{% querystring request page=page.next_page_number %}"><i class="fa fa-angle-double-right"></i></a></li>
                 {% endif %}
-            </ol>
+            </ul>
         </nav>
     {% endif %}
 

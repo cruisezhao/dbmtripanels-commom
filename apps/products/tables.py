@@ -37,3 +37,6 @@ class PlanTable(tables.Table):
         model = Plans
         fields = ('pk','id','name','cpu','memory','disk','instance', 'price',
                   'created','last_updated')
+        attrs={
+                "class": "table table-bordered table-hover dataTable",
+            }
