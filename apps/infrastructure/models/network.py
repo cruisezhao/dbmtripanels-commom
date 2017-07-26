@@ -2,77 +2,39 @@ from django.db import models
 from .util import CreatedUpdatedModel
 from common.utilities.utils import uuid_to_str
 from common.apps.users.models import Users
+from phonenumber_field.modelfields import PhoneNumberField
 
-VENDOR_TYPE = (
-    ('manufacturer','manufacturer'),
-    ('seller', 'seller'),
-    ('product_vendor', 'product_vendor'),
-    ('cloud_provider', 'cloud_provider'),
-)
-
-VENDOR_STATUS = (
-    ('USED','used'),
-    ('UNUSED', 'unused'),
-)
-
-DEVICE_TYPE = (
-    ('RACK','rack'),
-    ('POWER', 'power'),
-    ('DRIVE', 'drive'),
-    ('KVM','kvm'),
-    ('ROUTER', 'router'),
-    ('SWITCH', 'switch'),
-    ('FIREWALL', 'firewall'),
-    ('BAREMETAL', 'baremetal'),
-)
-
-DEVICE_TYPE = (
-    ('POWERON','on'),
-    ('POWEROFF', 'off'),
-)
-
-INTERFACE_TYPE = (
-    ('RAIL','rail'),
-    ('POWER_OUTLET', 'power_outlet'),
-    ('NETWORK', 'network'),
-    ('CONSOLE', 'console'),
-    ('USB', 'usb'),
-)
-
-INTERFACE_STATUS = (
-    ('ENABLED','enabled'),
-    ('DISABLE', 'disable'),
-    ('INVALID', 'invalid'),
-    ('ACTIVE', 'active'),
-)
-
-MAINTENANCE_STATUS = (
-    ('IN_PROCESS','in_process'),
-    ('HANG_UP', 'hang_up'),
-    ('FINISHED', 'finished'),
-)
-
-CONNECTION_TYPE = (
-    ('RAIL','rail'),
-    ('POWER_OUTLET', 'power_outlet'),
-    ('NETWORK', 'network'),
-    ('CONSOLE', 'console'),
-    ('USB', 'usb'),
-)
-
-CONNECTION_STATUS = (
-    ('ENABLED','enabled'),
-    ('DISABLE', 'disable'),
-)
 
 class Vendors(CreatedUpdatedModel):
     """Vendors"""
-    uuid = models.CharField(db_index=True, default=uuid_to_str, max_length=255, editable=False)
-    name = models.CharField(max_length=32)
+    VENDOR_TYPE = (
+        ('Manufacturer', 'Manufacturer'),
+        ('Seller', 'Seller'),
+        ('ProductVendor', 'ProductVendor'),
+        ('CloudProvider', 'CloudProvider'),
+    )
+
+    VENDOR_STATUS = (
+        ('Active', 'Active'),
+        ('Deprecated', 'Deprecated'),
+    )
+
     type = models.CharField(max_length=32, choices=VENDOR_TYPE)
-    description = models.CharField(max_length=32)
-    website = models.CharField(max_length=64)
+    name = models.CharField(max_length=256,null=True,blank=True)
+    description = models.TextField(blank=True)
+    website = models.CharField(max_length=128,null=True,blank=True)
+    address = models.CharField(max_length=256,null=True,blank=True)
+    city = models.CharField(max_length=32,null=True,blank=True)
+    state = models.CharField(max_length=32,null=True,blank=True)
+    country = models.CharField(max_length=32,null=True,blank=True)
+    zip = models.CharField(max_length=32,null=True,blank=True)
+    phone = PhoneNumberField('Phone Number',null=True,blank=True)
+    support_email = models.CharField(max_length=128,null=True,blank=True)
+    support_portal = models.CharField(max_length=128,null=True,blank=True)
+    username = models.CharField(max_length=128,null=True,blank=True)
+    password = models.CharField(max_length=128,null=True,blank=True)
     status = models.CharField(max_length=32, choices=VENDOR_STATUS)
+    notes = models.TextField(blank=True)
 
     class Meta:
         db_table = "vendors"
@@ -83,21 +45,27 @@ class Vendors(CreatedUpdatedModel):
 
 class DataCenters(CreatedUpdatedModel):
     """Data Centers"""
-    uuid = models.CharField(db_index=True, default=uuid_to_str, max_length=255, editable=False)
-    name = models.CharField(max_length=32)
-    tag = models.CharField(max_length=32)
-    address = models.CharField(max_length=32)
-    city = models.CharField(max_length=32)
-    state = models.CharField(max_length=32)
-    country = models.CharField(max_length=32)
-    zip = models.CharField(max_length=32)
-    website = models.CharField(max_length=32)
-    phone = models.CharField(max_length=32)
-    support_email = models.CharField(max_length=32)
-    support_portal = models.CharField(max_length=32)
-    username = models.CharField(max_length=32)
-    password = models.CharField(max_length=32)
-    notes = models.CharField(max_length=1024)
+    DATA_CENTER_STATUS = (
+        ('Active', 'Active'),
+        ('Deprecated', 'Deprecated'),
+    )
+
+    name = models.CharField(max_length=256,null=True,blank=True)
+    description = models.TextField(blank=True)
+    address = models.CharField(max_length=256,null=True,blank=True)
+    region = models.CharField(max_length=32,null=True,blank=True)
+    city = models.CharField(max_length=32,null=True,blank=True)
+    state = models.CharField(max_length=32,null=True,blank=True)
+    country = models.CharField(max_length=32,null=True,blank=True)
+    zip = models.CharField(max_length=64,null=True,blank=True)
+    website = models.CharField(max_length=128,null=True,blank=True)
+    phone = PhoneNumberField('Phone Number',null=True,blank=True)
+    support_email = models.CharField(max_length=128,null=True,blank=True)
+    support_portal = models.CharField(max_length=128,null=True,blank=True)
+    username = models.CharField(max_length=128,null=True,blank=True)
+    password = models.CharField(max_length=128,null=True,blank=True)
+    status = models.CharField(max_length=32, choices=DATA_CENTER_STATUS)
+    notes = models.TextField(blank=True)
 
     class Meta:
         db_table = "data_centers"
@@ -108,48 +76,70 @@ class DataCenters(CreatedUpdatedModel):
 
 class Devices(CreatedUpdatedModel):
     """Devices"""
+    DEVICE_TYPE = (
+        ('Rack', 'Rack'),
+        ('Power', 'Power'),
+        ('Drive', 'Drive'),
+        ('KVM', 'KVM'),
+        ('Router', 'Router'),
+        ('Switch', 'Switch'),
+        ('Firewall', 'Firewall'),
+        ('BareMetal', 'BareMetal'),
+    )
+
+    DEVICE_STATUS = (
+        ('PowerOn', 'PowerOn'),
+        ('PowerOff', 'PowerOff'),
+        ('InMaintenance', 'InMaintenance'),
+        ('Deprecated', 'Deprecated'),
+    )
+
     uuid = models.CharField(db_index=True, default=uuid_to_str, max_length=255, editable=False)
     data_center = models.ForeignKey(DataCenters, models.SET_NULL, null=True, blank=True)
-    name = models.CharField(max_length=64)
-    type = models.CharField(max_length=32, choices=DEVICE_TYPE)
     manufacturer = models.ForeignKey(Vendors, models.SET_NULL, related_name='manufacturer_device', null=True, blank=True)
-    model = models.CharField(max_length=64)
-    sn = models.CharField(max_length=50, blank=True, verbose_name='Serial number')
-    rack = models.ForeignKey('self', null=True, blank=True, on_delete=models.SET_NULL, verbose_name='Rack')
-    u_height = models.PositiveSmallIntegerField(verbose_name='Height In Rack',null=True, blank=True,
-                                     help_text='How many rack units does this device occupy')
-    tag = models.CharField(max_length=64)
     seller = models.ForeignKey(Vendors, models.SET_NULL, related_name='seller_device', null=True, blank=True)
-    purchase_date = models.DateField('Purchase Date', null=True, blank=True)
+    name = models.CharField(max_length=256,null=True,blank=True)
+    tag = models.CharField(max_length=128,null=True,blank=True)
+    description = models.TextField(blank=True)
+    type = models.CharField(max_length=32, choices=DEVICE_TYPE)
+    u_height = models.PositiveSmallIntegerField(verbose_name='Height In Rack', null=True, blank=True,
+                                                help_text='How many rack units does this device occupy')
+    size = models.CharField(max_length=128,null=True,blank=True)
+    model_no = models.CharField(max_length=128,null=True,blank=True)
+    serial_no = models.CharField(max_length=128, blank=True, verbose_name='Serial Number')
+    # rack = models.ForeignKey('self', null=True, blank=True, on_delete=models.SET_NULL, verbose_name='Rack')
+    # rack_start_unit =  models.ForeignKey(Interfaces, null=True, blank=True, on_delete=models.SET_NULL, verbose_name='Rack Unit')
+    online_date = models.DateField('Online Date', null=True, blank=True)
+    offline_date = models.DateField('Offline Date', null=True, blank=True)
+    order_date = models.DateField('Order Date', null=True, blank=True)
     price = models.DecimalField('Price',max_digits=10, decimal_places=2)
-    order_no = models.CharField(max_length=64)
+    order_no = models.CharField(max_length=256,null=True,blank=True)
     warranty_date = models.DateField('Warranty Date', null=True, blank=True)
-    status = models.CharField(max_length=32, choices=DEVICE_TYPE)
-    comments = models.TextField(blank=True)
+    access_method = models.CharField(max_length=32,null=True,blank=True)
+    access_url = models.CharField(max_length=64,null=True,blank=True)
+    access_port = models.PositiveIntegerField(null=True, blank=True)
+    username = models.CharField(max_length=128,null=True,blank=True)
+    password = models.CharField(max_length=128,null=True,blank=True)
+    status = models.CharField(max_length=32, choices=DEVICE_STATUS)
+    notes = models.TextField(blank=True)
 
     class Meta:
         db_table = "devices"
-        ordering = ['-created_date']
-        # unique_together = [
-        #     ['data_center', 'name'],
-        #     ['data_center', 'tag'],
-        # ]
 
     def __str__(self):
         return self.name
 
 class DeviceRacks(Devices):
     """Racks"""
-    #desc_units = models.BooleanField(default=False, verbose_name='Descending units',help_text='Units are numbered top-to-bottom')
-    location = models.TextField(blank=True, help_text='How to find the rack in data center.')
-    total_electric_current = models.CharField(max_length=64)
-    used_electric_current = models.CharField(max_length=64)
-    ec_check_date = models.DateField('Electric Current Check Date', null=True, blank=True, help_text='Electric Current Check Date')
-    power_stripe_amount = models.PositiveSmallIntegerField(null=True, blank=True)
-    total_band_width = models.CharField(max_length=64)
-    used_band_width = models.CharField(max_length=64)
+    location = models.CharField(max_length=256, help_text='How to find the rack in data center.')
+    network_tag = models.CharField(max_length=64,null=True,blank=True)
+    network_speed = models.PositiveIntegerField(null=True, blank=True)
+    max_bandwidth = models.PositiveIntegerField(null=True, blank=True)
+    used_bandwidth = models.PositiveIntegerField(null=True, blank=True)
     bw_check_date = models.DateField('Band Width Check Date', null=True, blank=True, help_text='Band Width Check Date')
-    up_router_ip = models.CharField(max_length=255)
+    routing_ip = models.GenericIPAddressField(protocol='both', unpack_ipv4=False, null=True, blank=True)
+    routing_gateway = models.GenericIPAddressField(protocol='both', unpack_ipv4=False, null=True, blank=True)
+    routing_mask = models.GenericIPAddressField(protocol='both', unpack_ipv4=False, null=True, blank=True)
 
     class Meta:
         db_table = "device_racks"
@@ -159,9 +149,17 @@ class DeviceRacks(Devices):
 
 class DevicePowers(Devices):
     """Power Devices"""
-    outlet_amount = models.PositiveSmallIntegerField(verbose_name='Power Outlet Amount', null=True, blank=True)
+    POWER_COLOR = (
+        ('Black','Black'),
+        ('Red','Red')
+    )
+
+    total_outlets = models.PositiveSmallIntegerField(verbose_name='Power Outlet Amount', null=True, blank=True)
+    max_amps = models.PositiveIntegerField(null=True, blank=True)
+    used_amps = models.PositiveIntegerField(null=True, blank=True)
+    check_date = models.DateField('Check Date', null=True, blank=True, help_text='Check Date')
     voltage = models.PositiveSmallIntegerField(verbose_name='Voltage', null=True, blank=True)
-    mgmt_ip = models.GenericIPAddressField(protocol='both', unpack_ipv4=False)
+    color = models.CharField(max_length=32, choices=POWER_COLOR, null=True, blank=True)
 
     class Meta:
         db_table = "device_powers"
@@ -171,8 +169,15 @@ class DevicePowers(Devices):
 
 class DeviceDrives(Devices):
     """Drives"""
-    disk_size = models.CharField(max_length=64)
-    file_system = models.CharField(max_length=64)
+    DISK_TYPE = (
+        ('SATA', 'SATA'),
+        ('SSD', 'SSD'),
+    )
+
+    disk_type = models.CharField(max_length=32, choices=DISK_TYPE, null=True, blank=True)
+    disk_size = models.PositiveIntegerField(null=True, blank=True)
+    file_system = models.CharField(max_length=64,null=True,blank=True)
+    need_power = models.NullBooleanField()
 
     class Meta:
         db_table = "device_drives"
@@ -182,10 +187,13 @@ class DeviceDrives(Devices):
 
 class DeviceKVMs(Devices):
     """KVMs"""
-    account = models.CharField(max_length=128)
-    password = models.CharField(max_length=128)
-    mgmt_ip = models.GenericIPAddressField(protocol='both', unpack_ipv4=False)
-    port_amount = models.PositiveSmallIntegerField(null=True, blank=True)
+    KVM_PORT_TYPE = (
+        ('USB', 'USB'),
+        ('PS2', 'PS2'),
+    )
+
+    total_ports = models.PositiveSmallIntegerField(null=True, blank=True)
+    port_type = models.CharField(max_length=32, choices=KVM_PORT_TYPE, null=True, blank=True)
 
     class Meta:
         db_table = "device_kvms"
@@ -195,11 +203,9 @@ class DeviceKVMs(Devices):
 
 class DeviceRouters(Devices):
     """Routers"""
-    account = models.CharField(max_length=128)
-    password = models.CharField(max_length=128)
-    mgmt_ip = models.GenericIPAddressField(protocol='both', unpack_ipv4=False)
-    os_version = models.CharField(max_length=128)
-    port_amount = models.PositiveSmallIntegerField(null=True, blank=True)
+    firmware_version = models.CharField(max_length=128, null=True, blank=True)
+    total_ports = models.PositiveSmallIntegerField(null=True, blank=True)
+    speed = models.PositiveIntegerField(null=True, blank=True)
 
     class Meta:
         db_table = "device_routers"
@@ -209,11 +215,10 @@ class DeviceRouters(Devices):
 
 class DeviceSwitches(Devices):
     """Switches"""
-    account = models.CharField(max_length=128)
-    password = models.CharField(max_length=128)
-    mgmt_ip = models.GenericIPAddressField(protocol='both', unpack_ipv4=False)
-    os_version = models.CharField(max_length=128)
-    port_amount = models.PositiveSmallIntegerField(null=True, blank=True)
+
+    firmware_version = models.CharField(max_length=128, null=True, blank=True)
+    total_ports = models.PositiveSmallIntegerField(null=True, blank=True)
+    speed = models.PositiveIntegerField(null=True, blank=True)
 
     class Meta:
         db_table = "device_switches"
@@ -223,14 +228,10 @@ class DeviceSwitches(Devices):
 
 class DeviceFirewalls(Devices):
     """Firewalls"""
-    account = models.CharField(max_length=128)
-    password = models.CharField(max_length=128)
-    mgmt_ip = models.GenericIPAddressField(protocol='both', unpack_ipv4=False)
-    os_version = models.CharField(max_length=128)
-    port_amount = models.PositiveSmallIntegerField(null=True, blank=True)
-    license_amount = models.PositiveSmallIntegerField(null=True, blank=True)
-    safe_area = models.CharField(max_length=255)
-    unsafe_area = models.CharField(max_length=255)
+    firmware_version = models.CharField(max_length=128,null=True,blank=True)
+    total_ports = models.PositiveSmallIntegerField(null=True, blank=True)
+    total_licenses = models.PositiveSmallIntegerField(null=True, blank=True)
+    speed = models.PositiveIntegerField(null=True, blank=True)
 
     class Meta:
         db_table = "device_firewalls"
@@ -240,20 +241,37 @@ class DeviceFirewalls(Devices):
 
 class DeviceBares(Devices):
     """Bare Metals"""
-    processor_model = models.CharField(max_length=32)
-    no_of_processors = models.PositiveSmallIntegerField('CPU Cores', null=True, blank=True)
-    memory_chips = models.CharField(max_length=32)
-    memory_size = models.CharField(max_length=32)
-    motherboard_model = models.CharField(max_length=32)
-    chassis_model = models.CharField(max_length=32)
-    power_supply_model = models.CharField(max_length=32)
-    disk_size = models.CharField(max_length=32)
+    RAID_TYPE = (
+        ('USB', 'USB'),
+        ('PS2', 'PS2'),
+    )
+
+    BARE_FIRMWARE_TYPE = (
+        ('BIOS', 'BIOS'),
+        ('UEFI', 'UEFI'),
+    )
+
+    cpu_model = models.CharField(max_length=128, null=True, blank=True)
+    total_cpus = models.PositiveSmallIntegerField('CPUs', null=True, blank=True)
+    total_cores = models.PositiveSmallIntegerField('Cores', null=True, blank=True)
+    cpu_speed = models.CharField(max_length=64, null=True, blank=True)
+    memory_model = models.CharField(max_length=128, null=True, blank=True)
+    memory_size = models.DecimalField('Price',max_digits=10, decimal_places=2)
+    motherboard_model = models.CharField(max_length=128,null=True,blank=True)
+    chassis_model = models.CharField(max_length=128,null=True,blank=True)
+    power_supply_model = models.CharField(max_length=128,null=True,blank=True)
+    disk_size = models.PositiveIntegerField(null=True, blank=True)
     disk_description = models.TextField(blank=True)
-    # with_rail = models.NullBooleanField()
-    account = models.CharField(max_length=128)
-    password = models.CharField(max_length=128)
-    mgmt_ip = models.GenericIPAddressField(protocol='both', unpack_ipv4=False)
-    port_amount = models.PositiveSmallIntegerField(null=True, blank=True)
+    has_raid = models.NullBooleanField()
+    raid_type = models.CharField(max_length=64,null=True,blank=True)
+    has_ipmi = models.NullBooleanField()
+    ipmi_username = models.CharField(max_length=128,null=True,blank=True)
+    ipmi_password = models.CharField(max_length=128,null=True,blank=True)
+    ipmi_version = models.CharField(max_length=32,null=True,blank=True)
+    total_ports = models.PositiveSmallIntegerField(null=True, blank=True)
+    firmware_type = models.CharField(max_length=32, choices=BARE_FIRMWARE_TYPE, null=True, blank=True)
+    firmware_version = models.CharField(max_length=32,null=True,blank=True)
+    usage = models.CharField(max_length=64,null=True,blank=True)
 
     class Meta:
         db_table = "device_bares"
@@ -263,16 +281,20 @@ class DeviceBares(Devices):
 
 class DeviceMaintenances(CreatedUpdatedModel):
     """Device Maintenances"""
-    uuid = models.CharField(db_index=True, default=uuid_to_str, max_length=255, editable=False)
-    device = models.ForeignKey(Devices)
-    user = models.ForeignKey(Users)
+    MAINTENANCE_STATUS = (
+        ('InProcess','InProcess'),
+        ('HangUp', 'HangUp'),
+        ('Finished', 'Finished'),
+    )
+
+    device = models.ForeignKey(Devices, models.SET_NULL, null=True, blank=True)
+    user = models.ForeignKey(Users, models.SET_NULL, null=True, blank=True)
     start_time = models.DateTimeField('Start Time', null=True, blank=True)
     end_time = models.DateTimeField('End Time', null=True, blank=True)
-    task_subject = models.CharField(max_length=64)
-    task_detail = models.CharField(max_length=1024)
-    total_minutes = models.PositiveIntegerField('Total Minutes', null=True, blank=True)
+    subject = models.CharField(max_length=256,null=True,blank=True)
+    description = models.TextField(blank=True)
     status = models.CharField(max_length=32, choices=MAINTENANCE_STATUS)
-    notes = models.CharField(max_length=1024)
+    notes = models.TextField(blank=True)
 
     class Meta:
         db_table = "server_maintenances"
@@ -281,13 +303,31 @@ class DeviceMaintenances(CreatedUpdatedModel):
         return "{}-{}".format(self.user.username, self.device.name)
 
 class Interfaces(CreatedUpdatedModel):
+    """Interfaces"""
+    INTERFACE_TYPE = (
+        ('Rack', 'Rack'),
+        ('PowerOutlet', 'PowerOutlet'),
+        ('Network', 'Network'),
+        ('Console', 'Console'),
+        ('USB', 'USB'),
+    )
+
+    INTERFACE_STATUS = (
+        ('Idle', 'Idle'),
+        ('Running', 'Running'),
+        ('Deprecated', 'Deprecated'),
+        ('Invalid', 'Invalid'),
+    )
+
     uuid = models.CharField(db_index=True, default=uuid_to_str, max_length=255, editable=False)
     device = models.ForeignKey(Devices, related_name='interfaces', on_delete=models.CASCADE)
-    name = models.CharField(max_length=255)
-    tag = models.CharField(max_length=255)
+    tag = models.CharField(max_length=128,null=True,blank=True)
     type = models.CharField(max_length=32, choices=INTERFACE_TYPE)
-    status = models.CharField(max_length=32, choices=INTERFACE_STATUS)
+    name = models.CharField(max_length=256,null=True,blank=True)
+    index = models.PositiveSmallIntegerField('Interface Index', null=True, blank=True)
     description = models.TextField(blank=True)
+    status = models.CharField(max_length=32, choices=INTERFACE_STATUS)
+    notes = models.TextField(blank=True)
 
     class Meta:
         db_table = "interfaces"
@@ -296,34 +336,62 @@ class Interfaces(CreatedUpdatedModel):
         return self.name
 
 class InterfaceRacks(Interfaces):
+    """Rack Interfaces"""
     has_rail = models.NullBooleanField()
-    rail_model = models.CharField(max_length=255)
-    unit_no = models.PositiveSmallIntegerField(null=True, blank=True)
+    rail_model = models.CharField(max_length=256,null=True,blank=True)
 
     class Meta:
-        db_table = "racks_interfaces"
+        db_table = "interface_racks"
 
     def __str__(self):
         return self.name
 
 class InterfaceNetworks(Interfaces):
-    speed = models.CharField(max_length=64)
-    mac = models.CharField(max_length=128, null=True, blank=True, verbose_name='MAC Address')
-    port_model = models.CharField(max_length=128)
+    """Network Interfaces"""
+    NETWORK_PORT_MODEL = (
+        ('Trunk', 'Trunk'),
+        ('Access', 'Access'),
+    )
+
+    NETWORK_PORT_TYPE = (
+        ('Ethernet', 'Ethernet'),
+        ('Fiber', 'Fiber'),
+    )
+
+    port_model = models.CharField(max_length=32, choices=NETWORK_PORT_MODEL, null=True, blank=True)
+    port_fast = models.NullBooleanField()
+    port_type = models.CharField(max_length=32, choices=NETWORK_PORT_TYPE, null=True, blank=True)
+    speed = models.PositiveIntegerField(null=True, blank=True)
+    mac = models.CharField(max_length=128, verbose_name='MAC Address')
 
     class Meta:
-        db_table = "network_interfaces"
+        db_table = "interface_networks"
 
     def __str__(self):
         return self.name
 
 class Connections(CreatedUpdatedModel):
-    uuid = models.CharField(db_index=True, default=uuid_to_str, max_length=255, editable=False)
+    """Connections"""
+    CONNECTION_TYPE = (
+        ('Rack', 'Rack'),
+        ('PowerOutlet', 'PowerOutlet'),
+        ('Network', 'Network'),
+        ('Console', 'Console'),
+        ('USB', 'USB'),
+    )
+
+    CONNECTION_STATUS = (
+        ('Reserved', 'Reserved'),
+        ('Running', 'Running'),
+        ('Deprecated', 'Deprecated'),
+    )
+
     interface_a = models.ForeignKey(Interfaces, related_name='interface_a', on_delete=models.SET_NULL, blank=True, null=True)
     interface_b = models.ForeignKey(Interfaces, related_name='interface_b', on_delete=models.SET_NULL, blank=True, null=True)
     type = models.CharField(max_length=32, choices=CONNECTION_TYPE)
-    status = models.CharField(max_length=32, choices=CONNECTION_STATUS)
     description = models.TextField(blank=True)
+    status = models.CharField(max_length=32, choices=CONNECTION_STATUS)
+    notes = models.TextField(blank=True)
 
     class Meta:
         db_table = "connections"
