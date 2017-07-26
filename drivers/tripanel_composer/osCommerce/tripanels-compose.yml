@@ -35,11 +35,19 @@ questions:
     hidden: false
 
 docker:
-  osCommerce3:
-    image: registry.databasemart.net:443/oscommerce2:latest
+  oscommerce:
+    image: registry.databasemart.net:443/oscommerce2
+    mem_limit: 1000000000
+    cpu_quota: 50000
     ports:
       - 80:80
-    mem_limit: 1000000000
-    cpu_quota: 10000
+    labels:
+      app_plan: Basic
+      io.rancher.scheduler.affinity:host_label: Rack=AH05-Linux-Host01
+    volumes:
+      - oscommerce_db:/var/lib/mysql
+      - oscommerce_web:/var/www/html
+    environment:
+      - DB_PASSWORD=dbpassword
 
 rancher:

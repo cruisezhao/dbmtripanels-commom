@@ -36,9 +36,17 @@ questions:
 docker:
   magento:
     image: registry.databasemart.net:443/magento2
+    mem_limit: 1000000000
+    cpu_quota: 50000
     ports:
-      - 80:80
-    mem_limit:
-    cpu_quota:
+      - 8081:80
+    labels:
+      app_plan: Basic
+      io.rancher.scheduler.affinity:host_label: Rack=AH05-Linux-Host01
+    volumes:
+      - magento_db:/var/lib/mysql
+      - magento_web:/var/www/html
+    environment:
+      - DB_PASSWORD=dbpassword
 
 rancher:

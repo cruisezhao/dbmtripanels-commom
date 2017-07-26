@@ -21,3 +21,8 @@ OsCommerce:
   - template_url: tripanel_composer/osCommerce/tripanels-compose.yml
     operating_system: Ubuntu 16.04
     database: MySQL 5.7
+
+PrestaShop:
+  - template_url: tripanel_composer/prestashop/tripanels-compose.yml
+    operating_system: Ubuntu 16.04
+    database: MySQL 5.7

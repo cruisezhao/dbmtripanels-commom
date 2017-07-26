@@ -16,6 +16,9 @@ class SysOptionTable(tables.Table):
     class Meta:
         model = SystemOptions
         fields = ['pk','id', 'name', 'type','value','action']
+        attrs={
+                "class": "table table-bordered table-hover dataTable",
+            }
 
 Cloud_ACTIONS = """<a href="{% url 'deployments:cloud_edit' uuid=record.uuid %}"><i class='fa fa-pencil'></i></a>"""
 class CloudTable(tables.Table):
@@ -25,6 +28,9 @@ class CloudTable(tables.Table):
     class Meta:
         model = Clouds
         fields = ['pk','id', 'name', 'action']
+        attrs={
+                "class": "table table-bordered table-hover dataTable",
+            }
 
 Deploy_Policy_ACTIONS = """<a href="{% url 'deployments:deploy_policy_edit' uuid=record.uuid %}"><i class='fa fa-pencil'></i></a>"""
 class DeployPolicyTable(tables.Table):
@@ -34,6 +40,9 @@ class DeployPolicyTable(tables.Table):
     class Meta:
         model = DeployPolicies
         fields = ['pk','id', 'relationships','action']
+        attrs={
+                "class": "table table-bordered table-hover dataTable",
+            }
 
 Deploy_Instance_ACTIONS = """<a href="{% url 'deployments:deploy_instance_edit' uuid=record.uuid %}"><i class='fa fa-pencil'></i></a>"""
 class DeployInstanceTable(tables.Table):
@@ -43,6 +52,9 @@ class DeployInstanceTable(tables.Table):
     class Meta:
         model = DeployInstances
         fields = ['pk','id','deploy_policy','action']
+        attrs={
+                "class": "table table-bordered table-hover dataTable",
+            }
 
 Instance_Configuration_ACTIONS = """<a href="{% url 'deployments:instance_configuration_edit' uuid=record.uuid %}"><i class='fa fa-pencil'></i></a>"""
 class InstanceConfigurationTable(tables.Table):
@@ -52,6 +64,9 @@ class InstanceConfigurationTable(tables.Table):
     class Meta:
         model = InstanceConfigurations
         fields = ['pk','id','deploy_instance','action']
+        attrs={
+                "class": "table table-bordered table-hover dataTable",
+            }
 
 Question_ACTIONS = """<a href="{% url 'deployments:question_edit' uuid=record.uuid %}"><i class='fa fa-pencil'></i></a>"""
 class QuestionTable(tables.Table):
@@ -61,3 +76,6 @@ class QuestionTable(tables.Table):
     class Meta:
         model = Questions
         fields = ['pk','id','name','type','required','action']
+        attrs={
+                "class": "table table-bordered table-hover dataTable",
+            }

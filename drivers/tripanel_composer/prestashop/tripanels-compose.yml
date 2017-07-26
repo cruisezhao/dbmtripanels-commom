@@ -1,0 +1,53 @@
+name: PrestaShop
+# type of products [Application(APP), Virtual Machine(VM), 
+# Bare Metal(Bare)]
+type: APP
+description: |
+  OpenCart is an open source PHP-based online
+  e-commerce solution.
+# author: TriClusters, Inc
+version: 0.0.1
+relationship:
+
+deploy_police:
+  name: 
+
+questions:
+  - name: cloud
+    label: Cloud location
+    description: |
+      The Cloud location where product an deployed.
+    type: string
+    default: private.rancher
+    required: true
+    hidden: false
+  - name: proxy_scheme
+    label: Proxy scheme
+    description: |
+      When behind a proxy, specify the protocol clients will use to connect to Confluence
+    type: enum
+    options:
+      - http
+      - https
+    default: http
+    required: false
+
+    hidden: false
+
+docker:
+  prestashop:
+    image: registry.databasemart.net:443/prestashop
+    mem_limit: 1000000000
+    cpu_quota: 50000
+    ports:
+      - 80:80
+    labels:
+      app_plan: Basic
+      io.rancher.scheduler.affinity:host_label: Rack=AH05-Linux-Host01
+    volumes:
+      - prestashop_db:/var/lib/mysql
+      - prestashop_web:/var/www/html
+    environment:
+      - DB_PASSWORD=dbpassword
+
+rancher:
