@@ -41,7 +41,11 @@ docker:
     ports:
       - 80:80
     labels:
-      - app_plan=Basic
+      app_plan: Basic
+      # Make wordpress only run containers on hosts with a key1=value1 label
+      io.rancher.scheduler.affinity:host_label: Rack=AH05-Linux-Host01
+      # Make wordpress only run on hosts that do not have a key2=value2 label
+      #io.rancher.scheduler.affinity:host_label_ne: key2=value2
     volumes:
       - opencart_db:/var/lib/mysql
       - opencart_web:/var/www/html

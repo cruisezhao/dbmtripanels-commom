@@ -39,9 +39,10 @@ docker:
     mem_limit: 1000000000
     cpu_quota: 50000
     ports:
-      - 80:80
+      - 8081:80
     labels:
-      - app_plan=Basic
+      app_plan: Basic
+      io.rancher.scheduler.affinity:host_label: Rack=AH05-Linux-Host01
     volumes:
       - magento_db:/var/lib/mysql
       - magento_web:/var/www/html
