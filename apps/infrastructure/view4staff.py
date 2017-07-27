@@ -20,8 +20,8 @@ class VendorListView(ObjectListView):
 
 
 class VendorView(View):
-    def get(self,request, uuid):
-        vendor = get_object_or_404(Vendors, uuid=uuid)
+    def get(self,request, id):
+        vendor = get_object_or_404(Vendors, id=id)
         return render(request, 'vendors/vendor.html',{
             'object':vendor,
         })
@@ -48,8 +48,8 @@ class DataCenterListView(ObjectListView):
 
 
 class DataCenterView(View):
-    def get(self,request,uuid):
-        datacenter = get_object_or_404(DataCenters, uuid=uuid)
+    def get(self,request,id):
+        datacenter = get_object_or_404(DataCenters, id=id)
         return render(request, "datacenters/datacenter.html",{
             'object':datacenter,
         })

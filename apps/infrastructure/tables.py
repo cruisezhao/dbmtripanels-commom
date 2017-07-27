@@ -12,23 +12,32 @@ class RackTable(tables.Table):
     class Meta:
         model = DeviceRacks
         fields = ['pk','name','manufacturer','data_center', 'location','power_stripe_amount']
+        attrs = {
+            'class':'table table-hover table-striped dataTable',
+        }
 
 
 class DataCenterTable(tables.Table):
     pk = ToggleColumn()
-    name = tables.LinkColumn("infras:data_center", args=[A('uuid')])
+    name = tables.LinkColumn("infras:data_center", args=[A('id')])
     class Meta:
         model = DataCenters
         fields = ['pk', 'name', 'address','website','phone','support_email','username']
+        attrs = {
+            'class':'table table-hover table-striped dataTable',
+        }
 
 
 class VerdorTable(tables.Table):
     pk = ToggleColumn()
-    name = tables.LinkColumn("infras:vendor", args=[A('uuid')])
+    name = tables.LinkColumn("infras:vendor", args=[A('id')])
 
     class Meta:
         model = Vendors
         fields = ['pk', 'name', 'type', 'description', 'website', 'status']
+        attrs = {
+            'class':'table table-hover table-striped dataTable',
+        }
 
 
 class DevicePowerTable(tables.Table):
@@ -38,6 +47,9 @@ class DevicePowerTable(tables.Table):
     class Meta:
         model = DevicePowers
         fields = ['pk','name','outlet_amount','voltage','mgmt_ip']
+        attrs = {
+            'class':'table table-hover table-striped dataTable',
+        }
 
 
 class DeviceDriveTable(tables.Table):
@@ -47,6 +59,9 @@ class DeviceDriveTable(tables.Table):
     class Meta:
         model = DeviceDrives
         fields = ['pk','name','disk_size','file_system']
+        attrs = {
+            'class':'table table-hover table-striped dataTable',
+        }
 
 
 class DeviceKVMTable(tables.Table):
@@ -55,6 +70,9 @@ class DeviceKVMTable(tables.Table):
     class Meta:
         model = DeviceKVMs
         fields = ['pk','name','account', 'password', 'mgmt_ip', 'port_amount']
+        attrs = {
+            'class':'table table-hover table-striped dataTable',
+        }
 
 
 class DeviceRouterTable(tables.Table):
@@ -64,6 +82,9 @@ class DeviceRouterTable(tables.Table):
     class Meta:
         model = DeviceRouters
         fields = ['pk','name','account', 'password', 'mgmt_ip','os_version', 'port_amount']
+        attrs = {
+            'class':'table table-hover table-striped dataTable',
+        }
 
 class DeviceSwitcheTable(tables.Table):
     pk = ToggleColumn()
@@ -71,6 +92,9 @@ class DeviceSwitcheTable(tables.Table):
     class Meta:
         model = DeviceRouters
         fields = ['pk','name','account', 'password', 'mgmt_ip','os_version', 'port_amount']
+        attrs = {
+            'class':'table table-hover table-striped dataTable',
+        }
 
 
 class DeviceFirewallTable(tables.Table):
@@ -80,6 +104,9 @@ class DeviceFirewallTable(tables.Table):
         model = DeviceFirewalls
         fields = ['pk','name','account', 'password', 'mgmt_ip','os_version', 'port_amount',
                   'license_amount','safe_area','unsafe_area']
+        attrs = {
+            'class':'table table-hover table-striped dataTable',
+        }
 
 class DeviceBareTable(tables.Table):
     pk = ToggleColumn()
@@ -88,6 +115,9 @@ class DeviceBareTable(tables.Table):
         model = DeviceFirewalls
         fields = ['pk','name','account', 'password', 'mgmt_ip','os_version', 'port_amount',
                   'processor_model','no_of_processors','memory_chips','memory_size','motherboard_model',]
+        attrs = {
+            'class':'table table-hover table-striped dataTable',
+        }
 
 
 class DeviceMaintenanceTable(tables.Table):
@@ -98,16 +128,23 @@ class DeviceMaintenanceTable(tables.Table):
         model = DeviceMaintenances
         fields = ['pk','id','device', 'user', 'start_time','end_time',
                   'task_subject','task_detail','total_minutes','status','notes']
+        attrs = {
+            'class':'table table-hover table-striped dataTable',
+        }
 
 
 class InterfaceRackTable(tables.Table):
     pk = ToggleColumn()
     name = tables.LinkColumn("infras:interface_rack", args=[A("uuid")])
 
+
     class Meta:
         model = InterfaceRacks
         fields = ['pk','name', 'device', 'tag', 'type', 'status', 'description',
                   'has_rail', 'rail_model', 'unit_no']
+        attrs = {
+            'class':'table table-hover table-striped dataTable',
+        }
 
 
 class InterfaceNetworkTable(tables.Table):
@@ -118,6 +155,9 @@ class InterfaceNetworkTable(tables.Table):
         model = InterfaceNetworks
         fields = ['pk','name', 'device', 'tag', 'type', 'status', 'description',
                   'speed', 'mac', 'port_model']
+        attrs = {
+            'class':'table table-hover table-striped dataTable',
+        }
 
 
 class ConnectionTable(tables.Table):
@@ -127,3 +167,6 @@ class ConnectionTable(tables.Table):
     class Meta:
         model = Connections
         fields = ['pk','interface_a', 'interface_b', 'type', 'status', 'description']
+        attrs = {
+            'class':'table table-hover table-striped dataTable',
+        }

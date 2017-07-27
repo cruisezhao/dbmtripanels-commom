@@ -1,109 +1,81 @@
-
-{% load static from staticfiles %}
-
 <!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <title>login</title>
+{% load staticfiles %}
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Admin|Login In</title>
+  <!-- Tell the browser to be responsive to screen width -->
+  <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+  <link href="{% static 'bower_components/bootstrap/dist/css/bootstrap.min.css' %}" rel="stylesheet">
+  <link href="{% static 'bower_components/font-awesome/css/font-awesome.min.css' %}" rel="stylesheet">
+  <link href="{% static 'bower_components/Ionicons/css/ionicons.min.css' %}" rel="stylesheet">
+  <link href="{% static 'dist/css/AdminLTE.min.css' %}" rel="stylesheet">
+  <link href="{% static 'dist/css/skins/skin-blue.min.css' %}" rel="stylesheet">
+  <link href="{% static 'plugins/iCheck/all.css' %}" rel="stylesheet">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
 
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+ <!-- jQuery 3 -->
+  <script src="{% static 'bower_components/jquery/dist/jquery.min.js' %}"></script>
 
-    <link href="{% static 'css/console-login-bs.css' %}" rel="stylesheet" />
-    <link href="{% static 'css/adminia.css' %}" rel="stylesheet" />
-    <link href="{% static 'css/login.css' %}" rel="stylesheet" />
+<body class="hold-transition login-page">
+<div class="login-box">
+  <div class="login-logo">
+    <b>Admin </b>Panel
+  </div>
+  <!-- /.login-logo -->
+  <div class="login-box-body">
+    <p class="login-box-msg">Please Login In</p>
+    {% if messages %}
+      {% for message in messages %}
+        <p class="login-box-msg">{{message}}</p>
+      {% endfor %}
+    {% endif %}
+    <form action="." method="post">
+      {% csrf_token %}
+      <div class="form-group has-feedback">
+        <input type="text" name="username" class="form-control" placeholder="Username">
+        <span class="form-control-feedback"><i class="fa fa-user" aria-hidden="true"></i></span>
+      </div>
+      <div class="form-group has-feedback">
+        <input type="password" name="password" class="form-control" placeholder="Password">
+        <span class="form-control-feedback"><i class="fa fa-lock" aria-hidden="true"></i></span>
+      </div>
+      <div class="row">
+        <div class="col-xs-8">
+          <div class="checkbox icheck">
+            <label>
+              <div class="icheckbox_square-blue" aria-checked="false" aria-disabled="false" style="position: relative;"><input type="checkbox" style="position: absolute; top: -20%; left: -20%; display: block; width: 140%; height: 140%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;"><ins class="iCheck-helper" style="position: absolute; top: -20%; left: -20%; display: block; width: 140%; height: 140%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;"></ins></div> Remember Me
+            </label>
+          </div>
+        </div>
+        <!-- /.col -->
+        <div class="col-xs-4">
+          <button type="submit" class="btn btn-primary btn-block btn-flat">Sign In</button>
+        </div>
+        <!-- /.col -->
+      </div>
+    </form>
 
-
-    <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
-    <!--[if lt IE 9]>
-      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
-    <![endif]-->
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
- </head>
-
-<body>
-
-<div class="navbar navbar-fixed-top">
-
-  <div class="container">
-
-
-			<a class="brand text-center" href="./"><img src="{% static 'img/SCLogo.png' %}"/></a>
-
-
-		</div>
-
-	</div>
+  </div>
+  <!-- /.login-box-body -->
 </div>
+<!-- /.login-box -->
+<script src="{% static 'bower_components/bootstrap/dist/js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'dist/js/adminlte.min.js' %}"></script>
+    <script src="{% static 'plugins/iCheck/icheck.js' %}"></script>
+<script>
+  $(function () {
+    $('input').iCheck({
+      checkboxClass: 'icheckbox_square-blue',
+      radioClass: 'iradio_square-blue',
+      increaseArea: '20%' // optional
+    });
+  });
+</script>
 
 
+</body>
 
-
-<div id="login-container">
-
-
-	<div id="login-header">
-
-		<h3>Login</h3>
-
-	</div> <!-- /login-header -->
-
-	<div id="login-content" class="clearfix">
-
-
-	<form method="post" action="">
-	{% csrf_token %}
-		<fieldset>
-			<div class="control-group">
-				<label class="control-label" for="username">Username</label>
-				<div class="controls">
-					<input type="text" name="username" class="" id="username" />
-				</div>
-			</div>
-			<div class="control-group">
-				<label class="control-label" for="password">Password</label>
-				<div class="controls">
-					<input type="password" name="password" class="" id="password" />
-				</div>
-			</div>
-		</fieldset>
-
-		<div id="remember-me" class="pull-left">
-			<input type="checkbox" name="remember" id="remember" />
-			<label id="remember-label" for="remember">Remember Me</label>
-		</div>
-
-		<div class="pull-right">
-			<button type="submit" class="btn btn-warning btn-large">
-				Login
-			</button>
-		</div>
-		<input type="hidden" name="next" value="{{ next }}" />
-	</form>
-
-</div> <!-- /login-content -->
-
-
-
-		<div id="login-extra">
-
-			<!-- <p>Don't have an account? <a href="javascript:;">Sign Up.</a></p> -->
-
-			<p>Remind Password? <a href="forgot_password.html">Retrieve.</a></p>
-
-		</div> <!-- /login-extra -->
-
-</div> <!-- /login-wrapper -->
-
-
-
-<!-- Le javascript
-================================================== -->
-<!-- Placed at the end of the document so the pages load faster -->
-
-<script src="{% static 'js/jquery.min.js' %}"></script>
-<script src="{% static 'js/bootstrap.min.js' %}"></script>
-
-
-  </body>
 </html>

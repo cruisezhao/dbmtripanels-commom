@@ -18,17 +18,17 @@ from  .view4staff import (RackListView, RackView, RackEditView,RackDeleteView,
 urlpatterns = [
     #vendors
     url(r'^vendors/$', VendorListView.as_view(), name='vendor_list'),
-    url(r'^vendors/(?P<uuid>[a-z\d+]{32})/$', VendorView.as_view(), name='vendor'),
+    url(r'^vendors/(?P<id>[\d+])/$', VendorView.as_view(), name='vendor'),
     url(r'^vendors/add/$', VendorEditView.as_view(), name='vendor_add'),
-    url(r'^vendors/(?P<uuid>[a-z\d+]{32})/edit/$', VendorEditView.as_view(), name='vendor_edit'),
-    url(r'^vendors/(?P<uuid>[a-z\d+]{32})/delete/$', VendorDeleteView.as_view(), name='vendor_delete'),
+    url(r'^vendors/(?P<id>[\d+])/edit/$', VendorEditView.as_view(), name='vendor_edit'),
+    url(r'^vendors/(?P<id>[\d+])/delete/$', VendorDeleteView.as_view(), name='vendor_delete'),
 
     #data center
     url(r'^data-centers/$', DataCenterListView.as_view(), name='data_center_list'),
-    url(r'^data-centers/(?P<uuid>[a-z\d+]{32})/$', DataCenterView.as_view(), name='data_center'),
+    url(r'^data-centers/(?P<id>[\d+])/$', DataCenterView.as_view(), name='data_center'),
     url(r'^data-centers/add/$', DataCenterEditView.as_view(), name='data_center_add'),
-    url(r'^data-centers/(?P<uuid>[a-z\d+]{32})/edit/$', DataCenterEditView.as_view(), name='data_center_edit'),
-    url(r'^data-centers/(?P<uuid>[a-z\d+]{32})/delete/$', DataCenterDeleteView.as_view(), name='data_center_delete'),
+    url(r'^data-centers/(?P<id>[\d+])/edit/$', DataCenterEditView.as_view(), name='data_center_edit'),
+    url(r'^data-centers/(?P<id>[\d+])/delete/$', DataCenterDeleteView.as_view(), name='data_center_delete'),
 
     #rack
     url(r'^racks/$', RackListView.as_view(), name='rack_list'),

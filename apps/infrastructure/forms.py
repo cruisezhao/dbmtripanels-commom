@@ -2,7 +2,7 @@ from django import forms
 from .models.network import (DeviceRacks,DataCenters,Vendors,InterfaceRacks,
                                 DevicePowers, DeviceDrives,DeviceKVMs,DeviceMaintenances,
                                 DeviceRouters,DeviceSwitches, DeviceFirewalls,DeviceBares,
-                                InterfaceNetworks,Connections,DEVICE_TYPE,DataCenters)
+                                InterfaceNetworks,Connections,DataCenters)
 from datetimewidget.widgets import DateTimeWidget, DateWidget
 
 
@@ -58,21 +58,24 @@ class DeviceRacksForm(forms.ModelForm):
     )
     class Meta:
         model = DeviceRacks
-        fields = ['name','manufacturer','model',
-                  'sn','rack','u_height','tag','seller','purchase_date',
-                  'price', 'order_no','warranty_date','status',
-                  'data_center','total_electric_current',
-                  'used_electric_current','ec_check_date','power_stripe_amount',
-                  'total_band_width','used_band_width', 'bw_check_date',
-                  'up_router_ip','comments','location']
+        fields = ['data_center','manufacturer','seller','name','tag',
+                  'description', 'type','u_height','size','model_no',
+                  'serial_no','online_date','offline_date','order_date',
+                  'price','order_no','warranty_date','access_method',
+                  'access_port','username','password','status','notes',
+                  'location','network_tag','network_speed','max_bandwidth',
+                  'used_bandwidth','bw_check_date','routing_ip','routing_gateway',
+                  'routing_mask']
 
 
 class DataCentersForm(forms.ModelForm):
     class Meta:
         model =DataCenters
-        fields = ['name','tag','address','city','state',
-                  'country','zip','website','phone','support_email',
-                  'support_portal','username','password','notes']
+        fields = ['name','description','address','region','city',
+                  'state','country','zip','website','phone','support_email',
+                  'support_portal','username','password','status','notes']
+
+
 
 
 class VendorForm(forms.ModelForm):
@@ -84,69 +87,84 @@ class VendorForm(forms.ModelForm):
 class DevicePowerForm(DeviceDateForm):
     class Meta:
         model = DevicePowers
-        fields = ['data_center','name','type','model','manufacturer','sn',
-                  'rack','u_height','tag','seller', 'purchase_date', 'price',
-                  'order_no', 'warranty_date', 'status', 'comments',
-                  'outlet_amount', 'voltage', 'mgmt_ip']
+        fields = ['data_center','manufacturer','seller','name','tag',
+                  'description', 'type','u_height','size','model_no',
+                  'serial_no','online_date','offline_date','order_date',
+                  'price','order_no','warranty_date','access_method',
+                  'access_port','username','password','status','notes',
+                  'total_outlets', 'max_amps', 'used_amps','check_date',
+                  'voltage','color']
 
 
 class DeviceDriveForm(DeviceDateForm):
     class Meta:
         model = DeviceDrives
-        fields = ['data_center','name','type','model','manufacturer','sn',
-                  'rack','u_height','tag','seller', 'purchase_date', 'price',
-                  'order_no', 'warranty_date', 'status', 'comments',
-                  'disk_size','file_system']
+        fields = ['data_center','manufacturer','seller','name','tag',
+                  'description', 'type','u_height','size','model_no',
+                  'serial_no','online_date','offline_date','order_date',
+                  'price','order_no','warranty_date','access_method',
+                  'access_port','username','password','status','notes',
+                  'disk_type','disk_size','file_system','need_power']
 
 
 class DeviceKVMForm(DeviceDateForm):
     class Meta:
         model = DeviceKVMs
-        fields = ['data_center','name','type','model','manufacturer','sn',
-                  'rack','u_height','tag','seller', 'purchase_date', 'price',
-                  'order_no', 'warranty_date', 'status', 'comments',
-                  'account', 'password', 'mgmt_ip', 'port_amount']
+        fields = ['data_center','manufacturer','seller','name','tag',
+                  'description', 'type','u_height','size','model_no',
+                  'serial_no','online_date','offline_date','order_date',
+                  'price','order_no','warranty_date','access_method',
+                  'access_port','username','password','status','notes',
+                  'total_ports', 'port_type']
 
 
 class DeviceRouterForm(DeviceDateForm):
     class Meta:
         model = DeviceRouters
-        fields = ['data_center','name','type','model','manufacturer','sn',
-              'rack','u_height','tag','seller', 'purchase_date', 'price',
-              'order_no', 'warranty_date', 'status', 'comments',
-              'account', 'password', 'mgmt_ip','os_version', 'port_amount']
+        fields = ['data_center','manufacturer','seller','name','tag',
+                  'description', 'type','u_height','size','model_no',
+                  'serial_no','online_date','offline_date','order_date',
+                  'price','order_no','warranty_date','access_method',
+                  'access_port','username','password','status','notes',
+                  'firmware_version', 'total_ports', 'speed']
 
 
 class DeviceSwitcheForm(DeviceDateForm):
      class Meta:
         model = DeviceSwitches
-        fields = ['data_center','name','type','model','manufacturer','sn',
-              'rack','u_height','tag','seller', 'purchase_date', 'price',
-              'order_no', 'warranty_date', 'status', 'comments',
-              'account', 'password', 'mgmt_ip','os_version', 'port_amount']
+        fields = ['data_center','manufacturer','seller','name','tag',
+                  'description', 'type','u_height','size','model_no',
+                  'serial_no','online_date','offline_date','order_date',
+                  'price','order_no','warranty_date','access_method',
+                  'access_port','username','password','status','notes',
+                  'firmware_version','total_ports','speed']
 
 
 class DeviceFirewallForm(DeviceDateForm):
     class Meta:
         model = DeviceFirewalls
-        fields = ['data_center','name','type','model','manufacturer','sn',
-              'rack','u_height','tag','seller', 'purchase_date', 'price',
-              'order_no', 'warranty_date', 'status', 'comments',
-              'account', 'password', 'mgmt_ip','os_version', 'port_amount',
-                'license_amount','safe_area','unsafe_area']
+        fields = ['data_center','manufacturer','seller','name','tag',
+                  'description', 'type','u_height','size','model_no',
+                  'serial_no','online_date','offline_date','order_date',
+                  'price','order_no','warranty_date','access_method',
+                  'access_port','username','password','status','notes',
+                  'firmware_version', 'total_ports', 'total_licenses','speed',]
 
 
 class DeviceBareForm(DeviceDateForm):
 
     class Meta:
         model = DeviceBares
-        fields = ['data_center','name','type','model','manufacturer','sn',
-            'rack','u_height','tag','seller', 'purchase_date', 'price',
-            'order_no', 'warranty_date', 'status', 'comments',
-            'account', 'password', 'mgmt_ip', 'port_amount',
-            'processor_model','no_of_processors','memory_chips','memory_size','motherboard_model',
-            'chassis_model', 'power_supply_model', 'disk_size',
-            'disk_description']
+        fields = ['data_center','manufacturer','seller','name','tag',
+                  'description', 'type','u_height','size','model_no',
+                  'serial_no','online_date','offline_date','order_date',
+                  'price','order_no','warranty_date','access_method',
+                  'access_port','username','password','status','notes',
+                  'memory_model', 'memory_size', 'motherboard_model',
+                  'chassis_model','power_supply_model','disk_size',
+                  'disk_description','has_raid','raid_type','has_ipmi',
+                  'ipmi_username', 'ipmi_password','ipmi_version','total_ports',
+                  'firmware_type','firmware_version','usage']
 
 
 class DeviceMaintenanceForm(DeviceDateForm):
@@ -166,26 +184,26 @@ class DeviceMaintenanceForm(DeviceDateForm):
     )
     class Meta:
         model = DeviceMaintenances
-        fields = ['device', 'user', 'start_time','end_time','task_subject','task_detail',
-            'total_minutes','status','notes']
+        fields = ['device', 'user', 'start_time','end_time','subject',
+                  'description','status','notes']
 
 
 class InterfaceRackForm(forms.ModelForm):
     class Meta:
         model = InterfaceRacks
-        fields = ['device', 'name', 'tag', 'type', 'status', 'description',
-                  'has_rail', 'rail_model', 'unit_no']
+        fields = ['device', 'tag', 'type','name','index','description','status', 'notes',
+                  'has_rail','rail_model', ]
 
 
 class InterfaceNetworkForm(forms.ModelForm):
      class Meta:
         model = InterfaceNetworks
-        fields = ['device', 'name', 'tag', 'type', 'status', 'description',
-                  'speed', 'mac', 'port_model']
+        fields = ['device', 'tag', 'type','name','index','description','status', 'notes',
+                  'port_model', 'port_fast', 'port_type','speed','mac']
 
 
 class ConnectionForm(forms.ModelForm):
 
     class Meta:
         model = Connections
-        fields = ['interface_a', 'interface_b', 'type', 'status', 'description']
+        fields = ['interface_a', 'interface_b', 'type', 'status', 'description','notes']
