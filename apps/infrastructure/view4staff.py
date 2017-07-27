@@ -48,8 +48,8 @@ class DataCenterListView(ObjectListView):
 
 
 class DataCenterView(View):
-    def get(self,request,uuid):
-        datacenter = get_object_or_404(DataCenters, uuid=uuid)
+    def get(self,request,id):
+        datacenter = get_object_or_404(DataCenters, id=id)
         return render(request, "datacenters/datacenter.html",{
             'object':datacenter,
         })
