@@ -1,11 +1,13 @@
 import uuid
 from django.db.models import Count
 from django.utils.safestring import mark_safe
+from django.utils.functional import lazy
 
 def uuid_to_str():
     """convert uuid to str"""
     return uuid.uuid4().hex
 
+@lazy
 def gen_choices(cls, field_name, choices):
     """generate choice count for each choice value"""
     pt_d = {}
