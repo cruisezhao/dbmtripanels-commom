@@ -6,9 +6,16 @@
 <form method="POST" action="" role="form">
 {% csrf_token %}
 
+
 {% block form_body %}
-  {% include 'inc/form/_form_group_body.html' %}
+  {% if form.Group %}
+    {% include 'inc/form/_form_group_body.html' %}
+  {% else %}
+    {% include 'inc/form/_form_body.html' %}
+  {% endif %}
 {% endblock form_body %}
+
+
 
 {% block form_footer %}
   {% include 'inc/form/_form_footer.html' %}
