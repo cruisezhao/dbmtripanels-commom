@@ -18,10 +18,10 @@ from  .view4staff import (RackListView, RackView, RackEditView,RackDeleteView,
 urlpatterns = [
     #vendors
     url(r'^vendors/$', VendorListView.as_view(), name='vendor_list'),
-    url(r'^vendors/(?P<uuid>[a-z\d+]{32})/$', VendorView.as_view(), name='vendor'),
+    url(r'^vendors/(?P<id>[\d+])/$', VendorView.as_view(), name='vendor'),
     url(r'^vendors/add/$', VendorEditView.as_view(), name='vendor_add'),
-    url(r'^vendors/(?P<uuid>[a-z\d+]{32})/edit/$', VendorEditView.as_view(), name='vendor_edit'),
-    url(r'^vendors/(?P<uuid>[a-z\d+]{32})/delete/$', VendorDeleteView.as_view(), name='vendor_delete'),
+    url(r'^vendors/(?P<id>[\d+])/edit/$', VendorEditView.as_view(), name='vendor_edit'),
+    url(r'^vendors/(?P<id>[\d+])/delete/$', VendorDeleteView.as_view(), name='vendor_delete'),
 
     #data center
     url(r'^data-centers/$', DataCenterListView.as_view(), name='data_center_list'),

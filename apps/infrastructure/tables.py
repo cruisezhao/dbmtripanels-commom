@@ -30,7 +30,7 @@ class DataCenterTable(tables.Table):
 
 class VerdorTable(tables.Table):
     pk = ToggleColumn()
-    name = tables.LinkColumn("infras:vendor", args=[A('uuid')])
+    name = tables.LinkColumn("infras:vendor", args=[A('id')])
 
     class Meta:
         model = Vendors
