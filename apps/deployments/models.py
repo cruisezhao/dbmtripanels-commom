@@ -5,6 +5,7 @@ from jsonfield import fields
 from common.apps.products.models import Products, Plans
 from common.apps.users.models import Users
 from common.apps.packages.models import Packages
+from common.apps.infrastructure.models import Devices
 
 # Create your models here.
 
