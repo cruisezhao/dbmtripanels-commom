@@ -16,7 +16,7 @@ class RackTable(tables.Table):
 
 class DataCenterTable(tables.Table):
     pk = ToggleColumn()
-    name = tables.LinkColumn("infras:data_center", args=[A('uuid')])
+    name = tables.LinkColumn("infras:data_center", args=[A('id')])
     class Meta:
         model = DataCenters
         fields = ['pk', 'name', 'address','website','phone','support_email','username']
