@@ -1,82 +1,102 @@
 from django.db import models
 from .util import CreatedUpdatedModel
 from common.utilities.utils import uuid_to_str
-from .network import DataCenters, Interfaces
-
-VLAN_STATUS = (
-    ('USED','used'),
-    ('UNUSED', 'unused'),
-)
-
-AF_CHOICES = (
-    (4, 'IPv4'),
-    (6, 'IPv6'),
-)
-
-PREFIX_STATUS = (
-    ('CONTAINER', 'Container'),
-    ('ACTIVE', 'Active'),
-    ('RESERVED', 'Reserved'),
-    ('DEPRECATED', 'Deprecated')
-)
-
-PREFIX_TYPE = (
-    ('PRIVATE', 'private'),
-    ('PUBLIC', 'public'),
-    ('MANAGEMENT', 'management'),
-)
-
-IPADDRESS_STATUS = (
-    ('ACTIVE', 'Active'),
-    ('RESERVED', 'Reserved'),
-    ('DEPRECATED', 'Deprecated'),
-    ('DHCP', 'DHCP')
-)
-
-IPADDRESS_TYPE = (
-    ('PRIVATE', 'private'),
-    ('PUBLIC', 'public'),
-    ('MANAGEMENT', 'management'),
-)
+from .network import DataCenters, Interfaces, Devices
 
 class VLANs(CreatedUpdatedModel):
     """VLANs"""
+    VLAN_STATUS = (
+        ('Online', 'Online'),
+        ('Offline', 'Offline'),
+    )
+
     data_center = models.ForeignKey(DataCenters, models.SET_NULL, null=True, blank=True)
-    name = models.CharField(max_length=64)
-    vid = models.PositiveSmallIntegerField(verbose_name='VLAN ID')
-    status = models.CharField(max_length=64, choices=VLAN_STATUS)
+    device = models.ForeignKey(Devices, models.SET_NULL, null=True, blank=True)
+    name = models.CharField(max_length=256, null=True, blank=True)
     description = models.TextField(blank=True)
+    vid = models.PositiveSmallIntegerField(verbose_name='VLAN ID')
+    status = models.CharField(max_length=32, choices=VLAN_STATUS)
+    notes = models.TextField(blank=True)
 
     class Meta:
         db_table = "vlans"
 
-class Prefixes(CreatedUpdatedModel):
+class IPPrefixes(CreatedUpdatedModel):
     """IP Prefixes"""
-    family = models.PositiveSmallIntegerField(choices=AF_CHOICES, editable=False)
-    prefix = models.GenericIPAddressField(protocol='both', help_text="IPv4 or IPv6 network with mask")
+    AF_CHOICES = (
+        ('IPv4', 'IPv4'),
+        ('IPv6', 'IPv6'),
+    )
+
+    PREFIX_STATUS = (
+        ('Container', 'Container'),
+        ('Active', 'Active'),
+        ('Reserved', 'Reserved'),
+        ('Deprecated', 'Deprecated'),
+    )
+
+    PREFIX_TYPE = (
+        ('Private', 'Private'),
+        ('Public', 'Public'),
+    )
+
     data_center = models.ForeignKey(DataCenters, models.SET_NULL, null=True, blank=True)
+    device = models.ForeignKey(Devices, models.SET_NULL, null=True, blank=True)
     vlan = models.ForeignKey(VLANs, models.SET_NULL, blank=True, null=True, verbose_name='VLAN')
-    status = models.CharField(max_length=64, choices=PREFIX_STATUS)
+    family = models.PositiveSmallIntegerField(choices=AF_CHOICES, editable=False)
     type = models.CharField(max_length=64, choices=PREFIX_TYPE)
+    prefix = models.GenericIPAddressField(protocol='both', help_text="IPv4 or IPv6 network with mask")
+    notation = models.CharField(max_length=64, null=True, blank=True)
+    gateway_ip = models.GenericIPAddressField(protocol='both', help_text="IPv4 or IPv6 network with mask")
+    net_mask = models.GenericIPAddressField(protocol='both', help_text="IPv4 or IPv6 network with mask")
     description = models.TextField(blank=True)
+    start_ip = models.GenericIPAddressField(protocol='both', help_text="IPv4 or IPv6 network with mask")
+    end_ip = models.GenericIPAddressField(protocol='both', help_text="IPv4 or IPv6 network with mask")
+    online_date = models.DateField('Online Date', null=True, blank=True)
+    offline_date = models.DateField('Offline Date', null=True, blank=True)
+    status = models.CharField(max_length=64, choices=PREFIX_STATUS)
+    notes = models.TextField(blank=True)
 
     class Meta:
-        db_table = "prefixes"
+        db_table = "ip_prefixes"
 
 class IPAddresses(CreatedUpdatedModel):
     """IP Addresses"""
-    family = models.PositiveSmallIntegerField(choices=AF_CHOICES, editable=False)
+    IPADDRESS_STATUS = (
+        ('Active', 'Active'),
+        ('Reserved', 'Reserved'),
+        ('Deprecated', 'Deprecated'),
+        ('DHCP', 'DHCP'),
+    )
+
+    prefix = models.ForeignKey(IPPrefixes, models.SET_NULL, blank=True, null=True, verbose_name='PREFIX')
     address = models.GenericIPAddressField(protocol='both', help_text="IPv4 or IPv6 network with mask")
-    prefix =  models.ForeignKey(Prefixes, models.SET_NULL, blank=True, null=True, verbose_name='PREFIX')
-    interface = models.ForeignKey(Interfaces, related_name='ip_addresses', on_delete=models.SET_NULL, blank=True, null=True)
-    status = models.CharField(max_length=64, choices=IPADDRESS_STATUS)
-    type = models.CharField(max_length=64, choices=IPADDRESS_TYPE)
-    # nat_inside = models.OneToOneField('self', related_name='nat_outside', on_delete=models.SET_NULL, blank=True,
-    #                                   null=True, verbose_name='NAT (Inside)',
-    #                                   help_text="The IP for which this address is the \"outside\" IP")
+    nat_address = models.GenericIPAddressField(protocol='both', help_text="IPv4 or IPv6 network with mask",blank=True, null=True)
     description = models.TextField(blank=True)
+    status = models.CharField(max_length=32, choices=IPADDRESS_STATUS)
+    notes = models.TextField(blank=True)
 
     class Meta:
         db_table = "ip_addresses"
+
+
+class IPInterfaces(CreatedUpdatedModel):
+    """IP Interfaces"""
+    IP_INTERFACE_STATUS = (
+        ('Active', 'Active'),
+        ('Reserved', 'Reserved'),
+        ('Deprecated', 'Deprecated'),
+    )
+
+    interface = models.ForeignKey(Interfaces, on_delete=models.SET_NULL, blank=True, null=True)
+    ip = models.ForeignKey(IPAddresses, on_delete=models.SET_NULL, blank=True, null=True)
+    allocate_date = models.DateField('Allocate Date', null=True, blank=True)
+    revoke_date = models.DateField('Revoke Date', null=True, blank=True)
+    status = models.CharField(max_length=32, choices=IP_INTERFACE_STATUS)
+    notes = models.TextField(blank=True)
+
+    class Meta:
+        db_table = "ip_interfaces"
+
 
 

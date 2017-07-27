@@ -35,7 +35,7 @@ def deploy(deployment_infos):
         #     "dockerCompose": "",
         #     #"rancherCompose": "",
         #     "startOnCreate": ""
-        stack_name=deployment_infos["package_id"]+deployment_infos["product_name"]+time.strftime("%Y%m%d%H%M%S", time.localtime())
+        stack_name=str(deployment_infos["package_id"])+deployment_infos["product_name"]+time.strftime("%Y%m%d%H%M%S", time.localtime())
         app_dict["name"] = stack_name
         app_dict["system"] = settings.deploy_info["system"]
         app_dict["startOnCreate"]=settings.deploy_info["startOnCreate"]
@@ -221,7 +221,7 @@ def get_server_state(cloud_name, server_id):
         state: current state, values can be:'Active','Deactive'
     '''
     if 'rancher' in cloud_name.lower():
-            current_state=rancher_apis.service_state(settings.enviroment_info[cloud_name],server_id)
+        current_state=rancher_apis.service_state(settings.enviroment_info[cloud_name],server_id)
     return current_state
 def add_host(cloud_name, admin_ip,user,password, host_label):
     '''
