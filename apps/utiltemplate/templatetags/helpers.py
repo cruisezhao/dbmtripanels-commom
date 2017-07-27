@@ -110,3 +110,11 @@ def utilization_graph(utilization, warning_threshold=75, danger_threshold=90):
         'warning_threshold': warning_threshold,
         'danger_threshold': danger_threshold,
     }
+    
+
+@register.assignment_tag
+def concat_string(a, b, *args):
+    res = str(a) + str(b)
+    for i in args:
+        res = res + str(i)
+    return res

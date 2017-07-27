@@ -7,7 +7,7 @@
 	    <h3>Detail of {{object}}</h3>
 		{% block button %}
 	    {% endblock %}
-	    <table class="table table-bordered">        
+	    <table class="table table-bordered">
 	        <tr>
 	            <th>Field</th>
 	            <th>Value</th>
@@ -17,7 +17,7 @@
 	            <td>{{object|get_verbose_field_name:field.name}}</td>
 	            <td>{{object|get_value:field.name|default_if_none:""}}</td>
 	        </tr>
-	      {% endfor %}        
+	      {% endfor %}
 	    </table>
 	</div>
 </div>

@@ -7,6 +7,7 @@ from .models import Products, Plans
 from common.utilities.extra_forms import CustomFieldFilterForm
 from datetimewidget.widgets import DateTimeWidget, DateWidget, TimeWidget
 from common.utilities.forms import FilterChoiceField, DateFilterMixin
+from third_party.markdown.odict import OrderedDict
 
 
 def product_type_choice():
@@ -105,6 +106,10 @@ class PlanForm(ModelForm):
     class Meta:
         model = Plans
         fields = ('name', 'cpu','memory','disk','instance','price')
+    
+    class Groups:
+        from collections import OrderedDict
+        groups = OrderedDict([('Group1', ('name', 'cpu', 'price')), ('Group2', ('memory', 'disk', 'instance'))])
 
 
 class PlanFilterForm(DateFilterMixin, forms.Form):

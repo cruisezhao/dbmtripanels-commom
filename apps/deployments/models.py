@@ -114,8 +114,7 @@ class Questions(CreatedUpdatedModel):
         return self.name
     
 
-class Devices(models.Model):
-    uuid = models.CharField(db_index=True, default=uuid_to_str, max_length=255, editable=False)
+
 
 class Servers(CreatedUpdatedModel):
     """Servers"""

@@ -1,12 +1,11 @@
 {% extends 'base.html' %}
 {% load form_helpers %}
 {% load staticfiles %}
-{% block styles %}
-    <link rel="stylesheet" type="text/css" href="{% static 'css/base3_add.css' %}"/>
-{% endblock styles %}
+{% load helpers %}
+
 
 {% block content %}
-    <form action="." method="post" enctype="multipart/form-data" class="form_module">
+    <!-- <form action="." method="post" enctype="multipart/form-data" class="form_module">
         {% csrf_token %}
         {% for field in form.hidden_fields %}
             {{ field }}
@@ -25,13 +24,15 @@
                     </div>
                 {% endif %}
                     <div class="panel panel-default">
-                        <!--<div class="panel-heading"><strong>{{ obj_type|capfirst }}</strong></div>-->
+
                         <div class="panel-body">
                             {% render_form form %}
                         </div>
                     </div>
             </div>
         </div>
+
+
         {% endblock %}
         <div class="Button">
         	<a href="{{ return_url }}" class="btn btn-default">Cancel</a>
@@ -41,8 +42,20 @@
                 <button type="submit" name="_create" class="btn btn-primary">Create</button>
                 <button type="submit" name="_addanother" class="btn btn-primary">Create and Add Another</button>
             {% endif %}
-                
+
         </div>
-        
-    </form>
+
+    </form> -->
+     <div class="box box-info" style="width:600px; margin: auto 40%" >
+
+        {% if obj.pk %}
+            {% concat_string  "Editing " obj_type " " obj as title %}
+        {% else %}
+            {% concat_string  "Create a new " obj_type as title %}
+        {% endif %}
+
+        {% include 'inc/form/base_edit_form.html' with title=title %}
+
+
+    </div>
 {% endblock %}
