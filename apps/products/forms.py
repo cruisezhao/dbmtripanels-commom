@@ -7,7 +7,7 @@ from .models import Products, Plans
 from common.utilities.extra_forms import CustomFieldFilterForm
 from datetimewidget.widgets import DateTimeWidget, DateWidget, TimeWidget
 from common.utilities.forms import FilterChoiceField, DateFilterMixin
-from third_party.markdown.odict import OrderedDict
+
 
 
 def product_type_choice():
