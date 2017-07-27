@@ -297,7 +297,7 @@ class DeviceMaintenances(CreatedUpdatedModel):
     notes = models.TextField(blank=True)
 
     class Meta:
-        db_table = "server_maintenances"
+        db_table = "device_maintenances"
 
     def __str__(self):
         return "{}-{}".format(self.user.username, self.device.name)
