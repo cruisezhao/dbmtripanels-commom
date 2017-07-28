@@ -1,9 +1,10 @@
 from django import forms
-from .models.network import (DeviceRacks,DataCenters,Vendors,InterfaceRacks,
+from .models.network import (DeviceRacks,DataCenters,Vendors,InterfaceRacks,Interfaces,
                                 DevicePowers, DeviceDrives,DeviceKVMs,DeviceMaintenances,
                                 DeviceRouters,DeviceSwitches, DeviceFirewalls,DeviceBares,
                                 InterfaceNetworks,Connections,DataCenters)
 from datetimewidget.widgets import DateTimeWidget, DateWidget
+from .utilities.forms import DeviceComponentForm
 
 
 class DeviceDateForm(forms.ModelForm):
@@ -194,6 +195,16 @@ class InterfaceRackForm(forms.ModelForm):
         fields = ['device', 'tag', 'type','name','index','description','status', 'notes',
                   'has_rail','rail_model', ]
 
+class InterfaceRackCreateForm(DeviceComponentForm):
+    name = forms.CharField(max_length=100, required=False)
+    tag = forms.CharField(max_length=100, required=False)
+    type = forms.ChoiceField(choices=Interfaces.INTERFACE_TYPE)
+    index = forms.CharField(max_length=100, required=False)
+    has_rail = forms.BooleanField(required=False, label='Has Rail')
+    rail_model = forms.CharField(max_length=100, required=False)
+    status = forms.ChoiceField(choices=Interfaces.INTERFACE_STATUS)
+    description = forms.CharField(max_length=100, required=False)
+    notes = forms.CharField(max_length=100, required=False)
 
 class InterfaceNetworkForm(forms.ModelForm):
      class Meta:

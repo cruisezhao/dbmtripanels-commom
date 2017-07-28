@@ -22,7 +22,7 @@
 		</div>
 	</div>
 	<div class="col-lg-8 col-md-6 col-xs-12 inter-connections">
-		<div href="#" class="btn btn-success addnew "><i class="fa fa-plus"></i> Add a new interface</div>
+		<a href="{% url 'infras:rack_interface_add' uuid=object.uuid %}" class="btn btn-success addnew "><i class="fa fa-plus"></i> Add a new interface</a>
 		<table class=" table table-bordered interfacer-table">
             <thead>
               <tr>
@@ -122,7 +122,7 @@
 
                 </td>
                 <td>
-                  <a href="#" class="btn btn-success btn-xs">
+                  <a href="{% url 'infras:connection_add'%}" class="btn btn-success btn-xs">
                       <i class="fa fa-compress" aria-hidden="true" title="Connect"></i>
                   </a>
 

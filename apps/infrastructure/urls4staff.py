@@ -12,7 +12,9 @@ from  .view4staff import (RackListView, RackView, RackEditView,RackDeleteView,
                           DeviceMaintenanceListView,DeviceMaintenanceView,DeviceMaintenanceEditView,DeviceMaintenanceDeleteView,
                           InterfaceRackListView, InterfaceRackView, InterfaceRackEditView,InterfaceRackDeleteView,
                           InterfaceNetworkListView, InterfaceNetworkView,InterfaceNetworkEditView,InterfaceNetworkDeleteView,
-                          ConnectionListView, ConnectionView, ConnectionEditView, ConnectionDeleteView)
+                          ConnectionListView, ConnectionView, ConnectionEditView, ConnectionDeleteView,
+                          # interfaceconnection_add,
+                          InterfaceAddView)
 
 
 urlpatterns = [
@@ -36,6 +38,7 @@ urlpatterns = [
     url(r'^racks/add/$', RackEditView.as_view(), name='rack_add'),
     url(r'^racks/(?P<uuid>[a-z\d+]{32})/edit/$', RackEditView.as_view(), name='rack_edit'),
     url(r'^racks/(?P<uuid>[a-z\d+]{32})/delete/$', RackDeleteView.as_view(), name='rack_delete'),
+    # url(r'^racks/(?P<uuid>[a-z\d+]{32})/interface-connections/add/$', interfaceconnection_add, name='interfaceconnection_add'),
 
     #power
     url(r'^powers/$', DevicePowerList.as_view(), name='power_list'),
@@ -99,6 +102,7 @@ urlpatterns = [
     url(r'^interface-racks/add/$', InterfaceRackEditView.as_view(), name='interface_rack_add'),
     url(r'^interface-racks/(?P<uuid>[a-z\d+]{32})/edit/$', InterfaceRackEditView.as_view(), name='interface_rack_edit'),
     url(r'^interface-racks/(?P<uuid>[a-z\d+]{32})/delete/$', InterfaceRackDeleteView.as_view(), name='interface_rack_delete'),
+    url(r'^racks/(?P<uuid>[a-z\d+]{32})/interfaces/add/$', InterfaceAddView.as_view(), name='rack_interface_add'),
 
     #InterfaceNetworks
     url(r'^interface-networks/$', InterfaceNetworkListView.as_view(), name='interface_network_list'),

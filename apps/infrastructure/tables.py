@@ -11,7 +11,7 @@ class RackTable(tables.Table):
     name = tables.LinkColumn("infras:rack", args=[A('uuid')])
     class Meta:
         model = DeviceRacks
-        fields = ['pk','name','manufacturer','data_center', 'location','power_stripe_amount']
+        fields = ['pk','name','data_center','manufacturer', 'location','network_tag']
         attrs = {
             'class':'table table-hover table-striped dataTable',
         }
