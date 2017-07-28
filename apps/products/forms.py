@@ -9,6 +9,7 @@ from datetimewidget.widgets import DateTimeWidget, DateWidget, TimeWidget
 from common.utilities.forms import FilterChoiceField, DateFilterMixin
 
 
+
 def product_type_choice():
     """choice for product type"""
     pt_d = {}
@@ -105,6 +106,10 @@ class PlanForm(ModelForm):
     class Meta:
         model = Plans
         fields = ('name', 'cpu','memory','disk','instance','price')
+    
+    class Groups:
+        from collections import OrderedDict
+        groups = OrderedDict([('Group1', ('name', 'cpu', 'price')), ('Group2', ('memory', 'disk', 'instance'))])
 
 
 class PlanFilterForm(DateFilterMixin, forms.Form):

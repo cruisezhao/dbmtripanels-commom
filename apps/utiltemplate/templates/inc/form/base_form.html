@@ -1,0 +1,25 @@
+
+{% block form_header %}
+  {% include 'inc/form/_form_header.html' %}
+{% endblock form_header %}
+
+<form method="POST" action="" role="form">
+{% csrf_token %}
+
+
+{% block form_body %}
+  {% if form.Groups %}
+    {% include 'inc/form/_form_group_body.html' %}
+  {% else %}
+    {% include 'inc/form/_form_body.html' %}
+  {% endif %}
+{% endblock form_body %}
+
+
+
+{% block form_footer %}
+  {% include 'inc/form/_form_footer.html' %}
+{% endblock form_footer %}
+
+</form>
+

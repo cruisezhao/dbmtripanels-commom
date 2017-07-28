@@ -5,6 +5,7 @@ from jsonfield import fields
 from common.apps.products.models import Products, Plans
 from common.apps.users.models import Users
 from common.apps.packages.models import Packages
+from common.apps.infrastructure.models import Devices
 
 # Create your models here.
 
@@ -114,8 +115,7 @@ class Questions(CreatedUpdatedModel):
         return self.name
     
 
-class Devices(models.Model):
-    uuid = models.CharField(db_index=True, default=uuid_to_str, max_length=255, editable=False)
+
 
 class Servers(CreatedUpdatedModel):
     """Servers"""
