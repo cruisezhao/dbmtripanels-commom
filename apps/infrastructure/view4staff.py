@@ -9,7 +9,10 @@ from .models.network import (DeviceRacks,DataCenters,Vendors,InterfaceRacks,
 from . import filters
 from . import tables
 from . import forms
-
+from django.urls import reverse
+from django.utils.html import escape
+from django.utils.http import urlencode
+from .utilities.views import ComponentCreateView
 
 class VendorListView(ObjectListView):
     queryset = Vendors.objects.all()
@@ -68,7 +71,7 @@ class DataCenterDeleteView(ObjectDeleteView):
 
 
 class RackListView(ObjectListView):
-    queryset = DeviceRacks.objects.all()
+    queryset = DeviceRacks.objects.select_related('devices_ptr')
     filter = filters.RackFilter
     filter_form = None
     table = tables.RackTable
@@ -375,6 +378,50 @@ class InterfaceNetworkDeleteView(ObjectDeleteView):
     default_return_url = "infras:interface_network_list"
 
 
+# def interfaceconnection_add(request, pk):
+#     device = get_object_or_404(Devices, pk=pk)
+#
+#     if request.method == 'POST':
+#         form = forms.InterfaceConnectionForm(device, request.POST)
+#         if form.is_valid():
+#
+#             interfaceconnection = form.save()
+#
+#             if '_addanother' in request.POST:
+#                 base_url = reverse('dcim:interfaceconnection_add', kwargs={'pk': device.pk})
+#                 device_b = interfaceconnection.interface_b.device
+#                 params = urlencode({
+#                     'rack_b': device_b.rack.pk if device_b.rack else '',
+#                     'device_b': device_b.pk,
+#                 })
+#                 return HttpResponseRedirect('{}?{}'.format(base_url, params))
+#             else:
+#                 return redirect('dcim:device', pk=device.pk)
+#
+#     else:
+#         form = forms.InterfaceConnectionForm(device, initial={
+#             'interface_a': request.GET.get('interface_a'),
+#             'site_b': request.GET.get('site_b'),
+#             'rack_b': request.GET.get('rack_b'),
+#             'device_b': request.GET.get('device_b'),
+#             'interface_b': request.GET.get('interface_b'),
+#         })
+#
+#     return render(request, 'dcim/interfaceconnection_edit.html', {
+#         'device': device,
+#         'form': form,
+#         'return_url': reverse('dcim:device', kwargs={'pk': device.pk}),
+#     })
+
+class InterfaceAddView(ComponentCreateView):
+    parent_model = DeviceRacks
+    parent_field = 'device'
+    model = InterfaceRacks
+    form = forms.InterfaceRackCreateForm
+    model_form = forms.InterfaceRackForm
+    template_name = 'interfaces/interface_rack_add.html'
+
+
 class ConnectionListView(ObjectListView):
     queryset = Connections.objects.all()
     filter = filters.ConnectionFilter
@@ -401,3 +448,5 @@ class ConnectionEditView(ObjectEditView):
 class ConnectionDeleteView(ObjectDeleteView):
     model = Connections
     default_return_url = "infras:connection_list"
+
+

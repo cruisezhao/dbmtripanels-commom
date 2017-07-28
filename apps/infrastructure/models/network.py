@@ -3,6 +3,7 @@ from .util import CreatedUpdatedModel
 from common.utilities.utils import uuid_to_str
 from common.apps.users.models import Users
 from phonenumber_field.modelfields import PhoneNumberField
+from django.core.urlresolvers import reverse
 
 
 class Vendors(CreatedUpdatedModel):
@@ -146,6 +147,10 @@ class DeviceRacks(Devices):
 
     def __str__(self):
         return self.name
+
+    def get_absolute_url(self):
+       return reverse('infras:rack_list')
+
 
 class DevicePowers(Devices):
     """Power Devices"""
@@ -401,7 +406,4 @@ class Connections(CreatedUpdatedModel):
             return "{}-{}-{}".format(self.type,self.interface_a.name,self.interface_b.name)
         else:
             return self.type
-
-
-
 

@@ -7,6 +7,14 @@ from django.conf import settings
 from django.core.validators import URLValidator
 from django.urls import reverse_lazy
 
+class DeviceComponentForm(forms.Form):
+    """
+    Allow inclusion of the parent device as context for limiting field choices.
+    """
+    def __init__(self, device, *args, **kwargs):
+        self.device = device
+        super(DeviceComponentForm, self).__init__(*args, **kwargs)
+
 
 class SelectWithDisabled(forms.Select):
     """
