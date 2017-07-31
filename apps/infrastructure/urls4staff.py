@@ -12,7 +12,15 @@ from  .view4staff import (RackListView, RackView, RackEditView,RackDeleteView,
                           DeviceMaintenanceListView,DeviceMaintenanceView,DeviceMaintenanceEditView,DeviceMaintenanceDeleteView,
                           InterfaceRackListView, InterfaceRackView, InterfaceRackEditView,InterfaceRackDeleteView,
                           InterfaceNetworkListView, InterfaceNetworkView,InterfaceNetworkEditView,InterfaceNetworkDeleteView,
-                          ConnectionListView, ConnectionView, ConnectionEditView, ConnectionDeleteView)
+                          ConnectionListView, ConnectionView, ConnectionEditView, ConnectionDeleteView,
+                          #ip
+                          VlanListView, VlanView, VlanEditView, VlanDeleteView,
+                          IPPrefixListView, IPPrefixView, IPPrefixEditView, IPPrefixDeleteView,
+                          IPAddressListView, IPAddressView, IPAddressEditView, IPAddressDeleteView,
+                          ConnectionListView, ConnectionView, ConnectionEditView, ConnectionDeleteView,
+                          # interfaceconnection_add,
+                          InterfaceAddView)
+
 
 
 urlpatterns = [
@@ -36,6 +44,7 @@ urlpatterns = [
     url(r'^racks/add/$', RackEditView.as_view(), name='rack_add'),
     url(r'^racks/(?P<uuid>[a-z\d+]{32})/edit/$', RackEditView.as_view(), name='rack_edit'),
     url(r'^racks/(?P<uuid>[a-z\d+]{32})/delete/$', RackDeleteView.as_view(), name='rack_delete'),
+    # url(r'^racks/(?P<uuid>[a-z\d+]{32})/interface-connections/add/$', interfaceconnection_add, name='interfaceconnection_add'),
 
     #power
     url(r'^powers/$', DevicePowerList.as_view(), name='power_list'),
@@ -99,6 +108,7 @@ urlpatterns = [
     url(r'^interface-racks/add/$', InterfaceRackEditView.as_view(), name='interface_rack_add'),
     url(r'^interface-racks/(?P<uuid>[a-z\d+]{32})/edit/$', InterfaceRackEditView.as_view(), name='interface_rack_edit'),
     url(r'^interface-racks/(?P<uuid>[a-z\d+]{32})/delete/$', InterfaceRackDeleteView.as_view(), name='interface_rack_delete'),
+    url(r'^racks/(?P<uuid>[a-z\d+]{32})/interfaces/add/$', InterfaceAddView.as_view(), name='rack_interface_add'),
 
     #InterfaceNetworks
     url(r'^interface-networks/$', InterfaceNetworkListView.as_view(), name='interface_network_list'),
@@ -113,4 +123,25 @@ urlpatterns = [
     url(r'^connections/add/$', ConnectionEditView.as_view(), name='connection_add'),
     url(r'^connections/(?P<uuid>[a-z\d+]{32})/edit/$', ConnectionEditView.as_view(), name='connection_edit'),
     url(r'^connections/(?P<uuid>[a-z\d+]{32})/delete/$', ConnectionDeleteView.as_view(), name='connection_delete'),
+
+    #vlan
+    url(r'^vlans/$', VlanListView.as_view(), name='vlan_list'),
+    url(r'^vlans/(?P<id>[\d+])/$', VlanView.as_view(), name='vlan'),
+    url(r'^vlans/add/$', VlanEditView.as_view(), name='vlan_add'),
+    url(r'^vlans/(?P<id>[\d+])/edit/$', VlanEditView.as_view(), name='vlan_edit'),
+    url(r'^vlans/(?P<id>[\d+])/delete/$', VlanDeleteView.as_view(), name='vlan_delete'),
+
+    #prefix
+    url(r'^prefixs/$', IPPrefixListView.as_view(), name='prefix_list'),
+    url(r'^prefixs/(?P<id>[\d+])/$', IPPrefixView.as_view(), name='prefix'),
+    url(r'^prefixs/add/$', IPPrefixEditView.as_view(), name='prefix_add'),
+    url(r'^prefixs/(?P<id>[\d+])/edit/$', IPPrefixEditView.as_view(), name='prefix_edit'),
+    url(r'^prefixs/(?P<id>[\d+])/delete/$', IPPrefixDeleteView.as_view(), name='prefix_delete'),
+
+    #ipaddress
+    url(r'^ip-addresses/$', IPAddressListView.as_view(), name='ip_address_list'),
+    url(r'^ip-addresses/(?P<id>[\d+])/$', IPAddressView.as_view(), name='ip_address'),
+    url(r'^ip-addresses/add/$', IPAddressEditView.as_view(), name='ip_address_add'),
+    url(r'^ip-addresses/(?P<id>[\d+])/edit/$', IPAddressEditView.as_view(), name='ip_address_edit'),
+    url(r'^ip-addresses/(?P<id>[\d+])/delete/$', IPAddressDeleteView.as_view(), name='ip_address_delete'),
 ]

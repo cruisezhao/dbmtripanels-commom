@@ -43,7 +43,7 @@ class IPPrefixes(CreatedUpdatedModel):
     data_center = models.ForeignKey(DataCenters, models.SET_NULL, null=True, blank=True)
     device = models.ForeignKey(Devices, models.SET_NULL, null=True, blank=True)
     vlan = models.ForeignKey(VLANs, models.SET_NULL, blank=True, null=True, verbose_name='VLAN')
-    family = models.PositiveSmallIntegerField(choices=AF_CHOICES, editable=False)
+    family = models.CharField(max_length=32, choices=AF_CHOICES)
     type = models.CharField(max_length=64, choices=PREFIX_TYPE)
     prefix = models.GenericIPAddressField(protocol='both', help_text="IPv4 or IPv6 network with mask")
     notation = models.CharField(max_length=64, null=True, blank=True)

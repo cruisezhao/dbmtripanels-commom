@@ -3,6 +3,7 @@ from .util import CreatedUpdatedModel
 from common.utilities.utils import uuid_to_str
 from common.apps.users.models import Users
 from phonenumber_field.modelfields import PhoneNumberField
+from django.core.urlresolvers import reverse
 
 
 class Vendors(CreatedUpdatedModel):
@@ -22,7 +23,7 @@ class Vendors(CreatedUpdatedModel):
     type = models.CharField(max_length=32, choices=VENDOR_TYPE)
     name = models.CharField(max_length=256,null=True,blank=True)
     description = models.TextField(blank=True)
-    website = models.CharField(max_length=128,null=True,blank=True)
+    website = models.CharField(max_length=256,null=True,blank=True)
     address = models.CharField(max_length=256,null=True,blank=True)
     city = models.CharField(max_length=32,null=True,blank=True)
     state = models.CharField(max_length=32,null=True,blank=True)
@@ -116,7 +117,7 @@ class Devices(CreatedUpdatedModel):
     order_no = models.CharField(max_length=256,null=True,blank=True)
     warranty_date = models.DateField('Warranty Date', null=True, blank=True)
     access_method = models.CharField(max_length=32,null=True,blank=True)
-    access_url = models.CharField(max_length=64,null=True,blank=True)
+    access_url = models.CharField(max_length=256,null=True,blank=True)
     access_port = models.PositiveIntegerField(null=True, blank=True)
     username = models.CharField(max_length=128,null=True,blank=True)
     password = models.CharField(max_length=128,null=True,blank=True)
@@ -146,6 +147,10 @@ class DeviceRacks(Devices):
 
     def __str__(self):
         return self.name
+
+    def get_absolute_url(self):
+       return reverse('infras:rack_list')
+
 
 class DevicePowers(Devices):
     """Power Devices"""
@@ -401,7 +406,4 @@ class Connections(CreatedUpdatedModel):
             return "{}-{}-{}".format(self.type,self.interface_a.name,self.interface_b.name)
         else:
             return self.type
-
-
-
 

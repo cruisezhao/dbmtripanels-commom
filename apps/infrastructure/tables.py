@@ -5,13 +5,14 @@ from .models.network import (DeviceRacks,DataCenters,Vendors,InterfaceRacks,
                                 DeviceRouters,DeviceSwitches, DeviceFirewalls,DeviceBares,
                                 InterfaceNetworks,Connections)
 from common.utilities.tables import ToggleColumn
+from .models.ip import VLANs, IPPrefixes, IPAddresses, IPInterfaces
 
 class RackTable(tables.Table):
     pk = ToggleColumn()
     name = tables.LinkColumn("infras:rack", args=[A('uuid')])
     class Meta:
         model = DeviceRacks
-        fields = ['pk','name','manufacturer','data_center', 'location','power_stripe_amount']
+        fields = ['pk','name','data_center','manufacturer', 'location','network_tag']
         attrs = {
             'class':'table table-hover table-striped dataTable',
         }
@@ -167,6 +168,42 @@ class ConnectionTable(tables.Table):
     class Meta:
         model = Connections
         fields = ['pk','interface_a', 'interface_b', 'type', 'status', 'description']
+        attrs = {
+            'class':'table table-hover table-striped dataTable',
+        }
+
+
+class VlanTable(tables.Table):
+    pk = ToggleColumn()
+    name = tables.LinkColumn("infras:vlan", args=[A("id")])
+
+    class Meta:
+        model = VLANs
+        fields = ['pk', 'name']
+        attrs = {
+            'class':'table table-hover table-striped dataTable',
+        }
+
+
+class IPPrefixTable(tables.Table):
+    pk = ToggleColumn()
+    prefix = tables.LinkColumn("infras:prefix", args=[A("id")])
+
+    class Meta:
+        model = IPPrefixes
+        fields = ['pk', 'prefix']
+        attrs = {
+            'class':'table table-hover table-striped dataTable',
+        }
+
+
+class IPAddressTable(tables.Table):
+    pk = ToggleColumn()
+    address = tables.LinkColumn("infras:ip_address", args=[A("id")])
+
+    class Meta:
+        model = IPAddresses
+        fields = ['pk', 'address']
         attrs = {
             'class':'table table-hover table-striped dataTable',
         }

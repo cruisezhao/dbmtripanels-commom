@@ -6,10 +6,14 @@ from .models.network import (DeviceRacks,DataCenters,Vendors,InterfaceRacks,
                                 DevicePowers, DeviceDrives,DeviceKVMs,DeviceMaintenances,
                                 DeviceRouters,DeviceSwitches, DeviceFirewalls,DeviceBares,
                                 InterfaceNetworks,Connections)
+from .models.ip import VLANs, IPPrefixes, IPAddresses, IPInterfaces
 from . import filters
 from . import tables
 from . import forms
-
+from django.urls import reverse
+from django.utils.html import escape
+from django.utils.http import urlencode
+from .utilities.views import ComponentCreateView
 
 class VendorListView(ObjectListView):
     queryset = Vendors.objects.all()
@@ -68,7 +72,7 @@ class DataCenterDeleteView(ObjectDeleteView):
 
 
 class RackListView(ObjectListView):
-    queryset = DeviceRacks.objects.all()
+    queryset = DeviceRacks.objects.select_related('devices_ptr')
     filter = filters.RackFilter
     filter_form = None
     table = tables.RackTable
@@ -375,6 +379,50 @@ class InterfaceNetworkDeleteView(ObjectDeleteView):
     default_return_url = "infras:interface_network_list"
 
 
+# def interfaceconnection_add(request, pk):
+#     device = get_object_or_404(Devices, pk=pk)
+#
+#     if request.method == 'POST':
+#         form = forms.InterfaceConnectionForm(device, request.POST)
+#         if form.is_valid():
+#
+#             interfaceconnection = form.save()
+#
+#             if '_addanother' in request.POST:
+#                 base_url = reverse('dcim:interfaceconnection_add', kwargs={'pk': device.pk})
+#                 device_b = interfaceconnection.interface_b.device
+#                 params = urlencode({
+#                     'rack_b': device_b.rack.pk if device_b.rack else '',
+#                     'device_b': device_b.pk,
+#                 })
+#                 return HttpResponseRedirect('{}?{}'.format(base_url, params))
+#             else:
+#                 return redirect('dcim:device', pk=device.pk)
+#
+#     else:
+#         form = forms.InterfaceConnectionForm(device, initial={
+#             'interface_a': request.GET.get('interface_a'),
+#             'site_b': request.GET.get('site_b'),
+#             'rack_b': request.GET.get('rack_b'),
+#             'device_b': request.GET.get('device_b'),
+#             'interface_b': request.GET.get('interface_b'),
+#         })
+#
+#     return render(request, 'dcim/interfaceconnection_edit.html', {
+#         'device': device,
+#         'form': form,
+#         'return_url': reverse('dcim:device', kwargs={'pk': device.pk}),
+#     })
+
+class InterfaceAddView(ComponentCreateView):
+    parent_model = DeviceRacks
+    parent_field = 'device'
+    model = InterfaceRacks
+    form = forms.InterfaceRackCreateForm
+    model_form = forms.InterfaceRackForm
+    template_name = 'interfaces/interface_rack_add.html'
+
+
 class ConnectionListView(ObjectListView):
     queryset = Connections.objects.all()
     filter = filters.ConnectionFilter
@@ -401,3 +449,87 @@ class ConnectionEditView(ObjectEditView):
 class ConnectionDeleteView(ObjectDeleteView):
     model = Connections
     default_return_url = "infras:connection_list"
+
+
+class VlanListView(ObjectListView):
+    queryset = VLANs.objects.all()
+    filter = filters.VlanFilter
+    filter_form = None
+    table = tables.VlanTable
+    template_name = "ips/vlan_list.html"
+
+
+class VlanView(View):
+    def get(self,request, id):
+        vlan = get_object_or_404(VLANs,id=id)
+        return render(request, "ips/vlan.html",{
+            "object":vlan,
+        })
+
+
+class VlanEditView(ObjectEditView):
+    model = VLANs
+    default_return_url = "infras:vlan_list"
+    form_class = forms.VlanForm
+    template_name = "ips/vlan_edit.html"
+
+
+class VlanDeleteView(ObjectDeleteView):
+    model = VLANs
+    default_return_url = "infras:vlan_list"
+
+
+class IPPrefixListView(ObjectListView):
+    queryset = IPPrefixes.objects.all()
+    filter = filters.IPPrefixFilter
+    filter_form = None
+    table = tables.IPPrefixTable
+    template_name = "ips/ip_prefix_list.html"
+
+
+class IPPrefixView(View):
+    def get(self,request, id):
+        prefix = get_object_or_404(IPPrefixes,id=id)
+        return render(request, "ips/ip_prefix.html",{
+            "object":prefix,
+        })
+
+
+class IPPrefixEditView(ObjectEditView):
+    model = IPPrefixes
+    default_return_url = "infras:prefix_list"
+    form_class = forms.IPPrefixForm
+    template_name = "ips/ip_prefix_edit.html"
+
+
+class IPPrefixDeleteView(ObjectDeleteView):
+    model = IPPrefixes
+    default_return_url = "infras:prefix_list"
+
+
+class IPAddressListView(ObjectListView):
+    queryset = IPAddresses.objects.all()
+    filter = filters.IPAddressFilter
+    filter_form = None
+    table = tables.IPAddressTable
+    template_name = "ips/ip_address_list.html"
+
+
+class IPAddressView(ObjectListView):
+    def get(self, request, id):
+        address = get_object_or_404(IPAddresses,id=id)
+        return render(request, "ips/ip_address.html",{
+            "object":address,
+        })
+
+
+class IPAddressEditView(ObjectEditView):
+    model = IPAddresses
+    default_return_url = "infras:ip_address_list"
+    form_class = forms.IPAddressForm
+    template_name = "ips/ip_address_edit.html"
+
+
+class IPAddressDeleteView(ObjectDeleteView):
+    model = IPAddresses
+    default_return_url = "infras:ip_address_list"
