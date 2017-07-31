@@ -3,6 +3,7 @@ from .models.network import (DeviceRacks,DataCenters,Vendors,InterfaceRacks,
                                 DevicePowers, DeviceDrives,DeviceKVMs,DeviceMaintenances,
                                 DeviceRouters,DeviceSwitches, DeviceFirewalls,DeviceBares,
                                 InterfaceNetworks,Connections)
+from .models.ip import VLANs, IPPrefixes, IPAddresses, IPInterfaces
 
 class RackFilter(django_filters.FilterSet):
     """rack filter"""
@@ -89,3 +90,21 @@ class ConnectionFilter(django_filters.FilterSet):
     class Meta:
         model = Connections
         fields = ['type', 'status']
+
+
+class VlanFilter(django_filters.FilterSet):
+    class Meta:
+        model =VLANs
+        fields = ['name']
+
+
+class IPPrefixFilter(django_filters.FilterSet):
+    class Meta:
+        model =IPPrefixes
+        fields = ['type']
+
+
+class IPAddressFilter(django_filters.FilterSet):
+    class Meta:
+        model =IPAddresses
+        fields = ['status']

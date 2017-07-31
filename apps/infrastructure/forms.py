@@ -5,6 +5,7 @@ from .models.network import (DeviceRacks,DataCenters,Vendors,InterfaceRacks,Inte
                                 InterfaceNetworks,Connections,DataCenters)
 from datetimewidget.widgets import DateTimeWidget, DateWidget
 from .utilities.forms import DeviceComponentForm
+from .models.ip import VLANs, IPPrefixes, IPAddresses, IPInterfaces
 
 
 class DeviceDateForm(forms.ModelForm):
@@ -218,3 +219,26 @@ class ConnectionForm(forms.ModelForm):
     class Meta:
         model = Connections
         fields = ['interface_a', 'interface_b', 'type', 'status', 'description','notes']
+
+
+class VlanForm(forms.ModelForm):
+
+    class Meta:
+        model = VLANs
+        fields = ['data_center', 'device', 'name', 'description', 'vid','status','notes']
+
+
+class IPPrefixForm(forms.ModelForm):
+    class Meta:
+        model = IPPrefixes
+        fields = ['data_center', 'device', 'vlan','family',
+                  'type','prefix','notation','gateway_ip',
+                  'net_mask','description','start_ip','end_ip','online_date',
+                  'offline_date','status','notes']
+
+
+class IPAddressForm(forms.ModelForm):
+    class Meta:
+        model = IPAddresses
+        fields = ['prefix', 'address', 'nat_address',
+                  'description','status','notes']
