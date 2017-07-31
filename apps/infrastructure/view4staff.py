@@ -497,14 +497,14 @@ class IPPrefixView(View):
 
 class IPPrefixEditView(ObjectEditView):
     model = IPPrefixes
-    default_return_url = "infras:ip_prefix_list"
+    default_return_url = "infras:prefix_list"
     form_class = forms.IPPrefixForm
     template_name = "ips/ip_prefix_edit.html"
 
 
 class IPPrefixDeleteView(ObjectDeleteView):
     model = IPPrefixes
-    default_return_url = "infras:ip_prefix_list"
+    default_return_url = "infras:prefix_list"
 
 
 class IPAddressListView(ObjectListView):

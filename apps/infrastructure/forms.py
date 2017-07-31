@@ -231,7 +231,7 @@ class VlanForm(forms.ModelForm):
 class IPPrefixForm(forms.ModelForm):
     class Meta:
         model = IPPrefixes
-        fields = ['data_center', 'device', 'vlan',
+        fields = ['data_center', 'device', 'vlan','family',
                   'type','prefix','notation','gateway_ip',
                   'net_mask','description','start_ip','end_ip','online_date',
                   'offline_date','status','notes']
