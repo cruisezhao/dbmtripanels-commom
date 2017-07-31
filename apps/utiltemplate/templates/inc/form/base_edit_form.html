@@ -4,16 +4,7 @@
 
 {% block form_footer %}
 
-    <div class="box-footer">
-
-        <a href="{{ return_url }}" class="btn btn-default">Cancel</a>
-        {% if obj.pk %}
-            <button type="submit" name="_update" class="btn btn-primary pull-right">Update</button>
-        {% else %}
-            <button type="submit" name="_create" class="btn btn-primary">Create</button>
-            <button type="submit" name="_addanother" class="btn btn-primary pull-right">Create and Add Another</button>
-        {% endif %}
-    </div>
+    {% include 'inc/form/_form_advanced_footer.html' %}
 
 
 {% endblock form_footer %}

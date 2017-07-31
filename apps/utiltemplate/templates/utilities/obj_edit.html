@@ -46,16 +46,26 @@
         </div>
 
     </form> -->
-     <div class="box box-info" style="width:600px; margin: auto 25%" >
 
-        {% if obj.pk %}
-            {% concat_string  "Editing " obj_type " " obj as title %}
-        {% else %}
-            {% concat_string  "Create a new " obj_type as title %}
-        {% endif %}
-
-        {% include 'inc/form/base_edit_form.html' with title=title %}
+    {% include 'inc/content_header.html' with title=obj_type %}
+    <div class="container">
+    <div class="row">
+        <div class="col-xs-12 col-md-4">
+        <div class="box box-info">
 
 
+            {% if obj.pk %}
+                {% concat_string  "Editing " obj_type " " obj as title %}
+            {% else %}
+                {% concat_string  "Create a new " obj_type as title %}
+            {% endif %}
+
+            {% include 'inc/form/base_edit_form.html' with title=title %}
+
+
+
+        </div>
+        </div>
+    </div>
     </div>
 {% endblock %}
