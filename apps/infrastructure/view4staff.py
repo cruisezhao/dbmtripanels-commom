@@ -28,6 +28,8 @@ class VendorView(View):
         vendor = get_object_or_404(Vendors, id=id)
         return render(request, 'vendors/vendor.html',{
             'object':vendor,
+            'detail_exclude':['id','created_date','created_by',
+                'updated_date','updated_by','username','password'],
         })
 
 
@@ -85,6 +87,8 @@ class RackView(View):
         rack = get_object_or_404(DeviceRacks, uuid = uuid)
         return render(request, "racks/rack.html",{
             'object':rack,
+            'detail_exclude':['id','uuid','created_date','created_by',
+                'updated_date','updated_by','username','password'],
         })
 
 
