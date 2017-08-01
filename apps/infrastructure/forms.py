@@ -4,7 +4,7 @@ from .models.network import (DeviceRacks,DataCenters,Vendors,InterfaceRacks,Inte
                                 DeviceRouters,DeviceSwitches, DeviceFirewalls,DeviceBares,
                                 InterfaceNetworks,Connections,DataCenters)
 from datetimewidget.widgets import DateTimeWidget, DateWidget
-from .utilities.forms import DeviceComponentForm
+from .utilities.forms import DeviceComponentForm, ExpandableNameField
 from .models.ip import VLANs, IPPrefixes, IPAddresses, IPInterfaces
 
 
@@ -191,7 +191,7 @@ class DeviceMaintenanceForm(DeviceDateForm):
 
 
 class InterfaceCreateForm(DeviceComponentForm):
-    name = forms.CharField(max_length=100, required=False)
+    name_pattern = ExpandableNameField(label='Name')
     tag = forms.CharField(max_length=100, required=False)
     type = forms.ChoiceField(choices=Interfaces.INTERFACE_TYPE)
     index = forms.IntegerField(required=False)
