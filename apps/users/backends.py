@@ -16,6 +16,6 @@ class AllowAdminGroupUsersModelBackend(ModelBackend):
 class AllowStaffGroupUsersModelBackend(ModelBackend):
     def user_can_authenticate(self, user):
         is_superuser = getattr(user, 'is_superuser', None)
-        print('is_superuser', is_superuser)
-        print('is staff member', is_member(user, 'staff'))
+        # print('is_superuser', is_superuser)
+        # print('is staff member', is_member(user, 'staff'))
         return is_member(user, 'staff') or is_superuser or is_superuser is None

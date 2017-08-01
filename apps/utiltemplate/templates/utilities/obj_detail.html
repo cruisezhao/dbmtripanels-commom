@@ -12,7 +12,7 @@
 	            <th>Field</th>
 	            <th>Value</th>
 	        </tr>
-	      {% for field in object|get_model_fields:exclude_field_names %}
+	      {% for field in object|get_model_fields:detail_exclude %}
 	        <tr>
 	            <td>{{object|get_verbose_field_name:field.name}}</td>
 	            <td>{{object|get_value:field.name|default_if_none:""}}</td>
