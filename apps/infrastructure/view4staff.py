@@ -1,19 +1,18 @@
+from common.utilities.views import (ObjectListView, ObjectEditView,
+                                    ObjectDeleteView)
 from django.shortcuts import render, get_object_or_404
 from django.views.generic import View
-from common.utilities.views import (ObjectListView, ObjectEditView,
-                            ObjectDeleteView)
 from .models.network import (DeviceRacks,DataCenters,Vendors,InterfaceRacks,
                                 DevicePowers, DeviceDrives,DeviceKVMs,DeviceMaintenances,
                                 DeviceRouters,DeviceSwitches, DeviceFirewalls,DeviceBares,
                                 InterfaceNetworks,Connections)
+
 from .models.ip import VLANs, IPPrefixes, IPAddresses, IPInterfaces
 from . import filters
-from . import tables
 from . import forms
-from django.urls import reverse
-from django.utils.html import escape
-from django.utils.http import urlencode
-from .utilities.views import ComponentCreateView
+from . import tables
+from .views import InterfaceCreateView
+
 
 class VendorListView(ObjectListView):
     queryset = Vendors.objects.all()
@@ -418,13 +417,12 @@ class InterfaceNetworkDeleteView(ObjectDeleteView):
 #         'return_url': reverse('dcim:device', kwargs={'pk': device.pk}),
 #     })
 
-class InterfaceAddView(ComponentCreateView):
+class InterfaceAddView(InterfaceCreateView):
     parent_model = DeviceRacks
     parent_field = 'device'
     model = InterfaceRacks
-    form = forms.InterfaceRackCreateForm
-    model_form = forms.InterfaceRackForm
-    template_name = 'interfaces/interface_rack_add.html'
+    form = forms.InterfaceCreateForm
+    template_name = 'interfaces/interface_add.html'
 
 
 class ConnectionListView(ObjectListView):

@@ -151,6 +151,9 @@ class DeviceRacks(Devices):
     def get_absolute_url(self):
        return reverse('infras:rack_list')
 
+    def get_detail_url(self):
+        return reverse('infras:rack', args=(self.uuid,))
+
 
 class DevicePowers(Devices):
     """Power Devices"""
@@ -367,7 +370,7 @@ class InterfaceNetworks(Interfaces):
     port_fast = models.NullBooleanField()
     port_type = models.CharField(max_length=32, choices=NETWORK_PORT_TYPE, null=True, blank=True)
     speed = models.PositiveIntegerField(null=True, blank=True)
-    mac = models.CharField(max_length=128, verbose_name='MAC Address')
+    mac = models.CharField(max_length=128, verbose_name='MAC Address', null=True, blank=True)
 
     class Meta:
         db_table = "interface_networks"

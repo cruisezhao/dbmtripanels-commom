@@ -190,28 +190,45 @@ class DeviceMaintenanceForm(DeviceDateForm):
                   'description','status','notes']
 
 
+class InterfaceCreateForm(DeviceComponentForm):
+    name = forms.CharField(max_length=100, required=False)
+    tag = forms.CharField(max_length=100, required=False)
+    type = forms.ChoiceField(choices=Interfaces.INTERFACE_TYPE)
+    index = forms.IntegerField(required=False)
+    #rack interface attr
+    has_rail = forms.BooleanField(required=False, label='Has Rail')
+    rail_model = forms.CharField(max_length=100, required=False)
+    #network interface attr
+    port_model = forms.ChoiceField(choices=InterfaceNetworks.NETWORK_PORT_MODEL)
+    port_fast = forms.BooleanField(required=False, label='Port Fast')
+    speed = forms.IntegerField(required=False)
+    mac = forms.CharField(max_length=100, required=False)
+
+    status = forms.ChoiceField(choices=Interfaces.INTERFACE_STATUS)
+    description = forms.CharField(max_length=100, required=False)
+    notes = forms.CharField(max_length=100, required=False)
+
+    class Groups:
+        from collections import OrderedDict
+        groups = OrderedDict([('Group1', ('has_rail', 'rail_model')), ('Group2', ('port_model', 'port_fast', 'speed', 'mac'))])
+
 class InterfaceRackForm(forms.ModelForm):
     class Meta:
         model = InterfaceRacks
         fields = ['device', 'tag', 'type','name','index','description','status', 'notes',
                   'has_rail','rail_model', ]
 
-class InterfaceRackCreateForm(DeviceComponentForm):
-    name = forms.CharField(max_length=100, required=False)
-    tag = forms.CharField(max_length=100, required=False)
-    type = forms.ChoiceField(choices=Interfaces.INTERFACE_TYPE)
-    index = forms.CharField(max_length=100, required=False)
-    has_rail = forms.BooleanField(required=False, label='Has Rail')
-    rail_model = forms.CharField(max_length=100, required=False)
-    status = forms.ChoiceField(choices=Interfaces.INTERFACE_STATUS)
-    description = forms.CharField(max_length=100, required=False)
-    notes = forms.CharField(max_length=100, required=False)
-
 class InterfaceNetworkForm(forms.ModelForm):
      class Meta:
         model = InterfaceNetworks
         fields = ['device', 'tag', 'type','name','index','description','status', 'notes',
                   'port_model', 'port_fast', 'port_type','speed','mac']
+
+
+class InterfaceForm(forms.ModelForm):
+    class Meta:
+        model = Interfaces
+        fields = ['device', 'tag', 'type', 'name', 'index', 'description', 'status', 'notes']
 
 
 class ConnectionForm(forms.ModelForm):
