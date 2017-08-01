@@ -90,8 +90,10 @@ class ObjectEditView(GetReturnURLMixin, View):
 
     def get_object(self, kwargs):
         """look up object by uuid"""
-        if 'uuid' in kwargs:
+        if hasattr(self.model, 'uuid'):
             return get_object_or_404(self.model, uuid = kwargs['uuid'])
+        else:
+            return get_object_or_404(self.model, id = kwargs['id'])
         return self.model()
 
     def get(self, request, *args, **kwargs):

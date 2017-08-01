@@ -21,6 +21,9 @@ class VLANs(CreatedUpdatedModel):
     class Meta:
         db_table = "vlans"
 
+    def __str__(self):
+        return self.name
+
 class IPPrefixes(CreatedUpdatedModel):
     """IP Prefixes"""
     AF_CHOICES = (
