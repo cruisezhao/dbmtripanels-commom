@@ -172,12 +172,15 @@ class ConnectionTable(tables.Table):
             'class':'table table-hover table-striped dataTable',
         }
 
-
+STATUS_LABEL = """
+    <span class="label label-{{record.get_status_class}}">{{ record.status }}</span>
+"""
 class VlanTable(tables.Table):
     pk = ToggleColumn()
     name = tables.LinkColumn("infras:vlan", args=[A("id")])
     data_center = tables.LinkColumn("infras:data_center", args=[A('data_center.id')])
     device = tables.LinkColumn(A('get_device_url'), args=[A('device.uuid')])
+    status = tables.TemplateColumn(STATUS_LABEL)
     class Meta:
         model = VLANs
         fields = ['pk', 'name','data_center','device','vid','status']
