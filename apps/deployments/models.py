@@ -1,11 +1,12 @@
-from django.db import models
-from common.utilities.models import CreatedUpdatedModel
-from common.utilities.utils import uuid_to_str
-from jsonfield import fields
+from common.apps.infrastructure.models.network import Devices
+from common.apps.packages.models import Packages
 from common.apps.products.models import Products, Plans
 from common.apps.users.models import Users
-from common.apps.packages.models import Packages
-from common.apps.infrastructure.models import Devices
+from common.utilities.models import CreatedUpdatedModel
+from common.utilities.utils import uuid_to_str
+from django.db import models
+from jsonfield import fields
+
 
 # Create your models here.
 
