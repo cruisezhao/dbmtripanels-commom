@@ -177,6 +177,7 @@ class VlanTable(tables.Table):
     pk = ToggleColumn()
     name = tables.LinkColumn("infras:vlan", args=[A("id")])
     data_center = tables.LinkColumn("infras:data_center", args=[A('data_center.id')])
+    device = tables.LinkColumn(A('get_device_url'), args=[A('device.uuid')])
     class Meta:
         model = VLANs
         fields = ['pk', 'name','data_center','device','vid','status']

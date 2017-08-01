@@ -24,6 +24,10 @@ class VLANs(CreatedUpdatedModel):
     def __str__(self):
         return self.name
 
+    def get_device_url(self):
+        return "infras:{}".format(self.device.type.lower())
+
+
 class IPPrefixes(CreatedUpdatedModel):
     """IP Prefixes"""
     AF_CHOICES = (
