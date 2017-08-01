@@ -1,24 +1,114 @@
 {% extends "base.html" %}
 {% load crudbuilder %}
+{% load helpers %}
 
 {% block content %}
+
 <div id="content_wrapper">
 	<div style="margin:20px;">
 	    <h3>Detail of {{object}}</h3>
 		{% block button %}
 	    {% endblock %}
-	    <table class="table table-bordered">
-	        <tr>
-	            <th>Field</th>
-	            <th>Value</th>
-	        </tr>
-	      {% for field in object|get_model_fields:detail_exclude %}
-	        <tr>
-	            <td>{{object|get_verbose_field_name:field.name}}</td>
-	            <td>{{object|get_value:field.name|default_if_none:""}}</td>
-	        </tr>
-	      {% endfor %}
-	    </table>
+	    {% if groups %}
+		    {% for group_name, field_name_list in groups.items %}
+		    <div class="panel panel-default">
+			 <div class="panel-heading"><strong>{{group_name}}</strong></div>
+		     <table class="table table-bordered panel-body attr-table">
+
+		      {% comment %}
+	 	      {% for field in object|get_model_fields:detail_exclude %}
+		        <tr>
+		            <td>{{object|get_verbose_field_name:field.name}}</td>
+		            <td>{{object|get_value:field.name|default_if_none:""}}</td>
+		        </tr>
+		      {% endfor %}
+		      {% endcomment %}
+
+
+		      <tbody>
+	           {% for field_name in field_name_list %}
+	        		<tr>
+		              	<td>{{object|get_verbose_field_name:field_name}}</td>
+		              	{% with object|get_field:field_name as f %}
+
+		              	{% if f.many_to_one %}
+		              	<td><a href="{{object|get_related_absolute_url:field_name}}">{{object|get_value:field_name|default_if_none:""}}</a></td>
+		              	{% elif f.many_to_many or f.one_to_many %}
+		              	<td>
+		              	{% for obj in object|get_related_objs:field_name %}
+		              	<a href="{{obj.get_absolute_url}}">{{obj|default_if_none:""}}</a>
+		              	{% if not forloop.last %}
+		              	<span>, </span>
+		              	{% endif %}
+		              	{% endfor %}
+		              	</td>
+		              	{% else %}
+		        		<td>{{object|get_value:field_name|default_if_none:""}}</td>
+		        		{% endif %}
+		        		{% endwith %}
+		        	  </tr>
+	           {% endfor %}
+			  </tbody>
+		    </table>
+
+		    </div>
+		    {% endfor %}
+	    {% else %}
+	     {% if fields %}
+	     	<table class="table table-bordered">
+		        <thead>
+		            <tr>
+		                <th>Field</th>
+		                <th>Value</th>
+		            </tr>
+		        </thead>
+		        <tbody>
+		            {% for field_name in fields %}
+		        	  <tr>
+		              	<td>{{object|get_verbose_field_name:field_name}}</td>
+		              	{% with object|get_field:field_name as f %}
+
+		              	{% if f.many_to_one %}
+		              	<td><a href="{{object|get_related_absolute_url:field_name}}">{{object|get_value:field_name|default_if_none:""}}</a></td>
+		              	{% elif f.many_to_many or f.one_to_many %}
+		              	<td>
+		              	{% for obj in object|get_related_objs:field_name %}
+		              	<a href="{{obj.get_absolute_url}}">{{obj|default_if_none:""}}</a>
+		              	{% if not forloop.last %}
+		              	<span>, </span>
+		              	{% endif %}
+		              	{% endfor %}
+		              	</td>
+		              	{% else %}
+		        		<td>{{object|get_value:field_name|default_if_none:""}}</td>
+		        		{% endif %}
+		        		{% endwith %}
+		        	  </tr>
+		            {% endfor %}
+		        </tbody>
+		    </table>
+	     {% else %}
+	     	 <table class="table table-bordered">
+		        <thead>
+		            <tr>
+		                <th>Field</th>
+		                <th>Value</th>
+		            </tr>
+		        </thead>
+		        <tbody>
+		            {% for field in object|get_model_fields %}
+		        	   <tr>
+		        		  <td>{{object|get_verbose_field_name:field.name}}</td>
+		        		  <td>{{object|get_value:field.name}}</td>
+		        	   </tr>
+		            {% endfor %}
+		        </tbody>
+		    </table>
+	     {% endif %}
+
+	   {% endif %}
 	</div>
 </div>
+
+
 {% endblock content %}

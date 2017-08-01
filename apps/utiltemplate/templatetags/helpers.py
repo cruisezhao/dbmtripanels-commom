@@ -118,3 +118,32 @@ def concat_string(a, b, *args):
     for i in args:
         res = res + str(i)
     return res
+
+@register.filter
+def get_field(instance, field_name):
+    """
+    Returns field object for a model instance
+    """
+    return instance._meta.get_field(field_name)
+
+@register.filter
+def get_related_absolute_url(instance, field_name):
+    """
+    Returns field object for a model instance
+    """
+    if hasattr(instance, field_name) and getattr(instance, field_name):
+        
+        return getattr(instance, field_name).get_absolute_url()
+    else:
+        return ""
+    
+@register.filter
+def get_related_objs(instance, field_name):
+    """
+    Returns field object for a model instance
+    """
+    if hasattr(instance, field_name) and getattr(instance, field_name):
+        
+        return getattr(instance, field_name).all()
+    else:
+        return ""
