@@ -10,7 +10,7 @@ class InterfaceCreateView(View):
     model = None
     form = None
     model_form = None
-    template_name = 'interfaces/interface_rack_add.html'
+    template_name = None
 
     def get(self, request, uuid):
 

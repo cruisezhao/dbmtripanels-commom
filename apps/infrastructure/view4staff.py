@@ -422,7 +422,7 @@ class InterfaceAddView(InterfaceCreateView):
     parent_field = 'device'
     model = InterfaceRacks
     form = forms.InterfaceCreateForm
-    template_name = 'interfaces/interface_rack_add.html'
+    template_name = 'interfaces/interface_add.html'
 
 
 class ConnectionListView(ObjectListView):
