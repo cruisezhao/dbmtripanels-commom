@@ -57,6 +57,8 @@ class DataCenterView(View):
         datacenter = get_object_or_404(DataCenters, id=id)
         return render(request, "datacenters/datacenter.html",{
             'object':datacenter,
+            'detail_exclude':['id','uuid','created_date','created_by',
+                'updated_date','updated_by',],
         })
 
 
@@ -116,6 +118,8 @@ class DevicePowerView(View):
         power = get_object_or_404(DevicePowers, uuid = uuid)
         return render(request,"powers/power.html",{
             "object":power,
+            'detail_exclude':['id','uuid','created_date','created_by',
+                'updated_date','updated_by',],
         })
 
 
@@ -144,6 +148,8 @@ class DeviceDriveView(View):
         drive = get_object_or_404(DeviceDrives, uuid=uuid)
         return render(request, "drivers/drive.html",{
             'object':drive,
+            'detail_exclude':['id','uuid','created_date','created_by',
+                'updated_date','updated_by',],
         })
 
 
@@ -172,6 +178,8 @@ class DeviceKVMView(View):
         KVM = get_object_or_404(DeviceKVMs, uuid=uuid)
         return render(request, "kvms/kvm.html",{
             'object':KVM,
+            'detail_exclude':['id','uuid','created_date','created_by',
+                'updated_date','updated_by',],
         })
 
 
@@ -200,6 +208,8 @@ class DeviceRouterView(View):
         router = get_object_or_404(DeviceRouters, uuid=uuid)
         return render(request, "routers/router.html",{
             'object':router,
+            'detail_exclude':['id','uuid','created_date','created_by',
+                'updated_date','updated_by',],
         })
 
 
@@ -228,6 +238,8 @@ class DeviceSwitcheView(View):
         switche = get_object_or_404(DeviceSwitches, uuid=uuid)
         return render(request, "switches/switche.html",{
             'object':switche,
+            'detail_exclude':['id','uuid','created_date','created_by',
+                'updated_date','updated_by',],
         })
 
 
@@ -256,6 +268,8 @@ class DeviceFirewallView(View):
         firewall = get_object_or_404(DeviceFirewalls, uuid=uuid)
         return render(request, "firewalls/firewall.html",{
             'object':firewall,
+            'detail_exclude':['id','uuid','created_date','created_by',
+                'updated_date','updated_by',],
         })
 
 
@@ -284,6 +298,8 @@ class DeviceBareView(View):
         bare = get_object_or_404(DeviceBares, uuid=uuid)
         return render(request, "bares/bare.html",{
             'object':bare,
+            'detail_exclude':['id','uuid','created_date','created_by',
+                'updated_date','updated_by',],
         })
 
 
@@ -312,6 +328,8 @@ class DeviceMaintenanceView(View):
         maintenace = get_object_or_404(DeviceMaintenances, uuid=uuid)
         return render(request, "maintenances/maintenace.html",{
             "object":maintenace,
+            'detail_exclude':['id','uuid','created_date','created_by',
+                'updated_date','updated_by',],
         })
 
 
@@ -328,6 +346,8 @@ class InterfaceRackView(View):
         Irack = get_object_or_404(InterfaceRacks, uuid=uuid)
         return render(request, "interfaces/interface_rack.html",{
             "object":Irack,
+            'detail_exclude':['id','uuid','created_date','created_by',
+                'updated_date','updated_by',],
         })
 
 
@@ -367,6 +387,8 @@ class InterfaceNetworkView(View):
         network = get_object_or_404(InterfaceNetworks, uuid=uuid)
         return render(request, "interfaces/interface_network.html",{
             "object":network,
+            'detail_exclude':['id','uuid','created_date','created_by',
+                'updated_date','updated_by',],
         })
 
 
@@ -438,6 +460,8 @@ class ConnectionView(View):
         connection = get_object_or_404(Connections, uuid=uuid)
         return render(request, "interfaces/connection.html",{
             "object":connection,
+            'detail_exclude':['id','uuid','created_date','created_by',
+                'updated_date','updated_by',],
         })
 
 
@@ -466,6 +490,8 @@ class VlanView(View):
         vlan = get_object_or_404(VLANs,id=id)
         return render(request, "ips/vlan.html",{
             "object":vlan,
+            'detail_exclude':['id','uuid','created_date','created_by',
+                'updated_date','updated_by',],
         })
 
 
@@ -494,6 +520,8 @@ class IPPrefixView(View):
         prefix = get_object_or_404(IPPrefixes,id=id)
         return render(request, "ips/ip_prefix.html",{
             "object":prefix,
+            'detail_exclude':['id','uuid','created_date','created_by',
+                'updated_date','updated_by',],
         })
 
 
@@ -522,6 +550,8 @@ class IPAddressView(ObjectListView):
         address = get_object_or_404(IPAddresses,id=id)
         return render(request, "ips/ip_address.html",{
             "object":address,
+            'detail_exclude':['id','uuid','created_date','created_by',
+                'updated_date','updated_by',],
         })
 
 

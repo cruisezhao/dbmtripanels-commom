@@ -21,6 +21,16 @@ class VLANs(CreatedUpdatedModel):
     class Meta:
         db_table = "vlans"
 
+    def __str__(self):
+        return self.name
+
+    def get_device_url(self):
+        return "infras:{}".format(self.device.type.lower())
+
+    def get_status_class(self):
+        return "success" if self.status == "Online" else "danger"
+
+
 class IPPrefixes(CreatedUpdatedModel):
     """IP Prefixes"""
     AF_CHOICES = (
