@@ -8,6 +8,7 @@ from common.utilities.views import (
 from . import forms
 from . import filters
 from . import tables
+from django.views.generic import DetailView
 
 
 class ProductListView(ObjectListView):
@@ -62,11 +63,20 @@ class PlanListView(ObjectListView):
     template_name = 'products/plan_new_list.html'
 
 
+class BaseDetailView(DetailView):
+    template_name = 'products/plan.html' 
+    
+    class Groups:
+        from collections import OrderedDict
+        groups = OrderedDict([('Group1', ('name', 'cpu', 'price')), ('Group2', ('memory', 'disk', 'instance'))])
+    
+    
+    
 class PlanView(View):
     """plan"""
     def get(self,request,uuid):
         plan = get_object_or_404(Plans,uuid=uuid)
-        return render(request, "products/plan.html", {'object':plan})
+        return render(request, "products/plan.html", {'object':plan, 'exclude_field_names':['uuid']})
 
 
 class PlanEditView(ObjectEditView):
