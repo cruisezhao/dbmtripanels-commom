@@ -11,7 +11,8 @@
         {% elif f.many_to_many or f.one_to_many %}
             <td>
                 {% for obj in object|get_related_objs:field_name %}
-                    <a href="{{obj.get_absolute_url}}">{{obj|default_if_none:""}}</a>
+
+                    <a href="{{obj|get_absolute_url}}">{{obj|default_if_none:""}}</a>
                     {% if not forloop.last %}
                     <span>, </span>
                     {% endif %}

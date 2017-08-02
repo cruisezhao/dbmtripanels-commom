@@ -135,9 +135,21 @@ def get_related_absolute_url(instance, field_name):
     """
     if hasattr(instance, field_name) and getattr(instance, field_name):
         
-        return getattr(instance, field_name).get_absolute_url()
+        return get_absolute_url(getattr(instance, field_name))
     else:
         return ""
+
+@register.filter
+def get_absolute_url(instance):
+    """
+    Returns field object for a model instance
+    """
+    if hasattr(instance, 'get_absolute_url') and getattr(instance, 'get_absolute_url'):
+        
+        return instance.get_absolute_url()
+    else:
+        return ""
+
     
 @register.filter
 def get_related_objs(instance, field_name):
@@ -195,3 +207,4 @@ def render_object_field(obj, field_name):
         'object': obj,
         'field_name': field_name,
     }
+    
