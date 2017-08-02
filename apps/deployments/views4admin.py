@@ -80,11 +80,10 @@ class DeployPolicyListView(ObjectListView):
 #         })
 
 class DeployPolicyView(TriPanelsBaseDetailView):
+    from collections import OrderedDict
     model = DeployPolicies
     template_name = 'deployments/deploy_policy.html'
-    class Groups:
-        from collections import OrderedDict
-        groups = OrderedDict([('Group1', ('uuid',)), ('Group2', ('plan', 'product'))])
+    groups = OrderedDict([('Group1', ('uuid',)), ('Group2', ('plan', 'product'))])
 
 class DeployPolicyEditView(ObjectEditView):
     model = DeployPolicies

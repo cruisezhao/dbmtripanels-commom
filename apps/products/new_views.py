@@ -68,13 +68,12 @@ class PlanListView(ObjectListView):
 
 
 
-class PlanView(TriPanelsBaseDetailView):  
+class PlanView(TriPanelsBaseDetailView): 
+    from collections import OrderedDict 
     model = Plans 
     template_name = 'products/plan.html'
     #links = {'name'}
-    class Groups:
-        from collections import OrderedDict
-        groups = OrderedDict([('Group1', ('name', 'cpu', 'price')), ('Group2', ('memory', 'disk', 'instance'))])
+    groups = OrderedDict([('Group1', ('name', 'cpu', 'price')), ('Group2', ('memory', 'disk', 'instance'))])
     
     
      

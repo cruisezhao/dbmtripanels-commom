@@ -15,8 +15,11 @@ from .views import InterfaceCreateView
 from common.utilities.views import TriPanelsBaseDetailView
 
 
-class DeviceDetailView(TriPanelsBaseDetailView):
-    pass
+class BaseDeviceDetailView(TriPanelsBaseDetailView):
+    def get(self,request,uuid):
+        obj = get_object_or_404(self.model,uuid=uuid)
+        return render(request, self.template_name, {'object':obj, 'detail_exclude':self.detail_exclude, 'groups':self.Groups.groups, 'fields':self.fields})
+    
 
 class VendorListView(ObjectListView):
     queryset = Vendors.objects.all()
