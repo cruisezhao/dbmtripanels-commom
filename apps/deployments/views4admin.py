@@ -6,8 +6,7 @@ from . import tables
 from . import forms
 from . import filters
 from common.utilities.views import (ObjectListView,ObjectEditView,
-                                    ObjectDeleteView)
-from utilities.views import BaseDetailView
+                                    ObjectDeleteView, TriPanelsBaseDetailView)
 
 class SystemOptionListView(ObjectListView):
     queryset = SystemOptions.objects.all()
@@ -80,12 +79,11 @@ class DeployPolicyListView(ObjectListView):
 #             'object':deploy,
 #         })
 
-class DeployPolicyView(BaseDetailView):
+class DeployPolicyView(TriPanelsBaseDetailView):
+    from collections import OrderedDict
     model = DeployPolicies
     template_name = 'deployments/deploy_policy.html'
-    class Groups:
-        from collections import OrderedDict
-        groups = OrderedDict([('Group1', ('uuid',)), ('Group2', ('plan', 'product'))])
+    groups = OrderedDict([('Group1', ('uuid',)), ('Group2', ('plan', 'product'))])
 
 class DeployPolicyEditView(ObjectEditView):
     model = DeployPolicies
