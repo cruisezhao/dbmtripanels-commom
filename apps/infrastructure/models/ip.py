@@ -70,6 +70,19 @@ class IPPrefixes(CreatedUpdatedModel):
     class Meta:
         db_table = "ip_prefixes"
 
+    def get_device_url(self):
+        return "infras:{}".format(self.device.type.lower())
+
+    def get_status_class(self):
+        if self.status == 'Container':
+            return "info"
+        elif self.status == 'Active':
+            return "success"
+        elif self.status == "Reserved":
+            return "warning"
+        else:
+            return "danger"
+
 class IPAddresses(CreatedUpdatedModel):
     """IP Addresses"""
     IPADDRESS_STATUS = (
