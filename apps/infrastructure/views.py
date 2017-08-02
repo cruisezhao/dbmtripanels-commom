@@ -40,10 +40,14 @@ class InterfaceCreateView(View):
             else:
                 self.model_form = InterfaceForm
 
-            for name in form.cleaned_data['name_pattern']:
+            name_tag_index = zip(form.cleaned_data['name_pattern'], form.cleaned_data['tag_pattern'], form.cleaned_data['index_pattern'])
+
+            for name, tag, index in name_tag_index:
                 component_data = {
                     self.parent_field: parent.pk,
                     'name': name,
+                    'tag': tag,
+                    'index': index,
                 }
                 # Replace objects with their primary key to keep component_form.clean() happy
                 for k, v in data.items():
