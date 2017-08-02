@@ -295,7 +295,7 @@ class BulkDeleteView(View):
         return BulkDeleteForm
     
     
-class BaseDetailView(View):
+class TriPanelsBaseDetailView(View):
     
     class Groups:
         groups = []

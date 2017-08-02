@@ -8,7 +8,7 @@ from common.utilities.views import (
 from . import forms
 from . import filters
 from . import tables
-from utilities.views import BaseDetailView
+from common.utilities.views import TriPanelsBaseDetailView
 
 
 class ProductListView(ObjectListView):
@@ -26,7 +26,7 @@ class ProductListView(ObjectListView):
 #         product = get_object_or_404(Products,uuid=uuid)
 #         return render(request, "products/product.html", {'object':product})
 
-class ProductView(BaseDetailView):
+class ProductView(TriPanelsBaseDetailView):
     model = Products
     template_name = 'products/product.html'
     fields = ['uuid', 'plans', 'product_type', 'product_name']
@@ -68,7 +68,7 @@ class PlanListView(ObjectListView):
 
 
 
-class PlanView(BaseDetailView):  
+class PlanView(TriPanelsBaseDetailView):  
     model = Plans 
     template_name = 'products/plan.html'
     #links = {'name'}

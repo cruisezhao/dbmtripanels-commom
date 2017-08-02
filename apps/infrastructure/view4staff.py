@@ -12,7 +12,11 @@ from . import filters
 from . import forms
 from . import tables
 from .views import InterfaceCreateView
+from common.utilities.views import TriPanelsBaseDetailView
 
+
+class DeviceDetailView(TriPanelsBaseDetailView):
+    pass
 
 class VendorListView(ObjectListView):
     queryset = Vendors.objects.all()
