@@ -1,0 +1,24 @@
+
+
+{% load helpers %}
+
+<tr>
+    <td>{{object|get_verbose_field_name:field_name}}</td>
+    {% with object|get_field:field_name as f %}
+
+        {% if f.many_to_one %}
+            <td><a href="{{object|get_related_absolute_url:field_name}}">{{object|get_value:field_name|default_if_none:""}}</a></td>
+        {% elif f.many_to_many or f.one_to_many %}
+            <td>
+                {% for obj in object|get_related_objs:field_name %}
+                    <a href="{{obj.get_absolute_url}}">{{obj|default_if_none:""}}</a>
+                    {% if not forloop.last %}
+                    <span>, </span>
+                    {% endif %}
+                {% endfor %}
+            </td>
+        {% else %}
+            <td>{{object|get_value:field_name|default_if_none:""}}</td>
+        {% endif %}
+    {% endwith %}
+</tr>

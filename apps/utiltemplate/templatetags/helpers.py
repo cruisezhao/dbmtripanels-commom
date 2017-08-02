@@ -4,10 +4,12 @@ from markdown import markdown
 
 from django import template
 from django.utils.safestring import mark_safe
-
+from itertools import chain
+from collections import namedtuple
 
 register = template.Library()
 
+Field = namedtuple('Field', 'name verbose_name')
 
 #
 # Filters
@@ -147,3 +149,49 @@ def get_related_objs(instance, field_name):
         return getattr(instance, field_name).all()
     else:
         return ""
+    
+@register.filter
+def get_value(obj, field):
+    try:
+        return getattr(obj, 'get_%s_display' % field)()
+    except:
+        return getattr(obj, field)
+        
+@register.filter
+def get_model_fields(obj, detail_exclude=None):
+    model = obj.__class__
+    excludes = ['pk']
+
+    property_fields = []
+    for name in dir(model):
+        if name not in excludes and isinstance(
+            getattr(model, name, None), property
+        ):
+            property_fields.append(Field(name=name, verbose_name=name))
+    fields = chain(obj._meta.fields, property_fields)
+
+    if detail_exclude:
+        fields = [field for field in fields if field.name not in detail_exclude]
+    return fields
+
+
+@register.filter
+def get_verbose_field_name(instance, field_name):
+    """
+    Returns verbose_name for a field.
+    """
+    fields = [field.name for field in instance._meta.fields]
+    if field_name in fields:
+        return instance._meta.get_field(field_name).verbose_name.title()
+    else:
+        return field_name.title()
+    
+@register.inclusion_tag('inc/object_field.html')
+def render_object_field(obj, field_name):
+    """
+    render the object field to a row of a table
+    """
+    return {
+        'object': obj,
+        'field_name': field_name,
+    }

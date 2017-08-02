@@ -1,0 +1,63 @@
+{% load helpers %}
+
+
+	    {% if groups %}
+		    {% for group_name, field_name_list in groups.items %}
+		    <div class="panel panel-default">
+			 <div class="panel-heading"><strong>{{group_name}}</strong></div>
+		     <table class="table table-bordered panel-body attr-table">
+
+		      {% comment %}
+	 	      {% for field in object|get_model_fields:detail_exclude %}
+		        <tr>
+		            <td>{{object|get_verbose_field_name:field.name}}</td>
+		            <td>{{object|get_value:field.name|default_if_none:""}}</td>
+		        </tr>
+		      {% endfor %}
+		      {% endcomment %}
+
+
+		      <tbody>
+	           {% for field_name in field_name_list %}
+	           		{% render_object_field object field_name %}
+	           {% endfor %}
+			  </tbody>
+		    </table>
+
+		    </div>
+		    {% endfor %}
+	    {% else %}
+	     {% if fields %}
+	     	<table class="table table-bordered">
+		        <thead>
+		            <tr>
+		                <th>Field</th>
+		                <th>Value</th>
+		            </tr>
+		        </thead>
+		        <tbody>
+		            {% for field_name in fields %}
+		        	  {% render_object_field object field_name %}
+		            {% endfor %}
+		        </tbody>
+		    </table>
+	     {% else %}
+	     	 <table class="table table-bordered">
+		        <thead>
+		            <tr>
+		                <th>Field</th>
+		                <th>Value</th>
+		            </tr>
+		        </thead>
+		        <tbody>
+		            {% for field in object|get_model_fields %}
+						{% render_object_field object field.name %}
+
+		            {% endfor %}
+		        </tbody>
+		    </table>
+	     {% endif %}
+
+	  {% endif %}
+
+
