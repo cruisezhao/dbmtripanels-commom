@@ -8,6 +8,7 @@ from common.utilities.views import (
 from . import forms
 from . import filters
 from . import tables
+from utilities.views import BaseDetailView
 
 
 class ProductListView(ObjectListView):
@@ -18,13 +19,17 @@ class ProductListView(ObjectListView):
     table = tables.ProductTable
     template_name = 'products/product_list.html'
 
+# 
+# class ProductView(View):
+#     """product object view"""
+#     def get(self,request,uuid):
+#         product = get_object_or_404(Products,uuid=uuid)
+#         return render(request, "products/product.html", {'object':product})
 
-class ProductView(View):
-    """product object view"""
-    def get(self,request,uuid):
-        product = get_object_or_404(Products,uuid=uuid)
-        return render(request, "products/product.html", {'object':product})
-
+class ProductView(BaseDetailView):
+    model = Products
+    template_name = 'products/product.html'
+    fields = ['uuid', 'plans', 'product_type', 'product_name']
 
 class ProductEditView(ObjectEditView):
     """product edit"""
@@ -62,11 +67,23 @@ class PlanListView(ObjectListView):
     template_name = 'products/plan_new_list.html'
 
 
-class PlanView(View):
-    """plan"""
-    def get(self,request,uuid):
-        plan = get_object_or_404(Plans,uuid=uuid)
-        return render(request, "products/plan.html", {'object':plan})
+
+class PlanView(BaseDetailView):  
+    model = Plans 
+    template_name = 'products/plan.html'
+    #links = {'name'}
+    class Groups:
+        from collections import OrderedDict
+        groups = OrderedDict([('Group1', ('name', 'cpu', 'price')), ('Group2', ('memory', 'disk', 'instance'))])
+    
+    
+     
+    
+# class PlanView(View):
+#     """plan"""
+#     def get(self,request,uuid):
+#         plan = get_object_or_404(Plans,uuid=uuid)
+#         return render(request, "products/plan.html", {'object':plan, 'detail_exclude':['uuid']})
 
 
 class PlanEditView(ObjectEditView):

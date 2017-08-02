@@ -7,6 +7,57 @@ from django.conf import settings
 from django.core.validators import URLValidator
 from django.urls import reverse_lazy
 
+NUMERIC_EXPANSION_PATTERN = '\[((?:\d+[?:,-])+\d+)\]'
+
+def parse_numeric_range(string, base=10):
+    """
+    Expand a numeric range (continuous or not) into a decimal or
+    hexadecimal list, as specified by the base parameter
+      '0-3,5' => [0, 1, 2, 3, 5]
+      '2,8-b,d,f' => [2, 8, 9, a, b, d, f]
+    """
+    values = list()
+    for dash_range in string.split(','):
+        try:
+            begin, end = dash_range.split('-')
+        except ValueError:
+            begin, end = dash_range, dash_range
+        begin, end = int(begin.strip(), base=base), int(end.strip(), base=base) + 1
+        values.extend(range(begin, end))
+    return list(set(values))
+
+def expand_numeric_pattern(string):
+    """
+    Expand a numeric pattern into a list of strings. Examples:
+      'ge-0/0/[0-3,5]' => ['ge-0/0/0', 'ge-0/0/1', 'ge-0/0/2', 'ge-0/0/3', 'ge-0/0/5']
+      'xe-0/[0,2-3]/[0-7]' => ['xe-0/0/0', 'xe-0/0/1', 'xe-0/0/2', ... 'xe-0/3/5', 'xe-0/3/6', 'xe-0/3/7']
+    """
+    lead, pattern, remnant = re.split(NUMERIC_EXPANSION_PATTERN, string, maxsplit=1)
+    parsed_range = parse_numeric_range(pattern)
+    for i in parsed_range:
+        if re.search(NUMERIC_EXPANSION_PATTERN, remnant):
+            for string in expand_numeric_pattern(remnant):
+                yield "{}{}{}".format(lead, i, string)
+        else:
+            yield "{}{}{}".format(lead, i, remnant)
+
+class ExpandableNameField(forms.CharField):
+    """
+    A field which allows for numeric range expansion
+      Example: 'Gi0/[1-3]' => ['Gi0/1', 'Gi0/2', 'Gi0/3']
+    """
+    def __init__(self, *args, **kwargs):
+        super(ExpandableNameField, self).__init__(*args, **kwargs)
+        if not self.help_text:
+            self.help_text = 'Numeric ranges are supported for bulk creation.<br />'\
+                             'Example: <code>ge-0/0/[0-23,25,30]</code>'
+
+    def to_python(self, value):
+        if re.search(NUMERIC_EXPANSION_PATTERN, value):
+            return list(expand_numeric_pattern(value))
+        return [value]
+
+
 class DeviceComponentForm(forms.Form):
     """
     Allow inclusion of the parent device as context for limiting field choices.
