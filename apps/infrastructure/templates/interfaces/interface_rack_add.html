@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+{% load form_helpers %}
+{% load staticfiles %}
+{% load helpers %}
+
+
+{% block content %}
+<section class="content">
+  <div class="box box-info">
+    <form action="." method="post" class="form form-horizontal">
+   {% csrf_token %}
+   <div class="row">
+       <div class="col-md-6 col-md-offset-3">
+           {% if form.non_field_errors %}
+               <div class="panel panel-danger">
+                   <div class="panel-heading"><strong>Errors</strong></div>
+                   <div class="panel-body">
+                       {{ form.non_field_errors }}
+                   </div>
+               </div>
+           {% endif %}
+           <div class="panel panel-default">
+               <div class="panel-heading">
+                   <strong>{{ component_type|title }}</strong>
+               </div>
+               <div class="panel-body">
+                   <div class="form-group">
+                       <label class="control-label required" style="margin-left:11px;">Device:</label>
+                       <div class="col-md-9 pull-right">
+                           <p class="form-control-static pull-left text-center">{{ parent }}</p>
+                       </div>
+                   </div>
+                   <!--{% render_form form %}-->
+                   {% include 'inc/form/_form_body.html' %}
+               </div>
+           </div>
+
+       <div class="box-footer">
+               <div class="col-md-12 pull-left" style="padding:0px;">
+                   <button type="submit" name="_create" class="btn btn-primary" style="margin-right:10px;">Create</button>
+                   <a href="{{ return_url }}" class="btn btn-default">Cancel</a>
+               </div>
+       </div>
+       </div>
+   </div>
+  </form>
+  </div>
+</section>
+
+
+{% endblock content%}
