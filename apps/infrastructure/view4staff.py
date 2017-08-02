@@ -13,12 +13,19 @@ from . import forms
 from . import tables
 from .views import InterfaceCreateView
 from common.utilities.views import TriPanelsBaseDetailView
+from common.apps.infrastructure.models import Interfaces
 
 
 class BaseDeviceDetailView(TriPanelsBaseDetailView):
     def get(self,request,uuid):
-        obj = get_object_or_404(self.model,uuid=uuid)
-        return render(request, self.template_name, {'object':obj, 'detail_exclude':self.detail_exclude, 'groups':self.Groups.groups, 'fields':self.fields})
+        dev = get_object_or_404(self.model,uuid=uuid)
+        from collections import OrderedDict
+        itfs_by_type = OrderedDict()
+        for (t, _) in Interfaces.INTERFACE_TYPE:
+            itfs = dev.interfaces_set.filter(type=t)
+            if itfs:
+                itfs_by_type[t] = itfs
+        return render(request, self.template_name, {'object':dev, 'itfs_by_type':itfs_by_type,'groups':self.Groups.groups, 'fields':self.fields})
     
 
 class VendorListView(ObjectListView):
