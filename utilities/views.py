@@ -293,3 +293,19 @@ class BulkDeleteView(View):
         if self.form:
             return self.form
         return BulkDeleteForm
+    
+    
+class BaseDetailView(View):
+    
+    class Groups:
+        groups = []
+    detail_exclude = [] 
+    fields = []
+    
+   
+    template_name = 'utilities/obj_detail.html'
+    
+    def get(self,request,uuid):
+        obj = get_object_or_404(self.model,uuid=uuid)
+        return render(request, self.template_name, {'object':obj, 'detail_exclude':self.detail_exclude, 'groups':self.Groups.groups, 'fields':self.fields})
+    

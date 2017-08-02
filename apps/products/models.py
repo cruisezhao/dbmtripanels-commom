@@ -45,7 +45,9 @@ class Plans(CreatedUpdatedModel):
     def __str__(self):
         return self.name
 
-
+    def get_absolute_url(self):
+        return reverse('plan', args=[self.uuid])
+    
 class Products(CreatedUpdatedModel):
     """product model"""
     TYPE_CHOICE = [
@@ -63,7 +65,7 @@ class Products(CreatedUpdatedModel):
         verbose_name_plural = "Products"
         db_table = "products"
 
-    @property
+    #@property
     def all_plans(self):
 
         return ', '.\

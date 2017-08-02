@@ -7,6 +7,7 @@ from . import forms
 from . import filters
 from common.utilities.views import (ObjectListView,ObjectEditView,
                                     ObjectDeleteView)
+from utilities.views import BaseDetailView
 
 class SystemOptionListView(ObjectListView):
     queryset = SystemOptions.objects.all()
@@ -72,13 +73,19 @@ class DeployPolicyListView(ObjectListView):
     template_name = "deployments/deploy_policy_list.html"
 
 
-class DeployPolicyView(View):
-    def get(self,request, uuid):
-        deploy = get_object_or_404(DeployPolicies, uuid = uuid)
-        return render(request, 'deployments/deploy_policy.html',{
-            'object':deploy,
-        })
+# class DeployPolicyView(View):
+#     def get(self,request, uuid):
+#         deploy = get_object_or_404(DeployPolicies, uuid = uuid)
+#         return render(request, 'deployments/deploy_policy.html',{
+#             'object':deploy,
+#         })
 
+class DeployPolicyView(BaseDetailView):
+    model = DeployPolicies
+    template_name = 'deployments/deploy_policy.html'
+    class Groups:
+        from collections import OrderedDict
+        groups = OrderedDict([('Group1', ('uuid',)), ('Group2', ('plan', 'product'))])
 
 class DeployPolicyEditView(ObjectEditView):
     model = DeployPolicies

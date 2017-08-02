@@ -1,0 +1,24 @@
+.content-header>.breadcrumb{
+  float: left;
+  background: transparent;
+  margin-top: 0;
+  margin-bottom: 0;
+  font-size: 12px;
+  padding: 7px 5px;
+  position: absolute;
+  top: 0px;
+  left: 10px;
+  border-radius: 2px;
+}
+
+.deviec-wrapper{
+  margin-top: 20px;
+  margin-bottom: 20px
+}
+
+.deviec-wrapper h1,.deviec-wrapper .eidt-btnwrapper{
+  display: inline-block;
+  margin:0px;
+  line-height: 30px;
+  vertical-align: top;
+}
