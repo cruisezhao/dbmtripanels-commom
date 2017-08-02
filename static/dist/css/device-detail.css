@@ -13,12 +13,25 @@
 
 .deviec-wrapper{
   margin-top: 20px;
-  margin-bottom: 20px
 }
 
-.deviec-wrapper h1,.deviec-wrapper .eidt-btnwrapper{
+.deviec-wrapper h1,.deviec-wrapper .eidt-btnwrapper {
   display: inline-block;
   margin:0px;
   line-height: 30px;
   vertical-align: top;
+}
+
+.title-top{
+  margin-bottom: 4px;
+}
+
+.title-top h3 {
+  line-height: 30px;
+}
+
+.title-top h3 ,.title-top .list-creatbtn{
+  display: inline-block;
+  margin:0px;
+  overflow: hidden;
 }

@@ -188,14 +188,21 @@ class VlanTable(tables.Table):
             'class':'table table-hover table-striped dataTable',
         }
 
-
+PREFIX_STATUS_LABEL = """
+    <span class="label label-{{record.get_status_class}}">{{ record.status }}</span>
+"""
 class IPPrefixTable(tables.Table):
     pk = ToggleColumn()
     prefix = tables.LinkColumn("infras:prefix", args=[A("id")])
+    data_center = tables.LinkColumn("infras:data_center", args=[A('data_center.id')])
+    device = tables.LinkColumn(A('get_device_url'), args=[A('device.uuid')])
+    vlan = tables.LinkColumn("infras:vlan", args=[A("vlan.id")])
+    online_date = tables.DateColumn(format="Y-m-d")
+    status = tables.TemplateColumn(PREFIX_STATUS_LABEL)
 
     class Meta:
         model = IPPrefixes
-        fields = ['pk', 'prefix']
+        fields = ['pk', 'prefix', 'type','status','data_center','device','vlan','online_date']
         attrs = {
             'class':'table table-hover table-striped dataTable',
         }

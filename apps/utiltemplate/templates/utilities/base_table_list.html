@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% load helpers %}
+
+{% block content %}
+	<div class="row-fluid" id="content_wrapper">
+		{% include 'inc/search_panel.html' %}
+    <div class="span10" id="content_wrapper1">
+				<div class="title-top">
+					<h3>
+            {% block title %}
+             Lists
+            {% endblock title %}
+          </h3>
+					<div class="pull-right">
+						<a class=" btn btn-primary accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseOne" >
+							<i class="fa fa-search" style="margin-right:4px;"></i>Search</a>
+						{% if messages %}
+						{% for message in messages %}
+						<p{% if message.tags %} class="{{ message.tags }} warning-txt" {% endif %} >{{ message }}</p>
+						{% endfor %}{% endif %}
+
+						{% if perms %}
+
+            {% block button %}
+
+						<a href="#" class="btn btn-primary">
+							<span class="fa fa-plus" aria-hidden="true"></span>
+							Create a object
+						</a>
+
+            {% endblock button %}
+						{% endif %}
+					 </div>
+				</div>
+				<div class="Ttable">
+				{% include 'utilities/obj_table.html' %}
+				</div>
+    </div>
+	</div>
+
+{% endblock %}
