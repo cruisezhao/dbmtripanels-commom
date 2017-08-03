@@ -127,14 +127,17 @@ class DevicePowerList(ObjectListView):
     template_name = "powers/power_list.html"
 
 
-class DevicePowerView(View):
-    def get(self, request, uuid):
-        power = get_object_or_404(DevicePowers, uuid = uuid)
-        return render(request,"powers/power.html",{
-            "object":power,
-            'detail_exclude':['id','uuid','created_date','created_by',
-                'updated_date','updated_by',],
-        })
+class DevicePowerView(TriPanelsBaseDetailView):
+    template_name = "powers/power.html"
+    model = DevicePowers
+    
+#     def get(self, request, uuid):
+#         power = get_object_or_404(DevicePowers, uuid = uuid)
+#         return render(request,"powers/power.html",{
+#             "object":power,
+#             'detail_exclude':['id','uuid','created_date','created_by',
+#                 'updated_date','updated_by',],
+#         })
 
 
 class DevicePowerEditView(ObjectEditView):
