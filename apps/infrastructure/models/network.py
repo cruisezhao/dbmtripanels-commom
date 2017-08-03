@@ -345,12 +345,12 @@ class Interfaces(CreatedUpdatedModel):
     
     def get_connection_and_peer_interface(self):
         from django.db.models import Q
-        if self.connections_a:
-            cons =  self.connections_a.filter(Q(status='Running') | Q(status='Reserved'))
+        if self.connected_as_a:
+            cons =  self.connected_as_a.filter(Q(status='Running') | Q(status='Reserved'))
             if cons:
                 return (cons[0], cons[0].interface_b)
-        if self.connections_b:
-            cons =  self.connections_b.filter(Q(status='Running') | Q(status='Reserved'))
+        if self.connected_as_b:
+            cons =  self.connected_as_b.filter(Q(status='Running') | Q(status='Reserved'))
             if cons:
                 return (cons[0], cons[0].interface_a)
         return None
@@ -406,8 +406,9 @@ class Connections(CreatedUpdatedModel):
         ('Deprecated', 'Deprecated'),
     )
 
-    interface_a = models.ForeignKey(Interfaces, related_name='connections_a', on_delete=models.PROTECT, blank=True, null=True)
-    interface_b = models.ForeignKey(Interfaces, related_name='connections_b', on_delete=models.PROTECT, blank=True, null=True)
+    interface_a = models.ForeignKey(Interfaces, related_name='connected_as_a', on_delete=models.CASCADE, blank=True, null=True)
+    interface_b = models.ForeignKey(Interfaces, related_name='connected_as_b', on_delete=models.CASCADE, blank=True, null=True)
+
     type = models.CharField(max_length=32, choices=CONNECTION_TYPE)
     description = models.TextField(blank=True)
     status = models.CharField(max_length=32, choices=CONNECTION_STATUS)
