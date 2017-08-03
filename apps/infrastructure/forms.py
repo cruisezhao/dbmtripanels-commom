@@ -192,9 +192,11 @@ class DeviceMaintenanceForm(DeviceDateForm):
 
 class InterfaceCreateForm(DeviceComponentForm):
     name_pattern = ExpandableNameField(label='Name')
-    tag = forms.CharField(max_length=100, required=False)
+    tag_pattern = ExpandableNameField(label='Tag', required=False)
     type = forms.ChoiceField(choices=Interfaces.INTERFACE_TYPE)
-    index = forms.IntegerField(required=False)
+    index_pattern = ExpandableNameField(label='Index', required=False,help_text = 'Numeric ranges are supported for bulk creation.<br />'\
+                             'Example: <code>[0-23,25,30]</code><br />'\
+                             'Only support integer elements here.')
     #rack interface attr
     has_rail = forms.BooleanField(required=False, label='Has Rail')
     rail_model = forms.CharField(max_length=100, required=False)
@@ -208,9 +210,18 @@ class InterfaceCreateForm(DeviceComponentForm):
     description = forms.CharField(max_length=100, required=False)
     notes = forms.CharField(max_length=100, required=False)
 
+    def clean(self):
+        cleaned_data = super().clean()
+        name_pattern = cleaned_data.get("name_pattern")
+        tag_pattern = cleaned_data.get("tag_pattern")
+        index_pattern = cleaned_data.get("index_pattern")
+        if not len(tag_pattern)==len(name_pattern)==len(index_pattern):
+            raise forms.ValidationError("Name,Tag and Index should have the same amount.")
+
+
     class Groups:
         from collections import OrderedDict
-        groups = OrderedDict([('Group1', ('has_rail', 'rail_model')), ('Group2', ('port_model', 'port_fast', 'speed', 'mac'))])
+        groups = OrderedDict([('Rack', ('has_rail', 'rail_model')), ('Network', ('port_model', 'port_fast', 'speed', 'mac'))])
 
 class InterfaceRackForm(forms.ModelForm):
     class Meta:
