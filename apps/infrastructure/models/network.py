@@ -19,7 +19,7 @@ class Vendors(CreatedUpdatedModel):
         ('Active', 'Active'),
         ('Deprecated', 'Deprecated'),
     )
-
+    
     type = models.CharField(max_length=32, choices=VENDOR_TYPE)
     name = models.CharField(max_length=256,null=True,blank=True)
     description = models.TextField(blank=True)
@@ -50,7 +50,7 @@ class DataCenters(CreatedUpdatedModel):
         ('Active', 'Active'),
         ('Deprecated', 'Deprecated'),
     )
-
+    
     name = models.CharField(max_length=256,null=True,blank=True)
     description = models.TextField(blank=True)
     address = models.CharField(max_length=256,null=True,blank=True)
@@ -73,6 +73,9 @@ class DataCenters(CreatedUpdatedModel):
 
     def __str__(self):
         return self.name
+    
+    def get_absolute_url(self):
+        return reverse('infras:data_center', args=(self.id,)) 
 
 
 class Devices(CreatedUpdatedModel):
@@ -149,7 +152,7 @@ class DeviceRacks(Devices):
         return self.name
 
     def get_absolute_url(self):
-       return reverse('infras:rack_list')
+        return reverse('infras:rack_list')
 
     def get_detail_url(self):
         return reverse('infras:rack', args=(self.uuid,))

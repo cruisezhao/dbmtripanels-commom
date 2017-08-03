@@ -30,34 +30,7 @@ class DeviceRacksForm(forms.ModelForm):
     """"""
     # seller = forms.ModelChoiceField(queryset = Vendors.objects.all(), required=False)
     # status = forms.ChoiceField(choices = DEVICE_TYPE)
-    purchase_date = forms.DateField(
-        required=False,
-        label='Purchase Date',
-        widget=DateWidget(
-            options={'format': 'yyyy-mm-dd',},
-            bootstrap_version=3),
-    )
-    ec_check_date = forms.DateField(
-        required=False,
-        label='EC Check Date',
-        widget=DateWidget(
-            options={'format': 'yyyy-mm-dd',},
-            bootstrap_version=3),
-    )
-    warranty_date = forms.DateField(
-        required=False,
-        label='Warranty Date',
-        widget=DateWidget(
-            options={'format': 'yyyy-mm-dd',},
-            bootstrap_version=3),
-    )
-    bw_check_date = forms.DateField(
-        required=False,
-        label='BW Check Date',
-        widget=DateWidget(
-            options={'format': 'yyyy-mm-dd',},
-            bootstrap_version=3),
-    )
+
     class Meta:
         model = DeviceRacks
         fields = ['data_center','manufacturer','seller','name','tag',
@@ -86,7 +59,7 @@ class VendorForm(forms.ModelForm):
         fields = ['name', 'type', 'description','website','status']
 
 
-class DevicePowerForm(DeviceDateForm):
+class DevicePowerForm(forms.ModelForm):
     class Meta:
         model = DevicePowers
         fields = ['data_center','manufacturer','seller','name','tag',
@@ -98,7 +71,7 @@ class DevicePowerForm(DeviceDateForm):
                   'voltage','color']
 
 
-class DeviceDriveForm(DeviceDateForm):
+class DeviceDriveForm(forms.ModelForm):
     class Meta:
         model = DeviceDrives
         fields = ['data_center','manufacturer','seller','name','tag',
@@ -109,7 +82,7 @@ class DeviceDriveForm(DeviceDateForm):
                   'disk_type','disk_size','file_system','need_power']
 
 
-class DeviceKVMForm(DeviceDateForm):
+class DeviceKVMForm(forms.ModelForm):
     class Meta:
         model = DeviceKVMs
         fields = ['data_center','manufacturer','seller','name','tag',
@@ -120,7 +93,7 @@ class DeviceKVMForm(DeviceDateForm):
                   'total_ports', 'port_type']
 
 
-class DeviceRouterForm(DeviceDateForm):
+class DeviceRouterForm(forms.ModelForm):
     class Meta:
         model = DeviceRouters
         fields = ['data_center','manufacturer','seller','name','tag',
@@ -131,7 +104,7 @@ class DeviceRouterForm(DeviceDateForm):
                   'firmware_version', 'total_ports', 'speed']
 
 
-class DeviceSwitcheForm(DeviceDateForm):
+class DeviceSwitcheForm(forms.ModelForm):
      class Meta:
         model = DeviceSwitches
         fields = ['data_center','manufacturer','seller','name','tag',
@@ -142,7 +115,7 @@ class DeviceSwitcheForm(DeviceDateForm):
                   'firmware_version','total_ports','speed']
 
 
-class DeviceFirewallForm(DeviceDateForm):
+class DeviceFirewallForm(forms.ModelForm):
     class Meta:
         model = DeviceFirewalls
         fields = ['data_center','manufacturer','seller','name','tag',
@@ -153,7 +126,7 @@ class DeviceFirewallForm(DeviceDateForm):
                   'firmware_version', 'total_ports', 'total_licenses','speed',]
 
 
-class DeviceBareForm(DeviceDateForm):
+class DeviceBareForm(forms.ModelForm):
 
     class Meta:
         model = DeviceBares
@@ -169,21 +142,8 @@ class DeviceBareForm(DeviceDateForm):
                   'firmware_type','firmware_version','usage']
 
 
-class DeviceMaintenanceForm(DeviceDateForm):
-    start_time = forms.DateTimeField(
-        required=False,
-        label='Start Date',
-        widget=DateTimeWidget(
-            options={'format': 'yyyy-mm-dd',},
-            bootstrap_version=3),
-    )
-    end_time = forms.DateTimeField(
-        required=False,
-        label='End Date',
-        widget=DateTimeWidget(
-            options={'format': 'yyyy-mm-dd',},
-            bootstrap_version=3),
-    )
+class DeviceMaintenanceForm(forms.ModelForm):
+
     class Meta:
         model = DeviceMaintenances
         fields = ['device', 'user', 'start_time','end_time','subject',
