@@ -394,8 +394,8 @@ class Connections(CreatedUpdatedModel):
         ('Deprecated', 'Deprecated'),
     )
 
-    interface_a = models.ForeignKey(Interfaces, related_name='interface_a', on_delete=models.SET_NULL, blank=True, null=True)
-    interface_b = models.ForeignKey(Interfaces, related_name='interface_b', on_delete=models.SET_NULL, blank=True, null=True)
+    interface_a = models.ForeignKey(Interfaces, related_name='connected_as_a', on_delete=models.CASCADE, blank=True, null=True)
+    interface_b = models.ForeignKey(Interfaces, related_name='connected_as_b', on_delete=models.CASCADE, blank=True, null=True)
     type = models.CharField(max_length=32, choices=CONNECTION_TYPE)
     description = models.TextField(blank=True)
     status = models.CharField(max_length=32, choices=CONNECTION_STATUS)
