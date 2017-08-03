@@ -35,3 +35,11 @@
   margin:0px;
   overflow: hidden;
 }
+
+.warnning-alert {
+  background: #f2dede;
+  color: #af5454;
+  border-bottom-color: #f2dede;
+}
+
+.modal-body p{word-wrap: break-word;}
