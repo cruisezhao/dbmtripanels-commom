@@ -1,0 +1,169 @@
+{% extends 'utilities/obj_detail.html' %}
+{% load crudbuilder %}
+
+{% block content %}
+<section class="content-header">
+	<ol class="breadcrumb">
+		<li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+		<li class="active">Interface</li>
+	</ol>
+	<div class="deviec-wrapper row">
+		<h1 class="col-xs-6 col-md-4 col-lg-4">{{object}}</h1>
+		<div class="col-xs-6 col-md-8 col-lg-8  eidt-btnwrapper ">
+			<div class="pull-right">
+				<a href="#" class="btn btn-warning">
+					<span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
+					Edit this device
+				</a>
+				<a href="#" class="btn btn-danger">
+					<span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+					Delete this device
+				</a>
+
+				<a href="{% url 'infras:rack_interface_add' uuid=object.uuid %}" class="btn btn-success addnew pull-right "><i class="fa fa-plus"></i> Add a new interface</a>
+
+			</div>
+
+		</div>
+	</div>
+</section>
+
+<section class="content">
+	<div class="row">
+		<div class=" col-xs-4 col-lg-4 col-md-6 col-xs-12">
+			<div class="box box-primary" id="content_wrapper">
+				<div class="box-header with-border">
+				    <h3 class="box-title">Detail of {{object}}</h3>
+				</div>
+				<div class="box-body">
+
+						{% include 'utilities/obj_detail_body.html' %}
+
+				</div>
+			</div>
+		</div>
+
+		<div class="col-lg-8 col-md-6 col-xs-12 inter-connections">
+			{% for type,itfs in itfs_by_type.items %}
+			<form method="post">
+				<div class="box box-primary">
+
+
+					<div class="box-body">
+						<div class="form-group">
+							<table class=" table  interfacer-table">
+								<thead>
+												<tr>
+													<th class="pk">
+														<input type="checkbox" id="toggle_all" title="Toggle all">
+													</th>
+													<th class="">
+														<a href="?sort=product_name">Interface A</a>
+													</th>
+													<th class="">
+														<a href="#">Status</a>
+													</th>
+													<th class="">
+														<a href="?sort=created">Connection Status</a>
+													</th>
+													<th class="summary">
+														Peer Device Name
+													</th>
+
+													<th class="">
+														<a href="#">Interface B</a>
+													</th>
+
+													<th class="">
+														<a href="#">status</a>
+													</th>
+
+													<th class="">
+														Console
+													</th>
+
+												</tr>
+											</thead>
+								<tbody>
+								{% for itf in itfs %}
+									{with itf.get_connection_and_peer_interface as con_and_peer_itf }
+											<tr class="even">
+												<td class="pk">
+													<input type="checkbox" name="pk" value="5">
+												</td>
+												<td class="">
+													<a href="#"><i class="fa fa-exchange"></i>itf.name</a>
+												</td>
+												<td class="">
+													<label class="label" style="background-color: #2dab4c">itf.status</label>
+												</td>
+												<td class="">
+													{% if con_and_peer_itf %}
+													<label class="label" style="background-color: #2dab4c">con_and_peer_itf.0.status</label>
+													{% endif %}
+
+												</td>
+												<td class="">
+													{% if con_and_peer_itf %}
+													<a href="#">con_and_peer_itf.1.device.name</a>
+													{% endif %}
+
+												</td>
+
+												<td class="">
+													{% if con_and_peer_itf %}
+													con_and_peer_itf.1.name
+													{% endif %}
+												<td class="">
+												</td>
+													{% if con_and_peer_itf %}
+													<label class="label" style="background-color: #2dab4c">con_and_peer_itf.1.status</label>
+													{% endif %}
+												</td>
+												<td>
+													<a href="#" class="btn btn-danger btn-xs">
+															<i class="fa fa-expand" aria-hidden="true" title="Connect"></i>
+													</a>
+
+													<a href="#" class="btn btn-info btn-xs">
+													<i class="fa fa-pencil" aria-hidden="true" title="Edit outlet"></i>
+													</a>
+													<a href="#" class="btn btn-danger btn-xs" disabled="disabled" style="cursor:not-allowed;">
+															<i class="fa fa-trash" aria-hidden="true" title="Delete outlet"></i>
+													</a>
+												</td>
+
+											</tr>
+											{% endwith %}
+										{% endfor %}
+
+
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</div>
+			</form>
+			{% endfor %}
+		</div>
+
+	</div>
+</section>
+
+
+{% endblock content %}
+
+{% block button %}
+<div class="float_right" style="top: 0px;">
+	<a href="{% url 'infras:rack_edit' object.uuid%}" class="edit btn btn-primary"><i class="fa fa-pencil"></i> Edit</a>
+	<a href="{% url 'infras:rack_delete' uuid=object.uuid %}" class="delete btn btn-primary"><i class="fa fa-trash"></i> Delete</a>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+	$(document).ready(function() {
+		$('body').addClass('sidebar-collapse');
+	});
+</script>
+{% endblock scripts %}
