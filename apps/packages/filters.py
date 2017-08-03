@@ -9,6 +9,7 @@ from django import forms
 from datetimewidget.widgets import DateWidget
 from common.utilities.utils import gen_choices
 from django.db.models import Q
+from django.utils.functional import lazy
 
 class PackageFilter(django_filters.FilterSet):
     """package filter set"""
@@ -29,7 +30,7 @@ class PackageFilter(django_filters.FilterSet):
                                             bootstrap_version=3),)
     
     
-    status = django_filters.MultipleChoiceFilter(choices=gen_choices(Packages, 'status', PACKAGE_STATUS), 
+    status = django_filters.MultipleChoiceFilter(choices=lazy(gen_choices,list)(Packages, 'status', PACKAGE_STATUS), 
                                                  widget=forms.CheckboxSelectMultiple())
     
     q = django_filters.CharFilter(

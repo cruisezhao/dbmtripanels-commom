@@ -9,6 +9,7 @@ from django import forms
 from datetimewidget.widgets import DateWidget
 from common.utilities.utils import gen_choices
 from django.db.models import Q
+from django.utils.functional import lazy
 
 class OrderFilter(django_filters.FilterSet):
     """order filter set"""
@@ -30,7 +31,7 @@ class OrderFilter(django_filters.FilterSet):
     cpu_cores = django_filters.NumberFilter(name='plan__cpu', lookup_expr='exact')
     memory = django_filters.NumberFilter(name='plan__memory', lookup_expr='exact')
     disk = django_filters.NumberFilter(name='plan__disk', lookup_expr='exact')
-    status = django_filters.MultipleChoiceFilter(choices=gen_choices(Orders, 'status', ORDER_STATUS), 
+    status = django_filters.MultipleChoiceFilter(choices=lazy(gen_choices,list)(Orders, 'status', ORDER_STATUS), 
                                                  widget=forms.CheckboxSelectMultiple())
     price = django_filters.NumberFilter(name='amount', lookup_expr='exact')
     
