@@ -1,4 +1,4 @@
-{% extends 'utilities/obj_detail.html' %}
+{% extends "base.html" %}
 {% load crudbuilder %}
 
 {% block content %}
@@ -10,12 +10,13 @@
 	<div class="deviec-wrapper row">
 		<h1 class="col-xs-6 col-md-4 col-lg-4">{{object}}</h1>
 		<div class="col-xs-6 col-md-8 col-lg-8  eidt-btnwrapper ">
+			{% block button %}
 			<div class="pull-right">
-				<a href="#" class="btn btn-warning">
+				<a href="{{object.get_edit_url}}" class="btn btn-warning">
 					<span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
 					Edit this device
 				</a>
-				<a href="#" class="btn btn-danger">
+				<a href="{{object.get_delete_url}}" class="btn btn-danger">
 					<span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
 					Delete this device
 				</a>
@@ -23,6 +24,7 @@
 				<a href="{% url 'infras:rack_interface_add' uuid=object.uuid %}" class="btn btn-success addnew pull-right "><i class="fa fa-plus"></i> Add a new interface</a>
 
 			</div>
+			{% endblock button %}
 
 		</div>
 	</div>
@@ -44,6 +46,48 @@
 		</div>
 
 		<div class="col-lg-8 col-md-6 col-xs-12 inter-connections">
+			{% if not itfs_by_type %}
+				<div class="box box-primary">
+					<div class="box-body">
+						<div class="form-group">
+							<table class=" table  interfacer-table">
+								<thead>
+									<tr>
+										<th class="pk">
+											<input type="checkbox" id="toggle_all" title="Toggle all">
+										</th>
+										<th class="">
+											<a href="?sort=product_name">Interface A</a>
+										</th>
+										<th class="">
+											<a href="#">Status</a>
+										</th>
+										<th class="">
+											<a href="?sort=created">Connection Status</a>
+										</th>
+										<th class="summary">
+											Peer Device Name
+										</th>
+
+										<th class="">
+											<a href="#">Interface B</a>
+										</th>
+
+										<th class="">
+											<a href="#">status</a>
+										</th>
+
+										<th class="">
+											Console
+										</th>
+
+									</tr>
+								</thead>
+								</table>
+								</div>
+								</div>
+								</div>
+			{% endif %}
 			{% for type,itfs in itfs_by_type.items %}
 			<form method="post">
 				<div class="box box-primary">
@@ -53,40 +97,41 @@
 						<div class="form-group">
 							<table class=" table  interfacer-table">
 								<thead>
-												<tr>
-													<th class="pk">
-														<input type="checkbox" id="toggle_all" title="Toggle all">
-													</th>
-													<th class="">
-														<a href="?sort=product_name">Interface A</a>
-													</th>
-													<th class="">
-														<a href="#">Status</a>
-													</th>
-													<th class="">
-														<a href="?sort=created">Connection Status</a>
-													</th>
-													<th class="summary">
-														Peer Device Name
-													</th>
+									<tr>
+										<th class="pk">
+											<input type="checkbox" id="toggle_all" title="Toggle all">
+										</th>
+										<th class="">
+											<a href="?sort=product_name">Interface A</a>
+										</th>
+										<th class="">
+											<a href="#">Status</a>
+										</th>
+										<th class="">
+											<a href="?sort=created">Connection Status</a>
+										</th>
+										<th class="summary">
+											Peer Device Name
+										</th>
 
-													<th class="">
-														<a href="#">Interface B</a>
-													</th>
+										<th class="">
+											<a href="#">Interface B</a>
+										</th>
 
-													<th class="">
-														<a href="#">status</a>
-													</th>
+										<th class="">
+											<a href="#">status</a>
+										</th>
 
-													<th class="">
-														Console
-													</th>
+										<th class="">
+											Console
+										</th>
 
-												</tr>
-											</thead>
+									</tr>
+								</thead>
+
 								<tbody>
 								{% for itf in itfs %}
-									{with itf.get_connection_and_peer_interface as con_and_peer_itf }
+									{% with itf.get_connection_and_peer_interface as con_and_peer_itf %}
 											<tr class="even">
 												<td class="pk">
 													<input type="checkbox" name="pk" value="5">
@@ -153,12 +198,6 @@
 
 {% endblock content %}
 
-{% block button %}
-<div class="float_right" style="top: 0px;">
-	<a href="{% url 'infras:rack_edit' object.uuid%}" class="edit btn btn-primary"><i class="fa fa-pencil"></i> Edit</a>
-	<a href="{% url 'infras:rack_delete' uuid=object.uuid %}" class="delete btn btn-primary"><i class="fa fa-trash"></i> Delete</a>
-</div>
-{% endblock %}
 
 {% block scripts %}
 <script>

@@ -43,6 +43,7 @@
                     url: rendered_url,
                     dataType: 'json',
                     success: function(response, status) {
+                        console.log(response.results);
                         $.each(response.results, function(index, choice) {
                             var option = $("<option></option>").attr("value", choice.id).text(choice[display_field]);
                             if (disabled_indicator && choice[disabled_indicator] && choice.id != initial_value) {

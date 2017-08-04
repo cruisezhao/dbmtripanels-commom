@@ -208,3 +208,8 @@ def render_object_field(obj, field_name):
         'field_name': field_name,
     }
     
+@register.filter
+def get_model_name(model):
+    print(model)
+    print(model.name)
+    return model.name

@@ -6,6 +6,7 @@ from phonenumber_field.modelfields import PhoneNumberField
 from django.core.urlresolvers import reverse
 
 
+
 class Vendors(CreatedUpdatedModel):
     """Vendors"""
     VENDOR_TYPE = (
@@ -76,8 +77,15 @@ class DataCenters(CreatedUpdatedModel):
     
     def get_absolute_url(self):
         return reverse('infras:data_center', args=(self.id,)) 
-
-
+    def get_edit_url(self):
+        return reverse('infras:data_center_edit', args=(self.id,)) 
+    def get_delete_url(self):
+        return reverse('infras:data_center_delete', args=(self.id,)) 
+    
+    @classmethod
+    def get_add_url(cls):
+        return reverse('infras:data_center_add') 
+    
 class Devices(CreatedUpdatedModel):
     """Devices"""
     DEVICE_TYPE = (
@@ -177,6 +185,16 @@ class DevicePowers(Devices):
 
     def __str__(self):
         return self.name
+    
+    def get_edit_url(self):
+        return reverse('infras:power_edit', args=(self.uuid,))
+    
+    def get_delete_url(self):
+        return reverse('infras:power_delete', args=(self.uuid,))
+    
+    @classmethod
+    def get_add_url(cls):
+        return reverse('infras:power_add')
 
 class DeviceDrives(Devices):
     """Drives"""
@@ -211,7 +229,17 @@ class DeviceKVMs(Devices):
 
     def __str__(self):
         return self.name
-
+    
+    def get_edit_url(self):
+        return reverse('infras:kvm_edit', args=(self.uuid,))
+    
+    def get_delete_url(self):
+        return reverse('infras:kvm_delete', args=(self.uuid,))
+    
+    @classmethod
+    def get_add_url(cls):
+        return reverse('infras:kvm_add')
+    
 class DeviceRouters(Devices):
     """Routers"""
     firmware_version = models.CharField(max_length=128, null=True, blank=True)
