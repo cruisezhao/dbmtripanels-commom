@@ -304,8 +304,7 @@ class TriPanelsBaseDetailView(View):
     groups = []
     fields = []
     template_name = 'utilities/obj_detail.html'
-    
-<<<<<<< HEAD
+
     def get_object(self,kwargs):
         #get a object via uuid
         if hasattr(self.model, 'uuid'):
@@ -315,14 +314,5 @@ class TriPanelsBaseDetailView(View):
         
     def get(self,request,**kwargs):
         obj = self.get_object(kwargs)
-=======
-    def get(self,request,*args, **kwargs):
-        if self.url_kwarg=='uuid':
-            uuid = self.kwargs.get(self.url_kwarg)
-            obj = get_object_or_404(self.model, uuid=uuid)
-        else:
-            id = self.kwargs.get(self.url_kwarg)
-            obj = get_object_or_404(self.model, id=id)
->>>>>>> 72004e60f8751527fc725ded4efab11c0dfce498
         return render(request, self.template_name, {'object':obj, 'groups':self.groups, 'fields':self.fields})
     
