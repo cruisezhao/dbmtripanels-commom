@@ -1,11 +1,3 @@
-{% extends 'base.html' %}
-{% block title %}
- Power List
-{% endblock title %}
+{% extends 'utilities/base_table_list.html' %}
 
-{% block button %}
-<a href="{% url 'infras:power_add'%}" class="btn btn-primary">
-	<span class="fa fa-plus" aria-hidden="true"></span>
-	Create a Power
-</a>
-{% endblock %}
+

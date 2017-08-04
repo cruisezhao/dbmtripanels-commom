@@ -6,6 +6,7 @@ from phonenumber_field.modelfields import PhoneNumberField
 from django.core.urlresolvers import reverse
 
 
+
 class Vendors(CreatedUpdatedModel):
     """Vendors"""
     VENDOR_TYPE = (
@@ -19,7 +20,7 @@ class Vendors(CreatedUpdatedModel):
         ('Active', 'Active'),
         ('Deprecated', 'Deprecated'),
     )
-
+    
     type = models.CharField(max_length=32, choices=VENDOR_TYPE)
     name = models.CharField(max_length=256,null=True,blank=True)
     description = models.TextField(blank=True)
@@ -50,7 +51,7 @@ class DataCenters(CreatedUpdatedModel):
         ('Active', 'Active'),
         ('Deprecated', 'Deprecated'),
     )
-
+    
     name = models.CharField(max_length=256,null=True,blank=True)
     description = models.TextField(blank=True)
     address = models.CharField(max_length=256,null=True,blank=True)
@@ -73,8 +74,18 @@ class DataCenters(CreatedUpdatedModel):
 
     def __str__(self):
         return self.name
-
-
+    
+    def get_absolute_url(self):
+        return reverse('infras:data_center', args=(self.id,)) 
+    def get_edit_url(self):
+        return reverse('infras:data_center_edit', args=(self.id,)) 
+    def get_delete_url(self):
+        return reverse('infras:data_center_delete', args=(self.id,)) 
+    
+    @classmethod
+    def get_add_url(cls):
+        return reverse('infras:data_center_add') 
+    
 class Devices(CreatedUpdatedModel):
     """Devices"""
     DEVICE_TYPE = (
@@ -149,7 +160,7 @@ class DeviceRacks(Devices):
         return self.name
 
     def get_absolute_url(self):
-       return reverse('infras:rack_list')
+        return reverse('infras:rack_list')
 
     def get_detail_url(self):
         return reverse('infras:rack', args=(self.uuid,))
@@ -174,6 +185,16 @@ class DevicePowers(Devices):
 
     def __str__(self):
         return self.name
+    
+    def get_edit_url(self):
+        return reverse('infras:power_edit', args=(self.uuid,))
+    
+    def get_delete_url(self):
+        return reverse('infras:power_delete', args=(self.uuid,))
+    
+    @classmethod
+    def get_add_url(cls):
+        return reverse('infras:power_add')
 
 class DeviceDrives(Devices):
     """Drives"""
@@ -208,7 +229,17 @@ class DeviceKVMs(Devices):
 
     def __str__(self):
         return self.name
-
+    
+    def get_edit_url(self):
+        return reverse('infras:kvm_edit', args=(self.uuid,))
+    
+    def get_delete_url(self):
+        return reverse('infras:kvm_delete', args=(self.uuid,))
+    
+    @classmethod
+    def get_add_url(cls):
+        return reverse('infras:kvm_add')
+    
 class DeviceRouters(Devices):
     """Routers"""
     firmware_version = models.CharField(max_length=128, null=True, blank=True)
@@ -342,7 +373,19 @@ class Interfaces(CreatedUpdatedModel):
 
     def __str__(self):
         return self.name
-
+    
+    def get_connection_and_peer_interface(self):
+        from django.db.models import Q
+        if self.connected_as_a:
+            cons =  self.connected_as_a.filter(Q(status='Running') | Q(status='Reserved'))
+            if cons:
+                return (cons[0], cons[0].interface_b)
+        if self.connected_as_b:
+            cons =  self.connected_as_b.filter(Q(status='Running') | Q(status='Reserved'))
+            if cons:
+                return (cons[0], cons[0].interface_a)
+        return None
+    
 class InterfaceRacks(Interfaces):
     """Rack Interfaces"""
     has_rail = models.NullBooleanField()
@@ -396,6 +439,7 @@ class Connections(CreatedUpdatedModel):
 
     interface_a = models.ForeignKey(Interfaces, related_name='connected_as_a', on_delete=models.CASCADE, blank=True, null=True)
     interface_b = models.ForeignKey(Interfaces, related_name='connected_as_b', on_delete=models.CASCADE, blank=True, null=True)
+
     type = models.CharField(max_length=32, choices=CONNECTION_TYPE)
     description = models.TextField(blank=True)
     status = models.CharField(max_length=32, choices=CONNECTION_STATUS)

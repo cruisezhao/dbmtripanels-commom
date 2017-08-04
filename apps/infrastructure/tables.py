@@ -188,9 +188,7 @@ class VlanTable(tables.Table):
             'class':'table table-hover table-striped dataTable',
         }
 
-PREFIX_STATUS_LABEL = """
-    <span class="label label-{{record.get_status_class}}">{{ record.status }}</span>
-"""
+
 class IPPrefixTable(tables.Table):
     pk = ToggleColumn()
     prefix = tables.LinkColumn("infras:prefix", args=[A("id")])
@@ -198,7 +196,7 @@ class IPPrefixTable(tables.Table):
     device = tables.LinkColumn(A('get_device_url'), args=[A('device.uuid')])
     vlan = tables.LinkColumn("infras:vlan", args=[A("vlan.id")])
     online_date = tables.DateColumn(format="Y-m-d")
-    status = tables.TemplateColumn(PREFIX_STATUS_LABEL)
+    status = tables.TemplateColumn(STATUS_LABEL)
 
     class Meta:
         model = IPPrefixes
@@ -211,10 +209,12 @@ class IPPrefixTable(tables.Table):
 class IPAddressTable(tables.Table):
     pk = ToggleColumn()
     address = tables.LinkColumn("infras:ip_address", args=[A("id")])
+    prefix = tables.LinkColumn("infras:prefix", args=[A("prefix.id")])
+    status = tables.TemplateColumn(STATUS_LABEL)
 
     class Meta:
         model = IPAddresses
-        fields = ['pk', 'address']
+        fields = ['pk', 'address','status','prefix','nat_address']
         attrs = {
             'class':'table table-hover table-striped dataTable',
         }

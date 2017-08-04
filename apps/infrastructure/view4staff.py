@@ -14,6 +14,7 @@ from . import tables
 from .views import InterfaceCreateView
 from common.utilities.views import TriPanelsBaseDetailView
 from common.apps.infrastructure.models import Interfaces
+from collections import OrderedDict
 
 
 class BaseDeviceDetailView(TriPanelsBaseDetailView):
@@ -127,14 +128,17 @@ class DevicePowerList(ObjectListView):
     template_name = "powers/power_list.html"
 
 
-class DevicePowerView(View):
-    def get(self, request, uuid):
-        power = get_object_or_404(DevicePowers, uuid = uuid)
-        return render(request,"powers/power.html",{
-            "object":power,
-            'detail_exclude':['id','uuid','created_date','created_by',
-                'updated_date','updated_by',],
-        })
+class DevicePowerView(TriPanelsBaseDetailView):
+    template_name = "powers/power.html"
+    model = DevicePowers
+    
+#     def get(self, request, uuid):
+#         power = get_object_or_404(DevicePowers, uuid = uuid)
+#         return render(request,"powers/power.html",{
+#             "object":power,
+#             'detail_exclude':['id','uuid','created_date','created_by',
+#                 'updated_date','updated_by',],
+#         })
 
 
 class DevicePowerEditView(ObjectEditView):
@@ -187,15 +191,12 @@ class DeviceKVMList(ObjectListView):
     template_name = "kvms/kvm_list.html"
 
 
-class DeviceKVMView(View):
-    def get(self,request,uuid):
-        KVM = get_object_or_404(DeviceKVMs, uuid=uuid)
-        return render(request, "kvms/kvm.html",{
-            'object':KVM,
-            'detail_exclude':['id','uuid','created_date','created_by',
-                'updated_date','updated_by',],
-        })
+class DeviceKVMView(TriPanelsBaseDetailView):
 
+    template_name = "kvms/kvm.html"
+    model = DeviceKVMs
+    # fields = ['data_center', 'manufacturer', 'seller']
+    # groups = OrderedDict([('Group1', ('data_center', 'manufacturer', 'seller')), ('Group2', ('name', 'tag', 'description'))])
 
 class DeviceKVMEditView(ObjectEditView):
     model = DeviceKVMs

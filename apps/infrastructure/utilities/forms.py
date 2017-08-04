@@ -88,7 +88,7 @@ class APISelect(SelectWithDisabled):
         super(APISelect, self).__init__(*args, **kwargs)
 
         self.attrs['class'] = 'api-select'
-        self.attrs['api-url'] = '/{}{}'.format(settings.BASE_PATH, api_url.lstrip('/'))  # Inject BASE_PATH
+        self.attrs['api-url'] = '{}{}'.format(settings.BASE_PATH, api_url.lstrip('/'))  # Inject BASE_PATH
         if display_field:
             self.attrs['display-field'] = display_field
         if disabled_indicator:
@@ -112,6 +112,7 @@ class ChainedModelChoiceField(forms.ModelChoiceField):
     def __init__(self, chains=None, *args, **kwargs):
         self.chains = chains
         super(ChainedModelChoiceField, self).__init__(*args, **kwargs)
+
 
 class ChainedFieldsMixin(forms.BaseForm):
     """
