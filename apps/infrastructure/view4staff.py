@@ -15,6 +15,7 @@ from .views import InterfaceCreateView
 from common.utilities.views import TriPanelsBaseDetailView
 from common.apps.infrastructure.models import Interfaces
 from collections import OrderedDict
+from common.apps.infrastructure.models import Devices
 
 
 class BaseDeviceDetailView(TriPanelsBaseDetailView):
@@ -455,7 +456,7 @@ class InterfaceNetworkDeleteView(ObjectDeleteView):
 #     })
 
 class InterfaceAddView(InterfaceCreateView):
-    parent_model = DeviceRacks
+    parent_model = Devices
     parent_field = 'device'
     model = Interfaces
     form = forms.InterfaceCreateForm

@@ -185,6 +185,9 @@ class DevicePowers(Devices):
 
     def __str__(self):
         return self.name
+
+    def get_absolute_url(self):
+        return reverse('infras:power', args=(self.uuid,))
     
     def get_edit_url(self):
         return reverse('infras:power_edit', args=(self.uuid,))
