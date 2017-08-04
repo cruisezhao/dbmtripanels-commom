@@ -2,36 +2,33 @@
 {% load form_helpers %}
 
 {% block content %}
-<style type="text/css">
-	div.text-center p{text-align: center;font-size: 20px;line-height: 100px;}
-	div.text-center .checkbox{width: 120px;display: inline-block;vertical-align: top;}
-	div.text-center .checkbox label{font-size: 16px;width: 80px;margin-bottom: 0px;line-height: 28px;}
-	div.text-center .checkbox input[type=checkbox]{width: 20px;height: 20px;margin-top: 4px;}
-	div.Confirm{width:100px;display: inline-block;vertical-align: top;}
-	div.Confirm input{border: none;line-height: 20px;}
-</style>
-<div class="">
-    <form action="." method="post" class="">
-    {% csrf_token %}
-    {% for field in form.hidden_fields %}
-        {{ field }}
-    {% endfor %}
-        <div class="">
-            
-            <div class="text-center">
-                {% block message %}<p>Are you sure?</p>{% endblock %}
-                <div class="checkbox">
-                    <label for="{{ form.confirm.id_for_label }}">
-                        {{ form.confirm }}
-                        {{ form.confirm.label }}
-                    </label>
-                </div>                
-                <div class="Confirm">
-                    <input type="submit" name="_confirm" class="delete btn btn-primary" value="Confirm">
-                    <a href="{{ return_url }}" class="">Cancel</a>
-                </div>
-            </div>
-        </div>
-    </form>
-</div>
+<form action="." method="post" class="">
+	{% csrf_token %}
+	{% for field in form.hidden_fields %}
+			{{ field }}
+	{% endfor %}
+	<div class="modal-dialog">
+	  <div class="modal-content">
+
+	    <div class="modal-header warnning-alert">
+	        <h4 class="modal-title">Delete</h4>
+	    </div>
+
+	    <div class="modal-body">
+	        {% block message %}<p>Are you sure?</p>{% endblock %}
+					<div class="checkbox">
+							<label for="{{ form.confirm.id_for_label }}">
+									{{ form.confirm }}
+									{{ form.confirm.label }}
+							</label>
+					</div>
+	    </div>
+
+	    <div class="modal-footer">
+	      <a href="javascript:history.go(-1)"  class="btn btn-default pull-left modal-cancel">Cancel</a>
+	      <button type="submit" class="btn btn-danger">Confirm</button>
+	    </div>
+	  </div>
+	</div>
+</form>
 {% endblock %}
