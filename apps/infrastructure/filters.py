@@ -1,5 +1,5 @@
 import django_filters
-from .models.network import (DeviceRacks,DataCenters,Vendors,InterfaceRacks,
+from .models.network import (Devices, DeviceRacks,DataCenters,Vendors,InterfaceRacks,
                                 DevicePowers, DeviceDrives,DeviceKVMs,DeviceMaintenances,
                                 DeviceRouters,DeviceSwitches, DeviceFirewalls,DeviceBares,
                                 InterfaceNetworks,Connections)
@@ -99,6 +99,14 @@ class ConnectionFilter(django_filters.FilterSet):
 
 
 class VlanFilter(django_filters.FilterSet):
+    """vlan filter
+    """
+    device_id = django_filters.ModelMultipleChoiceFilter(
+        name='device__pk',
+        to_field_name='pk',
+        queryset=Devices.objects.all(),
+        label='Device (ID)',
+    )
     class Meta:
         model =VLANs
         fields = ['name']

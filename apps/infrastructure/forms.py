@@ -229,7 +229,8 @@ class VlanForm(ChainedFieldsMixin, forms.ModelForm):
         ),
         required=False,
         widget=APISelect(
-            api_url='/api/device/devices/?data_center_id={{data_center}}',
+            api_url='/api/infras/devices/?data_center_id={{data_center}}',
+            attrs={'filter-for': 'vlan'}
         )
     )
     class Meta:
@@ -238,12 +239,25 @@ class VlanForm(ChainedFieldsMixin, forms.ModelForm):
 
 
 class IPPrefixForm(VlanForm, forms.ModelForm):
+    """ip prefix form
+    """
+    vlan = ChainedModelChoiceField(
+        queryset = VLANs.objects.all(),
+        chains = (
+            ('device', 'device'),
+        ),
+        widget = APISelect(
+            api_url='/api/infras/vlans/?device_id={{device}}',
+        )
+    )
+
     class Meta:
         model = IPPrefixes
         fields = ['data_center', 'device', 'vlan','family',
                   'type','prefix','notation','gateway_ip',
                   'net_mask','description','start_ip','end_ip','online_date',
                   'offline_date','status','notes']
+
     class Groups:
         groups = OrderedDict([('IPPrefix', ('prefix', 'type','family','start_ip', 'end_ip', 'net_mask','gateway_ip','status',)),
                             ('Location', ('data_center', 'device', 'vlan',)),
