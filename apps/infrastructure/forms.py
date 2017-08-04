@@ -1,3 +1,4 @@
+from collections import OrderedDict
 from django import forms
 from .models.network import (Devices,DeviceRacks,DataCenters,Vendors,InterfaceRacks,Interfaces,
                                 DevicePowers, DeviceDrives,DeviceKVMs,DeviceMaintenances,
@@ -236,13 +237,18 @@ class VlanForm(ChainedFieldsMixin, forms.ModelForm):
         fields = ['data_center', 'device', 'name', 'description', 'vid','status','notes']
 
 
-class IPPrefixForm(forms.ModelForm):
+class IPPrefixForm(VlanForm, forms.ModelForm):
     class Meta:
         model = IPPrefixes
         fields = ['data_center', 'device', 'vlan','family',
                   'type','prefix','notation','gateway_ip',
                   'net_mask','description','start_ip','end_ip','online_date',
                   'offline_date','status','notes']
+    class Groups:
+        groups = OrderedDict([('IPPrefix', ('prefix', 'type','family','start_ip', 'end_ip', 'net_mask','gateway_ip','status',)),
+                            ('Location', ('data_center', 'device', 'vlan',)),
+                            ('Information',('online_date','offline_date','notation','description','notes')),
+                             ])
 
 
 class IPAddressForm(forms.ModelForm):

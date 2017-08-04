@@ -527,14 +527,14 @@ class IPPrefixListView(ObjectListView):
     template_name = "ips/ip_prefix_list.html"
 
 
-class IPPrefixView(View):
-    def get(self,request, id):
-        prefix = get_object_or_404(IPPrefixes,id=id)
-        return render(request, "ips/ip_prefix.html",{
-            "object":prefix,
-            'detail_exclude':['id','uuid','created_date','created_by',
-                'updated_date','updated_by',],
-        })
+class IPPrefixView(TriPanelsBaseDetailView):
+    url_kwarg = 'id'
+    model = IPPrefixes
+    groups = OrderedDict([('IPPrefix', ('prefix', 'type','family','start_ip', 'end_ip', 'net_mask','gateway_ip','status',)),
+                          ('Location', ('data_center', 'device', 'vlan',)),
+                          ('Information',('online_date','offline_date','notation','description','notes')),
+                          ])
+    template_name = "ips/ip_prefix.html"
 
 
 class IPPrefixEditView(ObjectEditView):
