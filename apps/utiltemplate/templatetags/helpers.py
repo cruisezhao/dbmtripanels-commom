@@ -209,7 +209,5 @@ def render_object_field(obj, field_name):
     }
     
 @register.filter
-def get_model_name(model):
-    print(model)
-    print(model.name)
-    return model.name
+def get_model_name(instance):
+    return instance.__class__.__name__
