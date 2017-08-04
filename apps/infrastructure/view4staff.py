@@ -14,6 +14,7 @@ from . import tables
 from .views import InterfaceCreateView
 from common.utilities.views import TriPanelsBaseDetailView
 from common.apps.infrastructure.models import Interfaces
+from collections import OrderedDict
 
 
 class BaseDeviceDetailView(TriPanelsBaseDetailView):
@@ -190,15 +191,12 @@ class DeviceKVMList(ObjectListView):
     template_name = "kvms/kvm_list.html"
 
 
-class DeviceKVMView(View):
-    def get(self,request,uuid):
-        KVM = get_object_or_404(DeviceKVMs, uuid=uuid)
-        return render(request, "kvms/kvm.html",{
-            'object':KVM,
-            'detail_exclude':['id','uuid','created_date','created_by',
-                'updated_date','updated_by',],
-        })
+class DeviceKVMView(TriPanelsBaseDetailView):
 
+    template_name = "kvms/kvm.html"
+    model = DeviceKVMs
+    # fields = ['data_center', 'manufacturer', 'seller']
+    # groups = OrderedDict([('Group1', ('data_center', 'manufacturer', 'seller')), ('Group2', ('name', 'tag', 'description'))])
 
 class DeviceKVMEditView(ObjectEditView):
     model = DeviceKVMs

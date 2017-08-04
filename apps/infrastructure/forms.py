@@ -93,6 +93,9 @@ class DeviceKVMForm(forms.ModelForm):
                   'price','order_no','warranty_date','access_method',
                   'access_port','username','password','status','notes',
                   'total_ports', 'port_type']
+    class Groups:
+        from collections import OrderedDict
+        groups = OrderedDict([('Group1', ('data_center', 'manufacturer', 'seller')), ('Group2', ('name', 'tag', 'description'))])
 
 
 class DeviceRouterForm(forms.ModelForm):

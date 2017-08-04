@@ -64,12 +64,15 @@ class ObjectListView(View):
             form = self.filter(request.GET, self.queryset).form
         else:
             form = self.filter_form(request.GET, label_suffix='')if self.filter_form else None
-            
+        
+        
         context = {
             'table': table,
             'permissions': False,
             'filter_form': form,
             'export_templates': None,
+            'model':model,
+            'model_name':model._meta.verbose_name,
         }
         context.update(self.extra_context())
         return render(request, self.template_name, context)
