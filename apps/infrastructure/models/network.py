@@ -151,6 +151,10 @@ class Devices(CreatedUpdatedModel):
     def __str__(self):
         return self.name
 
+    def get_absolute_url(self):
+        return reverse('infras:%s' % self.type.lower(), args=(self.uuid,))
+
+
 class DeviceRacks(Devices):
     """Racks"""
     location = models.CharField(max_length=256, help_text='How to find the rack in data center.')
@@ -168,7 +172,6 @@ class DeviceRacks(Devices):
 
     def __str__(self):
         return self.name
-
 
     def get_absolute_url(self):
         return reverse('infras:rack', args=(self.uuid,))

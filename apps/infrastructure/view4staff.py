@@ -11,9 +11,11 @@ from .models.ip import VLANs, IPPrefixes, IPAddresses, IPInterfaces
 from . import filters
 from . import forms
 from . import tables
-from .views import InterfaceCreateView
+from django.shortcuts import get_object_or_404, redirect, render
+from copy import deepcopy
+
 from common.utilities.views import TriPanelsBaseDetailView
-from common.apps.infrastructure.models import Interfaces
+from common.apps.infrastructure.models import Interfaces, Devices
 from collections import OrderedDict
 from common.apps.infrastructure.models import Devices
 
@@ -441,12 +443,87 @@ class InterfaceNetworkDeleteView(ObjectDeleteView):
 #         'return_url': reverse('dcim:device', kwargs={'pk': device.pk}),
 #     })
 
-class InterfaceAddView(InterfaceCreateView):
+class InterfaceAddView(View):
     parent_model = Devices
     parent_field = 'device'
     model = Interfaces
     form = forms.InterfaceCreateForm
     template_name = 'interfaces/interface_add.html'
+    lookup = {'Rack':DeviceRacks, 'Power':DevicePowers, 'Drive':DeviceDrives, 'KVM':DeviceKVMs,
+              'Router':DeviceRouters, 'Switch':DeviceSwitches, 'Firewall':DeviceFirewalls, 'BareMetal':DeviceBares}
+
+    def get(self, request, uuid):
+        parent = get_object_or_404(self.parent_model, uuid=uuid)
+        subparent_model = self.lookup.get(parent.type)
+        subparent = get_object_or_404(subparent_model, uuid=uuid)
+
+        form = self.form(subparent, initial=request.GET)
+
+        return render(request, self.template_name, {
+            'parent': subparent,
+            'component_type': self.model._meta.verbose_name,
+            'form': form,
+            'return_url': subparent.get_absolute_url(),
+        })
+
+    def post(self, request, uuid):
+        parent = get_object_or_404(self.parent_model, uuid=uuid)
+        subparent_model = self.lookup.get(parent.type)
+        subparent = get_object_or_404(subparent_model, uuid=uuid)
+
+        form = self.form(subparent, request.POST)
+        if form.is_valid():
+            new_components = []
+            data = deepcopy(form.cleaned_data)
+
+            if data['type'] == 'Rack':
+                self.model_form = forms.InterfaceRackForm
+            elif data['type'] == 'Network':
+                self.model_form = forms.InterfaceNetworkForm
+            else:
+                self.model_form = forms.InterfaceForm
+
+            name_tag_index = zip(form.cleaned_data['name_pattern'], form.cleaned_data['tag_pattern'], form.cleaned_data['index_pattern'])
+
+            for name, tag, index in name_tag_index:
+                component_data = {
+                    self.parent_field: parent.pk,
+                    'name': name,
+                    'tag': tag,
+                    'index': index,
+                }
+                # Replace objects with their primary key to keep component_form.clean() happy
+                for k, v in data.items():
+                    if hasattr(v, 'pk'):
+                        component_data[k] = v.pk
+                    else:
+                        component_data[k] = v
+                component_form = self.model_form(component_data)
+                if component_form.is_valid():
+                    new_components.append(component_form.save(commit=False))
+                else:
+                    for field, errors in component_form.errors.as_data().items():
+                        # Assign errors on the child form's name field to name_pattern on the parent form
+                        if field == 'name':
+                            field = 'name_pattern'
+                    for e in errors:
+                        form.add_error(field, '{}: {}'.format(name, ', '.join(e)))
+
+            if not form.errors:
+                for modelform in new_components:
+                    modelform.save()
+                # self.model.objects.bulk_create(new_components)
+                if '_addanother' in request.POST:
+                    return redirect(request.path)
+                else:
+                    return redirect(subparent.get_absolute_url())
+
+        return render(request, self.template_name, {
+            'parent': subparent,
+            'component_type': self.model._meta.verbose_name,
+            'form': form,
+            'return_url': subparent.get_absolute_url(),
+        })
 
 
 class ConnectionListView(ObjectListView):

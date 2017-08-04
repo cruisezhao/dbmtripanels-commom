@@ -108,7 +108,7 @@ urlpatterns = [
     url(r'^interface-racks/add/$', InterfaceRackEditView.as_view(), name='interface_rack_add'),
     url(r'^interface-racks/(?P<uuid>[a-z\d+]{32})/edit/$', InterfaceRackEditView.as_view(), name='interface_rack_edit'),
     url(r'^interface-racks/(?P<uuid>[a-z\d+]{32})/delete/$', InterfaceRackDeleteView.as_view(), name='interface_rack_delete'),
-    url(r'^racks/(?P<uuid>[a-z\d+]{32})/interfaces/add/$', InterfaceAddView.as_view(), name='interface_add'),
+    url(r'^devices/(?P<uuid>[a-z\d+]{32})/interfaces/add/$', InterfaceAddView.as_view(), name='interface_add'),
 
     #InterfaceNetworks
     url(r'^interface-networks/$', InterfaceNetworkListView.as_view(), name='interface_network_list'),
