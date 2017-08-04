@@ -137,32 +137,32 @@
 													<input type="checkbox" name="pk" value="5">
 												</td>
 												<td class="">
-													<a href="#"><i class="fa fa-exchange"></i>itf.name</a>
+													<a href="#"><i class="fa fa-exchange"></i>{{itf.name}}</a>
 												</td>
 												<td class="">
-													<label class="label" style="background-color: #2dab4c">itf.status</label>
+													<label class="label" style="background-color: #2dab4c">{{itf.status}}</label>
 												</td>
 												<td class="">
 													{% if con_and_peer_itf %}
-													<label class="label" style="background-color: #2dab4c">con_and_peer_itf.0.status</label>
+													<label class="label" style="background-color: #2dab4c">{{con_and_peer_itf.0.status}}</label>
 													{% endif %}
 
 												</td>
 												<td class="">
 													{% if con_and_peer_itf %}
-													<a href="#">con_and_peer_itf.1.device.name</a>
+													<a href="#">{{con_and_peer_itf.1.device.name}}</a>
 													{% endif %}
 
 												</td>
 
 												<td class="">
 													{% if con_and_peer_itf %}
-													con_and_peer_itf.1.name
+													{{con_and_peer_itf.1.name}}
 													{% endif %}
 												<td class="">
 												</td>
 													{% if con_and_peer_itf %}
-													<label class="label" style="background-color: #2dab4c">con_and_peer_itf.1.status</label>
+													<label class="label" style="background-color: #2dab4c">{{con_and_peer_itf.1.status}}</label>
 													{% endif %}
 												</td>
 												<td>

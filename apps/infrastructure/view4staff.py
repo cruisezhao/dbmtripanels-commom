@@ -103,15 +103,11 @@ class RackListView(ObjectListView):
     template_name = "racks/racks_list.html"
 
 
-class RackView(View):
+class RackView(BaseDeviceDetailView):
     """rack view"""
-    def get(self,request,uuid):
-        rack = get_object_or_404(DeviceRacks, uuid = uuid)
-        return render(request, "racks/rack.html",{
-            'object':rack,
-            'detail_exclude':['id','uuid','created_date','created_by',
-                'updated_date','updated_by','username','password'],
-        })
+    template_name = "racks/rack.html"
+    model = DeviceRacks
+    
 
 
 class RackEditView(ObjectEditView):
