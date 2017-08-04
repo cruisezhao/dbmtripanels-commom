@@ -112,3 +112,30 @@ class ChainedModelChoiceField(forms.ModelChoiceField):
     def __init__(self, chains=None, *args, **kwargs):
         self.chains = chains
         super(ChainedModelChoiceField, self).__init__(*args, **kwargs)
+
+class ChainedFieldsMixin(forms.BaseForm):
+    """
+    Iterate through all ChainedModelChoiceFields in the form and modify their querysets based on chained fields.
+    """
+    def __init__(self, *args, **kwargs):
+        super(ChainedFieldsMixin, self).__init__(*args, **kwargs)
+
+        for field_name, field in self.fields.items():
+
+            if isinstance(field, ChainedModelChoiceField):
+
+                filters_dict = {}
+                for (db_field, parent_field) in field.chains:
+                    if self.is_bound and self.data.get(parent_field):
+                        filters_dict[db_field] = self.data[parent_field]
+                    elif self.initial.get(parent_field):
+                        filters_dict[db_field] = self.initial[parent_field]
+                    elif self.fields[parent_field].widget.attrs.get('nullable'):
+                        filters_dict[db_field] = None
+                    else:
+                        break
+
+                if filters_dict:
+                    field.queryset = field.queryset.filter(**filters_dict)
+                elif not self.is_bound:
+                    field.queryset = field.queryset.none()

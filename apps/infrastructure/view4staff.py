@@ -456,7 +456,7 @@ class InterfaceNetworkDeleteView(ObjectDeleteView):
 class InterfaceAddView(InterfaceCreateView):
     parent_model = DeviceRacks
     parent_field = 'device'
-    model = InterfaceRacks
+    model = Interfaces
     form = forms.InterfaceCreateForm
     template_name = 'interfaces/interface_add.html'
 
