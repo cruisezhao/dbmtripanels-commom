@@ -183,7 +183,6 @@ class InterfaceCreateForm(DeviceComponentForm):
         if not len(tag_pattern)==len(name_pattern)==len(index_pattern):
             raise forms.ValidationError("Name,Tag and Index should have the same amount.")
 
-
     class Groups:
         from collections import OrderedDict
         groups = OrderedDict([('Rack', ('has_rail', 'rail_model')), ('Network', ('port_model', 'port_fast', 'speed', 'mac'))])
