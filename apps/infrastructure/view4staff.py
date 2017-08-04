@@ -129,6 +129,7 @@ class DevicePowerList(ObjectListView):
 
 
 class DevicePowerView(TriPanelsBaseDetailView):
+    url_kwarg = 'uuid'
     template_name = "powers/power.html"
     model = DevicePowers
     
@@ -192,7 +193,7 @@ class DeviceKVMList(ObjectListView):
 
 
 class DeviceKVMView(TriPanelsBaseDetailView):
-
+    url_kwarg = 'uuid'
     template_name = "kvms/kvm.html"
     model = DeviceKVMs
     # fields = ['data_center', 'manufacturer', 'seller']
@@ -500,14 +501,10 @@ class VlanListView(ObjectListView):
     template_name = "ips/vlan_list.html"
 
 
-class VlanView(View):
-    def get(self,request, id):
-        vlan = get_object_or_404(VLANs,id=id)
-        return render(request, "ips/vlan.html",{
-            "object":vlan,
-            'detail_exclude':['id','uuid','created_date','created_by',
-                'updated_date','updated_by',],
-        })
+class VlanView(TriPanelsBaseDetailView):
+    url_kwarg = 'id'
+    model = VLANs
+    template_name = "ips/vlan.html"
 
 
 class VlanEditView(ObjectEditView):

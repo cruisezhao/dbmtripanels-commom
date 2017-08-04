@@ -1,6 +1,7 @@
 from django.views.generic import View
 from django import forms
 from django.db.models import ProtectedError
+from django.views.generic.detail import SingleObjectMixin
 from django.core.urlresolvers import reverse
 from django.shortcuts import redirect, render, get_object_or_404
 from django.utils.formats import mark_safe
@@ -296,15 +297,20 @@ class BulkDeleteView(View):
         if self.form:
             return self.form
         return BulkDeleteForm
-    
-    
+
+
 class TriPanelsBaseDetailView(View):
-    
+    url_kwarg = ''
     groups = []
     fields = []
     template_name = 'utilities/obj_detail.html'
     
-    def get(self,request,uuid):
-        obj = get_object_or_404(self.model,uuid=uuid)
+    def get(self,request,*args, **kwargs):
+        if self.url_kwarg=='uuid':
+            uuid = self.kwargs.get(self.url_kwarg)
+            obj = get_object_or_404(self.model, uuid=uuid)
+        else:
+            id = self.kwargs.get(self.url_kwarg)
+            obj = get_object_or_404(self.model, id=id)
         return render(request, self.template_name, {'object':obj, 'groups':self.groups, 'fields':self.fields})
     
