@@ -70,6 +70,9 @@ class IPPrefixes(CreatedUpdatedModel):
     class Meta:
         db_table = "ip_prefixes"
 
+    def __str__(self):
+        return self.prefix
+
     def get_device_url(self):
         return "infras:{}".format(self.device.type.lower())
 
@@ -101,6 +104,19 @@ class IPAddresses(CreatedUpdatedModel):
 
     class Meta:
         db_table = "ip_addresses"
+
+    def __str__(self):
+        return self.address
+
+    def get_status_class(self):
+        if self.status == 'DHCP':
+            return "info"
+        elif self.status == 'Active':
+            return "success"
+        elif self.status == "Reserved":
+            return "warning"
+        else:
+            return "danger"
 
 
 class IPInterfaces(CreatedUpdatedModel):

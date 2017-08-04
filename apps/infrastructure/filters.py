@@ -7,6 +7,12 @@ from .models.ip import VLANs, IPPrefixes, IPAddresses, IPInterfaces
 
 class RackFilter(django_filters.FilterSet):
     """rack filter"""
+    data_center_id = django_filters.ModelMultipleChoiceFilter(
+        name='data_center__pk',
+        to_field_name='pk',
+        queryset=DataCenters.objects.all(),
+        label='Data_Center (ID)',
+    )
     class Meta:
         model = DeviceRacks
         fields = ['name']
