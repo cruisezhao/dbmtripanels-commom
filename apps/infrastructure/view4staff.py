@@ -24,10 +24,10 @@ class BaseDeviceDetailView(TriPanelsBaseDetailView):
         from collections import OrderedDict
         itfs_by_type = OrderedDict()
         for (t, _) in Interfaces.INTERFACE_TYPE:
-            itfs = dev.interfaces_set.filter(type=t)
+            itfs = dev.interfaces.filter(type=t)
             if itfs:
                 itfs_by_type[t] = itfs
-        return render(request, self.template_name, {'object':dev, 'itfs_by_type':itfs_by_type,'groups':self.Groups.groups, 'fields':self.fields})
+        return render(request, self.template_name, {'object':dev, 'itfs_by_type':itfs_by_type,'groups':self.groups, 'fields':self.fields})
     
 
 class VendorListView(ObjectListView):
@@ -68,14 +68,17 @@ class DataCenterListView(ObjectListView):
     template_name = "datacenters/datacenter_list.html"
 
 
-class DataCenterView(View):
-    def get(self,request,id):
-        datacenter = get_object_or_404(DataCenters, id=id)
-        return render(request, "datacenters/datacenter.html",{
-            'object':datacenter,
-            'detail_exclude':['id','uuid','created_date','created_by',
-                'updated_date','updated_by',],
-        })
+class DataCenterView(TriPanelsBaseDetailView):
+    template_name = "datacenters/datacenter.html"
+    model = DataCenters
+    
+#     def get(self,request,id):
+#         datacenter = get_object_or_404(DataCenters, id=id)
+#         return render(request, "datacenters/datacenter.html",{
+#             'object':datacenter,
+#             'detail_exclude':['id','uuid','created_date','created_by',
+#                 'updated_date','updated_by',],
+#         })
 
 
 class DataCenterEditView(ObjectEditView):
@@ -129,7 +132,7 @@ class DevicePowerList(ObjectListView):
     template_name = "powers/power_list.html"
 
 
-class DevicePowerView(TriPanelsBaseDetailView):
+class DevicePowerView(BaseDeviceDetailView):
     template_name = "powers/power.html"
     model = DevicePowers
     
@@ -192,7 +195,7 @@ class DeviceKVMList(ObjectListView):
     template_name = "kvms/kvm_list.html"
 
 
-class DeviceKVMView(TriPanelsBaseDetailView):
+class DeviceKVMView(BaseDeviceDetailView):
 
     template_name = "kvms/kvm.html"
     model = DeviceKVMs
@@ -218,15 +221,10 @@ class DeviceRouterList(ObjectListView):
     table = tables.DeviceRouterTable
     template_name = "routers/router_list.html"
 
-class DeviceRouterView(View):
+class DeviceRouterView(BaseDeviceDetailView):
+    template_name = "routers/router.html"
+    model = DeviceRouters
 
-    def get(self,request,uuid):
-        router = get_object_or_404(DeviceRouters, uuid=uuid)
-        return render(request, "routers/router.html",{
-            'object':router,
-            'detail_exclude':['id','uuid','created_date','created_by',
-                'updated_date','updated_by',],
-        })
 
 
 class DeviceRouterEditView(ObjectEditView):
@@ -246,29 +244,25 @@ class DeviceSwitcheListView(ObjectListView):
     filter = filters.DeviceSwitcheFilter
     filter_form = None
     table = tables.DeviceSwitcheTable
-    template_name = "switches/switche_list.html"
+    template_name = "switches/switch_list.html"
 
 
-class DeviceSwitcheView(View):
-    def get(self,request,uuid):
-        switche = get_object_or_404(DeviceSwitches, uuid=uuid)
-        return render(request, "switches/switche.html",{
-            'object':switche,
-            'detail_exclude':['id','uuid','created_date','created_by',
-                'updated_date','updated_by',],
-        })
+class DeviceSwitcheView(BaseDeviceDetailView):
+    template_name = "switches/switch.html"
+    model = DeviceSwitches
+
 
 
 class DeviceSwitcheEditView(ObjectEditView):
     model = DeviceSwitches
-    default_return_url = "infras:switche_list"
-    template_name = "switches/switche_edit.html"
+    default_return_url = "infras:switch_list"
+    template_name = "switches/switch_edit.html"
     form_class = forms.DeviceSwitcheForm
 
 
 class DeviceSwitcheDeleteView(ObjectDeleteView):
     model = DeviceSwitches
-    default_return_url = "infras:switche_list"
+    default_return_url = "infras:switch_list"
 
 
 class DeviceFirewallListView(ObjectListView):
@@ -279,14 +273,9 @@ class DeviceFirewallListView(ObjectListView):
     template_name = "firewalls/firewall_list.html"
 
 
-class DeviceFirewallView(View):
-    def get(self,request,uuid):
-        firewall = get_object_or_404(DeviceFirewalls, uuid=uuid)
-        return render(request, "firewalls/firewall.html",{
-            'object':firewall,
-            'detail_exclude':['id','uuid','created_date','created_by',
-                'updated_date','updated_by',],
-        })
+class DeviceFirewallView(BaseDeviceDetailView):
+    template_name = "firewalls/firewall.html"
+    model = DeviceFirewalls
 
 
 class DeviceFirewallEditView(ObjectEditView):
@@ -309,14 +298,10 @@ class DeviceBareListView(ObjectListView):
     template_name = "bares/bare_list.html"
 
 
-class DeviceBareView(View):
-    def get(self,request,uuid):
-        bare = get_object_or_404(DeviceBares, uuid=uuid)
-        return render(request, "bares/bare.html",{
-            'object':bare,
-            'detail_exclude':['id','uuid','created_date','created_by',
-                'updated_date','updated_by',],
-        })
+class DeviceBareView(BaseDeviceDetailView):
+    template_name = "bares/bare.html"
+    model = DeviceBares
+    
 
 
 class DeviceBareEditView(ObjectEditView):

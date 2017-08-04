@@ -43,7 +43,17 @@ class Vendors(CreatedUpdatedModel):
 
     def __str__(self):
         return self.name
-
+    
+    def get_absolute_url(self):
+        return reverse('infras:vendor', args=(self.id,)) 
+    def get_edit_url(self):
+        return reverse('infras:vendor_edit', args=(self.id,)) 
+    def get_delete_url(self):
+        return reverse('infras:vendor_delete', args=(self.id,)) 
+    
+    @classmethod
+    def get_add_url(cls):
+        return reverse('infras:vendor_add') 
 
 class DataCenters(CreatedUpdatedModel):
     """Data Centers"""
@@ -159,12 +169,19 @@ class DeviceRacks(Devices):
     def __str__(self):
         return self.name
 
+
     def get_absolute_url(self):
-        return reverse('infras:rack_list')
-
-    def get_detail_url(self):
         return reverse('infras:rack', args=(self.uuid,))
-
+    
+    def get_edit_url(self):
+        return reverse('infras:rack_edit', args=(self.uuid,))
+    
+    def get_delete_url(self):
+        return reverse('infras:rack_delete', args=(self.uuid,))
+    
+    @classmethod
+    def get_add_url(cls):
+        return reverse('infras:rack_add')
 
 class DevicePowers(Devices):
     """Power Devices"""
@@ -233,6 +250,9 @@ class DeviceKVMs(Devices):
     def __str__(self):
         return self.name
     
+    def get_absolute_url(self):
+        return reverse('infras:kvm', args=(self.uuid,))
+    
     def get_edit_url(self):
         return reverse('infras:kvm_edit', args=(self.uuid,))
     
@@ -254,7 +274,18 @@ class DeviceRouters(Devices):
 
     def __str__(self):
         return self.name
-
+    
+    def get_absolute_url(self):
+        return reverse('infras:router', args=(self.uuid,)) 
+    def get_edit_url(self):
+        return reverse('infras:router_edit', args=(self.uuid,)) 
+    def get_delete_url(self):
+        return reverse('infras:router_delete', args=(self.uuid,)) 
+    
+    @classmethod
+    def get_add_url(cls):
+        return reverse('infras:router_add') 
+    
 class DeviceSwitches(Devices):
     """Switches"""
 
@@ -267,7 +298,17 @@ class DeviceSwitches(Devices):
 
     def __str__(self):
         return self.name
-
+    def get_absolute_url(self):
+        return reverse('infras:switch', args=(self.uuid,)) 
+    def get_edit_url(self):
+        return reverse('infras:switch_edit', args=(self.uuid,)) 
+    def get_delete_url(self):
+        return reverse('infras:switch_delete', args=(self.uuid,)) 
+    
+    @classmethod
+    def get_add_url(cls):
+        return reverse('infras:switch_add') 
+    
 class DeviceFirewalls(Devices):
     """Firewalls"""
     firmware_version = models.CharField(max_length=128,null=True,blank=True)
@@ -280,7 +321,17 @@ class DeviceFirewalls(Devices):
 
     def __str__(self):
         return self.name
-
+    def get_absolute_url(self):
+        return reverse('infras:firewall', args=(self.uuid,)) 
+    def get_edit_url(self):
+        return reverse('infras:firewall_edit', args=(self.uuid,)) 
+    def get_delete_url(self):
+        return reverse('infras:firewall_delete', args=(self.uuid,)) 
+    
+    @classmethod
+    def get_add_url(cls):
+        return reverse('infras:firewall_add') 
+    
 class DeviceBares(Devices):
     """Bare Metals"""
     RAID_TYPE = (
@@ -320,7 +371,17 @@ class DeviceBares(Devices):
 
     def __str__(self):
         return self.name
-
+    
+    def get_edit_url(self):
+        return reverse('infras:bare_edit', args=(self.uuid,))
+    
+    def get_delete_url(self):
+        return reverse('infras:bare_delete', args=(self.uuid,))
+    
+    @classmethod
+    def get_add_url(cls):
+        return reverse('infras:bare_add')
+    
 class DeviceMaintenances(CreatedUpdatedModel):
     """Device Maintenances"""
     MAINTENANCE_STATUS = (

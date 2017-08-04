@@ -15,11 +15,7 @@
         		<div class="pull-right">
         			<a class=" btn btn-primary accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseOne" >
         				<i class="fa fa-search" style="margin-right:4px;"></i>Search</a>
-        			{% if messages %}
-        			{% for message in messages %}
-        			<p {% if message.tags %} class="{{ message.tags }} warning-txt" {% endif %} >{{ message }}</p>
-        			{% endfor %}
-                    {% endif %}
+
 
         			{% if perms %}
                         {% block button %}
@@ -34,6 +30,11 @@
         			{% endif %}
         		 </div>
     		</div>
+            {% if messages %}
+                    {% for message in messages %}
+                    <p {% if message.tags %} class="{{ message.tags }} warning-txt" {% endif %} >{{ message }}</p>
+                    {% endfor %}
+             {% endif %}
     		<div class="">
     		  {% include 'utilities/obj_table.html' %}
     		</div>

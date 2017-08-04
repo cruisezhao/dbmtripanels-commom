@@ -75,11 +75,11 @@ urlpatterns = [
     url(r'^routers/(?P<uuid>[a-z\d+]{32})/delete/$', DeviceRouterDeleteView.as_view(), name='router_delete'),
 
     #DeviceSwitches
-    url(r'^switches/$', DeviceSwitcheListView.as_view(), name='switche_list'),
-    url(r'^switches/(?P<uuid>[a-z\d+]{32})/$', DeviceSwitcheView.as_view(), name='switche'),
-    url(r'^switches/add/$', DeviceSwitcheEditView.as_view(), name='switche_add'),
-    url(r'^switches/(?P<uuid>[a-z\d+]{32})/edit/$', DeviceSwitcheEditView.as_view(), name='switche_edit'),
-    url(r'^switches/(?P<uuid>[a-z\d+]{32})/delete/$', DeviceSwitcheDeleteView.as_view(), name='switche_delete'),
+    url(r'^switches/$', DeviceSwitcheListView.as_view(), name='switch_list'),
+    url(r'^switches/(?P<uuid>[a-z\d+]{32})/$', DeviceSwitcheView.as_view(), name='switch'),
+    url(r'^switches/add/$', DeviceSwitcheEditView.as_view(), name='switch_add'),
+    url(r'^switches/(?P<uuid>[a-z\d+]{32})/edit/$', DeviceSwitcheEditView.as_view(), name='switch_edit'),
+    url(r'^switches/(?P<uuid>[a-z\d+]{32})/delete/$', DeviceSwitcheDeleteView.as_view(), name='switch_delete'),
 
     #DeviceFirewalls
     url(r'^firewalls/$', DeviceFirewallListView.as_view(), name='firewall_list'),

@@ -89,7 +89,7 @@ class DeviceRouterTable(tables.Table):
 
 class DeviceSwitcheTable(tables.Table):
     pk = ToggleColumn()
-    name = tables.LinkColumn("infras:switche", args=[A("uuid")])
+    name = tables.LinkColumn("infras:switch", args=[A("uuid")])
     class Meta:
         model = DeviceRouters
         fields = ['pk','name','account', 'password', 'mgmt_ip','os_version', 'port_amount']

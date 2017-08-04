@@ -120,7 +120,7 @@ class ObjectEditView(GetReturnURLMixin, View):
             object_created = not form.instance.pk
             obj = form.save()
 
-            msg = 'Created' if object_created else 'Modified'
+            msg = 'Created ' if object_created else 'Modified'
             msg += self.model._meta.verbose_name
             if hasattr(obj, 'get_absolute_url'):
                 msg = '{} <a href="{}">{}</a>'.format(msg, obj.get_absolute_url, escape(obj))
@@ -304,7 +304,14 @@ class TriPanelsBaseDetailView(View):
     fields = []
     template_name = 'utilities/obj_detail.html'
     
-    def get(self,request,uuid):
-        obj = get_object_or_404(self.model,uuid=uuid)
+    def get_object(self,kwargs):
+        #get a object via uuid
+        if hasattr(self.model, 'uuid'):
+            return get_object_or_404(self.model, uuid = kwargs['uuid'])
+        else:
+            return get_object_or_404(self.model, id = kwargs['id'])    
+        
+    def get(self,request,**kwargs):
+        obj = self.get_object(kwargs)
         return render(request, self.template_name, {'object':obj, 'groups':self.groups, 'fields':self.fields})
     
