@@ -1,10 +1,12 @@
 from django import forms
-from .models.network import (DeviceRacks,DataCenters,Vendors,InterfaceRacks,Interfaces,
+from .models.network import (Devices,DeviceRacks,DataCenters,Vendors,InterfaceRacks,Interfaces,
                                 DevicePowers, DeviceDrives,DeviceKVMs,DeviceMaintenances,
                                 DeviceRouters,DeviceSwitches, DeviceFirewalls,DeviceBares,
                                 InterfaceNetworks,Connections,DataCenters)
 from datetimewidget.widgets import DateTimeWidget, DateWidget
-from .utilities.forms import DeviceComponentForm, ExpandableNameField
+from .utilities.forms import \
+    (DeviceComponentForm, ExpandableNameField,
+    ChainedModelChoiceField, APISelect, ChainedFieldsMixin)
 from .models.ip import VLANs, IPPrefixes, IPAddresses, IPInterfaces
 
 
@@ -212,8 +214,24 @@ class ConnectionForm(forms.ModelForm):
         fields = ['interface_a', 'interface_b', 'type', 'status', 'description','notes']
 
 
-class VlanForm(forms.ModelForm):
+class VlanForm(ChainedFieldsMixin, forms.ModelForm):
 
+    data_center = forms.ModelChoiceField(
+        queryset=DataCenters.objects.all(),
+        widget=forms.Select(
+            attrs={'filter-for': 'device'}
+        )
+    )
+    device = ChainedModelChoiceField(
+        queryset=Devices.objects.all(),
+        chains=(
+            ('data_center', 'data_center'),
+        ),
+        required=False,
+        widget=APISelect(
+            api_url='/api/device/devices/?data_center_id={{data_center}}',
+        )
+    )
     class Meta:
         model = VLANs
         fields = ['data_center', 'device', 'name', 'description', 'vid','status','notes']
